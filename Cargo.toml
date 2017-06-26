@@ -1,0 +1,13 @@
+[package]
+name = "pnmixer"
+version = "0.1.0"
+authors = ["Julian Ospald <hasufell@posteo.de>"]
+
+[dependencies]
+alsa = "0.1.8"
+gdk = "0.5.0"
+lazy_static = "0.1.*"
+
+[dependencies.gtk]
+version = "0.1.0"
+features = [ "v3_10" ]
