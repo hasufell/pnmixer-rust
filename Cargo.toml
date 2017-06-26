@@ -5,9 +5,11 @@ authors = ["Julian Ospald <hasufell@posteo.de>"]
 
 [dependencies]
 alsa = "0.1.8"
-gdk = "0.5.0"
-lazy_static = "0.1.*"
+libc = "0.2.23"
+gdk = "0.5.3"
+gdk-sys = "0.3.4"
+gtk-sys = "0.3.4"
 
 [dependencies.gtk]
-version = "0.1.0"
-features = [ "v3_10" ]
+git = 'https://github.com/gtk-rs/gtk.git'
+features = [ "v3_12", "v3_22" ]
