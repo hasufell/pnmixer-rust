@@ -2,7 +2,7 @@ extern crate alsa;
 extern crate std;
 extern crate libc;
 
-use self::alsa::card::{Card};
+use self::alsa::card::Card;
 use self::alsa::mixer::{Mixer, Selem, Elem};
 use alsa::mixer::SelemChannelId::*;
 use std::iter::Map;
@@ -23,8 +23,7 @@ pub fn get_alsa_cards() -> alsa::card::Iter {
 }
 
 pub fn get_mixer(card: Card) -> Mixer {
-    let mixer = Mixer::new(&format!("hw:{}", card.get_index()),
-            false).unwrap();
+    let mixer = Mixer::new(&format!("hw:{}", card.get_index()), false).unwrap();
 
     return mixer;
 }
@@ -35,10 +34,11 @@ pub fn get_selems(mixer: &Mixer) -> Map<alsa::mixer::Iter, fn(Elem) -> Selem> {
 
 pub fn get_selem_by_name<'a>(mixer: &'a Mixer, name: String) -> Option<Selem> {
     for selem in get_selems(mixer) {
-        let m_name = selem.get_id().get_name().map(|y| String::from(y)).ok();
-        let retval = m_name.map_or(false, |n| {
-            return n == name;
-        });
+        let m_name = selem.get_id()
+            .get_name()
+            .map(|y| String::from(y))
+            .ok();
+        let retval = m_name.map_or(false, |n| { return n == name; });
 
         if retval {
             return Some(selem);
@@ -67,4 +67,3 @@ pub fn get_selem(elem: Elem) -> Selem {
 // pub fn list_channels(card: Card, hctl: HCtl) -> [str] {
 
 // }
-
