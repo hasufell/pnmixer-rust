@@ -4,14 +4,15 @@ version = "0.1.0"
 authors = ["Julian Ospald <hasufell@posteo.de>"]
 
 [dependencies]
-alsa = "0.1.8"
-libc = "0.2.23"
+alsa = "^0.1.8"
+libc = "^0.2.23"
 gdk-sys = { git = "https://github.com/gtk-rs/sys" }
 gtk-sys = { git = "https://github.com/gtk-rs/sys" }
 glib = { git = "https://github.com/gtk-rs/glib.git" }
-ffi = "0.0.2"
+ffi = "^0.0.2"
 flexi_logger = "^0.5.1"
-log = "0.3.8"
+log = "^0.3.8"
+error-chain = "^0.10.0"
 
 [dependencies.gtk]
 git = "https://github.com/gtk-rs/gtk.git"
