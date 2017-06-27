@@ -11,27 +11,42 @@ extern crate gdk;
 extern crate gdk_sys;
 extern crate alsa;
 
-// use std::ops::Deref;
-
-// use std::boxed::Box;
-// use std::rc::Rc;
-// use std::sync::Arc;
-
 use gtk::prelude::*;
-
-
 use gdk_sys::GDK_KEY_Escape;
+use app_state::*;
+use std::cell::Cell;
+use std::boxed::Box;
+
 
 #[macro_use]
 mod errors;
 
 mod audio;
 mod gui;
-mod debug;
+mod gui_callbacks;
+mod app_state;
 
 
 fn main() {
     gtk::init().unwrap();
+
+    let ref apps = AppS {
+        status_icon: gtk::StatusIcon::new_from_icon_name("pnmixer"),
+        builder_popup: gtk::Builder::new_from_string(include_str!("../data/ui/popup-window-vertical.glade")),
+    };
+
+    let alsa_card = audio::get_default_alsa_card();
+    let mixer = audio::get_mixer(&alsa_card).unwrap();
+    let selem = audio::get_selem_by_name(
+        &mixer,
+        String::from("Master"),
+    ).unwrap();
+
+    let ref acard = AlsaCard {
+        card: Cell::new(alsa_card),
+        mixer: Cell::new(mixer),
+        selem: Cell::new(selem),
+    };
 
     flexi_logger::LogOptions::new()
        .log_to_file(false)
@@ -39,75 +54,8 @@ fn main() {
        .init(Some("info".to_string()))
        .unwrap_or_else(|e| panic!("Logger initialization failed with {}", e));
 
-    let tray_icon = gtk::StatusIcon::new_from_icon_name("pnmixer");
 
-    let glade_src = include_str!("../data/ui/popup-window-vertical.glade");
-    let builder_popup = gtk::Builder::new_from_string(glade_src);
-
-    {
-        let popup_window: gtk::Window =
-            builder_popup.get_object("popup_window").unwrap();
-        let vol_scale: gtk::Scale =
-            builder_popup.get_object("vol_scale").unwrap();
-
-        tray_icon.connect_activate(move |_| if popup_window.get_visible() {
-            popup_window.hide();
-        } else {
-            popup_window.show_now();
-            vol_scale.grab_focus();
-            gui::grab_devices(&popup_window);
-        });
-    }
-    {
-        let popup_window: gtk::Window =
-            builder_popup.get_object("popup_window").unwrap();
-        let vol_scale_adj: gtk::Adjustment =
-            builder_popup.get_object("vol_scale_adj").unwrap();
-        popup_window.connect_show(move |_| {
-            let alsa_card = audio::get_default_alsa_card();
-            let mixer = try_w!(audio::get_mixer(alsa_card));
-            let selem = try_w!(audio::get_selem_by_name(
-                &mixer,
-                String::from("Master"),
-            ));
-            let cur_vol = try_w!(audio::get_vol(selem));
-            gui::set_slider(&vol_scale_adj, cur_vol);
-        });
-    }
-
-    {
-        let popup_window: gtk::Window =
-            builder_popup.get_object("popup_window").unwrap();
-        popup_window.connect_event(move |w, e| {
-            match gdk::Event::get_event_type(e) {
-                gdk::EventType::GrabBroken => w.hide(),
-                gdk::EventType::KeyPress => {
-                    let key: gdk::EventKey = e.clone().downcast().unwrap();
-                    if key.get_keyval() == (GDK_KEY_Escape as u32) {
-                        w.hide();
-                    }
-                }
-                gdk::EventType::ButtonPress => {
-                    let device = try_wr!(
-                        gtk::get_current_event_device().ok_or(
-                            "No current event device!",
-                        ),
-                        Inhibit(false)
-                    );
-                    let (window, _, _) =
-                        gdk::DeviceExt::get_window_at_position(&device);
-                    if window.is_none() {
-                        w.hide();
-                    }
-                }
-                _ => (),
-            }
-
-            return Inhibit(false);
-        });
-    }
-
-    tray_icon.set_visible(true);
+    gui_callbacks::init(apps);
 
     gtk::main();
 }

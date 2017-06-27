@@ -15,7 +15,8 @@ pub trait CHErr {
 }
 
 impl<A, E: std::error::Error> CHErr for std::result::Result<A, E>
-        where Error: std::convert::From<E> {
+    where Error: std::convert::From<E>
+{
     type Item = A;
     fn cherr(self) -> Result<Self::Item> {
         return self.map_err(From::from);
@@ -30,6 +31,9 @@ macro_rules! try_w {
     };
     ($expr:expr, $fmt:expr, $($arg:tt)+) => {
         try_wr!($expr, (), $fmt, $(arg)+)
+    };
+    ($expr:expr, $fmt:expr) => {
+        try_wr!($expr, (), $fmt)
     }
 }
 
@@ -42,6 +46,14 @@ macro_rules! try_wr {
             return $ret;
         },
     });
+    ($expr:expr, $ret:expr, $fmt:expr) => (match $expr {
+        std::result::Result::Ok(val) => val,
+        std::result::Result::Err(err) => {
+            warn!("Original error: {:?}", err);
+            warn!($fmt);
+            return $ret;
+        },
+    });
     ($expr:expr, $ret:expr, $fmt:expr, $($arg:tt)+) => (match $expr {
         std::result::Result::Ok(val) => val,
         std::result::Result::Err(err) => {
@@ -50,4 +62,14 @@ macro_rules! try_wr {
             return $ret;
         },
     })
+}
+
+#[macro_export]
+macro_rules! try_r {
+    ($expr:expr, $ret:expr) => (match $expr {
+        std::result::Result::Ok(val) => val,
+        std::result::Result::Err(err) => {
+            return $ret;
+        },
+    });
 }
