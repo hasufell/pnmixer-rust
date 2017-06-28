@@ -63,6 +63,23 @@ fn init_popup_window(appstate: &AppS, rc_acard: Rc<RefCell<AlsaCard>>) {
         });
     }
 
+    /* vol_scale_adj.connect_value_changed */
+    {
+        let vol_scale_adj: Rc<gtk::Adjustment> =
+            Rc::new(
+                appstate.builder_popup.get_object("vol_scale_adj").unwrap(),
+            );
+
+        let card = rc_acard.clone();
+        let vol_scale = vol_scale_adj.clone();
+        vol_scale_adj.connect_value_changed(move |_| {
+            let acard = card.borrow();
+            let val = vol_scale.get_value();
+
+            try_w!(acard.set_vol(val));
+        });
+    }
+
     /* mute_check.connect_toggled */
     {
         let mute_check: gtk::CheckButton =

@@ -9,6 +9,7 @@ libc = "^0.2.23"
 gdk-sys = { git = "https://github.com/gtk-rs/sys" }
 gtk-sys = { git = "https://github.com/gtk-rs/sys" }
 glib = { git = "https://github.com/gtk-rs/glib.git" }
+glib-sys = { git = "https://github.com/gtk-rs/sys" }
 ffi = "^0.0.2"
 flexi_logger = "^0.5.1"
 log = "^0.3.8"

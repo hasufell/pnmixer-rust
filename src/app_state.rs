@@ -1,9 +1,13 @@
 use gtk;
 
+use alsa::poll::PollDescriptors;
 use alsa::card::Card;
 use alsa::mixer::{Mixer, SelemId, Selem};
 use audio;
 use errors::*;
+
+// TODO: fix import
+use libc::pollfd;
 
 pub struct AppS {
     /* we keep this to ensure the lifetime is across the whole application */
@@ -12,10 +16,13 @@ pub struct AppS {
     pub builder_popup: gtk::Builder,
 }
 
+// TODO: implement free/destructor
 pub struct AlsaCard {
-    card: Card,
-    mixer: Mixer,
-    selem_id: SelemId,
+    _cannot_construct: (),
+    pub card: Card,
+    pub mixer: Mixer,
+    pub selem_id: SelemId,
+    pub watch_ids: Vec<pollfd>,
 }
 
 impl AlsaCard {
@@ -35,11 +42,15 @@ impl AlsaCard {
             elem_name.unwrap_or(String::from("Master")),
         ).unwrap()
             .get_id();
+        let vec_pollfd = PollDescriptors::get(&mixer)?;
+        // let watch_ids =
 
         return Ok(AlsaCard {
+            _cannot_construct: (),
             card: card,
             mixer: mixer,
             selem_id: selem_id,
+            watch_ids: vec![],
         });
     }
 
@@ -53,6 +64,10 @@ impl AlsaCard {
         return audio::get_vol(&self.selem());
     }
 
+    pub fn set_vol(&self, new_vol: f64) -> Result<()> {
+        return audio::set_vol(&self.selem(), new_vol);
+    }
+
     pub fn has_mute(&self) -> bool {
         return audio::has_mute(&self.selem());
     }
@@ -64,4 +79,20 @@ impl AlsaCard {
     pub fn set_mute(&self, mute: bool) -> Result<()> {
         return audio::set_mute(&self.selem(), mute);
     }
+}
+
+pub enum AudioUser {
+    AudioUserUnknown,
+    AudioUserPopup,
+    AudioUserTrayIcon,
+    AudioUserHotkeys,
+}
+
+enum AudioSignal {
+    AudioNoCard,
+    AudioCardInitialized,
+    AudioCardCleanedUp,
+    AudioCardDisconnected,
+    AudioCardError,
+    AudioValuesChanged,
 }

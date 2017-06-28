@@ -10,6 +10,7 @@ extern crate gtk_sys;
 extern crate gdk;
 extern crate gdk_sys;
 extern crate alsa;
+extern crate libc;
 
 use gtk::prelude::*;
 use gdk_sys::GDK_KEY_Escape;
