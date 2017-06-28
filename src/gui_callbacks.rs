@@ -9,15 +9,16 @@ use gtk::prelude::*;
 use gdk_sys::GDK_KEY_Escape;
 
 use gui;
-use audio;
 use app_state::*;
 use errors::*;
+use std::cell::RefCell;
+use std::rc::Rc;
 
 
-pub fn init<'a>(appstate: &'a AppS) {
+pub fn init<'a>(appstate: &'a AppS, rc_acard: Rc<RefCell<AlsaCard>>) {
 
     init_tray_icon(&appstate);
-    init_popup_window(&appstate);
+    init_popup_window(&appstate, rc_acard);
 }
 
 
@@ -31,16 +32,16 @@ fn init_tray_icon(appstate: &AppS) {
         appstate.builder_popup.get_object("vol_scale").unwrap();
 
     tray_icon.connect_activate(move |_| if popup_window.get_visible() {
-                                   popup_window.hide();
-                               } else {
-                                   popup_window.show_now();
-                                   vol_scale.grab_focus();
-                                   try_w!(gui::grab_devices(&popup_window));
-                               });
+        popup_window.hide();
+    } else {
+        popup_window.show_now();
+        vol_scale.grab_focus();
+        try_w!(gui::grab_devices(&popup_window));
+    });
     tray_icon.set_visible(true);
 }
 
-fn init_popup_window(appstate: &AppS) {
+fn init_popup_window(appstate: &AppS, rc_acard: Rc<RefCell<AlsaCard>>) {
     /* popup_window.connect_show */
     {
         let popup_window: gtk::Window =
@@ -50,17 +51,14 @@ fn init_popup_window(appstate: &AppS) {
         let mute_check: gtk::CheckButton =
             appstate.builder_popup.get_object("mute_check").unwrap();
 
+        let card = rc_acard.clone();
         popup_window.connect_show(move |_| {
-            let alsa_card = audio::get_default_alsa_card();
-            let mixer = try_w!(audio::get_mixer(&alsa_card));
-            let selem = try_w!(audio::get_selem_by_name(
-                &mixer,
-                String::from("Master"),
-            ));
-            let cur_vol = try_w!(audio::get_vol(&selem));
+            let acard = card.borrow();
+
+            let cur_vol = try_w!(acard.vol());
             gui::set_slider(&vol_scale_adj, cur_vol);
 
-            let muted = audio::get_mute(&selem);
+            let muted = acard.get_mute();
             update_mute_check(&mute_check, muted);
         });
     }
@@ -70,16 +68,12 @@ fn init_popup_window(appstate: &AppS) {
         let mute_check: gtk::CheckButton =
             appstate.builder_popup.get_object("mute_check").unwrap();
 
+        let card = rc_acard.clone();
         mute_check.connect_toggled(move |_| {
-            let alsa_card = audio::get_default_alsa_card();
-            let mixer = try_w!(audio::get_mixer(&alsa_card));
-            let selem = try_w!(audio::get_selem_by_name(
-                &mixer,
-                String::from("Master"),
-            ));
+            let acard = card.borrow();
 
-            let muted = try_w!(audio::get_mute(&selem));
-            let _ = try_w!(audio::set_mute(&selem, !muted));
+            let muted = try_w!(acard.get_mute());
+            let _ = try_w!(acard.set_mute(!muted));
         });
     }
 
@@ -122,7 +116,7 @@ fn update_mute_check(check_button: &gtk::CheckButton, muted: Result<bool>) {
         Ok(val) => {
             check_button.set_active(val);
             check_button.set_tooltip_text("");
-        },
+        }
         Err(_) => {
             /* can't figure out whether channel is muted, grey out */
             check_button.set_active(true);
@@ -131,4 +125,3 @@ fn update_mute_check(check_button: &gtk::CheckButton, muted: Result<bool>) {
         }
     }
 }
-

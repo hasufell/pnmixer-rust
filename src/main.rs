@@ -14,7 +14,8 @@ extern crate alsa;
 use gtk::prelude::*;
 use gdk_sys::GDK_KEY_Escape;
 use app_state::*;
-use std::cell::Cell;
+use std::cell::RefCell;
+use std::rc::Rc;
 use std::boxed::Box;
 
 
@@ -27,26 +28,23 @@ mod gui_callbacks;
 mod app_state;
 
 
+
 fn main() {
     gtk::init().unwrap();
 
     let ref apps = AppS {
         status_icon: gtk::StatusIcon::new_from_icon_name("pnmixer"),
-        builder_popup: gtk::Builder::new_from_string(include_str!("../data/ui/popup-window-vertical.glade")),
+        builder_popup: gtk::Builder::new_from_string(
+            include_str!("../data/ui/popup-window-vertical.glade"),
+        ),
     };
 
-    let alsa_card = audio::get_default_alsa_card();
-    let mixer = audio::get_mixer(&alsa_card).unwrap();
-    let selem = audio::get_selem_by_name(
-        &mixer,
-        String::from("Master"),
-    ).unwrap();
-
-    let ref acard = AlsaCard {
-        card: Cell::new(alsa_card),
-        mixer: Cell::new(mixer),
-        selem: Cell::new(selem),
-    };
+    let acard = Rc::new(RefCell::new(
+        AlsaCard::new(
+            Some(String::from("Intel 82801AA-ICH")),
+            Some(String::from("Master")),
+        ).unwrap(),
+    ));
 
     flexi_logger::LogOptions::new()
        .log_to_file(false)
@@ -55,7 +53,7 @@ fn main() {
        .unwrap_or_else(|e| panic!("Logger initialization failed with {}", e));
 
 
-    gui_callbacks::init(apps);
+    gui_callbacks::init(apps, acard);
 
     gtk::main();
 }

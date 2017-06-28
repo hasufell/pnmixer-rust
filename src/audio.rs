@@ -23,6 +23,17 @@ pub fn get_alsa_cards() -> alsa::card::Iter {
     return alsa::card::Iter::new();
 }
 
+pub fn get_alsa_card_by_name(name: String) -> Result<Card> {
+    for r_card in get_alsa_cards() {
+        let card = r_card?;
+        let card_name = card.get_name()?;
+        if name == card_name {
+            return Ok(card);
+        }
+    }
+    bail!("Not found a matching card named {}", name);
+}
+
 pub fn get_mixer(card: &Card) -> Result<Mixer> {
     return Mixer::new(&format!("hw:{}", card.get_index()), false).cherr();
 }
@@ -40,9 +51,7 @@ pub fn get_selems(mixer: &Mixer) -> Map<alsa::mixer::Iter, fn(Elem) -> Selem> {
 
 pub fn get_selem_by_name(mixer: &Mixer, name: String) -> Result<Selem> {
     for selem in get_selems(mixer) {
-        let n = selem.get_id()
-            .get_name()
-            .map(|y| String::from(y))?;
+        let n = selem.get_id().get_name().map(|y| String::from(y))?;
 
         if n == name {
             return Ok(selem);
@@ -74,4 +83,3 @@ pub fn set_mute(selem: &Selem, mute: bool) -> Result<()> {
     let _ = selem.set_playback_switch_all(!mute as i32)?;
     return Ok(());
 }
-
