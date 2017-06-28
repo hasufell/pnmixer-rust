@@ -5,6 +5,9 @@ use alsa::card::Card;
 use alsa::mixer::{Mixer, SelemId, Selem};
 use audio;
 use errors::*;
+use std::rc::Rc;
+use std::cell::RefCell;
+
 
 // TODO: fix import
 use libc::pollfd;
@@ -22,7 +25,7 @@ pub struct AlsaCard {
     pub card: Card,
     pub mixer: Mixer,
     pub selem_id: SelemId,
-    pub watch_ids: Vec<pollfd>,
+    pub watch_ids: Vec<u32>,
 }
 
 impl AlsaCard {
@@ -37,20 +40,22 @@ impl AlsaCard {
             }
         };
         let mixer = audio::get_mixer(&card)?;
+        let rc_mixer = RefCell::new(audio::get_mixer(&card)?);
         let selem_id = audio::get_selem_by_name(
             &mixer,
             elem_name.unwrap_or(String::from("Master")),
         ).unwrap()
             .get_id();
         let vec_pollfd = PollDescriptors::get(&mixer)?;
-        // let watch_ids =
+        // let watch_ids = vec![];
+        let watch_ids = audio::watch_poll_descriptors(vec_pollfd, rc_mixer);
 
         return Ok(AlsaCard {
             _cannot_construct: (),
             card: card,
             mixer: mixer,
             selem_id: selem_id,
-            watch_ids: vec![],
+            watch_ids: watch_ids,
         });
     }
 

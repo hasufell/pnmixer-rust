@@ -1,4 +1,5 @@
 extern crate alsa;
+extern crate alsa_sys;
 extern crate glib_sys;
 
 use self::alsa::card::Card;
@@ -8,11 +9,15 @@ use std::iter::Map;
 use libc::c_int;
 use libc::c_uint;
 use libc::c_void;
+use libc::size_t;
 use errors::*;
 use std::convert::From;
 use libc::pollfd;
 use app_state;
 use std::cell::RefCell;
+use std::mem;
+use std::ptr;
+use std::u8;
 
 
 
@@ -121,24 +126,27 @@ pub fn set_mute(selem: &Selem, mute: bool) -> Result<()> {
 
 pub fn watch_poll_descriptors(
     polls: Vec<pollfd>,
-    acard: RefCell<app_state::AlsaCard>,
+    mixer: RefCell<Mixer>,
 ) -> Vec<c_uint> {
     let mut watch_ids: Vec<c_uint> = vec![];
+    let mixer = unsafe {
+        mem::transmute::<Mixer, *mut alsa_sys::snd_mixer_t>(mixer.into_inner())
+    };
     for poll in polls {
         unsafe {
-            let gioc = glib_sys::g_io_channel_unix_new(poll.fd);
+            let gioc: *mut glib_sys::GIOChannel = glib_sys::g_io_channel_unix_new(poll.fd);
             watch_ids.push(glib_sys::g_io_add_watch(
                 gioc,
-                glib_sys::GIOCondition::from_bits_truncate(
+                glib_sys::GIOCondition::from_bits(
                     glib_sys::G_IO_IN.bits() | glib_sys::G_IO_ERR.bits(),
-                ),
+                ).unwrap(),
                 Some(watch_cb),
-                acard.as_ptr() as glib_sys::gpointer,
+                mixer as glib_sys::gpointer,
             ));
         }
     }
 
-    return vec![];
+    return watch_ids;
 }
 
 extern "C" fn watch_cb(
@@ -146,5 +154,42 @@ extern "C" fn watch_cb(
     cond: glib_sys::GIOCondition,
     data: glib_sys::gpointer,
 ) -> glib_sys::gboolean {
+
+    // println!("Blah");
+    // println!("GIOC: {:?}", chan);
+
+    let mixer = data as *mut alsa_sys::snd_mixer_t;
+
+    unsafe {
+        alsa_sys::snd_mixer_handle_events(mixer);
+    }
+
+    if cond == glib_sys::G_IO_ERR {
+        return false as glib_sys::gboolean;
+    }
+
+    // println!("GIOC (later): {:?}", chan);
+    let mut sread: usize = 1;
+    let mut buf: u8 = 0;
+
+    while sread > 0 {
+        let stat = unsafe { glib_sys::g_io_channel_read_chars(chan,
+                                           &mut buf as *mut u8,
+                                           250,
+                                           &mut sread as *mut size_t,
+                                           ptr::null_mut())
+        };
+        match stat {
+            glib_sys::G_IO_STATUS_AGAIN => continue,
+            glib_sys::G_IO_STATUS_NORMAL => (),
+            glib_sys::G_IO_STATUS_ERROR => (),
+            glib_sys::G_IO_STATUS_EOF => (),
+            _ => (),
+        }
+        return true as glib_sys::gboolean;
+    };
+
     return true as glib_sys::gboolean;
 }
+
+

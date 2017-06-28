@@ -13,6 +13,7 @@ use app_state::*;
 use errors::*;
 use std::cell::RefCell;
 use std::rc::Rc;
+use audio;
 
 
 pub fn init<'a>(appstate: &'a AppS, rc_acard: Rc<RefCell<AlsaCard>>) {
@@ -55,7 +56,8 @@ fn init_popup_window(appstate: &AppS, rc_acard: Rc<RefCell<AlsaCard>>) {
         popup_window.connect_show(move |_| {
             let acard = card.borrow();
 
-            let cur_vol = try_w!(acard.vol());
+            let cur_vol = try_w!(audio::get_vol(&acard.selem()));
+            println!("Cur vol: {}", cur_vol);
             gui::set_slider(&vol_scale_adj, cur_vol);
 
             let muted = acard.get_mute();
