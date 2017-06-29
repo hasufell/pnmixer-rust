@@ -3,12 +3,14 @@ use alsa::mixer::{Mixer, Selem, SelemId};
 use alsa::poll::PollDescriptors;
 use alsa_sys;
 use errors::*;
+use glib;
 use glib_sys;
 use libc::c_uint;
 use libc::pollfd;
 use libc::size_t;
 use myalsa::*;
 use std::mem;
+use std::cell::RefCell;
 use std::ptr;
 use std::u8;
 
@@ -21,15 +23,15 @@ pub struct AlsaCard {
     pub mixer: Mixer,
     pub selem_id: SelemId,
     pub watch_ids: Vec<u32>,
+    last_action_timestamp: RefCell<i64>,
 }
 
 
 /* TODO: AlsaCard cleanup */
 impl AlsaCard {
-    pub fn new(
-        card_name: Option<String>,
-        elem_name: Option<String>,
-    ) -> Result<AlsaCard> {
+    pub fn new(card_name: Option<String>,
+               elem_name: Option<String>)
+               -> Result<AlsaCard> {
         let card = {
             match card_name {
                 Some(name) => get_alsa_card_by_name(name)?,
@@ -37,31 +39,33 @@ impl AlsaCard {
             }
         };
         let mixer = get_mixer(&card)?;
-        let selem_id = get_selem_by_name(
-            &mixer,
-            elem_name.unwrap_or(String::from("Master")),
-        ).unwrap()
-            .get_id();
+        let selem_id =
+            get_selem_by_name(&mixer,
+                              elem_name.unwrap_or(String::from("Master")))
+                    .unwrap()
+                    .get_id();
         let vec_pollfd = PollDescriptors::get(&mixer)?;
 
         /* TODO: callback is registered here, which must be unregistered
-         * when the mixer is destroyed!! */
+         * when the mixer is destroyed!!
+         * poll descriptors must be unwatched too */
         let watch_ids = watch_poll_descriptors(vec_pollfd, &mixer);
 
         return Ok(AlsaCard {
-            _cannot_construct: (),
-            card: card,
-            mixer: mixer,
-            selem_id: selem_id,
-            watch_ids: watch_ids,
-        });
+                      _cannot_construct: (),
+                      card: card,
+                      mixer: mixer,
+                      selem_id: selem_id,
+                      watch_ids: watch_ids,
+                      last_action_timestamp: RefCell::new(0),
+                  });
     }
 
 
     pub fn selem(&self) -> Selem {
         return get_selems(&self.mixer)
-            .nth(self.selem_id.get_index() as usize)
-            .unwrap();
+                   .nth(self.selem_id.get_index() as usize)
+                   .unwrap();
     }
 
 
@@ -70,7 +74,10 @@ impl AlsaCard {
     }
 
 
-    pub fn set_vol(&self, new_vol: f64) -> Result<()> {
+    pub fn set_vol(&self, new_vol: f64, user: AudioUser) -> Result<()> {
+        let mut rc = self.last_action_timestamp.borrow_mut();
+        *rc = glib::get_real_time();
+        // TODO invoke handlers, make use of user
         return set_vol(&self.selem(), new_vol);
     }
 
@@ -85,8 +92,30 @@ impl AlsaCard {
     }
 
 
-    pub fn set_mute(&self, mute: bool) -> Result<()> {
+    pub fn set_mute(&self, mute: bool, user: AudioUser) -> Result<()> {
+        let mut rc = self.last_action_timestamp.borrow_mut();
+        *rc = glib::get_real_time();
+        // TODO invoke handlers, make use of user
         return set_mute(&self.selem(), mute);
+    }
+
+
+    fn on_alsa_event(&self, alsa_event: AlsaEvent) {
+        let last: i64 = *self.last_action_timestamp.borrow();
+        let now: i64 = glib::get_monotonic_time();
+        let delay = now - last;
+        if delay < 1000000 {
+            return;
+        }
+
+        /* external change */
+        match alsa_event {
+            // TODO: invoke handlers with AudioUserUnknown
+            AlsaEvent::AlsaCardError => println!("AlsaCardError"),
+            AlsaEvent::AlsaCardDiconnected => println!("AlsaCardDiconnected"),
+            AlsaEvent::AlsaCardValuesChanged => println!("AlsaCardValuesChanged"),
+        }
+
     }
 }
 
@@ -108,15 +137,17 @@ enum AudioSignal {
     AudioValuesChanged,
 }
 
+enum AlsaEvent {
+    AlsaCardError,
+    AlsaCardDiconnected,
+    AlsaCardValuesChanged,
+}
 
-fn watch_poll_descriptors(
-    polls: Vec<pollfd>,
-    mixer: &Mixer,
-) -> Vec<c_uint> {
+
+fn watch_poll_descriptors(polls: Vec<pollfd>, mixer: &Mixer) -> Vec<c_uint> {
     let mut watch_ids: Vec<c_uint> = vec![];
-    let mixer_ptr = unsafe {
-        mem::transmute::<&Mixer, &*mut alsa_sys::snd_mixer_t>(mixer)
-    };
+    let mixer_ptr =
+        unsafe { mem::transmute::<&Mixer, &*mut alsa_sys::snd_mixer_t>(mixer) };
     for poll in polls {
         unsafe {
             let gioc: *mut glib_sys::GIOChannel =
@@ -136,11 +167,10 @@ fn watch_poll_descriptors(
 }
 
 
-extern fn watch_cb(
-    chan: *mut glib_sys::GIOChannel,
-    cond: glib_sys::GIOCondition,
-    data: glib_sys::gpointer,
-) -> glib_sys::gboolean {
+extern "C" fn watch_cb(chan: *mut glib_sys::GIOChannel,
+                       cond: glib_sys::GIOCondition,
+                       data: glib_sys::gpointer)
+                       -> glib_sys::gboolean {
 
     let mixer = data as *mut alsa_sys::snd_mixer_t;
 
@@ -156,21 +186,20 @@ extern fn watch_cb(
     let mut buf: Vec<u8> = vec![0; 256];
 
     while sread > 0 {
-        let stat: glib_sys::GIOStatus = unsafe {
-            glib_sys::g_io_channel_read_chars(
-                chan,
-                buf.as_mut_ptr() as *mut u8,
-                256,
-                &mut sread as *mut size_t,
-                ptr::null_mut(),
-            )
-        };
+        let stat: glib_sys::GIOStatus =
+            unsafe {
+                glib_sys::g_io_channel_read_chars(chan,
+                                                  buf.as_mut_ptr() as *mut u8,
+                                                  256,
+                                                  &mut sread as *mut size_t,
+                                                  ptr::null_mut())
+            };
 
         match stat {
             glib_sys::G_IO_STATUS_AGAIN => {
                 println!("G_IO_STATUS_AGAIN");
-                continue
-            },
+                continue;
+            }
             glib_sys::G_IO_STATUS_NORMAL => println!("G_IO_STATUS_NORMAL"),
             glib_sys::G_IO_STATUS_ERROR => println!("G_IO_STATUS_ERROR"),
             glib_sys::G_IO_STATUS_EOF => println!("G_IO_STATUS_EOF"),
@@ -182,4 +211,3 @@ extern fn watch_cb(
 
     return true as glib_sys::gboolean;
 }
-

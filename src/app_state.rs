@@ -9,4 +9,3 @@ pub struct AppS {
 
     pub builder_popup: gtk::Builder,
 }
-

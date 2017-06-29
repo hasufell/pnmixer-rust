@@ -1,5 +1,6 @@
 use app_state::*;
 use audio::AlsaCard;
+use audio::AudioUser::*;
 use errors::*;
 use gdk::DeviceExt;
 use gdk::{GrabOwnership, GrabStatus, BUTTON_PRESS_MASK, KEY_PRESS_MASK};
@@ -43,18 +44,18 @@ pub fn init_popup_window(appstate: &AppS, rc_acard: Rc<RefCell<AlsaCard>>) {
     /* vol_scale_adj.connect_value_changed */
     {
         let vol_scale_adj: Rc<gtk::Adjustment> =
-            Rc::new(
-                appstate.builder_popup.get_object("vol_scale_adj").unwrap(),
-            );
+            Rc::new(appstate.builder_popup
+                        .get_object("vol_scale_adj")
+                        .unwrap());
 
         let card = rc_acard.clone();
         let vol_scale = vol_scale_adj.clone();
         vol_scale_adj.connect_value_changed(move |_| {
-            let acard = card.borrow();
-            let val = vol_scale.get_value();
+                                                let acard = card.borrow();
+                                                let val = vol_scale.get_value();
 
-            try_w!(acard.set_vol(val));
-        });
+                                                try_w!(acard.set_vol(val, AudioUserPopup));
+                                            });
     }
 
     /* mute_check.connect_toggled */
@@ -64,11 +65,11 @@ pub fn init_popup_window(appstate: &AppS, rc_acard: Rc<RefCell<AlsaCard>>) {
 
         let card = rc_acard.clone();
         mute_check.connect_toggled(move |_| {
-            let acard = card.borrow();
+                                       let acard = card.borrow();
 
-            let muted = try_w!(acard.get_mute());
-            let _ = try_w!(acard.set_mute(!muted));
-        });
+                                       let muted = try_w!(acard.get_mute());
+                                       let _ = try_w!(acard.set_mute(!muted, AudioUserPopup));
+                                   });
     }
 
     /* popup_window.connect_event */
@@ -133,42 +134,33 @@ fn grab_devices(window: &gtk::Window) -> Result<()> {
     let gdk_window = window.get_window().ok_or("No window?!")?;
 
     /* Grab the mouse */
-    let m_grab_status = device.grab(
-        &gdk_window,
-        GrabOwnership::None,
-        true,
-        BUTTON_PRESS_MASK,
-        None,
-        GDK_CURRENT_TIME as u32,
-    );
+    let m_grab_status =
+        device.grab(&gdk_window,
+                    GrabOwnership::None,
+                    true,
+                    BUTTON_PRESS_MASK,
+                    None,
+                    GDK_CURRENT_TIME as u32);
 
     if m_grab_status != GrabStatus::Success {
-        warn!(
-            "Could not grab {}",
-            device.get_name().unwrap_or(String::from("UNKNOWN DEVICE"))
-        );
+        warn!("Could not grab {}",
+              device.get_name().unwrap_or(String::from("UNKNOWN DEVICE")));
     }
 
     /* Grab the keyboard */
-    let k_dev = device.get_associated_device().ok_or(
-        "Couldn't get associated device",
-    )?;
+    let k_dev = device.get_associated_device()
+        .ok_or("Couldn't get associated device")?;
 
-    let k_grab_status = k_dev.grab(
-        &gdk_window,
-        GrabOwnership::None,
-        true,
-        KEY_PRESS_MASK,
-        None,
-        GDK_CURRENT_TIME as u32,
-    );
+    let k_grab_status = k_dev.grab(&gdk_window,
+                                   GrabOwnership::None,
+                                   true,
+                                   KEY_PRESS_MASK,
+                                   None,
+                                   GDK_CURRENT_TIME as u32);
     if k_grab_status != GrabStatus::Success {
-        warn!(
-            "Could not grab {}",
-            k_dev.get_name().unwrap_or(String::from("UNKNOWN DEVICE"))
-        );
+        warn!("Could not grab {}",
+              k_dev.get_name().unwrap_or(String::from("UNKNOWN DEVICE")));
     }
 
     return Ok(());
 }
-

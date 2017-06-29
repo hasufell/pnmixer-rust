@@ -12,10 +12,9 @@ pub fn init_tray_icon(appstate: &AppS) {
         appstate.builder_popup.get_object("popup_window").unwrap();
 
     tray_icon.connect_activate(move |_| if popup_window.get_visible() {
-        popup_window.hide();
-    } else {
-        popup_window.show_now();
-    });
+                                   popup_window.hide();
+                               } else {
+                                   popup_window.show_now();
+                               });
     tray_icon.set_visible(true);
 }
-

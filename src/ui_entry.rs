@@ -12,4 +12,3 @@ pub fn init<'a>(appstate: &'a AppS, rc_acard: Rc<RefCell<AlsaCard>>) {
     init_tray_icon(&appstate);
     init_popup_window(&appstate, rc_acard);
 }
-

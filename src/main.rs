@@ -13,6 +13,7 @@ extern crate alsa_sys;
 extern crate ffi;
 extern crate gdk;
 extern crate gdk_sys;
+extern crate glib;
 extern crate glib_sys;
 extern crate gtk;
 extern crate gtk_sys;
@@ -41,14 +42,12 @@ fn main() {
 
     let ref apps = AppS {
         status_icon: gtk::StatusIcon::new_from_icon_name("pnmixer"),
-        builder_popup: gtk::Builder::new_from_string(
-            include_str!("../data/ui/popup-window-vertical.glade"),
-        ),
+        builder_popup: gtk::Builder::new_from_string(include_str!("../data/ui/popup-window-vertical.glade")),
     };
 
-    let acard = Rc::new(RefCell::new(
-        AlsaCard::new(None, Some(String::from("Master"))).unwrap(),
-    ));
+    let acard = Rc::new(RefCell::new(AlsaCard::new(None,
+                                                   Some(String::from("Master")))
+                                             .unwrap()));
 
     flexi_logger::LogOptions::new()
        .log_to_file(false)
