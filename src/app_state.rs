@@ -40,15 +40,16 @@ impl AlsaCard {
             }
         };
         let mixer = audio::get_mixer(&card)?;
-        let rc_mixer = RefCell::new(audio::get_mixer(&card)?);
         let selem_id = audio::get_selem_by_name(
             &mixer,
             elem_name.unwrap_or(String::from("Master")),
         ).unwrap()
             .get_id();
         let vec_pollfd = PollDescriptors::get(&mixer)?;
-        // let watch_ids = vec![];
-        let watch_ids = audio::watch_poll_descriptors(vec_pollfd, rc_mixer);
+
+        /* TODO: callback is registered here, which must be unregistered
+         * when the mixer is destroyed!! */
+        let watch_ids = audio::watch_poll_descriptors(vec_pollfd, &mixer);
 
         return Ok(AlsaCard {
             _cannot_construct: (),

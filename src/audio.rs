@@ -15,6 +15,7 @@ use std::convert::From;
 use libc::pollfd;
 use app_state;
 use std::cell::RefCell;
+use std::rc::Rc;
 use std::mem;
 use std::ptr;
 use std::u8;
@@ -126,12 +127,11 @@ pub fn set_mute(selem: &Selem, mute: bool) -> Result<()> {
 
 pub fn watch_poll_descriptors(
     polls: Vec<pollfd>,
-    mixer: RefCell<Mixer>,
+    mixer: &Mixer,
 ) -> Vec<c_uint> {
     let mut watch_ids: Vec<c_uint> = vec![];
-    let mixer = mixer.into_inner();
     let mixer_ptr = unsafe {
-        mem::transmute::<Mixer, *mut alsa_sys::snd_mixer_t>(mixer)
+        mem::transmute::<&Mixer, &*mut alsa_sys::snd_mixer_t>(mixer)
     };
     for poll in polls {
         unsafe {
@@ -143,7 +143,7 @@ pub fn watch_poll_descriptors(
                     glib_sys::G_IO_IN.bits() | glib_sys::G_IO_ERR.bits(),
                 ).unwrap(),
                 Some(watch_cb),
-                mixer_ptr as glib_sys::gpointer,
+                *mixer_ptr as glib_sys::gpointer,
             ));
         }
     }
@@ -168,20 +168,24 @@ extern fn watch_cb(
     }
 
     let mut sread: size_t = 1;
-    let mut buf: u8 = 0;
+    let mut buf: Vec<u8> = vec![0; 256];
 
     while sread > 0 {
         let stat: glib_sys::GIOStatus = unsafe {
             glib_sys::g_io_channel_read_chars(
                 chan,
-                &mut buf as *mut u8,
+                buf.as_mut_ptr() as *mut u8,
                 256,
                 &mut sread as *mut size_t,
                 ptr::null_mut(),
             )
         };
+
         match stat {
-            glib_sys::G_IO_STATUS_AGAIN => continue,
+            glib_sys::G_IO_STATUS_AGAIN => {
+                println!("G_IO_STATUS_AGAIN");
+                continue
+            },
             glib_sys::G_IO_STATUS_NORMAL => println!("G_IO_STATUS_NORMAL"),
             glib_sys::G_IO_STATUS_ERROR => println!("G_IO_STATUS_ERROR"),
             glib_sys::G_IO_STATUS_EOF => println!("G_IO_STATUS_EOF"),
