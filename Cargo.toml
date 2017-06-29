@@ -23,3 +23,15 @@ features = [ "v3_10", "v3_12", "v3_22" ]
 [dependencies.gdk]
 git = "https://github.com/gtk-rs/gdk.git"
 features = [ "v3_10", "v3_12", "v3_22" ]
+
+[profile.dev]
+opt-level = 2      # controls the `--opt-level` the compiler builds with
+debug = true       # controls whether the compiler passes `-C debuginfo`
+                   # a value of `true` is equivalent to `2`
+rpath = false      # controls whether the compiler passes `-C rpath`
+lto = false        # controls `-C lto` for binaries and staticlibs
+debug-assertions = true # controls whether debug assertions are enabled
+codegen-units = 1  # controls whether the compiler passes `-C codegen-units`
+                   # `codegen-units` is ignored when `lto = true`
+panic = 'unwind'   # panic strategy (`-C panic=...`), can also be 'abort'
+

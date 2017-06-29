@@ -178,6 +178,8 @@ extern fn watch_cb(
         return true as glib_sys::gboolean;
     }
 
+    // TODO: handle alsa events, pass to 'on_alsa_event'
+
     return true as glib_sys::gboolean;
 }
 

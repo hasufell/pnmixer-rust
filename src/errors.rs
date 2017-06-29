@@ -2,6 +2,8 @@ use alsa;
 use std::convert::From;
 use std;
 
+
+
 error_chain! {
     foreign_links {
         Alsa(alsa::Error);
@@ -9,10 +11,12 @@ error_chain! {
 
 }
 
+
 pub trait CHErr {
     type Item;
     fn cherr(self) -> Result<Self::Item>;
 }
+
 
 impl<A, E: std::error::Error> CHErr for std::result::Result<A, E>
     where Error: std::convert::From<E>
@@ -36,6 +40,7 @@ macro_rules! try_w {
         try_wr!($expr, (), $fmt)
     }
 }
+
 
 #[macro_export]
 macro_rules! try_wr {
@@ -64,6 +69,7 @@ macro_rules! try_wr {
     })
 }
 
+
 #[macro_export]
 macro_rules! try_r {
     ($expr:expr, $ret:expr) => (match $expr {
@@ -73,3 +79,4 @@ macro_rules! try_r {
         },
     });
 }
+
