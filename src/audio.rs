@@ -129,19 +129,21 @@ pub fn watch_poll_descriptors(
     mixer: RefCell<Mixer>,
 ) -> Vec<c_uint> {
     let mut watch_ids: Vec<c_uint> = vec![];
-    let mixer = unsafe {
-        mem::transmute::<Mixer, *mut alsa_sys::snd_mixer_t>(mixer.into_inner())
+    let mixer = mixer.into_inner();
+    let mixer_ptr = unsafe {
+        mem::transmute::<Mixer, *mut alsa_sys::snd_mixer_t>(mixer)
     };
     for poll in polls {
         unsafe {
-            let gioc: *mut glib_sys::GIOChannel = glib_sys::g_io_channel_unix_new(poll.fd);
+            let gioc: *mut glib_sys::GIOChannel =
+                glib_sys::g_io_channel_unix_new(poll.fd);
             watch_ids.push(glib_sys::g_io_add_watch(
                 gioc,
                 glib_sys::GIOCondition::from_bits(
                     glib_sys::G_IO_IN.bits() | glib_sys::G_IO_ERR.bits(),
                 ).unwrap(),
                 Some(watch_cb),
-                mixer as glib_sys::gpointer,
+                mixer_ptr as glib_sys::gpointer,
             ));
         }
     }
@@ -149,14 +151,11 @@ pub fn watch_poll_descriptors(
     return watch_ids;
 }
 
-extern "C" fn watch_cb(
+extern fn watch_cb(
     chan: *mut glib_sys::GIOChannel,
     cond: glib_sys::GIOCondition,
     data: glib_sys::gpointer,
 ) -> glib_sys::gboolean {
-
-    // println!("Blah");
-    // println!("GIOC: {:?}", chan);
 
     let mixer = data as *mut alsa_sys::snd_mixer_t;
 
@@ -168,28 +167,28 @@ extern "C" fn watch_cb(
         return false as glib_sys::gboolean;
     }
 
-    // println!("GIOC (later): {:?}", chan);
-    let mut sread: usize = 1;
+    let mut sread: size_t = 1;
     let mut buf: u8 = 0;
 
     while sread > 0 {
-        let stat = unsafe { glib_sys::g_io_channel_read_chars(chan,
-                                           &mut buf as *mut u8,
-                                           250,
-                                           &mut sread as *mut size_t,
-                                           ptr::null_mut())
+        let stat: glib_sys::GIOStatus = unsafe {
+            glib_sys::g_io_channel_read_chars(
+                chan,
+                &mut buf as *mut u8,
+                256,
+                &mut sread as *mut size_t,
+                ptr::null_mut(),
+            )
         };
         match stat {
             glib_sys::G_IO_STATUS_AGAIN => continue,
-            glib_sys::G_IO_STATUS_NORMAL => (),
-            glib_sys::G_IO_STATUS_ERROR => (),
-            glib_sys::G_IO_STATUS_EOF => (),
-            _ => (),
+            glib_sys::G_IO_STATUS_NORMAL => println!("G_IO_STATUS_NORMAL"),
+            glib_sys::G_IO_STATUS_ERROR => println!("G_IO_STATUS_ERROR"),
+            glib_sys::G_IO_STATUS_EOF => println!("G_IO_STATUS_EOF"),
         }
         return true as glib_sys::gboolean;
-    };
+    }
 
     return true as glib_sys::gboolean;
 }
-
 

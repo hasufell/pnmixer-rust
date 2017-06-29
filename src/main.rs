@@ -1,3 +1,5 @@
+#![feature(alloc_system)]
+extern crate alloc_system;
 
 extern crate flexi_logger;
 #[macro_use]
@@ -34,11 +36,6 @@ mod app_state;
 fn main() {
     gtk::init().unwrap();
 
-
-    let x = 4 / 0;
-
-    println!("Zero: {}", x);
-
     let ref apps = AppS {
         status_icon: gtk::StatusIcon::new_from_icon_name("pnmixer"),
         builder_popup: gtk::Builder::new_from_string(
@@ -47,10 +44,7 @@ fn main() {
     };
 
     let acard = Rc::new(RefCell::new(
-        AlsaCard::new(
-            None,
-            Some(String::from("Master")),
-        ).unwrap(),
+        AlsaCard::new(None, Some(String::from("Master"))).unwrap(),
     ));
 
     flexi_logger::LogOptions::new()
