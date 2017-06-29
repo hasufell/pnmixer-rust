@@ -1,42 +1,18 @@
 use app_state::*;
 use audio::AlsaCard;
 use errors::*;
+use gdk::DeviceExt;
+use gdk::{GrabOwnership, GrabStatus, BUTTON_PRESS_MASK, KEY_PRESS_MASK};
 use gdk;
-use gdk_sys::GDK_KEY_Escape;
+use gdk_sys::{GDK_KEY_Escape, GDK_CURRENT_TIME};
 use gtk::prelude::*;
 use gtk;
-use gui;
 use std::cell::RefCell;
 use std::rc::Rc;
 
 
-pub fn init<'a>(appstate: &'a AppS, rc_acard: Rc<RefCell<AlsaCard>>) {
 
-    init_tray_icon(&appstate);
-    init_popup_window(&appstate, rc_acard);
-}
-
-
-fn init_tray_icon(appstate: &AppS) {
-
-    let ref tray_icon = appstate.status_icon;
-
-    let popup_window: gtk::Window =
-        appstate.builder_popup.get_object("popup_window").unwrap();
-    let vol_scale: gtk::Scale =
-        appstate.builder_popup.get_object("vol_scale").unwrap();
-
-    tray_icon.connect_activate(move |_| if popup_window.get_visible() {
-        popup_window.hide();
-    } else {
-        popup_window.show_now();
-        vol_scale.grab_focus();
-        try_w!(gui::grab_devices(&popup_window));
-    });
-    tray_icon.set_visible(true);
-}
-
-fn init_popup_window(appstate: &AppS, rc_acard: Rc<RefCell<AlsaCard>>) {
+pub fn init_popup_window(appstate: &AppS, rc_acard: Rc<RefCell<AlsaCard>>) {
     /* popup_window.connect_show */
     {
         let popup_window: gtk::Window =
@@ -45,17 +21,22 @@ fn init_popup_window(appstate: &AppS, rc_acard: Rc<RefCell<AlsaCard>>) {
             appstate.builder_popup.get_object("vol_scale_adj").unwrap();
         let mute_check: gtk::CheckButton =
             appstate.builder_popup.get_object("mute_check").unwrap();
+        let vol_scale: gtk::Scale =
+            appstate.builder_popup.get_object("vol_scale").unwrap();
 
         let card = rc_acard.clone();
-        popup_window.connect_show(move |_| {
+        popup_window.connect_show(move |w| {
             let acard = card.borrow();
 
             let cur_vol = try_w!(acard.vol());
             println!("Cur vol: {}", cur_vol);
-            gui::set_slider(&vol_scale_adj, cur_vol);
+            set_slider(&vol_scale_adj, cur_vol);
 
             let muted = acard.get_mute();
             update_mute_check(&mute_check, muted);
+
+            vol_scale.grab_focus();
+            try_w!(grab_devices(w));
         });
     }
 
@@ -124,6 +105,7 @@ fn init_popup_window(appstate: &AppS, rc_acard: Rc<RefCell<AlsaCard>>) {
     }
 }
 
+
 fn update_mute_check(check_button: &gtk::CheckButton, muted: Result<bool>) {
     match muted {
         Ok(val) => {
@@ -138,3 +120,55 @@ fn update_mute_check(check_button: &gtk::CheckButton, muted: Result<bool>) {
         }
     }
 }
+
+
+fn set_slider(vol_scale_adj: &gtk::Adjustment, scale: f64) {
+    vol_scale_adj.set_value(scale);
+}
+
+
+fn grab_devices(window: &gtk::Window) -> Result<()> {
+    let device = gtk::get_current_event_device().ok_or("No current device")?;
+
+    let gdk_window = window.get_window().ok_or("No window?!")?;
+
+    /* Grab the mouse */
+    let m_grab_status = device.grab(
+        &gdk_window,
+        GrabOwnership::None,
+        true,
+        BUTTON_PRESS_MASK,
+        None,
+        GDK_CURRENT_TIME as u32,
+    );
+
+    if m_grab_status != GrabStatus::Success {
+        warn!(
+            "Could not grab {}",
+            device.get_name().unwrap_or(String::from("UNKNOWN DEVICE"))
+        );
+    }
+
+    /* Grab the keyboard */
+    let k_dev = device.get_associated_device().ok_or(
+        "Couldn't get associated device",
+    )?;
+
+    let k_grab_status = k_dev.grab(
+        &gdk_window,
+        GrabOwnership::None,
+        true,
+        KEY_PRESS_MASK,
+        None,
+        GDK_CURRENT_TIME as u32,
+    );
+    if k_grab_status != GrabStatus::Success {
+        warn!(
+            "Could not grab {}",
+            k_dev.get_name().unwrap_or(String::from("UNKNOWN DEVICE"))
+        );
+    }
+
+    return Ok(());
+}
+

@@ -13,13 +13,16 @@ pub fn get_default_alsa_card() -> Card {
     return get_alsa_card_by_id(0);
 }
 
+
 pub fn get_alsa_card_by_id(index: c_int) -> Card {
     return Card::new(index);
 }
 
+
 pub fn get_alsa_cards() -> alsa::card::Iter {
     return alsa::card::Iter::new();
 }
+
 
 pub fn get_alsa_card_by_name(name: String) -> Result<Card> {
     for r_card in get_alsa_cards() {
@@ -32,9 +35,11 @@ pub fn get_alsa_card_by_name(name: String) -> Result<Card> {
     bail!("Not found a matching card named {}", name);
 }
 
+
 pub fn get_mixer(card: &Card) -> Result<Mixer> {
     return Mixer::new(&format!("hw:{}", card.get_index()), false).cherr();
 }
+
 
 pub fn get_selem(elem: Elem) -> Selem {
     /* in the ALSA API, there are currently only simple elements,
@@ -43,9 +48,11 @@ pub fn get_selem(elem: Elem) -> Selem {
     return Selem::new(elem).unwrap();
 }
 
+
 pub fn get_selems(mixer: &Mixer) -> Map<alsa::mixer::Iter, fn(Elem) -> Selem> {
     return mixer.iter().map(get_selem);
 }
+
 
 pub fn get_selem_by_name(mixer: &Mixer, name: String) -> Result<Selem> {
     for selem in get_selems(mixer) {
@@ -58,10 +65,12 @@ pub fn get_selem_by_name(mixer: &Mixer, name: String) -> Result<Selem> {
     bail!("Not found a matching selem named {}", name);
 }
 
+
 pub fn vol_to_percent(vol: i64, range: (i64, i64)) -> f64 {
     let (min, max) = range;
     return ((vol - min) as f64) / ((max - min) as f64) * 100.0;
 }
+
 
 pub fn percent_to_vol(vol: f64, range: (i64, i64)) -> i64 {
     let (min, max) = range;
@@ -69,6 +78,7 @@ pub fn percent_to_vol(vol: f64, range: (i64, i64)) -> i64 {
     /* TODO: precision? Use direction. */
     return _v as i64;
 }
+
 
 pub fn get_vol(selem: &Selem) -> Result<f64> {
     let range = selem.get_playback_volume_range();
@@ -78,6 +88,7 @@ pub fn get_vol(selem: &Selem) -> Result<f64> {
 
     return volume.cherr();
 }
+
 
 pub fn set_vol(selem: &Selem, new_vol: f64) -> Result<()> {
     /* auto-unmute */
@@ -93,19 +104,21 @@ pub fn set_vol(selem: &Selem, new_vol: f64) -> Result<()> {
     return Ok(());
 }
 
+
 pub fn has_mute(selem: &Selem) -> bool {
     return selem.has_playback_switch();
 }
+
 
 pub fn get_mute(selem: &Selem) -> Result<bool> {
     let val = selem.get_playback_switch(FrontRight)?;
     return Ok(val == 0);
 }
 
+
 pub fn set_mute(selem: &Selem, mute: bool) -> Result<()> {
     /* true -> mute, false -> unmute */
     let _ = selem.set_playback_switch_all(!mute as i32)?;
     return Ok(());
 }
-
 

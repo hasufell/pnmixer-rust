@@ -1,20 +1,17 @@
 use alsa::card::Card;
-use alsa::mixer::{Mixer, Selem, Elem, SelemId};
+use alsa::mixer::{Mixer, Selem, SelemId};
 use alsa::poll::PollDescriptors;
 use alsa_sys;
 use errors::*;
 use glib_sys;
-use libc::c_int;
 use libc::c_uint;
-use libc::c_void;
 use libc::pollfd;
 use libc::size_t;
 use myalsa::*;
-use std::cell::RefCell;
 use std::mem;
 use std::ptr;
-use std::rc::Rc;
 use std::u8;
+
 
 
 // TODO: implement free/destructor
@@ -26,6 +23,8 @@ pub struct AlsaCard {
     pub watch_ids: Vec<u32>,
 }
 
+
+/* TODO: AlsaCard cleanup */
 impl AlsaCard {
     pub fn new(
         card_name: Option<String>,
@@ -58,35 +57,39 @@ impl AlsaCard {
         });
     }
 
+
     pub fn selem(&self) -> Selem {
         return get_selems(&self.mixer)
             .nth(self.selem_id.get_index() as usize)
             .unwrap();
     }
 
+
     pub fn vol(&self) -> Result<f64> {
         return get_vol(&self.selem());
     }
+
 
     pub fn set_vol(&self, new_vol: f64) -> Result<()> {
         return set_vol(&self.selem(), new_vol);
     }
 
+
     pub fn has_mute(&self) -> bool {
         return has_mute(&self.selem());
     }
+
 
     pub fn get_mute(&self) -> Result<bool> {
         return get_mute(&self.selem());
     }
 
+
     pub fn set_mute(&self, mute: bool) -> Result<()> {
         return set_mute(&self.selem(), mute);
     }
-
-
-
 }
+
 
 pub enum AudioUser {
     AudioUserUnknown,
@@ -94,6 +97,7 @@ pub enum AudioUser {
     AudioUserTrayIcon,
     AudioUserHotkeys,
 }
+
 
 enum AudioSignal {
     AudioNoCard,
@@ -103,10 +107,6 @@ enum AudioSignal {
     AudioCardError,
     AudioValuesChanged,
 }
-
-
-
-
 
 
 fn watch_poll_descriptors(
@@ -134,6 +134,7 @@ fn watch_poll_descriptors(
 
     return watch_ids;
 }
+
 
 extern fn watch_cb(
     chan: *mut glib_sys::GIOChannel,

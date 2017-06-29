@@ -19,7 +19,6 @@ extern crate gtk_sys;
 extern crate libc;
 
 use app_state::*;
-use gtk::prelude::*;
 use std::cell::RefCell;
 use std::rc::Rc;
 
@@ -28,11 +27,13 @@ mod errors;
 
 mod app_state;
 mod audio;
-mod gui;
-mod gui_callbacks;
 mod myalsa;
+mod ui_entry;
+mod ui_popup_window;
+mod ui_tray_icon;
 
 use audio::AlsaCard;
+
 
 
 fn main() {
@@ -55,7 +56,7 @@ fn main() {
        .init(Some("info".to_string()))
        .unwrap_or_else(|e| panic!("Logger initialization failed with {}", e));
 
-    gui_callbacks::init(apps, acard);
+    ui_entry::init(apps, acard);
 
     gtk::main();
 }
