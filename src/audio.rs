@@ -1,131 +1,115 @@
-extern crate alsa;
-extern crate alsa_sys;
-extern crate glib_sys;
-
-use self::alsa::card::Card;
-use self::alsa::mixer::{Mixer, Selem, Elem};
-use alsa::mixer::SelemChannelId::*;
-use std::iter::Map;
+use alsa::card::Card;
+use alsa::mixer::{Mixer, Selem, Elem, SelemId};
+use alsa::poll::PollDescriptors;
+use alsa_sys;
+use errors::*;
+use glib_sys;
 use libc::c_int;
 use libc::c_uint;
 use libc::c_void;
-use libc::size_t;
-use errors::*;
-use std::convert::From;
 use libc::pollfd;
-use app_state;
+use libc::size_t;
+use myalsa::*;
 use std::cell::RefCell;
-use std::rc::Rc;
 use std::mem;
 use std::ptr;
+use std::rc::Rc;
 use std::u8;
 
 
-
-pub fn get_default_alsa_card() -> Card {
-    return get_alsa_card_by_id(0);
+// TODO: implement free/destructor
+pub struct AlsaCard {
+    _cannot_construct: (),
+    pub card: Card,
+    pub mixer: Mixer,
+    pub selem_id: SelemId,
+    pub watch_ids: Vec<u32>,
 }
 
-pub fn get_alsa_card_by_id(index: c_int) -> Card {
-    return alsa::Card::new(index);
-}
+impl AlsaCard {
+    pub fn new(
+        card_name: Option<String>,
+        elem_name: Option<String>,
+    ) -> Result<AlsaCard> {
+        let card = {
+            match card_name {
+                Some(name) => get_alsa_card_by_name(name)?,
+                None => get_default_alsa_card(),
+            }
+        };
+        let mixer = get_mixer(&card)?;
+        let selem_id = get_selem_by_name(
+            &mixer,
+            elem_name.unwrap_or(String::from("Master")),
+        ).unwrap()
+            .get_id();
+        let vec_pollfd = PollDescriptors::get(&mixer)?;
 
-pub fn get_alsa_cards() -> alsa::card::Iter {
-    return alsa::card::Iter::new();
-}
+        /* TODO: callback is registered here, which must be unregistered
+         * when the mixer is destroyed!! */
+        let watch_ids = watch_poll_descriptors(vec_pollfd, &mixer);
 
-pub fn get_alsa_card_by_name(name: String) -> Result<Card> {
-    for r_card in get_alsa_cards() {
-        let card = r_card?;
-        let card_name = card.get_name()?;
-        if name == card_name {
-            return Ok(card);
-        }
-    }
-    bail!("Not found a matching card named {}", name);
-}
-
-pub fn get_mixer(card: &Card) -> Result<Mixer> {
-    return Mixer::new(&format!("hw:{}", card.get_index()), false).cherr();
-}
-
-pub fn get_selem(elem: Elem) -> Selem {
-    /* in the ALSA API, there are currently only simple elements,
-     * so this unwrap() should be safe.
-     *http://www.alsa-project.org/alsa-doc/alsa-lib/group___mixer.html#enum-members */
-    return Selem::new(elem).unwrap();
-}
-
-pub fn get_selems(mixer: &Mixer) -> Map<alsa::mixer::Iter, fn(Elem) -> Selem> {
-    return mixer.iter().map(get_selem);
-}
-
-pub fn get_selem_by_name(mixer: &Mixer, name: String) -> Result<Selem> {
-    for selem in get_selems(mixer) {
-        let n = selem.get_id().get_name().map(|y| String::from(y))?;
-
-        if n == name {
-            return Ok(selem);
-        }
-    }
-    bail!("Not found a matching selem named {}", name);
-}
-
-pub fn vol_to_percent(vol: i64, range: (i64, i64)) -> f64 {
-    let (min, max) = range;
-    return ((vol - min) as f64) / ((max - min) as f64) * 100.0;
-}
-
-pub fn percent_to_vol(vol: f64, range: (i64, i64)) -> i64 {
-    let (min, max) = range;
-    let _v = vol / 100.0 * ((max - min) as f64) + (min as f64);
-    /* TODO: precision? Use direction. */
-    return _v as i64;
-}
-
-pub fn get_vol(selem: &Selem) -> Result<f64> {
-    let range = selem.get_playback_volume_range();
-    let volume = selem.get_playback_volume(FrontRight).map(|v| {
-        return vol_to_percent(v, range);
-    });
-
-    return volume.cherr();
-}
-
-pub fn set_vol(selem: &Selem, new_vol: f64) -> Result<()> {
-    /* auto-unmute */
-    if get_mute(selem)? {
-        set_mute(selem, false)?;
+        return Ok(AlsaCard {
+            _cannot_construct: (),
+            card: card,
+            mixer: mixer,
+            selem_id: selem_id,
+            watch_ids: watch_ids,
+        });
     }
 
-    let range = selem.get_playback_volume_range();
-    selem.set_playback_volume_all(
-        percent_to_vol(new_vol, range),
-    )?;
+    pub fn selem(&self) -> Selem {
+        return get_selems(&self.mixer)
+            .nth(self.selem_id.get_index() as usize)
+            .unwrap();
+    }
 
-    return Ok(());
+    pub fn vol(&self) -> Result<f64> {
+        return get_vol(&self.selem());
+    }
+
+    pub fn set_vol(&self, new_vol: f64) -> Result<()> {
+        return set_vol(&self.selem(), new_vol);
+    }
+
+    pub fn has_mute(&self) -> bool {
+        return has_mute(&self.selem());
+    }
+
+    pub fn get_mute(&self) -> Result<bool> {
+        return get_mute(&self.selem());
+    }
+
+    pub fn set_mute(&self, mute: bool) -> Result<()> {
+        return set_mute(&self.selem(), mute);
+    }
+
+
+
 }
 
-pub fn has_mute(selem: &Selem) -> bool {
-    return selem.has_playback_switch();
+pub enum AudioUser {
+    AudioUserUnknown,
+    AudioUserPopup,
+    AudioUserTrayIcon,
+    AudioUserHotkeys,
 }
 
-pub fn get_mute(selem: &Selem) -> Result<bool> {
-    let val = selem.get_playback_switch(FrontRight)?;
-    return Ok(val == 0);
+enum AudioSignal {
+    AudioNoCard,
+    AudioCardInitialized,
+    AudioCardCleanedUp,
+    AudioCardDisconnected,
+    AudioCardError,
+    AudioValuesChanged,
 }
 
-pub fn set_mute(selem: &Selem, mute: bool) -> Result<()> {
-    /* true -> mute, false -> unmute */
-    let _ = selem.set_playback_switch_all(!mute as i32)?;
-    return Ok(());
-}
 
 
 
-/* GIO */
 
-pub fn watch_poll_descriptors(
+
+fn watch_poll_descriptors(
     polls: Vec<pollfd>,
     mixer: &Mixer,
 ) -> Vec<c_uint> {

@@ -1,19 +1,13 @@
-extern crate gtk;
-extern crate gtk_sys;
-extern crate gdk;
-extern crate gdk_sys;
-extern crate alsa;
-extern crate std;
-
-use gtk::prelude::*;
-use gdk_sys::GDK_KEY_Escape;
-
-use gui;
 use app_state::*;
+use audio::AlsaCard;
 use errors::*;
+use gdk;
+use gdk_sys::GDK_KEY_Escape;
+use gtk::prelude::*;
+use gtk;
+use gui;
 use std::cell::RefCell;
 use std::rc::Rc;
-use audio;
 
 
 pub fn init<'a>(appstate: &'a AppS, rc_acard: Rc<RefCell<AlsaCard>>) {
@@ -56,7 +50,7 @@ fn init_popup_window(appstate: &AppS, rc_acard: Rc<RefCell<AlsaCard>>) {
         popup_window.connect_show(move |_| {
             let acard = card.borrow();
 
-            let cur_vol = try_w!(audio::get_vol(&acard.selem()));
+            let cur_vol = try_w!(acard.vol());
             println!("Cur vol: {}", cur_vol);
             gui::set_slider(&vol_scale_adj, cur_vol);
 

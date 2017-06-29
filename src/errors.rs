@@ -1,6 +1,6 @@
 use alsa;
-use std;
 use std::convert::From;
+use std;
 
 error_chain! {
     foreign_links {
@@ -40,8 +40,8 @@ macro_rules! try_w {
 #[macro_export]
 macro_rules! try_wr {
     ($expr:expr, $ret:expr) => (match $expr {
-        std::result::Result::Ok(val) => val,
-        std::result::Result::Err(err) => {
+        ::std::result::Result::Ok(val) => val,
+        ::std::result::Result::Err(err) => {
             warn!("{:?}", err);
             return $ret;
         },

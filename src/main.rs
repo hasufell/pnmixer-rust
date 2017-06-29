@@ -8,29 +8,31 @@ extern crate log;
 #[macro_use]
 extern crate error_chain;
 
-extern crate gtk;
-extern crate gtk_sys;
+extern crate alsa;
+extern crate alsa_sys;
+extern crate ffi;
 extern crate gdk;
 extern crate gdk_sys;
-extern crate alsa;
+extern crate glib_sys;
+extern crate gtk;
+extern crate gtk_sys;
 extern crate libc;
 
-use gtk::prelude::*;
-use gdk_sys::GDK_KEY_Escape;
 use app_state::*;
+use gtk::prelude::*;
 use std::cell::RefCell;
 use std::rc::Rc;
-use std::boxed::Box;
-
 
 #[macro_use]
 mod errors;
 
+mod app_state;
 mod audio;
 mod gui;
 mod gui_callbacks;
-mod app_state;
+mod myalsa;
 
+use audio::AlsaCard;
 
 
 fn main() {
@@ -52,7 +54,6 @@ fn main() {
        // ... your configuration options go here ...
        .init(Some("info".to_string()))
        .unwrap_or_else(|e| panic!("Logger initialization failed with {}", e));
-
 
     gui_callbacks::init(apps, acard);
 

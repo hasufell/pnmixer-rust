@@ -1,17 +1,10 @@
-extern crate gtk;
-extern crate gtk_sys;
-extern crate gdk;
-extern crate gdk_sys;
-extern crate glib;
-extern crate ffi;
-extern crate libc;
-
-
 use errors::*;
-use gtk::prelude::*;
 use gdk::DeviceExt;
 use gdk::{GrabOwnership, GrabStatus, BUTTON_PRESS_MASK, KEY_PRESS_MASK};
 use gdk_sys::GDK_CURRENT_TIME;
+use gtk::prelude::*;
+use gtk;
+
 
 pub fn set_slider(vol_scale_adj: &gtk::Adjustment, scale: f64) {
     vol_scale_adj.set_value(scale);
