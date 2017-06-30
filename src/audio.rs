@@ -18,6 +18,34 @@ use std::u8;
 
 
 
+#[derive(Clone, Copy, Debug)]
+pub enum AudioUser {
+    AudioUserUnknown,
+    AudioUserPopup,
+    AudioUserTrayIcon,
+    AudioUserHotkeys,
+}
+
+
+#[derive(Clone, Copy, Debug)]
+pub enum AudioSignal {
+    AudioNoCard,
+    AudioCardInitialized,
+    AudioCardCleanedUp,
+    AudioCardDisconnected,
+    AudioCardError,
+    AudioValuesChanged,
+}
+
+
+#[derive(Clone, Copy, Debug)]
+pub enum AlsaEvent {
+    AlsaCardError,
+    AlsaCardDiconnected,
+    AlsaCardValuesChanged,
+}
+
+
 // TODO: implement free/destructor
 pub struct AlsaCard {
     _cannot_construct: (),
@@ -163,31 +191,11 @@ impl AlsaCard {
 }
 
 
-#[derive(Clone, Copy, Debug)]
-pub enum AudioUser {
-    AudioUserUnknown,
-    AudioUserPopup,
-    AudioUserTrayIcon,
-    AudioUserHotkeys,
-}
-
-
-#[derive(Clone, Copy, Debug)]
-pub enum AudioSignal {
-    AudioNoCard,
-    AudioCardInitialized,
-    AudioCardCleanedUp,
-    AudioCardDisconnected,
-    AudioCardError,
-    AudioValuesChanged,
-}
-
-
-#[derive(Clone, Copy, Debug)]
-pub enum AlsaEvent {
-    AlsaCardError,
-    AlsaCardDiconnected,
-    AlsaCardValuesChanged,
+impl Drop for AlsaCard {
+    fn drop (&mut self) {
+        debug!("Destructing watch_ids: {:?}", self.watch_ids);
+        unwatch_poll_descriptors(&self.watch_ids);
+    }
 }
 
 
@@ -215,6 +223,15 @@ fn watch_poll_descriptors(polls: Vec<pollfd>,
     }
 
     return watch_ids;
+}
+
+
+fn unwatch_poll_descriptors(watch_ids: &Vec<u32>) {
+    for watch_id in watch_ids {
+        unsafe {
+            glib_sys::g_source_remove(*watch_id);
+        }
+    }
 }
 
 
