@@ -1,113 +1,161 @@
 use app_state::*;
-use audio::AlsaCard;
 use audio::AudioUser::*;
 use errors::*;
 use gdk::DeviceExt;
 use gdk::{GrabOwnership, GrabStatus, BUTTON_PRESS_MASK, KEY_PRESS_MASK};
 use gdk;
 use gdk_sys::{GDK_KEY_Escape, GDK_CURRENT_TIME};
+use glib;
+use glib_sys;
+use gobject_sys::{G_SIGNAL_MATCH_ID, G_SIGNAL_MATCH_DATA};
+use gobject_sys;
 use gtk::prelude::*;
 use gtk;
-use std::cell::RefCell;
+use std::mem;
+use std::ptr;
 use std::rc::Rc;
 
 
 
-pub fn init_popup_window(appstate: &AppS, rc_acard: Rc<RefCell<AlsaCard>>) {
+pub fn init_popup_window(appstate: Rc<AppS>) {
+    let mut toggle_signal = 0;
+
+    /* mute_check.connect_toggled */
+    {
+        let _appstate = appstate.clone();
+        let mute_check = &appstate.clone().gui.popup_window.mute_check;
+        toggle_signal = mute_check.connect_toggled(
+            move |_| on_mute_check_toggled(&_appstate),
+        );
+    }
+
     /* popup_window.connect_show */
     {
-        let popup_window: gtk::Window =
-            appstate.builder_popup.get_object("popup_window").unwrap();
-        let vol_scale_adj: gtk::Adjustment =
-            appstate.builder_popup.get_object("vol_scale_adj").unwrap();
-        let mute_check: gtk::CheckButton =
-            appstate.builder_popup.get_object("mute_check").unwrap();
-        let vol_scale: gtk::Scale =
-            appstate.builder_popup.get_object("vol_scale").unwrap();
-
-        let card = rc_acard.clone();
-        popup_window.connect_show(move |w| {
-            let acard = card.borrow();
-
-            let cur_vol = try_w!(acard.vol());
-            println!("Cur vol: {}", cur_vol);
-            set_slider(&vol_scale_adj, cur_vol);
-
-            let muted = acard.get_mute();
-            update_mute_check(&mute_check, muted);
-
-            vol_scale.grab_focus();
-            try_w!(grab_devices(w));
-        });
+        let _appstate = appstate.clone();
+        let popup_window = &appstate.clone().gui.popup_window.window;
+        popup_window.connect_show(
+            move |w| on_popup_window_show(w, &_appstate, toggle_signal),
+        );
     }
 
     /* vol_scale_adj.connect_value_changed */
     {
-        let vol_scale_adj: Rc<gtk::Adjustment> =
-            Rc::new(appstate.builder_popup
-                        .get_object("vol_scale_adj")
-                        .unwrap());
-
-        let card = rc_acard.clone();
-        let vol_scale = vol_scale_adj.clone();
-        vol_scale_adj.connect_value_changed(move |_| {
-                                                let acard = card.borrow();
-                                                let val = vol_scale.get_value();
-
-                                                try_w!(acard.set_vol(val, AudioUserPopup));
-                                            });
-    }
-
-    /* mute_check.connect_toggled */
-    {
-        let mute_check: gtk::CheckButton =
-            appstate.builder_popup.get_object("mute_check").unwrap();
-
-        let card = rc_acard.clone();
-        mute_check.connect_toggled(move |_| {
-                                       let acard = card.borrow();
-
-                                       let muted = try_w!(acard.get_mute());
-                                       let _ = try_w!(acard.set_mute(!muted, AudioUserPopup));
-                                   });
+        let _appstate = appstate.clone();
+        let vol_scale_adj = &appstate.clone().gui.popup_window.vol_scale_adj;
+        vol_scale_adj.connect_value_changed(
+            move |_| on_vol_scale_value_changed(&_appstate),
+        );
     }
 
     /* popup_window.connect_event */
     {
-        let popup_window: gtk::Window =
-            appstate.builder_popup.get_object("popup_window").unwrap();
+        let _appstate = appstate.clone();
+        let popup_window = &appstate.clone().gui.popup_window.window;
         popup_window.connect_event(move |w, e| {
-            match gdk::Event::get_event_type(e) {
-                gdk::EventType::GrabBroken => w.hide(),
-                gdk::EventType::KeyPress => {
-                    let key: gdk::EventKey = e.clone().downcast().unwrap();
-                    if key.get_keyval() == (GDK_KEY_Escape as u32) {
-                        w.hide();
-                    }
-                }
-                gdk::EventType::ButtonPress => {
-                    let device = try_wr!(
-                        gtk::get_current_event_device().ok_or(
-                            "No current event device!",
-                        ),
-                        Inhibit(false)
-                    );
-                    let (window, _, _) =
-                        gdk::DeviceExt::get_window_at_position(&device);
-                    if window.is_none() {
-                        w.hide();
-                    }
-                }
-                _ => (),
-            }
-
-            return Inhibit(false);
+            on_popup_window_event(w, e, &_appstate)
         });
     }
 }
 
 
-fn update_mute_check(check_button: &gtk::CheckButton, muted: Result<bool>) {
+fn on_popup_window_show(
+    window: &gtk::Window,
+    appstate: &AppS,
+    toggle_signal: u64,
+) {
+    let acard = appstate.acard.borrow();
+    let popup_window = &appstate.gui.popup_window;
+
+    let cur_vol = try_w!(acard.vol());
+    println!("Cur vol: {}", cur_vol);
+    set_slider(&popup_window.vol_scale_adj, cur_vol);
+
+    let muted = acard.get_mute();
+    update_mute_check(&appstate, toggle_signal, muted);
+
+    popup_window.vol_scale.grab_focus();
+    // try_w!(grab_devices(window));
+
+    println!("Handler size in on_popup_window_show: {}", acard.handlers.borrow().capacity());
+}
+
+
+fn on_popup_window_event(
+    w: &gtk::Window,
+    e: &gdk::Event,
+    appstate: &AppS,
+) -> gtk::Inhibit {
+    match gdk::Event::get_event_type(e) {
+        gdk::EventType::GrabBroken => w.hide(),
+        gdk::EventType::KeyPress => {
+            let key: gdk::EventKey = e.clone().downcast().unwrap();
+            if key.get_keyval() == (GDK_KEY_Escape as u32) {
+                w.hide();
+            }
+        }
+        gdk::EventType::ButtonPress => {
+            let device = try_wr!(
+                gtk::get_current_event_device().ok_or(
+                    "No current event device!",
+                ),
+                Inhibit(false)
+            );
+            let (window, _, _) =
+                gdk::DeviceExt::get_window_at_position(&device);
+            if window.is_none() {
+                w.hide();
+            }
+        }
+        _ => (),
+    }
+
+    return Inhibit(false);
+}
+
+
+fn on_vol_scale_value_changed(appstate: &AppS) {
+    let acard = appstate.acard.borrow();
+
+    let val = appstate.gui.popup_window.vol_scale.get_value();
+
+    try_w!(acard.set_vol(val, AudioUserPopup));
+}
+
+
+fn on_mute_check_toggled(appstate: &AppS) {
+    let acard = appstate.acard.borrow();
+
+    let muted = try_w!(acard.get_mute());
+    let _ = try_w!(acard.set_mute(!muted, AudioUserPopup));
+}
+
+
+fn update_mute_check(appstate: &AppS, toggle_signal: u64, muted: Result<bool>) {
+    let check_button = &appstate.gui.popup_window.mute_check;
+    // let check_button_ptr = unsafe {
+    // mem::transmute::<&gtk::CheckButton, &*mut gobject_sys::GObject>(
+    // check_button,
+    // )
+    // };
+
+    // g_signal_handlers_block_matched() doesn't work in gtk-rs
+    glib::signal_handler_block(check_button, toggle_signal);
+    // let n_blocked = unsafe {
+    // gobject_sys::g_signal_handlers_block_matched(
+    // *check_button_ptr,
+    // G_SIGNAL_MATCH_ID | G_SIGNAL_MATCH_DATA,
+    // toggle_signal as u32,
+    // 0,
+    // ptr::null_mut(),
+    // ptr::null_mut(),
+    // ptr::null_mut(),
+    // )
+    // };
+
+    // if n_blocked != 1 {
+    // error!("Wrong number of blocked handlers: {}", n_blocked);
+    // }
+
     match muted {
         Ok(val) => {
             check_button.set_active(val);
@@ -120,6 +168,20 @@ fn update_mute_check(check_button: &gtk::CheckButton, muted: Result<bool>) {
             check_button.set_tooltip_text("Soundcard has no mute switch");
         }
     }
+
+    glib::signal_handler_unblock(check_button, toggle_signal);
+
+    // unsafe {
+    // gobject_sys::g_signal_handlers_unblock_matched(
+    // *check_button_ptr,
+    // G_SIGNAL_MATCH_ID | G_SIGNAL_MATCH_DATA,
+    // toggle_signal as u32,
+    // 0,
+    // ptr::null_mut(),
+    // ptr::null_mut(),
+    // ptr::null_mut(),
+    // );
+    // }
 }
 
 
@@ -134,32 +196,40 @@ fn grab_devices(window: &gtk::Window) -> Result<()> {
     let gdk_window = window.get_window().ok_or("No window?!")?;
 
     /* Grab the mouse */
-    let m_grab_status =
-        device.grab(&gdk_window,
-                    GrabOwnership::None,
-                    true,
-                    BUTTON_PRESS_MASK,
-                    None,
-                    GDK_CURRENT_TIME as u32);
+    let m_grab_status = device.grab(
+        &gdk_window,
+        GrabOwnership::None,
+        true,
+        BUTTON_PRESS_MASK,
+        None,
+        GDK_CURRENT_TIME as u32,
+    );
 
     if m_grab_status != GrabStatus::Success {
-        warn!("Could not grab {}",
-              device.get_name().unwrap_or(String::from("UNKNOWN DEVICE")));
+        warn!(
+            "Could not grab {}",
+            device.get_name().unwrap_or(String::from("UNKNOWN DEVICE"))
+        );
     }
 
     /* Grab the keyboard */
-    let k_dev = device.get_associated_device()
-        .ok_or("Couldn't get associated device")?;
+    let k_dev = device.get_associated_device().ok_or(
+        "Couldn't get associated device",
+    )?;
 
-    let k_grab_status = k_dev.grab(&gdk_window,
-                                   GrabOwnership::None,
-                                   true,
-                                   KEY_PRESS_MASK,
-                                   None,
-                                   GDK_CURRENT_TIME as u32);
+    let k_grab_status = k_dev.grab(
+        &gdk_window,
+        GrabOwnership::None,
+        true,
+        KEY_PRESS_MASK,
+        None,
+        GDK_CURRENT_TIME as u32,
+    );
     if k_grab_status != GrabStatus::Success {
-        warn!("Could not grab {}",
-              k_dev.get_name().unwrap_or(String::from("UNKNOWN DEVICE")));
+        warn!(
+            "Could not grab {}",
+            k_dev.get_name().unwrap_or(String::from("UNKNOWN DEVICE"))
+        );
     }
 
     return Ok(());

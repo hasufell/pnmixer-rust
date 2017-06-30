@@ -79,3 +79,46 @@ macro_rules! try_r {
         },
     });
 }
+
+
+
+#[macro_export]
+macro_rules! try_e {
+    ($expr:expr) => {
+        try_er!($expr, ())
+    };
+    ($expr:expr, $fmt:expr, $($arg:tt)+) => {
+        try_er!($expr, (), $fmt, $(arg)+)
+    };
+    ($expr:expr, $fmt:expr) => {
+        try_er!($expr, (), $fmt)
+    }
+}
+
+
+#[macro_export]
+macro_rules! try_er {
+    ($expr:expr, $ret:expr) => (match $expr {
+        ::std::result::Result::Ok(val) => val,
+        ::std::result::Result::Err(err) => {
+            err!("{:?}", err);
+            return $ret;
+        },
+    });
+    ($expr:expr, $ret:expr, $fmt:expr) => (match $expr {
+        std::result::Result::Ok(val) => val,
+        std::result::Result::Err(err) => {
+            err!("Original error: {:?}", err);
+            err!($fmt);
+            return $ret;
+        },
+    });
+    ($expr:expr, $ret:expr, $fmt:expr, $($arg:tt)+) => (match $expr {
+        std::result::Result::Ok(val) => val,
+        std::result::Result::Err(err) => {
+            err!("Original error: {:?}", err);
+            err!(format!($fmt, $(arg)+));
+            return $ret;
+        },
+    })
+}

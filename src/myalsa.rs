@@ -56,9 +56,7 @@ pub fn get_selems(mixer: &Mixer) -> Map<alsa::mixer::Iter, fn(Elem) -> Selem> {
 
 pub fn get_selem_by_name(mixer: &Mixer, name: String) -> Result<Selem> {
     for selem in get_selems(mixer) {
-        let n = selem.get_id()
-            .get_name()
-            .map(|y| String::from(y))?;
+        let n = selem.get_id().get_name().map(|y| String::from(y))?;
 
         if n == name {
             return Ok(selem);
@@ -99,7 +97,9 @@ pub fn set_vol(selem: &Selem, new_vol: f64) -> Result<()> {
     }
 
     let range = selem.get_playback_volume_range();
-    selem.set_playback_volume_all(percent_to_vol(new_vol, range))?;
+    selem.set_playback_volume_all(
+        percent_to_vol(new_vol, range),
+    )?;
 
     return Ok(());
 }

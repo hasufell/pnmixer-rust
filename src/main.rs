@@ -15,12 +15,11 @@ extern crate gdk;
 extern crate gdk_sys;
 extern crate glib;
 extern crate glib_sys;
+extern crate gobject_sys;
 extern crate gtk;
 extern crate gtk_sys;
 extern crate libc;
 
-use app_state::*;
-use std::cell::RefCell;
 use std::rc::Rc;
 
 #[macro_use]
@@ -33,21 +32,14 @@ mod ui_entry;
 mod ui_popup_window;
 mod ui_tray_icon;
 
-use audio::AlsaCard;
+use app_state::*;
 
 
 
 fn main() {
     gtk::init().unwrap();
 
-    let ref apps = AppS {
-        status_icon: gtk::StatusIcon::new_from_icon_name("pnmixer"),
-        builder_popup: gtk::Builder::new_from_string(include_str!("../data/ui/popup-window-vertical.glade")),
-    };
-
-    let acard = Rc::new(RefCell::new(AlsaCard::new(None,
-                                                   Some(String::from("Master")))
-                                             .unwrap()));
+    let apps = Rc::new(AppS::new());
 
     flexi_logger::LogOptions::new()
        .log_to_file(false)
@@ -55,7 +47,7 @@ fn main() {
        .init(Some("info".to_string()))
        .unwrap_or_else(|e| panic!("Logger initialization failed with {}", e));
 
-    ui_entry::init(apps, acard);
+    ui_entry::init(apps);
 
     gtk::main();
 }
