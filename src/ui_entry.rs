@@ -10,7 +10,7 @@ use ui_tray_icon::*;
 pub fn init(appstate: Rc<AppS>) {
     {
         let apps = appstate.clone();
-        appstate.acard.borrow().connect_handler(Box::new(move |a, s, u| {
+        appstate.acard.borrow().connect_handler(Box::new(move |s, u| {
             match (s, u) {
                 (AudioSignal::AudioValuesChanged,
                  AudioUser::AudioUserUnknown) => {

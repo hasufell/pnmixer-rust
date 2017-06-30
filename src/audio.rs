@@ -15,6 +15,7 @@ use std::mem;
 use std::ptr;
 use std::rc::Rc;
 use std::u8;
+use std::f64;
 
 
 
@@ -46,6 +47,7 @@ pub enum AlsaEvent {
 }
 
 
+// TODO: Audio struct? Separate more cleanly
 // TODO: implement free/destructor
 pub struct AlsaCard {
     _cannot_construct: (),
@@ -54,7 +56,8 @@ pub struct AlsaCard {
     pub selem_id: SelemId,
     pub watch_ids: Vec<u32>,
     pub last_action_timestamp: RefCell<i64>,
-    pub handlers: RefCell<Vec<Box<Fn(&AlsaCard, AudioSignal, AudioUser)>>>,
+    pub handlers: RefCell<Vec<Box<Fn(AudioSignal, AudioUser)>>>,
+    pub scroll_step: RefCell<u32>,
 }
 
 
@@ -77,6 +80,7 @@ impl AlsaCard {
                     .get_id();
         let vec_pollfd = PollDescriptors::get(&mixer)?;
 
+        // TODO: rework, should probably be a Box?
         let acard = Rc::new(RefCell::new(AlsaCard {
                                              _cannot_construct: (),
                                              card: card,
@@ -86,16 +90,24 @@ impl AlsaCard {
                                              last_action_timestamp:
                                                  RefCell::new(0),
                                              handlers: RefCell::new(vec![]),
+                                             scroll_step: RefCell::new(3),
                                          }));
 
         /* TODO: callback is registered here, which must be unregistered
          * when the mixer is destroyed!!
          * poll descriptors must be unwatched too */
-        let watch_ids = watch_poll_descriptors(vec_pollfd,
-                                               acard.clone().as_ptr());
+        let watch_ids = watch_poll_descriptors(vec_pollfd, acard.as_ptr());
         acard.borrow_mut().watch_ids = watch_ids;
 
         return Ok(acard.clone());
+    }
+
+
+    pub fn switch_card(old_card: Rc<RefCell<AlsaCard>>,
+                       card_name: Option<String>,
+                       elem_name: Option<String>)
+                       -> Result<Rc<RefCell<AlsaCard>>> {
+
     }
 
 
@@ -120,6 +132,34 @@ impl AlsaCard {
 
         debug!("Setting vol to {:?} by user {:?}", new_vol, user);
         return set_vol(&self.selem(), new_vol);
+    }
+
+
+    pub fn increase_vol(&self, user: AudioUser) -> Result<()> {
+        {
+            let mut rc = self.last_action_timestamp.borrow_mut();
+            *rc = glib::get_monotonic_time();
+        }
+        let old_vol = self.vol()?;
+        let new_vol = f64::ceil(old_vol + (*self.scroll_step.borrow() as f64));
+
+        debug!("Increase vol by {:?} to {:?}", (new_vol - old_vol), new_vol);
+
+        return self.set_vol(new_vol, user);
+    }
+
+
+    pub fn decrease_vol(&self, user: AudioUser) -> Result<()> {
+        {
+            let mut rc = self.last_action_timestamp.borrow_mut();
+            *rc = glib::get_monotonic_time();
+        }
+        let old_vol = self.vol()?;
+        let new_vol = old_vol - (*self.scroll_step.borrow() as f64);
+
+        debug!("Decrease vol by {:?} to {:?}", (new_vol - old_vol), new_vol);
+
+        return self.set_vol(new_vol, user);
     }
 
 
@@ -176,23 +216,36 @@ impl AlsaCard {
                signal,
                user);
         let handlers = self.handlers.borrow();
-        let x: &Vec<Box<Fn(&AlsaCard, AudioSignal, AudioUser)>> = &*handlers;
-        for handler in x {
+        let handlers_ref: &Vec<Box<Fn(AudioSignal, AudioUser)>> =
+            handlers.as_ref();
+        for handler in handlers_ref {
             let unboxed = handler.as_ref();
-            unboxed(&self, signal, user);
+            unboxed(signal, user);
         }
     }
 
 
-    pub fn connect_handler(&self,
-                           cb: Box<Fn(&AlsaCard, AudioSignal, AudioUser)>) {
+    pub fn connect_handler(&self, cb: Box<Fn(AudioSignal, AudioUser)>) {
         self.handlers.borrow_mut().push(cb);
     }
 }
 
 
 impl Drop for AlsaCard {
-    fn drop (&mut self) {
+    // call Box::new(x), transmute the Box into a raw pointer, and then
+    // std::mem::forget
+    //
+    // if you unregister the callback, you should keep a raw pointer to the
+    // box
+    //
+    // For instance, `register` could return a raw pointer to the
+    // Box + a std::marker::PhantomData with the appropriate
+    // lifetime (if applicable)
+    //
+    // The struct could implement Drop, which unregisters the
+    // callback and frees the Box, by simply transmuting the
+    // raw pointer to a Box<T>
+    fn drop(&mut self) {
         debug!("Destructing watch_ids: {:?}", self.watch_ids);
         unwatch_poll_descriptors(&self.watch_ids);
     }
