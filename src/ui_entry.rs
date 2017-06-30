@@ -14,10 +14,10 @@ pub fn init(appstate: Rc<AppS>) {
             match (s, u) {
                 (AudioSignal::AudioValuesChanged,
                  AudioUser::AudioUserUnknown) => {
-                    println!("External volume change!");
+                    debug!("External volume change!");
 
                 }
-                _ => println!("Nix"),
+                _ => debug!("Nix"),
             }
         }));
     }

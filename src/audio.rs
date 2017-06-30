@@ -89,6 +89,8 @@ impl AlsaCard {
             *rc = glib::get_monotonic_time();
         }
         // TODO invoke handlers, make use of user
+
+        debug!("Setting vol to {:?} by user {:?}", new_vol, user);
         return set_vol(&self.selem(), new_vol);
     }
 
@@ -107,6 +109,7 @@ impl AlsaCard {
         let mut rc = self.last_action_timestamp.borrow_mut();
         *rc = glib::get_monotonic_time();
         // TODO invoke handlers, make use of user
+        debug!("Setting mute to {} by user {:?}", mute, user);
         return set_mute(&self.selem(), mute);
     }
 
@@ -118,29 +121,32 @@ impl AlsaCard {
             let now: i64 = glib::get_monotonic_time();
             let delay: i64 = now - last;
             if delay < 1000000 {
-                info!("Delay: {}", delay);
                 return;
             }
+            debug!("Discarding last time stamp, too old");
             *self.last_action_timestamp.borrow_mut() = 0;
         }
 
         /* external change */
         match alsa_event {
             // TODO: invoke handlers with AudioUserUnknown
-            AlsaEvent::AlsaCardError => info!("AlsaCardError"),
-            AlsaEvent::AlsaCardDiconnected => info!("AlsaCardDiconnected"),
+            AlsaEvent::AlsaCardError => debug!("AlsaCardError"),
+            AlsaEvent::AlsaCardDiconnected => debug!("AlsaCardDiconnected"),
             AlsaEvent::AlsaCardValuesChanged => {
-                info!("AlsaCardValuesChanged");
+                debug!("AlsaCardValuesChanged");
                 self.invoke_handlers(self::AudioSignal::AudioValuesChanged,
                                      self::AudioUser::AudioUserUnknown);
             }
+            e => warn!("Unhandled alsa event: {:?}", e),
         }
 
     }
 
 
     fn invoke_handlers(&self, signal: AudioSignal, user: AudioUser) {
-
+        debug!("Invoking handlers for signal {:?} by user {:?}",
+               signal,
+               user);
         let handlers = self.handlers.borrow();
         let x: &Vec<Box<Fn(&AlsaCard, AudioSignal, AudioUser)>> = &*handlers;
         for handler in x {
@@ -157,7 +163,7 @@ impl AlsaCard {
 }
 
 
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Debug)]
 pub enum AudioUser {
     AudioUserUnknown,
     AudioUserPopup,
@@ -166,7 +172,7 @@ pub enum AudioUser {
 }
 
 
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Debug)]
 pub enum AudioSignal {
     AudioNoCard,
     AudioCardInitialized,
@@ -177,7 +183,7 @@ pub enum AudioSignal {
 }
 
 
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Debug)]
 pub enum AlsaEvent {
     AlsaCardError,
     AlsaCardDiconnected,
@@ -220,17 +226,11 @@ extern "C" fn watch_cb(chan: *mut glib_sys::GIOChannel,
     let acard =
         unsafe { mem::transmute::<glib_sys::gpointer, &AlsaCard>(data) };
 
-    {
+    unsafe {
         let mixer_ptr =
-            unsafe {
-                mem::transmute::<&Mixer,
-                                 &*mut alsa_sys::snd_mixer_t>(&acard.mixer)
-            };
-
-        unsafe {
-            alsa_sys::snd_mixer_handle_events(*mixer_ptr);
-        }
-    }
+            mem::transmute::<&Mixer, &*mut alsa_sys::snd_mixer_t>(&acard.mixer);
+        alsa_sys::snd_mixer_handle_events(*mixer_ptr);
+    };
 
     if cond == glib_sys::G_IO_ERR {
         return false as glib_sys::gboolean;
@@ -251,12 +251,12 @@ extern "C" fn watch_cb(chan: *mut glib_sys::GIOChannel,
 
         match stat {
             glib_sys::G_IO_STATUS_AGAIN => {
-                info!("G_IO_STATUS_AGAIN");
+                debug!("G_IO_STATUS_AGAIN");
                 continue;
             }
-            glib_sys::G_IO_STATUS_NORMAL => info!("G_IO_STATUS_NORMAL"),
-            glib_sys::G_IO_STATUS_ERROR => info!("G_IO_STATUS_ERROR"),
-            glib_sys::G_IO_STATUS_EOF => info!("G_IO_STATUS_EOF"),
+            glib_sys::G_IO_STATUS_NORMAL => debug!("G_IO_STATUS_NORMAL"),
+            glib_sys::G_IO_STATUS_ERROR => debug!("G_IO_STATUS_ERROR"),
+            glib_sys::G_IO_STATUS_EOF => debug!("G_IO_STATUS_EOF"),
         }
         return true as glib_sys::gboolean;
     }

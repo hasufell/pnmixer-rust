@@ -44,7 +44,7 @@ fn main() {
     flexi_logger::LogOptions::new()
        .log_to_file(false)
        // ... your configuration options go here ...
-       .init(Some("info".to_string()))
+       .init(Some("pnmixer=debug".to_string()))
        .unwrap_or_else(|e| panic!("Logger initialization failed with {}", e));
 
     ui_entry::init(apps);

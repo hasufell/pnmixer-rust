@@ -6,13 +6,8 @@ use gdk::{GrabOwnership, GrabStatus, BUTTON_PRESS_MASK, KEY_PRESS_MASK};
 use gdk;
 use gdk_sys::{GDK_KEY_Escape, GDK_CURRENT_TIME};
 use glib;
-use glib_sys;
-use gobject_sys::{G_SIGNAL_MATCH_ID, G_SIGNAL_MATCH_DATA};
-use gobject_sys;
 use gtk::prelude::*;
 use gtk;
-use std::mem;
-use std::ptr;
 use std::rc::Rc;
 
 
@@ -146,29 +141,8 @@ pub fn update_mute_check(appstate: &AppS,
                          toggle_signal: u64,
                          muted: Result<bool>) {
     let check_button = &appstate.gui.popup_window.mute_check;
-    // let check_button_ptr = unsafe {
-    // mem::transmute::<&gtk::CheckButton, &*mut gobject_sys::GObject>(
-    // check_button,
-    // )
-    // };
 
-    // g_signal_handlers_block_matched() doesn't work in gtk-rs
     glib::signal_handler_block(check_button, toggle_signal);
-    // let n_blocked = unsafe {
-    // gobject_sys::g_signal_handlers_block_matched(
-    // *check_button_ptr,
-    // G_SIGNAL_MATCH_ID | G_SIGNAL_MATCH_DATA,
-    // toggle_signal as u32,
-    // 0,
-    // ptr::null_mut(),
-    // ptr::null_mut(),
-    // ptr::null_mut(),
-    // )
-    // };
-
-    // if n_blocked != 1 {
-    // error!("Wrong number of blocked handlers: {}", n_blocked);
-    // }
 
     match muted {
         Ok(val) => {
@@ -184,18 +158,6 @@ pub fn update_mute_check(appstate: &AppS,
     }
 
     glib::signal_handler_unblock(check_button, toggle_signal);
-
-    // unsafe {
-    // gobject_sys::g_signal_handlers_unblock_matched(
-    // *check_button_ptr,
-    // G_SIGNAL_MATCH_ID | G_SIGNAL_MATCH_DATA,
-    // toggle_signal as u32,
-    // 0,
-    // ptr::null_mut(),
-    // ptr::null_mut(),
-    // ptr::null_mut(),
-    // );
-    // }
 }
 
 
