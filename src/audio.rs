@@ -31,7 +31,7 @@ pub enum AudioSignal {
 pub struct Audio {
     _cannot_construct: (),
     pub acard: RefCell<Box<AlsaCard>>,
-    pub last_action_timestamp: RefCell<i64>,
+    pub last_action_timestamp: Rc<RefCell<i64>>,
     pub handlers: Rc<RefCell<Vec<Box<Fn(AudioSignal, AudioUser)>>>>,
     pub scroll_step: Cell<u32>,
 }
@@ -43,7 +43,7 @@ impl Audio {
                -> Result<Audio> {
 
         let handlers = Rc::new(RefCell::new(vec![]));
-        let last_action_timestamp = RefCell::new(0);
+        let last_action_timestamp = Rc::new(RefCell::new(0));
 
         let myhandler = handlers.clone();
         let ts = last_action_timestamp.clone();
