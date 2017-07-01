@@ -2,6 +2,7 @@ use app_state::*;
 use audio::{AlsaCard, AudioSignal, AudioUser};
 use std::cell::RefCell;
 use std::rc::Rc;
+use ui_popup_menu::*;
 use ui_popup_window::*;
 use ui_tray_icon::*;
 
@@ -24,4 +25,5 @@ pub fn init(appstate: Rc<AppS>) {
 
     init_tray_icon(appstate.clone());
     init_popup_window(appstate.clone());
+    init_popup_menu(appstate.clone());
 }

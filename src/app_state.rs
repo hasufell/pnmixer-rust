@@ -2,6 +2,7 @@ use gtk;
 use audio::AlsaCard;
 use std::cell::RefCell;
 use std::rc::Rc;
+use glade_helpers::*;
 
 
 // TODO: destructors
@@ -15,9 +16,11 @@ pub struct AppS {
 
 impl AppS {
     pub fn new() -> AppS {
-        let builder_popup = gtk::Builder::new_from_string(include_str!("../data/ui/popup-window-vertical.glade"));
+        let builder_popup_window =
+            gtk::Builder::new_from_string(include_str!("../data/ui/popup-window.glade"));
+        let builder_popup_menu = gtk::Builder::new_from_string(include_str!("../data/ui/popup-menu.glade"));
         return AppS {
-                   gui: Gui::new(builder_popup),
+                   gui: Gui::new(builder_popup_window, builder_popup_menu),
                    acard: AlsaCard::new(None, Some(String::from("Master")))
                        .unwrap(),
                };
@@ -28,34 +31,32 @@ impl AppS {
 pub struct Gui {
     pub status_icon: gtk::StatusIcon,
     pub popup_window: PopupWindow,
+    pub popup_menu: PopupMenu,
 }
 
 
 impl Gui {
-    pub fn new(builder: gtk::Builder) -> Gui {
+    pub fn new(builder_popup_window: gtk::Builder,
+               builder_popup_menu: gtk::Builder)
+               -> Gui {
         return Gui {
                    status_icon: gtk::StatusIcon::new_from_icon_name("pnmixer"),
-                   popup_window: PopupWindow::new(builder),
+                   popup_window: PopupWindow::new(builder_popup_window),
+                   popup_menu: PopupMenu::new(builder_popup_menu),
                };
     }
 }
 
 
-pub struct PopupWindow {
-    pub window: gtk::Window,
-    pub vol_scale_adj: gtk::Adjustment,
-    pub vol_scale: gtk::Scale,
-    pub mute_check: gtk::CheckButton,
-}
+create_builder_item!(PopupMenu,
+                     menu_window: gtk::Window,
+                     menubar: gtk::MenuBar,
+                     menu: gtk::Menu,
+                     about_item: gtk::MenuItem);
 
 
-impl PopupWindow {
-    pub fn new(builder: gtk::Builder) -> PopupWindow {
-        return PopupWindow {
-                   window: builder.get_object("popup_window").unwrap(),
-                   vol_scale_adj: builder.get_object("vol_scale_adj").unwrap(),
-                   vol_scale: builder.get_object("vol_scale").unwrap(),
-                   mute_check: builder.get_object("mute_check").unwrap(),
-               };
-    }
-}
+create_builder_item!(PopupWindow,
+                     popup_window: gtk::Window,
+                     vol_scale_adj: gtk::Adjustment,
+                     vol_scale: gtk::Scale,
+                     mute_check: gtk::CheckButton);

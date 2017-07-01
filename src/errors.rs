@@ -12,22 +12,6 @@ error_chain! {
 }
 
 
-pub trait CHErr {
-    type Item;
-    fn cherr(self) -> Result<Self::Item>;
-}
-
-
-impl<A, E: std::error::Error> CHErr for std::result::Result<A, E>
-    where Error: std::convert::From<E>
-{
-    type Item = A;
-    fn cherr(self) -> Result<Self::Item> {
-        return self.map_err(From::from);
-    }
-}
-
-
 #[macro_export]
 macro_rules! try_w {
     ($expr:expr) => {

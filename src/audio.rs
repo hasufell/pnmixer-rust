@@ -103,12 +103,12 @@ impl AlsaCard {
     }
 
 
-    pub fn switch_card(old_card: Rc<RefCell<AlsaCard>>,
-                       card_name: Option<String>,
-                       elem_name: Option<String>)
-                       -> Result<Rc<RefCell<AlsaCard>>> {
+    // pub fn switch_card(old_card: Rc<RefCell<AlsaCard>>,
+    // card_name: Option<String>,
+    // elem_name: Option<String>)
+    // -> Result<Rc<RefCell<AlsaCard>>> {
 
-    }
+    // }
 
 
     pub fn selem(&self) -> Selem {

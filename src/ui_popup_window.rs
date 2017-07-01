@@ -34,7 +34,7 @@ pub fn init_popup_window(appstate: Rc<AppS>) {
         let popup_window = &appstate.clone()
                                 .gui
                                 .popup_window
-                                .window;
+                                .popup_window;
         popup_window.connect_show(move |w| {
                                       on_popup_window_show(w,
                                                            &_appstate,
@@ -60,7 +60,7 @@ pub fn init_popup_window(appstate: Rc<AppS>) {
         let popup_window = &appstate.clone()
                                 .gui
                                 .popup_window
-                                .window;
+                                .popup_window;
         popup_window.connect_event(move |w, e| {
                                        on_popup_window_event(w, e, &_appstate)
                                    });

@@ -25,10 +25,14 @@ use std::rc::Rc;
 #[macro_use]
 mod errors;
 
+#[macro_use]
+mod glade_helpers;
+
 mod app_state;
 mod audio;
 mod myalsa;
 mod ui_entry;
+mod ui_popup_menu;
 mod ui_popup_window;
 mod ui_tray_icon;
 

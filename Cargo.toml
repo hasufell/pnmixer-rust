@@ -15,7 +15,7 @@ gobject-sys = { git = "https://github.com/gtk-rs/sys" }
 ffi = "^0.0.2"
 flexi_logger = "^0.5.1"
 log = "^0.3.8"
-error-chain = "^0.10.0"
+error-chain = { path = "3rdparty/error-chain" }
 
 [dependencies.gtk]
 git = "https://github.com/gtk-rs/gtk.git"

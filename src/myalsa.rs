@@ -37,7 +37,7 @@ pub fn get_alsa_card_by_name(name: String) -> Result<Card> {
 
 
 pub fn get_mixer(card: &Card) -> Result<Mixer> {
-    return Mixer::new(&format!("hw:{}", card.get_index()), false).cherr();
+    return Mixer::new(&format!("hw:{}", card.get_index()), false).from_err();
 }
 
 
@@ -88,7 +88,7 @@ pub fn get_vol(selem: &Selem) -> Result<f64> {
         return vol_to_percent(v, range);
     });
 
-    return volume.cherr();
+    return volume.from_err();
 }
 
 
