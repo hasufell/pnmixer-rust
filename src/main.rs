@@ -43,13 +43,13 @@ use app_state::*;
 fn main() {
     gtk::init().unwrap();
 
-    let apps = Rc::new(AppS::new());
-
     flexi_logger::LogOptions::new()
        .log_to_file(false)
        // ... your configuration options go here ...
        .init(Some("pnmixer=debug".to_string()))
        .unwrap_or_else(|e| panic!("Logger initialization failed with {}", e));
+
+    let apps = Rc::new(AppS::new());
 
     ui_entry::init(apps);
 

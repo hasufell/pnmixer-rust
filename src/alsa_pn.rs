@@ -10,7 +10,7 @@ use libc::c_int;
 use libc::c_uint;
 use libc::pollfd;
 use libc::size_t;
-use std::cell::RefCell;
+use std::cell::Cell;
 use std::iter::Map;
 use std::mem;
 use std::ptr;
@@ -30,9 +30,9 @@ pub enum AlsaEvent {
 pub struct AlsaCard {
     _cannot_construct: (),
     pub card: Card,
-    pub mixer: Rc<Mixer>,
+    pub mixer: Mixer,
     pub selem_id: SelemId,
-    pub watch_ids: RefCell<Vec<u32>>,
+    pub watch_ids: Cell<Vec<u32>>,
     pub cb: Rc<Fn(AlsaEvent)>,
 }
 
@@ -48,8 +48,10 @@ impl AlsaCard {
                 None => get_default_alsa_card(),
             }
         };
-        let mixer = Rc::new(get_mixer(&card)?);
-        let mixer2 = mixer.clone();
+        let mixer = get_mixer(&card)?;
+
+        let vec_pollfd = PollDescriptors::get(&mixer)?;
+
         let selem_id =
             get_selem_by_name(&mixer,
                               elem_name.unwrap_or(String::from("Master")))
@@ -61,17 +63,16 @@ impl AlsaCard {
                                  card: card,
                                  mixer: mixer,
                                  selem_id: selem_id,
-                                 watch_ids: RefCell::new(vec![]),
+                                 watch_ids: Cell::new(vec![]),
                                  cb: cb,
                              });
 
-        let vec_pollfd = PollDescriptors::get(mixer2.as_ref())?;
         /* TODO: callback is registered here, which must be unregistered
          * when the card is destroyed!!
          * poll descriptors must be unwatched too */
         let watch_ids = AlsaCard::watch_poll_descriptors(vec_pollfd,
                                                          acard.as_ref());
-        *acard.watch_ids.borrow_mut() = watch_ids;
+        acard.watch_ids.set(watch_ids);
 
         return Ok(acard);
     }
@@ -167,6 +168,7 @@ impl AlsaCard {
 }
 
 
+// TODO: test that this is actually triggered when switching cards
 impl Drop for AlsaCard {
     // call Box::new(x), transmute the Box into a raw pointer, and then
     // std::mem::forget
@@ -182,13 +184,10 @@ impl Drop for AlsaCard {
     // callback and frees the Box, by simply transmuting the
     // raw pointer to a Box<T>
     fn drop(&mut self) {
-        debug!("Destructing watch_ids: {:?}", self.watch_ids);
-        AlsaCard::unwatch_poll_descriptors(&self.watch_ids.borrow());
+        debug!("Destructing watch_ids: {:?}", self.watch_ids.get_mut());
+        AlsaCard::unwatch_poll_descriptors(&self.watch_ids.get_mut());
     }
 }
-
-
-
 
 
 extern "C" fn watch_cb(chan: *mut glib_sys::GIOChannel,

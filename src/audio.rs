@@ -1,5 +1,6 @@
 use errors::*;
 use glib;
+use std::cell::Cell;
 use std::cell::RefCell;
 use std::rc::Rc;
 use std::f64;
@@ -32,7 +33,7 @@ pub struct Audio {
     pub acard: RefCell<Box<AlsaCard>>,
     pub last_action_timestamp: RefCell<i64>,
     pub handlers: Rc<RefCell<Vec<Box<Fn(AudioSignal, AudioUser)>>>>,
-    pub scroll_step: RefCell<u32>,
+    pub scroll_step: Cell<u32>,
 }
 
 
@@ -57,7 +58,7 @@ impl Audio {
             acard: RefCell::new(AlsaCard::new(card_name, elem_name, cb)?),
             last_action_timestamp: last_action_timestamp.clone(),
             handlers: handlers.clone(),
-            scroll_step: RefCell::new(5),
+            scroll_step: Cell::new(5),
         };
 
         return Ok(audio);
@@ -68,12 +69,12 @@ impl Audio {
                         card_name: Option<String>,
                         elem_name: Option<String>)
                         -> Result<()> {
+        debug!("Switching cards");
+        let cb = self.acard.borrow().cb.clone();
         let mut ac = self.acard.borrow_mut();
-        let cb = self.acard
-            .borrow()
-            .cb
-            .clone();
-        *ac = AlsaCard::new(card_name, elem_name, cb)?;
+        *ac = AlsaCard::new(card_name,
+                            elem_name,
+                            cb)?;
 
         return Ok(());
     }
@@ -102,7 +103,7 @@ impl Audio {
             *rc = glib::get_monotonic_time();
         }
         let old_vol = self.vol()?;
-        let new_vol = f64::ceil(old_vol + (*self.scroll_step.borrow() as f64));
+        let new_vol = f64::ceil(old_vol + (self.scroll_step.get() as f64));
 
         debug!("Increase vol by {:?} to {:?}", (new_vol - old_vol), new_vol);
 
@@ -116,7 +117,7 @@ impl Audio {
             *rc = glib::get_monotonic_time();
         }
         let old_vol = self.vol()?;
-        let new_vol = old_vol - (*self.scroll_step.borrow() as f64);
+        let new_vol = old_vol - (self.scroll_step.get() as f64);
 
         debug!("Decrease vol by {:?} to {:?}", (new_vol - old_vol), new_vol);
 
