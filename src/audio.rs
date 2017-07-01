@@ -1,21 +1,9 @@
-use alsa::card::Card;
-use alsa::mixer::{Mixer, Selem, SelemId};
-use alsa::poll::PollDescriptors;
-use alsa_sys;
 use errors::*;
 use glib;
-use glib_sys;
-use libc::c_uint;
-use libc::pollfd;
-use libc::size_t;
-use myalsa::*;
-use std::cell::Ref;
 use std::cell::RefCell;
-use std::mem;
-use std::ptr;
 use std::rc::Rc;
-use std::u8;
 use std::f64;
+use alsa_pn::*;
 
 
 
@@ -39,87 +27,60 @@ pub enum AudioSignal {
 }
 
 
-#[derive(Clone, Copy, Debug)]
-pub enum AlsaEvent {
-    AlsaCardError,
-    AlsaCardDiconnected,
-    AlsaCardValuesChanged,
-}
-
-
-// TODO: Audio struct? Separate more cleanly
-// TODO: implement free/destructor
-pub struct AlsaCard {
+pub struct Audio {
     _cannot_construct: (),
-    pub card: Card,
-    pub mixer: Mixer,
-    pub selem_id: SelemId,
-    pub watch_ids: Vec<u32>,
+    pub acard: RefCell<Box<AlsaCard>>,
     pub last_action_timestamp: RefCell<i64>,
-    pub handlers: RefCell<Vec<Box<Fn(AudioSignal, AudioUser)>>>,
+    pub handlers: Rc<RefCell<Vec<Box<Fn(AudioSignal, AudioUser)>>>>,
     pub scroll_step: RefCell<u32>,
 }
 
 
-/* TODO: AlsaCard cleanup */
-impl AlsaCard {
+impl Audio {
     pub fn new(card_name: Option<String>,
                elem_name: Option<String>)
-               -> Result<Rc<RefCell<AlsaCard>>> {
-        let card = {
-            match card_name {
-                Some(name) => get_alsa_card_by_name(name)?,
-                None => get_default_alsa_card(),
-            }
+               -> Result<Audio> {
+
+        let handlers = Rc::new(RefCell::new(vec![]));
+        let last_action_timestamp = RefCell::new(0);
+
+        let myhandler = handlers.clone();
+        let ts = last_action_timestamp.clone();
+        let cb = Rc::new(move |event| {
+                             Audio::on_alsa_event(&mut *ts.borrow_mut(),
+                                                  &myhandler.borrow(),
+                                                  event)
+                         });
+
+        let audio = Audio {
+            _cannot_construct: (),
+            acard: RefCell::new(AlsaCard::new(card_name, elem_name, cb)?),
+            last_action_timestamp: last_action_timestamp.clone(),
+            handlers: handlers.clone(),
+            scroll_step: RefCell::new(5),
         };
-        let mixer = get_mixer(&card)?;
-        let selem_id =
-            get_selem_by_name(&mixer,
-                              elem_name.unwrap_or(String::from("Master")))
-                    .unwrap()
-                    .get_id();
-        let vec_pollfd = PollDescriptors::get(&mixer)?;
 
-        // TODO: rework, should probably be a Box?
-        let acard = Rc::new(RefCell::new(AlsaCard {
-                                             _cannot_construct: (),
-                                             card: card,
-                                             mixer: mixer,
-                                             selem_id: selem_id,
-                                             watch_ids: vec![],
-                                             last_action_timestamp:
-                                                 RefCell::new(0),
-                                             handlers: RefCell::new(vec![]),
-                                             scroll_step: RefCell::new(3),
-                                         }));
-
-        /* TODO: callback is registered here, which must be unregistered
-         * when the mixer is destroyed!!
-         * poll descriptors must be unwatched too */
-        let watch_ids = watch_poll_descriptors(vec_pollfd, acard.as_ptr());
-        acard.borrow_mut().watch_ids = watch_ids;
-
-        return Ok(acard.clone());
+        return Ok(audio);
     }
 
 
-    // pub fn switch_card(old_card: Rc<RefCell<AlsaCard>>,
-    // card_name: Option<String>,
-    // elem_name: Option<String>)
-    // -> Result<Rc<RefCell<AlsaCard>>> {
+    pub fn switch_acard(&self,
+                        card_name: Option<String>,
+                        elem_name: Option<String>)
+                        -> Result<()> {
+        let mut ac = self.acard.borrow_mut();
+        let cb = self.acard
+            .borrow()
+            .cb
+            .clone();
+        *ac = AlsaCard::new(card_name, elem_name, cb)?;
 
-    // }
-
-
-    pub fn selem(&self) -> Selem {
-        return get_selems(&self.mixer)
-                   .nth(self.selem_id.get_index() as usize)
-                   .unwrap();
+        return Ok(());
     }
 
 
     pub fn vol(&self) -> Result<f64> {
-        return get_vol(&self.selem());
+        return self.acard.borrow().get_vol();
     }
 
 
@@ -131,7 +92,7 @@ impl AlsaCard {
         // TODO invoke handlers, make use of user
 
         debug!("Setting vol to {:?} by user {:?}", new_vol, user);
-        return set_vol(&self.selem(), new_vol);
+        return self.acard.borrow().set_vol(new_vol);
     }
 
 
@@ -164,12 +125,12 @@ impl AlsaCard {
 
 
     pub fn has_mute(&self) -> bool {
-        return has_mute(&self.selem());
+        return self.acard.borrow().has_mute();
     }
 
 
     pub fn get_mute(&self) -> Result<bool> {
-        return get_mute(&self.selem());
+        return self.acard.borrow().get_mute();
     }
 
 
@@ -178,12 +139,32 @@ impl AlsaCard {
         *rc = glib::get_monotonic_time();
         // TODO invoke handlers, make use of user
         debug!("Setting mute to {} by user {:?}", mute, user);
-        return set_mute(&self.selem(), mute);
+        return self.acard.borrow().set_mute(mute);
     }
 
 
-    fn on_alsa_event(&self, alsa_event: AlsaEvent) {
-        let last: i64 = *Ref::clone(&self.last_action_timestamp.borrow());
+    pub fn connect_handler(&self, cb: Box<Fn(AudioSignal, AudioUser)>) {
+        self.handlers.borrow_mut().push(cb);
+    }
+
+
+    fn invoke_handlers(handlers: &Vec<Box<Fn(AudioSignal, AudioUser)>>,
+                       signal: AudioSignal,
+                       user: AudioUser) {
+        debug!("Invoking handlers for signal {:?} by user {:?}",
+               signal,
+               user);
+        for handler in handlers {
+            let unboxed = handler.as_ref();
+            unboxed(signal, user);
+        }
+    }
+
+
+    fn on_alsa_event(last_action_timestamp: &mut i64,
+                     handlers: &Vec<Box<Fn(AudioSignal, AudioUser)>>,
+                     alsa_event: AlsaEvent) {
+        let last: i64 = *last_action_timestamp;
 
         if last != 0 {
             let now: i64 = glib::get_monotonic_time();
@@ -192,7 +173,7 @@ impl AlsaCard {
                 return;
             }
             debug!("Discarding last time stamp, too old");
-            *self.last_action_timestamp.borrow_mut() = 0;
+            *last_action_timestamp = 0;
         }
 
         /* external change */
@@ -202,136 +183,12 @@ impl AlsaCard {
             AlsaEvent::AlsaCardDiconnected => debug!("AlsaCardDiconnected"),
             AlsaEvent::AlsaCardValuesChanged => {
                 debug!("AlsaCardValuesChanged");
-                self.invoke_handlers(self::AudioSignal::AudioValuesChanged,
-                                     self::AudioUser::AudioUserUnknown);
+                Audio::invoke_handlers(handlers,
+                                       self::AudioSignal::AudioValuesChanged,
+                                       self::AudioUser::AudioUserUnknown);
             }
             e => warn!("Unhandled alsa event: {:?}", e),
         }
 
     }
-
-
-    fn invoke_handlers(&self, signal: AudioSignal, user: AudioUser) {
-        debug!("Invoking handlers for signal {:?} by user {:?}",
-               signal,
-               user);
-        let handlers = self.handlers.borrow();
-        let handlers_ref: &Vec<Box<Fn(AudioSignal, AudioUser)>> =
-            handlers.as_ref();
-        for handler in handlers_ref {
-            let unboxed = handler.as_ref();
-            unboxed(signal, user);
-        }
-    }
-
-
-    pub fn connect_handler(&self, cb: Box<Fn(AudioSignal, AudioUser)>) {
-        self.handlers.borrow_mut().push(cb);
-    }
-}
-
-
-impl Drop for AlsaCard {
-    // call Box::new(x), transmute the Box into a raw pointer, and then
-    // std::mem::forget
-    //
-    // if you unregister the callback, you should keep a raw pointer to the
-    // box
-    //
-    // For instance, `register` could return a raw pointer to the
-    // Box + a std::marker::PhantomData with the appropriate
-    // lifetime (if applicable)
-    //
-    // The struct could implement Drop, which unregisters the
-    // callback and frees the Box, by simply transmuting the
-    // raw pointer to a Box<T>
-    fn drop(&mut self) {
-        debug!("Destructing watch_ids: {:?}", self.watch_ids);
-        unwatch_poll_descriptors(&self.watch_ids);
-    }
-}
-
-
-fn watch_poll_descriptors(polls: Vec<pollfd>,
-                          acard: *mut AlsaCard)
-                          -> Vec<c_uint> {
-    let mut watch_ids: Vec<c_uint> = vec![];
-    let acard_ptr =
-        unsafe { mem::transmute::<*mut AlsaCard, glib_sys::gpointer>(acard) };
-    for poll in polls {
-        let gioc: *mut glib_sys::GIOChannel =
-            unsafe { glib_sys::g_io_channel_unix_new(poll.fd) };
-        let id = unsafe {
-            glib_sys::g_io_add_watch(
-                gioc,
-                glib_sys::GIOCondition::from_bits(
-                    glib_sys::G_IO_IN.bits() | glib_sys::G_IO_ERR.bits(),
-                ).unwrap(),
-                Some(watch_cb),
-                acard_ptr,
-            )
-        };
-        watch_ids.push(id);
-        unsafe { glib_sys::g_io_channel_unref(gioc) }
-    }
-
-    return watch_ids;
-}
-
-
-fn unwatch_poll_descriptors(watch_ids: &Vec<u32>) {
-    for watch_id in watch_ids {
-        unsafe {
-            glib_sys::g_source_remove(*watch_id);
-        }
-    }
-}
-
-
-extern "C" fn watch_cb(chan: *mut glib_sys::GIOChannel,
-                       cond: glib_sys::GIOCondition,
-                       data: glib_sys::gpointer)
-                       -> glib_sys::gboolean {
-
-    let acard =
-        unsafe { mem::transmute::<glib_sys::gpointer, &AlsaCard>(data) };
-
-    unsafe {
-        let mixer_ptr =
-            mem::transmute::<&Mixer, &*mut alsa_sys::snd_mixer_t>(&acard.mixer);
-        alsa_sys::snd_mixer_handle_events(*mixer_ptr);
-    };
-
-    if cond == glib_sys::G_IO_ERR {
-        return false as glib_sys::gboolean;
-    }
-
-    let mut sread: size_t = 1;
-    let mut buf: Vec<u8> = vec![0; 256];
-
-    while sread > 0 {
-        let stat: glib_sys::GIOStatus =
-            unsafe {
-                glib_sys::g_io_channel_read_chars(chan,
-                                                  buf.as_mut_ptr() as *mut u8,
-                                                  256,
-                                                  &mut sread as *mut size_t,
-                                                  ptr::null_mut())
-            };
-
-        match stat {
-            glib_sys::G_IO_STATUS_AGAIN => {
-                debug!("G_IO_STATUS_AGAIN");
-                continue;
-            }
-            glib_sys::G_IO_STATUS_NORMAL => debug!("G_IO_STATUS_NORMAL"),
-            glib_sys::G_IO_STATUS_ERROR => debug!("G_IO_STATUS_ERROR"),
-            glib_sys::G_IO_STATUS_EOF => debug!("G_IO_STATUS_EOF"),
-        }
-        return true as glib_sys::gboolean;
-    }
-
-    acard.on_alsa_event(AlsaEvent::AlsaCardValuesChanged);
-
-    return true as glib_sys::gboolean;
 }

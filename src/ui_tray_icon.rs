@@ -66,15 +66,15 @@ fn on_tray_icon_scroll_event(appstate: &AppS,
                              event: &gdk::EventScroll)
                              -> bool {
 
+    let audio = &appstate.audio;
+
     let scroll_dir: gdk::ScrollDirection = event.get_direction();
     match scroll_dir {
         gdk::ScrollDirection::Up => {
-            try_wr!(appstate.acard.borrow().increase_vol(AudioUserTrayIcon),
-                    false);
+            try_wr!(appstate.audio.increase_vol(AudioUserTrayIcon), false);
         }
         gdk::ScrollDirection::Down => {
-            try_wr!(appstate.acard.borrow().decrease_vol(AudioUserTrayIcon),
-                    false);
+            try_wr!(appstate.audio.decrease_vol(AudioUserTrayIcon), false);
         }
         _ => (),
     }

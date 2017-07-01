@@ -28,9 +28,9 @@ mod errors;
 #[macro_use]
 mod glade_helpers;
 
+mod alsa_pn;
 mod app_state;
 mod audio;
-mod myalsa;
 mod ui_entry;
 mod ui_popup_menu;
 mod ui_popup_window;

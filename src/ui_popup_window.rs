@@ -71,13 +71,13 @@ pub fn init_popup_window(appstate: Rc<AppS>) {
 fn on_popup_window_show(window: &gtk::Window,
                         appstate: &AppS,
                         toggle_signal: u64) {
-    let acard = appstate.acard.borrow();
+    let audio = &appstate.audio;
     let popup_window = &appstate.gui.popup_window;
 
-    let cur_vol = try_w!(acard.vol());
+    let cur_vol = try_w!(audio.vol());
     set_slider(&popup_window.vol_scale_adj, cur_vol);
 
-    let muted = acard.get_mute();
+    let muted = audio.get_mute();
     update_mute_check(&appstate, toggle_signal, muted);
 
     popup_window.vol_scale.grab_focus();
@@ -118,22 +118,22 @@ fn on_popup_window_event(w: &gtk::Window,
 
 
 fn on_vol_scale_value_changed(appstate: &AppS) {
-    let acard = appstate.acard.borrow();
+    let audio = &appstate.audio;
 
     let val = appstate.gui
         .popup_window
         .vol_scale
         .get_value();
 
-    try_w!(acard.set_vol(val, AudioUserPopup));
+    try_w!(audio.set_vol(val, AudioUserPopup));
 }
 
 
 fn on_mute_check_toggled(appstate: &AppS) {
-    let acard = appstate.acard.borrow();
+    let audio = &appstate.audio;
 
-    let muted = try_w!(acard.get_mute());
-    let _ = try_w!(acard.set_mute(!muted, AudioUserPopup));
+    let muted = try_w!(audio.get_mute());
+    let _ = try_w!(audio.set_mute(!muted, AudioUserPopup));
 }
 
 

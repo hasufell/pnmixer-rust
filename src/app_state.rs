@@ -1,5 +1,5 @@
 use gtk;
-use audio::AlsaCard;
+use audio::Audio;
 use std::cell::RefCell;
 use std::rc::Rc;
 use glade_helpers::*;
@@ -10,7 +10,7 @@ use glade_helpers::*;
 // TODO: glade stuff, config, alsacard
 pub struct AppS {
     pub gui: Gui,
-    pub acard: Rc<RefCell<AlsaCard>>,
+    pub audio: Audio,
 }
 
 
@@ -21,7 +21,7 @@ impl AppS {
         let builder_popup_menu = gtk::Builder::new_from_string(include_str!("../data/ui/popup-menu.glade"));
         return AppS {
                    gui: Gui::new(builder_popup_window, builder_popup_menu),
-                   acard: AlsaCard::new(None, Some(String::from("Master")))
+                   audio: Audio::new(None, Some(String::from("Master")))
                        .unwrap(),
                };
     }

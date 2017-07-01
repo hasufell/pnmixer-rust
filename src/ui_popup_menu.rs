@@ -1,15 +1,6 @@
 use app_state::*;
-use gdk;
-use gdk_sys;
-use glib;
-use glib_sys;
-use std::mem;
 use gtk::prelude::*;
 use std::rc::Rc;
-use std::cell::RefCell;
-use libc;
-use audio::AudioUser::*;
-use errors::*;
 use gtk;
 
 
