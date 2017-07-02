@@ -311,9 +311,7 @@ pub fn get_selems(mixer: &Mixer) -> Map<alsa::mixer::Iter, fn(Elem) -> Selem> {
 pub fn get_selem_names(mixer: &Mixer) -> Vec<String> {
     let mut vec = vec![];
     for selem in get_selems(mixer) {
-        let n = selem.get_id()
-            .get_name()
-            .map(|y| String::from(y));
+        let n = selem.get_id().get_name().map(|y| String::from(y));
         match n {
             Ok(name) => vec.push(name),
             _ => (),
