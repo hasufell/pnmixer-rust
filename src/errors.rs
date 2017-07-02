@@ -36,16 +36,16 @@ macro_rules! try_wr {
         },
     });
     ($expr:expr, $ret:expr, $fmt:expr) => (match $expr {
-        std::result::Result::Ok(val) => val,
-        std::result::Result::Err(err) => {
+        ::std::result::Result::Ok(val) => val,
+        ::std::result::Result::Err(err) => {
             warn!("Original error: {:?}", err);
             warn!($fmt);
             return $ret;
         },
     });
     ($expr:expr, $ret:expr, $fmt:expr, $($arg:tt)+) => (match $expr {
-        std::result::Result::Ok(val) => val,
-        std::result::Result::Err(err) => {
+        ::std::result::Result::Ok(val) => val,
+        ::std::result::Result::Err(err) => {
             warn!("Original error: {:?}", err);
             warn!(format!($fmt, $(arg)+));
             return $ret;
@@ -57,8 +57,8 @@ macro_rules! try_wr {
 #[macro_export]
 macro_rules! try_r {
     ($expr:expr, $ret:expr) => (match $expr {
-        std::result::Result::Ok(val) => val,
-        std::result::Result::Err(err) => {
+        ::std::result::Result::Ok(val) => val,
+        ::std::result::Result::Err(err) => {
             return $ret;
         },
     });
@@ -90,16 +90,16 @@ macro_rules! try_er {
         },
     });
     ($expr:expr, $ret:expr, $fmt:expr) => (match $expr {
-        std::result::Result::Ok(val) => val,
-        std::result::Result::Err(err) => {
+        ::std::result::Result::Ok(val) => val,
+        ::std::result::Result::Err(err) => {
             err!("Original error: {:?}", err);
             err!($fmt);
             return $ret;
         },
     });
     ($expr:expr, $ret:expr, $fmt:expr, $($arg:tt)+) => (match $expr {
-        std::result::Result::Ok(val) => val,
-        std::result::Result::Err(err) => {
+        ::std::result::Result::Ok(val) => val,
+        ::std::result::Result::Err(err) => {
             err!("Original error: {:?}", err);
             err!(format!($fmt, $(arg)+));
             return $ret;

@@ -78,10 +78,21 @@ impl AlsaCard {
     }
 
 
+    pub fn card_name(&self) -> Result<String> {
+        return self.card.get_name().from_err();
+    }
+
+
+    pub fn chan_name(&self) -> Result<String> {
+        let n = self.selem_id
+            .get_name()
+            .map(|y| String::from(y))?;
+        return Ok(n);
+    }
+
+
     pub fn selem(&self) -> Selem {
-        return get_selems(&self.mixer)
-                   .nth(self.selem_id.get_index() as usize)
-                   .unwrap();
+        return self.mixer.find_selem(&self.selem_id).unwrap();
     }
 
 
@@ -254,6 +265,19 @@ pub fn get_alsa_cards() -> alsa::card::Iter {
 }
 
 
+pub fn get_alsa_card_names() -> Vec<String> {
+    let mut vec = vec![];
+    for card in get_alsa_cards() {
+        match card.and_then(|c| c.get_name()) {
+            Ok(name) => vec.push(name),
+            _ => (),
+        }
+    }
+
+    return vec;
+}
+
+
 pub fn get_alsa_card_by_name(name: String) -> Result<Card> {
     for r_card in get_alsa_cards() {
         let card = r_card?;
@@ -281,6 +305,22 @@ pub fn get_selem(elem: Elem) -> Selem {
 
 pub fn get_selems(mixer: &Mixer) -> Map<alsa::mixer::Iter, fn(Elem) -> Selem> {
     return mixer.iter().map(get_selem);
+}
+
+
+pub fn get_selem_names(mixer: &Mixer) -> Vec<String> {
+    let mut vec = vec![];
+    for selem in get_selems(mixer) {
+        let n = selem.get_id()
+            .get_name()
+            .map(|y| String::from(y));
+        match n {
+            Ok(name) => vec.push(name),
+            _ => (),
+        }
+    }
+
+    return vec;
 }
 
 

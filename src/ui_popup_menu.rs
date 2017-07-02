@@ -21,6 +21,18 @@ pub fn init_popup_menu(appstate: Rc<AppS>) {
                                         on_about_item_activate(&apps);
                                     });
     }
+
+    /* about_item.connect_activate_link */
+    {
+        let apps = appstate.clone();
+        let prefs_item = &appstate.clone()
+                              .gui
+                              .popup_menu
+                              .prefs_item;
+        prefs_item.connect_activate(move |_| {
+                                        on_prefs_item_activate(&apps);
+                                    });
+    }
 }
 
 
@@ -59,4 +71,15 @@ Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA."));
     about_dialog.set_comments("A mixer for the system tray");
 
     return about_dialog;
+}
+
+
+fn on_prefs_item_activate(appstate: &AppS) {
+    /* TODO: only create if needed */
+    let prefs_dialog = &appstate.gui.prefs_dialog.prefs_dialog;
+    let popup_menu = &appstate.gui.popup_menu.menu_window;
+
+    prefs_dialog.set_transient_for(popup_menu);
+    prefs_dialog.run();
+    // prefs_dialog.destroy();
 }
