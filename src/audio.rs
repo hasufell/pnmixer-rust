@@ -260,8 +260,6 @@ impl Audio {
         let mut rc = self.last_action_timestamp.borrow_mut();
         *rc = glib::get_monotonic_time();
 
-
-
         debug!("Setting mute to {} on card {:?} and chan {:?} by user {:?}",
                mute,
                self.acard
@@ -282,6 +280,12 @@ impl Audio {
                         AudioSignal::ValuesChanged,
                         user);
         return Ok(());
+    }
+
+
+    pub fn toggle_mute(&self, user: AudioUser) -> Result<()> {
+        let muted = self.get_mute()?;
+        return self.set_mute(!muted, user);
     }
 
 

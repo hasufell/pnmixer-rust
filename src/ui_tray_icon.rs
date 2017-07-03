@@ -115,10 +115,8 @@ fn pixbuf_new_from_theme(icon_name: &str,
 
 
 fn update_tray_icon(audio_pix: &AudioPix, appstate: &AppS) {
-    debug!("Update tray icon");
     let status_icon = &appstate.gui.status_icon;
     let pixbuf = audio_pix.select_pix(appstate.audio.vol_level());
-    debug!("VolLevel: {:?}", appstate.audio.vol_level());
     status_icon.set_from_pixbuf(Some(pixbuf));
 }
 
@@ -134,7 +132,6 @@ pub fn init_tray_icon(appstate: Rc<AppS>) {
         appstate.audio.connect_handler(Box::new(move |s, u| {
             match (s, u) {
                 (AudioSignal::ValuesChanged, _) => {
-                    debug!("tray icon handler: {:?} {:?}", s, u);
                     update_tray_icon(&_audio_pix.borrow(), &apps);
                 },
                 _ => (),
@@ -174,6 +171,15 @@ pub fn init_tray_icon(appstate: Rc<AppS>) {
         let tray_icon = &appstate.clone().gui.status_icon;
         tray_icon.connect_popup_menu(move |_, _, _| {
                                          on_tray_icon_popup_menu(&apps)
+                                     });
+    }
+
+    /* tray_icon.connect_button_release_event */
+    {
+        let apps = appstate.clone();
+        let tray_icon = &appstate.clone().gui.status_icon;
+        tray_icon.connect_button_release_event(move |_, eb| {
+                                         on_tray_button_release_event(&apps, eb)
                                      });
     }
 }
@@ -238,6 +244,23 @@ fn on_tray_icon_size_changed(appstate: &AppS,
     }
 
     update_tray_icon(&audio_pix.borrow(), &appstate);
+
+    return false;
+}
+
+
+fn on_tray_button_release_event(appstate: &AppS,
+                                event_button: &gdk::EventButton)
+                                -> bool {
+    let button = event_button.get_button();
+
+    if button != 2 {
+        // not middle-click
+        return false;
+    }
+
+    let audio = &appstate.audio;
+    try_wr!(audio.toggle_mute(AudioUser::Popup), false);
 
     return false;
 }

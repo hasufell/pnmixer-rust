@@ -131,9 +131,7 @@ fn on_vol_scale_value_changed(appstate: &AppS) {
 
 fn on_mute_check_toggled(appstate: &AppS) {
     let audio = &appstate.audio;
-
-    let muted = try_w!(audio.get_mute());
-    let _ = try_w!(audio.set_mute(!muted, AudioUser::Popup));
+    try_w!(audio.toggle_mute(AudioUser::Popup))
 }
 
 
