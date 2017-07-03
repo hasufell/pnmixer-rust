@@ -12,7 +12,7 @@ use std::cell::RefCell;
 use libc;
 use audio::*;
 use errors::*;
-use std::path;
+use std::path::*;
 
 
 
@@ -63,7 +63,7 @@ struct AudioPix {
 
 
 impl AudioPix {
-    pub fn new(size: i32) -> Result<AudioPix> {
+    pub fn new_from_theme(size: i32) -> Result<AudioPix> {
         let theme: gtk::IconTheme =
             gtk::IconTheme::get_default().ok_or("Couldn't get default icon theme")?;
         let pix = AudioPix {
@@ -77,6 +77,19 @@ impl AudioPix {
             *   icon-naming-spec-latest.html
             */
             off: pixbuf_new_from_theme("audio-volume-off", size, &theme).or(pixbuf_new_from_theme("audio-volume-low", size, &theme))?,
+        };
+
+        return Ok(pix);
+    }
+
+    pub fn new_from_pnmixer() -> Result<AudioPix> {
+            gtk::IconTheme::get_default().ok_or("Couldn't get default icon theme")?;
+        let pix = AudioPix {
+            muted: pixbuf_new_from_file("pnmixer-muted.png")?,
+            low: pixbuf_new_from_file("pnmixer-low.png")?,
+            medium: pixbuf_new_from_file("pnmixer-medium.png")?,
+            high: pixbuf_new_from_file("pnmixer-high.png")?,
+            off: pixbuf_new_from_file("pnmixer-off.png")?,
         };
 
         return Ok(pix);
@@ -105,12 +118,29 @@ fn pixbuf_new_from_theme(icon_name: &str,
 
     debug!("Loading stock icon {} from {:?}",
            icon_name,
-           icon_info.get_filename().unwrap_or(path::PathBuf::new()));
+           icon_info.get_filename().unwrap_or(PathBuf::new()));
 
     // TODO: propagate error
     let pixbuf = icon_info.load_icon().unwrap();
 
     return Ok(pixbuf);
+}
+
+
+fn pixbuf_new_from_file(filename: &str) -> Result<gdk_pixbuf::Pixbuf> {
+    ensure!(!filename.is_empty(), "Filename is empty");
+
+    let s = format!("./data/pixmaps/{}", filename);
+    let path = Path::new(s.as_str());
+
+    if path.exists() {
+        let str_path = path.to_str().ok_or("Path is not valid unicode")?;
+
+        // TODO: propagate error
+        return Ok(gdk_pixbuf::Pixbuf::new_from_file(str_path).unwrap());
+    } else {
+        bail!("Uh-oh");
+    }
 }
 
 
@@ -122,7 +152,7 @@ fn update_tray_icon(audio_pix: &AudioPix, appstate: &AppS) {
 
 
 pub fn init_tray_icon(appstate: Rc<AppS>) {
-    let audio_pix = Rc::new(RefCell::new(try_w!(AudioPix::new(ICON_MIN_SIZE))));
+    let audio_pix = Rc::new(RefCell::new(try_w!(AudioPix::new_from_pnmixer())));
     update_tray_icon(&audio_pix.borrow(), &appstate);
 
     /* connect audio handler */
@@ -240,7 +270,7 @@ fn on_tray_icon_size_changed(appstate: &AppS,
 
     {
         let mut pix = audio_pix.borrow_mut();
-        *pix = try_wr!(AudioPix::new(size), false);
+        *pix = try_wr!(AudioPix::new_from_pnmixer(), false);
     }
 
     update_tray_icon(&audio_pix.borrow(), &appstate);
