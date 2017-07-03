@@ -8,6 +8,7 @@ alsa = "^0.1.8"
 alsa-sys = "^0.1.1"
 libc = "^0.2.23"
 gdk-sys = { git = "https://github.com/gtk-rs/sys" }
+gdk-pixbuf = { git = "https://github.com/gtk-rs/gdk-pixbuf.git" }
 gtk-sys = { git = "https://github.com/gtk-rs/sys" }
 glib = { git = "https://github.com/gtk-rs/glib.git" }
 glib-sys = { git = "https://github.com/gtk-rs/sys" }

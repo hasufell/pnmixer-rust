@@ -543,41 +543,6 @@
                     <property name="position">1</property>
                   </packing>
                 </child>
-                <child>
-                  <object class="GtkFrame" id="frame6">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="label_xalign">0</property>
-                    <property name="shadow_type">none</property>
-                    <child>
-                      <object class="GtkCheckButton" id="system_theme">
-                        <property name="label" translatable="yes">Use System Theme</property>
-                        <property name="use_action_appearance">False</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="receives_default">False</property>
-                        <property name="halign">start</property>
-                        <property name="margin_start">12</property>
-                        <property name="draw_indicator">True</property>
-                      </object>
-                    </child>
-                    <child type="label">
-                      <object class="GtkLabel" id="label17">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="margin_bottom">5</property>
-                        <property name="label" translatable="yes">&lt;b&gt;Icon Theme&lt;/b&gt;</property>
-                        <property name="use_markup">True</property>
-                      </object>
-                    </child>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">False</property>
-                    <property name="padding">5</property>
-                    <property name="position">2</property>
-                  </packing>
-                </child>
               </object>
             </child>
             <child type="tab">

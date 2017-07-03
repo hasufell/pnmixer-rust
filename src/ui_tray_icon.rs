@@ -1,5 +1,6 @@
 use app_state::*;
 use gdk;
+use gdk_pixbuf;
 use gdk_sys;
 use glib;
 use glib_sys;
@@ -10,6 +11,42 @@ use std::cell::RefCell;
 use libc;
 use audio::AudioUser::*;
 use errors::*;
+
+
+
+// struct VolMeter {
+    // pub red: u8,
+    // pub green: u8,
+    // pub blue: u8,
+    // pub x_offset_pct: i64,
+    // pub y_offset_pct: i64,
+    // /* dynamic */
+    // pub pixbuf: gdk_pixbuf::Pixbuf,
+    // pub width: i64,
+    // pub row: u8,
+// }
+
+
+// impl VolMeter {
+    // pub fn new() -> VolMeter {
+        // let pixbux = Pixbuf::new();
+        // return VolMeter {
+            // red: 255,
+            // green: 255,
+            // blue: 255,
+            // x_offset_pct: 0,
+            // y_offset_pct: 0,
+            // pixbuf: ,
+            // width: ,
+            // row: ,
+        // }
+    // }
+// }
+
+
+fn pixbuf_new_from_stock(icon_name: String, size: u32) {
+
+}
 
 
 

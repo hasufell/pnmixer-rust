@@ -36,6 +36,8 @@ pub fn init_prefs_dialog(appstate: &Rc<AppS>, prefs_dialog: &Rc<PrefsDialog>) {
         prefs_dialog.clone().prefs_dialog.connect_show(move |_| { on_prefs_dialog_show(&apps, &pd); });
     }
 
+    /*  DEVICE TAB */
+
     /* card_combo.connect_changed */
     {
         let apps = appstate.clone();

@@ -12,6 +12,7 @@ extern crate alsa;
 extern crate alsa_sys;
 extern crate ffi;
 extern crate gdk;
+extern crate gdk_pixbuf;
 extern crate gdk_sys;
 extern crate glib;
 extern crate glib_sys;
@@ -34,6 +35,7 @@ mod audio;
 mod ui_entry;
 mod ui_popup_menu;
 mod ui_popup_window;
+mod ui_prefs_dialog;
 mod ui_tray_icon;
 
 use app_state::*;
@@ -50,6 +52,7 @@ fn main() {
        .unwrap_or_else(|e| panic!("Logger initialization failed with {}", e));
 
     let apps = Rc::new(AppS::new());
+    // let _ = apps.audio.switch_acard(None, None).unwrap();
 
     ui_entry::init(apps);
 

@@ -96,8 +96,16 @@ impl Audio {
                         elem_name: Option<String>)
                         -> Result<()> {
         debug!("Switching cards");
-        debug!("Old card name: {}", self.acard.borrow().card_name().unwrap());
-        debug!("Old chan name: {}", self.acard.borrow().chan_name().unwrap());
+        debug!("Old card name: {}",
+               self.acard
+                   .borrow()
+                   .card_name()
+                   .unwrap());
+        debug!("Old chan name: {}",
+               self.acard
+                   .borrow()
+                   .chan_name()
+                   .unwrap());
         let cb = self.acard
             .borrow()
             .cb
@@ -106,8 +114,16 @@ impl Audio {
             let mut ac = self.acard.borrow_mut();
             *ac = AlsaCard::new(card_name, elem_name, cb)?;
         }
-        debug!("Old card name: {}", self.acard.borrow().card_name().unwrap());
-        debug!("Old chan name: {}", self.acard.borrow().chan_name().unwrap());
+        debug!("Old card name: {}",
+               self.acard
+                   .borrow()
+                   .card_name()
+                   .unwrap());
+        debug!("Old chan name: {}",
+               self.acard
+                   .borrow()
+                   .chan_name()
+                   .unwrap());
         return Ok(());
     }
 
@@ -125,8 +141,14 @@ impl Audio {
         // TODO invoke handlers, make use of user
 
         debug!("Setting vol on card {:?} and chan {:?} to {:?} by user {:?}",
-               self.acard.borrow().card_name().unwrap(),
-               self.acard.borrow().chan_name().unwrap(),
+               self.acard
+                   .borrow()
+                   .card_name()
+                   .unwrap(),
+               self.acard
+                   .borrow()
+                   .chan_name()
+                   .unwrap(),
                new_vol,
                user);
         return self.acard.borrow().set_vol(new_vol);
@@ -142,8 +164,14 @@ impl Audio {
         let new_vol = f64::ceil(old_vol + (self.scroll_step.get() as f64));
 
         debug!("Increase vol on card {:?} and chan {:?} by {:?} to {:?}",
-               self.acard.borrow().card_name().unwrap(),
-               self.acard.borrow().chan_name().unwrap(),
+               self.acard
+                   .borrow()
+                   .card_name()
+                   .unwrap(),
+               self.acard
+                   .borrow()
+                   .chan_name()
+                   .unwrap(),
                (new_vol - old_vol),
                new_vol);
 
@@ -160,8 +188,14 @@ impl Audio {
         let new_vol = old_vol - (self.scroll_step.get() as f64);
 
         debug!("Decrease vol on card {:?} and chan {:?} by {:?} to {:?}",
-               self.acard.borrow().card_name().unwrap(),
-               self.acard.borrow().chan_name().unwrap(),
+               self.acard
+                   .borrow()
+                   .card_name()
+                   .unwrap(),
+               self.acard
+                   .borrow()
+                   .chan_name()
+                   .unwrap(),
                (new_vol - old_vol),
                new_vol);
 
@@ -186,8 +220,14 @@ impl Audio {
 
         debug!("Setting mute to {} on card {:?} and chan {:?} by user {:?}",
                mute,
-               self.acard.borrow().card_name().unwrap(),
-               self.acard.borrow().chan_name().unwrap(),
+               self.acard
+                   .borrow()
+                   .card_name()
+                   .unwrap(),
+               self.acard
+                   .borrow()
+                   .chan_name()
+                   .unwrap(),
                user);
 
         return self.acard.borrow().set_mute(mute);
