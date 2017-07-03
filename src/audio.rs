@@ -10,22 +10,32 @@ use alsa_pn::*;
 
 
 #[derive(Clone, Copy, Debug)]
+pub enum VolLevel {
+    Muted,
+    Low,
+    Medium,
+    High,
+    Off,
+}
+
+
+#[derive(Clone, Copy, Debug)]
 pub enum AudioUser {
-    AudioUserUnknown,
-    AudioUserPopup,
-    AudioUserTrayIcon,
-    AudioUserHotkeys,
+    Unknown,
+    Popup,
+    TrayIcon,
+    Hotkeys,
 }
 
 
 #[derive(Clone, Copy, Debug)]
 pub enum AudioSignal {
-    AudioNoCard,
-    AudioCardInitialized,
-    AudioCardCleanedUp,
-    AudioCardDisconnected,
-    AudioCardError,
-    AudioValuesChanged,
+    NoCard,
+    CardInitialized,
+    CardCleanedUp,
+    CardDisconnected,
+    CardError,
+    ValuesChanged,
 }
 
 
@@ -125,6 +135,7 @@ impl Audio {
                    .chan_name()
                    .unwrap());
         return Ok(());
+        // TODO: invoke handler
     }
 
 
@@ -133,12 +144,27 @@ impl Audio {
     }
 
 
+    pub fn vol_level(&self) -> VolLevel {
+        let muted = self.get_mute().unwrap_or(false);
+        if muted {
+            return VolLevel::Muted;
+        }
+        let cur_vol = try_r!(self.vol(), VolLevel::Muted);
+        match cur_vol {
+            0. => return VolLevel::Off,
+            0.0...33.0 => return VolLevel::Low,
+            0.0...66.0 => return VolLevel::Medium,
+            0.0...100.0 => return VolLevel::High,
+            _ => return VolLevel::Off,
+        }
+    }
+
+
     pub fn set_vol(&self, new_vol: f64, user: AudioUser) -> Result<()> {
         {
             let mut rc = self.last_action_timestamp.borrow_mut();
             *rc = glib::get_monotonic_time();
         }
-        // TODO invoke handlers, make use of user
 
         debug!("Setting vol on card {:?} and chan {:?} to {:?} by user {:?}",
                self.acard
@@ -151,7 +177,14 @@ impl Audio {
                    .unwrap(),
                new_vol,
                user);
-        return self.acard.borrow().set_vol(new_vol);
+        self.acard
+            .borrow()
+            .set_vol(new_vol)?;
+
+        invoke_handlers(&self.handlers.borrow(),
+                        AudioSignal::ValuesChanged,
+                        user);
+        return Ok(());
     }
 
 
@@ -175,7 +208,12 @@ impl Audio {
                (new_vol - old_vol),
                new_vol);
 
-        return self.set_vol(new_vol, user);
+        self.set_vol(new_vol, user)?;
+
+        invoke_handlers(&self.handlers.borrow(),
+                        AudioSignal::ValuesChanged,
+                        user);
+        return Ok(());
     }
 
 
@@ -199,7 +237,12 @@ impl Audio {
                (new_vol - old_vol),
                new_vol);
 
-        return self.set_vol(new_vol, user);
+        self.set_vol(new_vol, user)?;
+
+        invoke_handlers(&self.handlers.borrow(),
+                        AudioSignal::ValuesChanged,
+                        user);
+        return Ok(());
     }
 
 
@@ -216,7 +259,8 @@ impl Audio {
     pub fn set_mute(&self, mute: bool, user: AudioUser) -> Result<()> {
         let mut rc = self.last_action_timestamp.borrow_mut();
         *rc = glib::get_monotonic_time();
-        // TODO invoke handlers, make use of user
+
+
 
         debug!("Setting mute to {} on card {:?} and chan {:?} by user {:?}",
                mute,
@@ -230,7 +274,14 @@ impl Audio {
                    .unwrap(),
                user);
 
-        return self.acard.borrow().set_mute(mute);
+        self.acard
+            .borrow()
+            .set_mute(mute)?;
+
+        invoke_handlers(&self.handlers.borrow(),
+                        AudioSignal::ValuesChanged,
+                        user);
+        return Ok(());
     }
 
 
@@ -258,8 +309,6 @@ fn on_alsa_event(last_action_timestamp: &mut i64,
                  alsa_event: AlsaEvent) {
     let last: i64 = *last_action_timestamp;
 
-    debug!("Last: {}", last);
-
     if last != 0 {
         let now: i64 = glib::get_monotonic_time();
         let delay: i64 = now - last;
@@ -278,8 +327,8 @@ fn on_alsa_event(last_action_timestamp: &mut i64,
         AlsaEvent::AlsaCardValuesChanged => {
             debug!("AlsaCardValuesChanged");
             invoke_handlers(handlers,
-                            self::AudioSignal::AudioValuesChanged,
-                            self::AudioUser::AudioUserUnknown);
+                            self::AudioSignal::ValuesChanged,
+                            self::AudioUser::Unknown);
         }
         e => warn!("Unhandled alsa event: {:?}", e),
     }

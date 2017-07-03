@@ -40,7 +40,7 @@ impl Gui {
                builder_popup_menu: gtk::Builder)
                -> Gui {
         return Gui {
-                   status_icon: gtk::StatusIcon::new_from_icon_name("pnmixer"),
+                   status_icon: gtk::StatusIcon::new(),
                    popup_window: PopupWindow::new(builder_popup_window),
                    popup_menu: PopupMenu::new(builder_popup_menu),
                };

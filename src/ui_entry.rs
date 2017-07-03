@@ -1,5 +1,5 @@
 use app_state::*;
-use audio::{AudioSignal, AudioUser};
+use audio::*;
 use std::rc::Rc;
 use ui_popup_menu::*;
 use ui_popup_window::*;
@@ -11,16 +11,14 @@ use ui_prefs_dialog::*;
 pub fn init(appstate: Rc<AppS>) {
     {
         let apps = appstate.clone();
-        appstate.audio.connect_handler(Box::new(move |s, u| {
-            match (s, u) {
-                (AudioSignal::AudioValuesChanged,
-                 AudioUser::AudioUserUnknown) => {
+        appstate.audio.connect_handler(Box::new(move |s, u| match (s, u) {
+                                                    (AudioSignal::ValuesChanged,
+                 AudioUser::Unknown) => {
                     debug!("External volume change!");
 
                 }
-                _ => debug!("Nix"),
-            }
-        }));
+                                                    _ => debug!("Nix"),
+                                                }));
     }
 
     init_tray_icon(appstate.clone());

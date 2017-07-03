@@ -1,5 +1,5 @@
 use app_state::*;
-use audio::AudioUser::*;
+use audio::*;
 use errors::*;
 use gdk::DeviceExt;
 use gdk::{GrabOwnership, GrabStatus, BUTTON_PRESS_MASK, KEY_PRESS_MASK};
@@ -125,7 +125,7 @@ fn on_vol_scale_value_changed(appstate: &AppS) {
         .vol_scale
         .get_value();
 
-    try_w!(audio.set_vol(val, AudioUserPopup));
+    try_w!(audio.set_vol(val, AudioUser::Popup));
 }
 
 
@@ -133,7 +133,7 @@ fn on_mute_check_toggled(appstate: &AppS) {
     let audio = &appstate.audio;
 
     let muted = try_w!(audio.get_mute());
-    let _ = try_w!(audio.set_mute(!muted, AudioUserPopup));
+    let _ = try_w!(audio.set_mute(!muted, AudioUser::Popup));
 }
 
 
