@@ -38,6 +38,7 @@ mod ui_popup_menu;
 mod ui_popup_window;
 mod ui_prefs_dialog;
 mod ui_tray_icon;
+mod prefs;
 mod support_ui;
 mod support_alsa;
 
