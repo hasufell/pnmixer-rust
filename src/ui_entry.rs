@@ -11,14 +11,15 @@ use ui_prefs_dialog::*;
 pub fn init(appstate: Rc<AppS>) {
     {
         let apps = appstate.clone();
-        appstate.audio.connect_handler(Box::new(move |s, u| match (s, u) {
-                                                    (AudioSignal::ValuesChanged,
-                 AudioUser::Unknown) => {
+        appstate.audio.connect_handler(
+            Box::new(move |s, u| match (s, u) {
+                (AudioSignal::ValuesChanged, AudioUser::Unknown) => {
                     debug!("External volume change!");
 
                 }
-                                                    _ => debug!("Nix"),
-                                                }));
+                _ => debug!("Nix"),
+            }),
+        );
     }
 
     init_tray_icon(appstate.clone());

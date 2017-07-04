@@ -13,6 +13,7 @@ extern crate alsa_sys;
 extern crate ffi;
 extern crate gdk;
 extern crate gdk_pixbuf;
+extern crate gdk_pixbuf_sys;
 extern crate gdk_sys;
 extern crate glib;
 extern crate glib_sys;
@@ -52,7 +53,6 @@ fn main() {
        .unwrap_or_else(|e| panic!("Logger initialization failed with {}", e));
 
     let apps = Rc::new(AppS::new());
-    // let _ = apps.audio.switch_acard(None, None).unwrap();
 
     ui_entry::init(apps);
 

@@ -14,24 +14,18 @@ pub fn init_popup_menu(appstate: Rc<AppS>) {
     /* about_item.connect_activate_link */
     {
         let apps = appstate.clone();
-        let about_item = &appstate.clone()
-                              .gui
-                              .popup_menu
-                              .about_item;
-        about_item.connect_activate(move |_| {
-                                        on_about_item_activate(&apps);
-                                    });
+        let about_item = &appstate.clone().gui.popup_menu.about_item;
+        about_item.connect_activate(
+            move |_| { on_about_item_activate(&apps); },
+        );
     }
 
     /* about_item.connect_activate_link */
     {
-        let prefs_item = &appstate.clone()
-                              .gui
-                              .popup_menu
-                              .prefs_item;
-        prefs_item.connect_activate(move |_| {
-                                        on_prefs_item_activate(appstate.clone());
-                                    });
+        let prefs_item = &appstate.clone().gui.popup_menu.prefs_item;
+        prefs_item.connect_activate(
+            move |_| { on_prefs_item_activate(appstate.clone()); },
+        );
     }
 }
 
@@ -49,7 +43,8 @@ fn on_about_item_activate(appstate: &AppS) {
 fn create_about_dialog() -> gtk::AboutDialog {
     let about_dialog: gtk::AboutDialog = gtk::AboutDialog::new();
 
-    about_dialog.set_license(Some("PNMixer is free software; you can redistribute it and/or modify it
+    about_dialog.set_license(Some(
+        "PNMixer is free software; you can redistribute it and/or modify it
 under the terms of the GNU General Public License v3 as published
 by the Free Software Foundation.
 
@@ -60,7 +55,8 @@ See the GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with PNMixer; if not, write to the Free Software Foundation,
-Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA."));
+Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.",
+    ));
     about_dialog.set_copyright(Some("Copyright © 2017 Julian Ospald"));
     about_dialog.set_authors(&["Julian Ospald"]);
     about_dialog.set_artists(&["Paul Davey"]);

@@ -14,15 +14,17 @@ pub struct AppS {
 
 impl AppS {
     pub fn new() -> AppS {
-        let builder_popup_window =
-            gtk::Builder::new_from_string(include_str!("../data/ui/popup-window.glade"));
-        let builder_popup_menu = gtk::Builder::new_from_string(include_str!("../data/ui/popup-menu.glade"));
+        let builder_popup_window = gtk::Builder::new_from_string(include_str!(
+            "../data/ui/popup-window.glade"
+        ));
+        let builder_popup_menu = gtk::Builder::new_from_string(
+            include_str!("../data/ui/popup-menu.glade"),
+        );
 
         return AppS {
-                   gui: Gui::new(builder_popup_window, builder_popup_menu),
-                   audio: Audio::new(None, Some(String::from("Master")))
-                       .unwrap(),
-               };
+            gui: Gui::new(builder_popup_window, builder_popup_menu),
+            audio: Audio::new(None, Some(String::from("Master"))).unwrap(),
+        };
     }
 }
 
@@ -36,28 +38,33 @@ pub struct Gui {
 
 
 impl Gui {
-    pub fn new(builder_popup_window: gtk::Builder,
-               builder_popup_menu: gtk::Builder)
-               -> Gui {
+    pub fn new(
+        builder_popup_window: gtk::Builder,
+        builder_popup_menu: gtk::Builder,
+    ) -> Gui {
         return Gui {
-                   status_icon: gtk::StatusIcon::new(),
-                   popup_window: PopupWindow::new(builder_popup_window),
-                   popup_menu: PopupMenu::new(builder_popup_menu),
-               };
+            status_icon: gtk::StatusIcon::new(),
+            popup_window: PopupWindow::new(builder_popup_window),
+            popup_menu: PopupMenu::new(builder_popup_menu),
+        };
     }
 }
 
 
-create_builder_item!(PopupWindow,
-                     popup_window: gtk::Window,
-                     vol_scale_adj: gtk::Adjustment,
-                     vol_scale: gtk::Scale,
-                     mute_check: gtk::CheckButton);
+create_builder_item!(
+    PopupWindow,
+    popup_window: gtk::Window,
+    vol_scale_adj: gtk::Adjustment,
+    vol_scale: gtk::Scale,
+    mute_check: gtk::CheckButton
+);
 
 
-create_builder_item!(PopupMenu,
-                     menu_window: gtk::Window,
-                     menubar: gtk::MenuBar,
-                     menu: gtk::Menu,
-                     about_item: gtk::MenuItem,
-                     prefs_item: gtk::MenuItem);
+create_builder_item!(
+    PopupMenu,
+    menu_window: gtk::Window,
+    menubar: gtk::MenuBar,
+    menu: gtk::Menu,
+    about_item: gtk::MenuItem,
+    prefs_item: gtk::MenuItem
+);
