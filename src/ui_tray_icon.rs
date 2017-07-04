@@ -3,24 +3,17 @@ use gdk;
 use gdk_pixbuf;
 use gdk_pixbuf_sys;
 use gdk_pixbuf_sys::GDK_COLORSPACE_RGB;
-use gdk_sys;
-use glib;
-use glib_sys;
 use gtk;
-use std::mem;
 use gtk::prelude::*;
 use std::rc::Rc;
 use std::cell::Cell;
 use std::cell::RefCell;
-use libc;
 use audio::*;
 use errors::*;
 use std::path::*;
 use glib::translate::ToGlibPtr;
 use glib::translate::FromGlibPtrFull;
-use glib::translate::FromGlibPtrNone;
 
-use libc::memcpy;
 
 
 
@@ -110,11 +103,6 @@ impl VolMeter {
             y
         );
 
-        debug!("vm_height: {}", vm_height);
-        debug!("i_height: {}", i_height);
-        debug!("y: {}", y);
-        debug!("volume: {}", volume);
-
         /* Let's check if the icon width changed, in which case we
          * must reinit our internal row of pixels.
          */
@@ -131,7 +119,7 @@ impl VolMeter {
                 .iter()
                 .cloned()
                 .cycle()
-                .take(vm_width - 1 as usize)
+                .take((vm_width * 4) as usize)
                 .collect();
         }
 
@@ -146,18 +134,13 @@ impl VolMeter {
             for i in 0..(vm_height - 1) {
                 let row_offset: i64 = y - i;
                 let col_offset: i64 = x * 4;
-                let p_index = ((row_offset * rowstride) + col_offset) as isize;
+                let p_index = ((row_offset * rowstride) + col_offset) as usize;
 
-                unsafe {
-                    let p = pixels.as_mut_ptr().offset(p_index) as
-                        *mut libc::c_void;
-                    memcpy(
-                        p,
-                        self.row.borrow().as_slice().as_ptr() as
-                            *const libc::c_void,
-                        self.row.borrow().len(),
-                    );
-                }
+                let row = self.row.borrow();
+                pixels[p_index..p_index + row.len()].copy_from_slice(
+                    row.as_ref(),
+                );
+
             }
         }
 
