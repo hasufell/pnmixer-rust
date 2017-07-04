@@ -30,7 +30,7 @@ mod errors;
 #[macro_use]
 mod glade_helpers;
 
-mod alsa_pn;
+mod alsa_card;
 mod app_state;
 mod audio;
 mod ui_entry;
@@ -38,6 +38,8 @@ mod ui_popup_menu;
 mod ui_popup_window;
 mod ui_prefs_dialog;
 mod ui_tray_icon;
+mod support_ui;
+mod support_alsa;
 
 use app_state::*;
 

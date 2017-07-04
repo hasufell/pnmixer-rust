@@ -1,5 +1,6 @@
 use gtk;
 use audio::Audio;
+use ui_tray_icon::TrayIcon;
 
 
 
@@ -30,7 +31,7 @@ impl AppS {
 
 
 pub struct Gui {
-    pub status_icon: gtk::StatusIcon,
+    pub tray_icon: TrayIcon,
     pub popup_window: PopupWindow,
     pub popup_menu: PopupMenu,
     /* prefs_dialog is dynamically created and destroyed */
@@ -43,7 +44,7 @@ impl Gui {
         builder_popup_menu: gtk::Builder,
     ) -> Gui {
         return Gui {
-            status_icon: gtk::StatusIcon::new(),
+            tray_icon: TrayIcon::new().unwrap(),
             popup_window: PopupWindow::new(builder_popup_window),
             popup_menu: PopupMenu::new(builder_popup_menu),
         };

@@ -1,38 +1,66 @@
 use app_state::*;
-use gdk;
-use gdk_pixbuf;
-use gdk_pixbuf_sys;
-use gdk_pixbuf_sys::GDK_COLORSPACE_RGB;
-use gtk;
-use gtk::prelude::*;
-use std::rc::Rc;
-use std::cell::Cell;
-use std::cell::RefCell;
 use audio::*;
 use errors::*;
-use std::path::*;
-use glib::translate::ToGlibPtr;
-use glib::translate::FromGlibPtrFull;
+use gdk;
+use gdk_pixbuf;
+use gdk_pixbuf_sys::GDK_COLORSPACE_RGB;
+use gtk::prelude::*;
+use gtk;
+use std::cell::Cell;
+use std::cell::RefCell;
+use std::rc::Rc;
+use support_ui::*;
+
+
+// TODO: on_apply
+
+
+const ICON_MIN_SIZE: i64 = 16;
 
 
 
-
-const ICON_MIN_SIZE: i32 = 16;
-
-
-fn copy_pixbuf(pixbuf: &gdk_pixbuf::Pixbuf) -> gdk_pixbuf::Pixbuf {
-
-    let new_pixbuf = unsafe {
-        let gdk_pixbuf = pixbuf.to_glib_full();
-        let copy = gdk_pixbuf_sys::gdk_pixbuf_copy(gdk_pixbuf);
-        FromGlibPtrFull::from_glib_full(copy)
-    };
-
-    return new_pixbuf;
+pub struct TrayIcon {
+    pub volmeter: VolMeter,
+    pub audio_pix: AudioPix,
+    pub status_icon: gtk::StatusIcon,
+    pub icon_size: Cell<i64>,
 }
 
 
-struct VolMeter {
+impl TrayIcon {
+    // TODO: take settings as parameter
+    pub fn new() -> Result<TrayIcon> {
+        let volmeter = VolMeter::new();
+        let audio_pix = AudioPix::new_from_pnmixer()?;
+        let status_icon = gtk::StatusIcon::new();
+
+        return Ok(TrayIcon { volmeter, audio_pix, status_icon, icon_size: Cell::new(ICON_MIN_SIZE) });
+    }
+
+    fn update(&self, audio: &Audio, m_size: Option<i64>) {
+        match m_size {
+            Some(s) => {
+                if s < ICON_MIN_SIZE {
+                    self.icon_size.set(ICON_MIN_SIZE);
+                } else {
+                    self.icon_size.set(s);
+                }
+            },
+            None => (),
+        }
+
+        let cur_vol = try_w!(audio.vol());
+        let pixbuf = self.audio_pix.select_pix(audio.vol_level());
+        let vol_pix = try_w!(self.volmeter.meter_draw(cur_vol as i64,
+                                                      &pixbuf));
+
+        self.status_icon.set_from_pixbuf(Some(&vol_pix));
+    }
+}
+
+
+
+pub struct VolMeter {
     pub red: u8,
     pub green: u8,
     pub blue: u8,
@@ -153,7 +181,7 @@ impl VolMeter {
 
 
 #[derive(Clone, Debug)]
-struct AudioPix {
+pub struct AudioPix {
     muted: gdk_pixbuf::Pixbuf,
     low: gdk_pixbuf::Pixbuf,
     medium: gdk_pixbuf::Pixbuf,
@@ -213,71 +241,20 @@ impl AudioPix {
 }
 
 
-fn pixbuf_new_from_theme(
-    icon_name: &str,
-    size: i32,
-    theme: &gtk::IconTheme,
-) -> Result<gdk_pixbuf::Pixbuf> {
-
-    let icon_info = theme
-        .lookup_icon(icon_name, size, gtk::IconLookupFlags::empty())
-        .ok_or(format!("Couldn't find icon {}", icon_name))?;
-
-    debug!(
-        "Loading stock icon {} from {:?}",
-        icon_name,
-        icon_info.get_filename().unwrap_or(PathBuf::new())
-    );
-
-    // TODO: propagate error
-    let pixbuf = icon_info.load_icon().unwrap();
-
-    return Ok(pixbuf);
-}
-
-
-fn pixbuf_new_from_file(filename: &str) -> Result<gdk_pixbuf::Pixbuf> {
-    ensure!(!filename.is_empty(), "Filename is empty");
-
-    let s = format!("./data/pixmaps/{}", filename);
-    let path = Path::new(s.as_str());
-
-    if path.exists() {
-        let str_path = path.to_str().ok_or("Path is not valid unicode")?;
-
-        // TODO: propagate error
-        return Ok(gdk_pixbuf::Pixbuf::new_from_file(str_path).unwrap());
-    } else {
-        bail!("Uh-oh");
-    }
-}
-
-
-fn update_tray_icon(audio_pix: &AudioPix, appstate: &AppS) {
-    let cur_vol = try_w!(appstate.audio.vol());
-
-    let status_icon = &appstate.gui.status_icon;
-    let pixbuf = audio_pix.select_pix(appstate.audio.vol_level());
-
-    let volmeter = VolMeter::new();
-    let vol_pix = try_w!(volmeter.meter_draw(cur_vol as i64, &pixbuf));
-
-    status_icon.set_from_pixbuf(Some(&vol_pix));
-}
-
-
 pub fn init_tray_icon(appstate: Rc<AppS>) {
-    let audio_pix = Rc::new(RefCell::new(try_w!(AudioPix::new_from_pnmixer())));
-    update_tray_icon(&audio_pix.borrow(), &appstate);
+    let audio = &appstate.audio;
+    let tray_icon = &appstate.gui.tray_icon;
+    tray_icon.update(&audio, None);
+
+    tray_icon.status_icon.set_visible(true);
 
     /* connect audio handler */
     {
-        let _audio_pix = audio_pix.clone();
         let apps = appstate.clone();
         appstate.audio.connect_handler(
             Box::new(move |s, u| match (s, u) {
                 (AudioSignal::ValuesChanged, _) => {
-                    update_tray_icon(&_audio_pix.borrow(), &apps);
+                    apps.gui.tray_icon.update(&apps.audio, None);
                 }
                 _ => (),
             }),
@@ -287,27 +264,22 @@ pub fn init_tray_icon(appstate: Rc<AppS>) {
     /* tray_icon.connect_size_changed */
     {
         let apps = appstate.clone();
-        let tray_icon = &appstate.gui.status_icon;
-        let _audio_pix = audio_pix.clone();
-        tray_icon.connect_size_changed(move |_, size| {
-            on_tray_icon_size_changed(&apps, _audio_pix.as_ref(), size)
+        tray_icon.status_icon.connect_size_changed(move |_, size| {
+            apps.gui.tray_icon.update(&apps.audio, Some(size as i64));
+            return false;
         });
-        tray_icon.set_visible(true);
     }
 
     /* tray_icon.connect_activate */
     {
         let apps = appstate.clone();
-        let tray_icon = &appstate.gui.status_icon;
-        tray_icon.connect_activate(move |_| on_tray_icon_activate(&apps));
-        tray_icon.set_visible(true);
+        tray_icon.status_icon.connect_activate(move |_| on_tray_icon_activate(&apps));
     }
 
     /* tray_icon.connect_scroll_event */
     {
         let apps = appstate.clone();
-        let tray_icon = &appstate.clone().gui.status_icon;
-        tray_icon.connect_scroll_event(
+        tray_icon.status_icon.connect_scroll_event(
             move |_, e| on_tray_icon_scroll_event(&apps, &e),
         );
     }
@@ -315,8 +287,7 @@ pub fn init_tray_icon(appstate: Rc<AppS>) {
     /* tray_icon.connect_popup_menu */
     {
         let apps = appstate.clone();
-        let tray_icon = &appstate.clone().gui.status_icon;
-        tray_icon.connect_popup_menu(
+        tray_icon.status_icon.connect_popup_menu(
             move |_, _, _| on_tray_icon_popup_menu(&apps),
         );
     }
@@ -324,8 +295,7 @@ pub fn init_tray_icon(appstate: Rc<AppS>) {
     /* tray_icon.connect_button_release_event */
     {
         let apps = appstate.clone();
-        let tray_icon = &appstate.clone().gui.status_icon;
-        tray_icon.connect_button_release_event(
+        tray_icon.status_icon.connect_button_release_event(
             move |_, eb| on_tray_button_release_event(&apps, eb),
         );
     }
@@ -369,30 +339,6 @@ fn on_tray_icon_scroll_event(
         }
         _ => (),
     }
-
-    return false;
-}
-
-
-fn on_tray_icon_size_changed(
-    appstate: &AppS,
-    audio_pix: &RefCell<AudioPix>,
-    size: i32,
-) -> bool {
-    debug!("Tray icon size is now {}", size);
-
-    let mut size = size;
-    if size < ICON_MIN_SIZE {
-        size = ICON_MIN_SIZE;
-        debug!("Forcing size to the minimum value {}", size);
-    }
-
-    {
-        let mut pix = audio_pix.borrow_mut();
-        *pix = try_wr!(AudioPix::new_from_pnmixer(), false);
-    }
-
-    update_tray_icon(&audio_pix.borrow(), &appstate);
 
     return false;
 }

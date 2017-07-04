@@ -1,11 +1,11 @@
+use alsa_card::*;
 use errors::*;
 use glib;
 use std::cell::Cell;
 use std::cell::Ref;
 use std::cell::RefCell;
-use std::rc::Rc;
 use std::f64;
-use alsa_pn::*;
+use std::rc::Rc;
 
 
 
@@ -25,6 +25,7 @@ pub enum AudioUser {
     Popup,
     TrayIcon,
     Hotkeys,
+    PrefsWindow,
 }
 
 
@@ -104,6 +105,7 @@ impl Audio {
         &self,
         card_name: Option<String>,
         elem_name: Option<String>,
+        user: AudioUser,
     ) -> Result<()> {
         debug!("Switching cards");
         debug!(
@@ -127,8 +129,14 @@ impl Audio {
             "Old chan name: {}",
             self.acard.borrow().chan_name().unwrap()
         );
+
+        invoke_handlers(
+            &self.handlers.borrow(),
+            AudioSignal::CardInitialized,
+            user,
+        );
+
         return Ok(());
-        // TODO: invoke handler
     }
 
 

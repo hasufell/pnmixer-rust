@@ -1,8 +1,10 @@
 use app_state::*;
+use audio::AudioUser;
 use gtk::prelude::*;
-use std::rc::Rc;
 use gtk;
-use alsa_pn;
+use std::rc::Rc;
+use support_alsa::*;
+
 
 
 create_builder_item!(
@@ -11,8 +13,6 @@ create_builder_item!(
     card_combo: gtk::ComboBoxText,
     chan_combo: gtk::ComboBoxText
 );
-
-
 
 
 pub fn show_prefs_dialog(appstate: Rc<AppS>) {
@@ -50,6 +50,7 @@ pub fn init_prefs_dialog(appstate: &Rc<AppS>, prefs_dialog: &Rc<PrefsDialog>) {
         let card_combo = &prefs_dialog.card_combo;
         let pd = prefs_dialog.clone();
 
+        // TODO: refill channel combo
         card_combo.connect_changed(
             move |_| { on_card_combo_changed(&apps, &pd); },
         );
@@ -76,7 +77,7 @@ fn on_prefs_dialog_show(appstate: &AppS, prefs_dialog: &PrefsDialog) {
     /* set card combo */
     let cur_card_name =
         try_w!(acard.card_name(), "Can't get current card name!");
-    let available_card_names = alsa_pn::get_alsa_card_names();
+    let available_card_names = get_alsa_card_names();
 
     /* set_active_id doesn't work, so save the index */
     let mut c_index: i32 = -1;
@@ -95,7 +96,7 @@ fn on_prefs_dialog_show(appstate: &AppS, prefs_dialog: &PrefsDialog) {
 
     /* set chan combo */
     let cur_chan_name = try_w!(acard.chan_name());
-    let available_chan_names = alsa_pn::get_selem_names(&acard.mixer);
+    let available_chan_names = get_selem_names(&acard.mixer);
 
     /* set_active_id doesn't work, so save the index */
     let mut c_index: i32 = -1;
@@ -129,6 +130,7 @@ fn on_card_combo_changed(appstate: &AppS, prefs_dialog: &PrefsDialog) {
         appstate.audio.switch_acard(
             Some(cur_card_name),
             active_chan_item,
+            AudioUser::PrefsWindow
         );
     }
 }
@@ -153,6 +155,7 @@ fn on_chan_combo_changed(appstate: &AppS, prefs_dialog: &PrefsDialog) {
         appstate.audio.switch_acard(
             cur_card_name,
             Some(active_chan_item),
+            AudioUser::PrefsWindow
         );
     }
 }
