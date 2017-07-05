@@ -22,6 +22,7 @@ toml = "^0.4.2"
 serde_derive = "^1.0.9"
 serde = "^1.0.9"
 xdg = "*"
+which = "*"
 
 [dependencies.gtk]
 git = "https://github.com/gtk-rs/gtk.git"

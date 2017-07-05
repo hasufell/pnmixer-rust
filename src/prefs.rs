@@ -1,8 +1,12 @@
 use errors::*;
-use toml;
-use xdg;
+use std::fmt::Display;
+use std::fmt::Formatter;
 use std::fs::File;
 use std::io::prelude::*;
+use std;
+use toml;
+use which;
+use xdg;
 
 
 
@@ -25,17 +29,6 @@ impl Default for MiddleClickAction {
     fn default() -> MiddleClickAction {
         return MiddleClickAction::ToggleMute;
     }
-}
-
-
-#[derive(Deserialize, Debug, Serialize, Default)]
-#[serde(default)]
-pub struct Prefs {
-    pub device_prefs: DevicePrefs,
-    pub view_prefs: ViewPrefs,
-    pub behavior_prefs: BehaviorPrefs,
-    pub notify_prefs: NotifyPrefs,
-    // TODO: HotKeys?
 }
 
 
@@ -101,7 +94,7 @@ impl Default for VolColor {
 #[derive(Deserialize, Debug, Serialize)]
 #[serde(default)]
 pub struct BehaviorPrefs {
-    vol_control_cmd: Option<String>,
+    pub vol_control_cmd: Option<String>,
     pub vol_scroll_step: f64,
     pub middle_click_action: MiddleClickAction,
     // TODO: fine scroll step?
@@ -142,8 +135,15 @@ impl Default for NotifyPrefs {
 }
 
 
-
-
+#[derive(Deserialize, Debug, Serialize, Default)]
+#[serde(default)]
+pub struct Prefs {
+    pub device_prefs: DevicePrefs,
+    pub view_prefs: ViewPrefs,
+    pub behavior_prefs: BehaviorPrefs,
+    pub notify_prefs: NotifyPrefs,
+    // TODO: HotKeys?
+}
 
 impl Prefs {
     pub fn new() -> Result<Prefs> {
@@ -201,11 +201,31 @@ impl Prefs {
     }
 
 
-    // TODO: implement
-    pub fn vol_control_cmd() -> String {
-        return String::from("");
+    pub fn get_avail_vol_control_cmd(&self) -> Option<String> {
+        match self.behavior_prefs.vol_control_cmd {
+            Some(ref c) => return Some(c.clone()),
+            None => {
+                for command in VOL_CONTROL_COMMANDS.iter() {
+                    if which::which(command).is_ok() {
+                        return Some(String::from(*command));
+                    }
+                }
+            }
+        }
+
+        return None;
     }
 }
+
+impl Display for Prefs {
+    fn fmt(&self,
+           f: &mut Formatter)
+           -> std::result::Result<(), std::fmt::Error> {
+        let s = self.to_str();
+        return write!(f, "{}", s);
+    }
+}
+
 
 fn get_xdg_dirs() -> xdg::BaseDirectories {
     return xdg::BaseDirectories::with_prefix("pnmixer-rs").unwrap();

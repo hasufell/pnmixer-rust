@@ -26,6 +26,7 @@ extern crate gobject_sys;
 extern crate gtk;
 extern crate gtk_sys;
 extern crate libc;
+extern crate which;
 extern crate xdg;
 
 use std::rc::Rc;
@@ -65,10 +66,10 @@ fn main() {
     let apps = Rc::new(AppS::new());
 
     let mut prefs = prefs::Prefs::new().unwrap();
-    println!("Channel: {:?}", prefs.to_str());
+    println!("Channel: {}", prefs.to_str());
     prefs.store_config();
 
-    // println!("Channel: {:?}", prefs.to_str());
+    println!("Control_cmd: {:?}", prefs.get_avail_vol_control_cmd());
 
     ui_entry::init(apps);
 
