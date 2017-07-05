@@ -28,7 +28,7 @@ impl Default for MiddleClickAction {
 }
 
 
-#[derive(Deserialize, Debug, Serialize)]
+#[derive(Deserialize, Debug, Serialize, Default)]
 #[serde(default)]
 pub struct Prefs {
     pub device_prefs: DevicePrefs,
@@ -36,17 +36,6 @@ pub struct Prefs {
     pub behavior_prefs: BehaviorPrefs,
     pub notify_prefs: NotifyPrefs,
     // TODO: HotKeys?
-}
-
-impl Default for Prefs {
-    fn default() -> Prefs {
-        return Prefs {
-                   device_prefs: DevicePrefs::default(),
-                   view_prefs: ViewPrefs::default(),
-                   behavior_prefs: BehaviorPrefs::default(),
-                   notify_prefs: NotifyPrefs::default(),
-               };
-    }
 }
 
 
