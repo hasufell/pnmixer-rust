@@ -8,6 +8,11 @@ extern crate log;
 #[macro_use]
 extern crate error_chain;
 
+#[macro_use]
+extern crate serde_derive;
+extern crate toml;
+extern crate serde;
+
 extern crate alsa;
 extern crate alsa_sys;
 extern crate ffi;
@@ -43,6 +48,7 @@ mod support_ui;
 mod support_alsa;
 
 use app_state::*;
+use prefs::*;
 
 
 
@@ -56,6 +62,11 @@ fn main() {
        .unwrap_or_else(|e| panic!("Logger initialization failed with {}", e));
 
     let apps = Rc::new(AppS::new());
+
+    let mut prefs = prefs::Prefs::new_from_def();
+    prefs.behavior_prefs.middle_click_action = MiddleClickAction::CustomCommand(String::from("Gaga"));
+    println!("Channel: {:?}", prefs.to_str());
+
 
     ui_entry::init(apps);
 

@@ -18,6 +18,9 @@ ffi = "^0.0.2"
 flexi_logger = "^0.5.1"
 log = "^0.3.8"
 error-chain = { path = "3rdparty/error-chain" }
+toml = "^0.4.2"
+serde_derive = "^1.0.9"
+serde = "^1.0.9"
 
 [dependencies.gtk]
 git = "https://github.com/gtk-rs/gtk.git"

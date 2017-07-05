@@ -1,26 +1,31 @@
 use errors::*;
 use std::path::Path;
 use glib;
-use glib::KeyFile;
+use toml;
 
 
 
-const DEFAULT_PREFS: &str = "[PNMixer]\n
-AlsaCard=(default)\n
-AlsaChannel=Master\n
-DrawVolMeter=True\n
-VolMeterOffset=10\n
-VolMeterColor=245;121;0;\n
-SystemTheme=true\n
-VolControlCommand=xfce4-mixer\n
-VolControlStep=5\n
-MiddleClickAction=0\n
-CustomCommand=\n
-EnableNotifications=true\n
-NotificationTimeout=1500\n
-MouseNotifications=true\n
-PopupNotifcations=true\n
-ExternalNotifications=true\n";
+const DEFAULT_PREFS: &str = "[device_prefs]
+card = \"default\"
+channel = \"Master\"
+
+[view_prefs]
+draw_vol_meter = true
+vol_meter_offset = 10
+vol_meter_color = { red = 245, blue = 121, green = 0 }
+system_theme = true
+
+[behavior_prefs]
+vol_control_cmd = \"\"
+vol_scroll_step = 5.0
+middle_click_action = \"ToggleMute\"
+
+[notify_prefs]
+enable_notifications = true
+notifcation_timeout = 1500
+notify_mouse_scroll = true
+notify_popup = true
+notify_external = true";
 
 
 const VOL_CONTROL_COMMANDS: [&str; 3] = [
@@ -31,6 +36,7 @@ const VOL_CONTROL_COMMANDS: [&str; 3] = [
 
 
 
+#[derive(Deserialize, Debug, Serialize)]
 pub enum MiddleClickAction {
     ToggleMute,
     ShowPreferences,
@@ -39,30 +45,49 @@ pub enum MiddleClickAction {
 }
 
 
-struct Prefs {
-    key_file: glib::KeyFile,
 
-    /* device prefs */
+#[derive(Deserialize, Debug, Serialize)]
+pub struct Prefs {
+    pub device_prefs: DevicePrefs,
+    pub view_prefs: ViewPrefs,
+    pub behavior_prefs: BehaviorPrefs,
+    pub notify_prefs: NotifyPrefs,
+    // TODO: HotKeys?
+}
+
+#[derive(Deserialize, Debug, Serialize)]
+pub struct DevicePrefs {
     pub card: String,
     pub channel: String,
     // TODO: normalize volume?
+}
 
-    /* view prefs */
+#[derive(Deserialize, Debug, Serialize)]
+pub struct ViewPrefs {
     pub draw_vol_meter: bool,
     pub vol_meter_offset: i64,
-    pub vol_meter_color: (u8, u8, u8),
+    pub vol_meter_color: VolColor,
     pub system_theme: bool,
     // TODO: Display text folume/text volume pos?
+}
 
-    /* behavior */
+#[derive(Deserialize, Debug, Serialize)]
+pub struct VolColor {
+    pub red: u8,
+    pub green: u8,
+    pub blue: u8,
+}
+
+#[derive(Deserialize, Debug, Serialize)]
+pub struct BehaviorPrefs {
     pub vol_control_cmd: String,
     pub vol_scroll_step: f64,
     pub middle_click_action: MiddleClickAction,
     // TODO: fine scroll step?
+}
 
-    // TODO: HotKeys?
-
-    /* notifications */
+#[derive(Deserialize, Debug, Serialize)]
+pub struct NotifyPrefs {
     pub enable_notifications: bool,
     pub notifcation_timeout: i64,
     pub notify_mouse_scroll: bool,
@@ -73,28 +98,42 @@ struct Prefs {
 
 
 impl Prefs {
-    pub fn new() -> Prefs {
-        // load from config
+    // pub fn set_blah(&mut self) {
+        // self.vol_scroll_step = 5.0;
+    // }
 
-    }
+    // pub fn new() -> Prefs {
+        // // load from config
 
-    pub fn reload_from_config(&self) {
+    // }
 
-    }
+    // pub fn reload_from_config(&self) {
 
-
-    pub fn save_to_config() -> Result<()> {
-
-    }
+    // }
 
 
-    fn config_path() -> String {
+    // pub fn save_to_config() -> Result<()> {
 
-    }
+    // }
+
+
+    // fn config_path() -> String {
+
+    // }
 
 
     fn ensure_config_path() {
 
+    }
+
+    pub fn new_from_def() -> Prefs {
+        let prefs: Prefs = toml::from_str(DEFAULT_PREFS).unwrap();
+        return prefs;
+    }
+
+
+    pub fn to_str(&self) -> String {
+        return toml::to_string(self).unwrap();
     }
 }
 
