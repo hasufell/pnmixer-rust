@@ -36,7 +36,7 @@ impl Default for MiddleClickAction {
 #[serde(default)]
 pub struct DevicePrefs {
     pub card: String,
-    pub channel: String,
+    pub channel: String, 
     // TODO: normalize volume?
 }
 
@@ -56,7 +56,7 @@ pub struct ViewPrefs {
     pub draw_vol_meter: bool,
     pub vol_meter_offset: i64,
     pub system_theme: bool,
-    pub vol_meter_color: VolColor,
+    pub vol_meter_color: VolColor, 
     // TODO: Display text folume/text volume pos?
 }
 
@@ -96,7 +96,7 @@ impl Default for VolColor {
 pub struct BehaviorPrefs {
     pub vol_control_cmd: Option<String>,
     pub vol_scroll_step: f64,
-    pub middle_click_action: MiddleClickAction,
+    pub middle_click_action: MiddleClickAction, 
     // TODO: fine scroll step?
 }
 
@@ -118,7 +118,7 @@ pub struct NotifyPrefs {
     pub notifcation_timeout: i64,
     pub notify_mouse_scroll: bool,
     pub notify_popup: bool,
-    pub notify_external: bool,
+    pub notify_external: bool, 
     // TODO: notify_hotkeys?
 }
 
@@ -141,7 +141,7 @@ pub struct Prefs {
     pub device_prefs: DevicePrefs,
     pub view_prefs: ViewPrefs,
     pub behavior_prefs: BehaviorPrefs,
-    pub notify_prefs: NotifyPrefs,
+    pub notify_prefs: NotifyPrefs, 
     // TODO: HotKeys?
 }
 

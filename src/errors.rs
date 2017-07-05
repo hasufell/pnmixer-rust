@@ -89,24 +89,24 @@ macro_rules! try_er {
     ($expr:expr, $ret:expr) => (match $expr {
         ::std::result::Result::Ok(val) => val,
         ::std::result::Result::Err(err) => {
-            err!("{:?}", err);
-            return $ret;
+            error!("{:?}", err);
+            ::std::process::exit(1);
         },
     });
     ($expr:expr, $ret:expr, $fmt:expr) => (match $expr {
         ::std::result::Result::Ok(val) => val,
         ::std::result::Result::Err(err) => {
-            err!("Original error: {:?}", err);
-            err!($fmt);
-            return $ret;
+            error!("Original error: {:?}", err);
+            error!($fmt);
+            std::process::exit(1);
         },
     });
     ($expr:expr, $ret:expr, $fmt:expr, $($arg:tt)+) => (match $expr {
         ::std::result::Result::Ok(val) => val,
         ::std::result::Result::Err(err) => {
-            err!("Original error: {:?}", err);
-            err!(format!($fmt, $(arg)+));
-            return $ret;
+            error!("Original error: {:?}", err);
+            error!(format!($fmt, $(arg)+));
+            std::process::exit(1);
         },
     })
 }

@@ -1,6 +1,8 @@
-use gtk;
 use audio::Audio;
+use gtk;
+use prefs::Prefs;
 use ui_tray_icon::TrayIcon;
+use std::cell::RefCell;
 
 
 
@@ -10,6 +12,7 @@ use ui_tray_icon::TrayIcon;
 pub struct AppS {
     pub gui: Gui,
     pub audio: Audio,
+    pub prefs: RefCell<Prefs>,
 }
 
 
@@ -18,11 +21,15 @@ impl AppS {
         let builder_popup_window =
             gtk::Builder::new_from_string(include_str!("../data/ui/popup-window.glade"));
         let builder_popup_menu = gtk::Builder::new_from_string(include_str!("../data/ui/popup-menu.glade"));
+        let prefs = RefCell::new(Prefs::new().unwrap());
+        let gui =
+            Gui::new(builder_popup_window, builder_popup_menu, &prefs.borrow());
 
         return AppS {
-                   gui: Gui::new(builder_popup_window, builder_popup_menu),
+                   gui: gui,
                    audio: Audio::new(None, Some(String::from("Master")))
                        .unwrap(),
+                   prefs: prefs,
                };
     }
 }
@@ -38,10 +45,11 @@ pub struct Gui {
 
 impl Gui {
     pub fn new(builder_popup_window: gtk::Builder,
-               builder_popup_menu: gtk::Builder)
+               builder_popup_menu: gtk::Builder,
+               prefs: &Prefs)
                -> Gui {
         return Gui {
-                   tray_icon: TrayIcon::new().unwrap(),
+                   tray_icon: TrayIcon::new(prefs).unwrap(),
                    popup_window: PopupWindow::new(builder_popup_window),
                    popup_menu: PopupMenu::new(builder_popup_menu),
                };

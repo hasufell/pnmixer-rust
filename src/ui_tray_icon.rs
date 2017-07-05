@@ -6,6 +6,7 @@ use gdk_pixbuf;
 use gdk_pixbuf_sys::GDK_COLORSPACE_RGB;
 use gtk::prelude::*;
 use gtk;
+use prefs::Prefs;
 use std::cell::Cell;
 use std::cell::RefCell;
 use std::rc::Rc;
@@ -15,50 +16,74 @@ use support_ui::*;
 // TODO: on_apply
 
 
-const ICON_MIN_SIZE: i64 = 16;
+const ICON_MIN_SIZE: i32 = 16;
 
 
 
 pub struct TrayIcon {
-    pub volmeter: VolMeter,
-    pub audio_pix: AudioPix,
+    pub volmeter: Option<VolMeter>,
+    pub audio_pix: RefCell<AudioPix>,
     pub status_icon: gtk::StatusIcon,
-    pub icon_size: Cell<i64>,
+    pub icon_size: Cell<i32>,
 }
 
 
 impl TrayIcon {
-    // TODO: take settings as parameter
-    pub fn new() -> Result<TrayIcon> {
-        let volmeter = VolMeter::new();
-        let audio_pix = AudioPix::new_from_pnmixer()?;
+    pub fn new(prefs: &Prefs) -> Result<TrayIcon> {
+        let draw_vol_meter = prefs.view_prefs.draw_vol_meter;
+
+        let volmeter = {
+            if draw_vol_meter {
+                Some(VolMeter::new(prefs))
+            } else {
+                None
+            }
+        };
+        let audio_pix = AudioPix::new(ICON_MIN_SIZE, prefs)?;
         let status_icon = gtk::StatusIcon::new();
 
         return Ok(TrayIcon {
                       volmeter,
-                      audio_pix,
+                      audio_pix: RefCell::new(audio_pix),
                       status_icon,
                       icon_size: Cell::new(ICON_MIN_SIZE),
                   });
     }
 
-    fn update(&self, audio: &Audio, m_size: Option<i64>) {
+    fn update(&self,
+              prefs: &Prefs,
+              audio: &Audio,
+              m_size: Option<i32>)
+              -> Result<()> {
         match m_size {
             Some(s) => {
                 if s < ICON_MIN_SIZE {
                     self.icon_size.set(ICON_MIN_SIZE);
+
                 } else {
                     self.icon_size.set(s);
                 }
+                /* if icon size changed, we have to re-init audio pix */
+                let pixbuf = AudioPix::new(self.icon_size.get(), &prefs)?;
+                *self.audio_pix.borrow_mut() = pixbuf;
             }
             None => (),
         }
 
-        let cur_vol = try_w!(audio.vol());
-        let pixbuf = self.audio_pix.select_pix(audio.vol_level());
-        let vol_pix = try_w!(self.volmeter.meter_draw(cur_vol as i64, &pixbuf));
+        let cur_vol = audio.vol()?;
+        let audio_pix = self.audio_pix.borrow();
+        let pixbuf = audio_pix.select_pix(audio.vol_level());
 
-        self.status_icon.set_from_pixbuf(Some(&vol_pix));
+        let volmeter = &self.volmeter.as_ref();
+        match volmeter {
+            &Some(v) => {
+                let vol_pix = v.meter_draw(cur_vol as i64, &pixbuf)?;
+                self.status_icon.set_from_pixbuf(Some(&vol_pix));
+            }
+            &None => self.status_icon.set_from_pixbuf(Some(pixbuf)),
+        };
+
+        return Ok(());
     }
 }
 
@@ -77,13 +102,12 @@ pub struct VolMeter {
 
 
 impl VolMeter {
-    // TODO: take settings
-    pub fn new() -> VolMeter {
+    pub fn new(prefs: &Prefs) -> VolMeter {
         return VolMeter {
-                   red: 245,
-                   green: 121,
-                   blue: 0,
-                   x_offset_pct: 10,
+                   red: prefs.view_prefs.vol_meter_color.red,
+                   green: prefs.view_prefs.vol_meter_color.green,
+                   blue: prefs.view_prefs.vol_meter_color.blue,
+                   x_offset_pct: prefs.view_prefs.vol_meter_offset,
                    y_offset_pct: 10,
                    /* dynamic */
                    width: Cell::new(0),
@@ -182,41 +206,47 @@ pub struct AudioPix {
 
 
 impl AudioPix {
-    // TODO: take settings
-    pub fn new_from_theme(size: i32) -> Result<AudioPix> {
-        let theme: gtk::IconTheme = gtk::IconTheme::get_default().ok_or(
-            "Couldn't get default icon theme",
-        )?;
-        let pix = AudioPix {
-            muted: pixbuf_new_from_theme("audio-volume-muted", size, &theme)?,
-            low: pixbuf_new_from_theme("audio-volume-low", size, &theme)?,
-            medium: pixbuf_new_from_theme("audio-volume-medium", size, &theme)?,
-            high: pixbuf_new_from_theme("audio-volume-high", size, &theme)?,
-            /* 'audio-volume-off' is not available in every icon set.
-             * Check freedesktop standard for more info:
-             *   http://standards.freedesktop.org/icon-naming-spec/
-             *   icon-naming-spec-latest.html
-             */
-            off: pixbuf_new_from_theme("audio-volume-off", size, &theme).or(
-                pixbuf_new_from_theme("audio-volume-low", size, &theme),
-            )?,
-        };
+    pub fn new(size: i32, prefs: &Prefs) -> Result<AudioPix> {
+        let system_theme = prefs.view_prefs.system_theme;
 
+        let pix = {
+            if system_theme {
+                let theme: gtk::IconTheme = gtk::IconTheme::get_default().ok_or(
+                "Couldn't get default icon theme",
+                )?;
+                AudioPix {
+                    muted: pixbuf_new_from_theme("audio-volume-muted",
+                                                 size, &theme)?,
+                    low: pixbuf_new_from_theme("audio-volume-low",
+                                               size, &theme)?,
+                    medium: pixbuf_new_from_theme("audio-volume-medium",
+                                                  size, &theme)?,
+                    high: pixbuf_new_from_theme("audio-volume-high",
+                                                size, &theme)?,
+                    /* 'audio-volume-off' is not available in every icon set.
+                     * Check freedesktop standard for more info:
+                     *   http://standards.freedesktop.org/icon-naming-spec/
+                     *   icon-naming-spec-latest.html
+                     */
+                    off: pixbuf_new_from_theme("audio-volume-off",
+                                               size, &theme).or(
+                        pixbuf_new_from_theme("audio-volume-low",
+                                              size, &theme),
+                        )?,
+                }
+            } else {
+                AudioPix {
+                    muted: pixbuf_new_from_file("pnmixer-muted.png")?,
+                    low: pixbuf_new_from_file("pnmixer-low.png")?,
+                    medium: pixbuf_new_from_file("pnmixer-medium.png")?,
+                    high: pixbuf_new_from_file("pnmixer-high.png")?,
+                    off: pixbuf_new_from_file("pnmixer-off.png")?,
+                }
+            }
+        };
         return Ok(pix);
     }
 
-    pub fn new_from_pnmixer() -> Result<AudioPix> {
-        gtk::IconTheme::get_default().ok_or("Couldn't get default icon theme")?;
-        let pix = AudioPix {
-            muted: pixbuf_new_from_file("pnmixer-muted.png")?,
-            low: pixbuf_new_from_file("pnmixer-low.png")?,
-            medium: pixbuf_new_from_file("pnmixer-medium.png")?,
-            high: pixbuf_new_from_file("pnmixer-high.png")?,
-            off: pixbuf_new_from_file("pnmixer-off.png")?,
-        };
-
-        return Ok(pix);
-    }
 
     pub fn select_pix(&self, vol_level: VolLevel) -> &gdk_pixbuf::Pixbuf {
         match vol_level {
@@ -233,7 +263,7 @@ impl AudioPix {
 pub fn init_tray_icon(appstate: Rc<AppS>) {
     let audio = &appstate.audio;
     let tray_icon = &appstate.gui.tray_icon;
-    tray_icon.update(&audio, None);
+    try_e!(tray_icon.update(&appstate.prefs.borrow_mut(), &audio, None));
 
     tray_icon.status_icon.set_visible(true);
 
@@ -243,7 +273,7 @@ pub fn init_tray_icon(appstate: Rc<AppS>) {
         appstate.audio.connect_handler(
             Box::new(move |s, u| match (s, u) {
                 (AudioSignal::ValuesChanged, _) => {
-                    apps.gui.tray_icon.update(&apps.audio, None);
+                    try_w!(apps.gui.tray_icon.update(&apps.prefs.borrow_mut(), &apps.audio, None));
                 }
                 _ => (),
             }),
@@ -254,7 +284,7 @@ pub fn init_tray_icon(appstate: Rc<AppS>) {
     {
         let apps = appstate.clone();
         tray_icon.status_icon.connect_size_changed(move |_, size| {
-            apps.gui.tray_icon.update(&apps.audio, Some(size as i64));
+            try_wr!(apps.gui.tray_icon.update(&apps.prefs.borrow_mut(), &apps.audio, Some(size)), false);
             return false;
         });
     }
@@ -316,8 +346,6 @@ fn on_tray_icon_popup_menu(appstate: &AppS) {
 fn on_tray_icon_scroll_event(appstate: &AppS,
                              event: &gdk::EventScroll)
                              -> bool {
-
-    let audio = &appstate.audio;
 
     let scroll_dir: gdk::ScrollDirection = event.get_direction();
     match scroll_dir {

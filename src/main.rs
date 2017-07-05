@@ -50,7 +50,6 @@ mod support_ui;
 mod support_alsa;
 
 use app_state::*;
-use prefs::*;
 
 
 
@@ -64,12 +63,6 @@ fn main() {
        .unwrap_or_else(|e| panic!("Logger initialization failed with {}", e));
 
     let apps = Rc::new(AppS::new());
-
-    let mut prefs = prefs::Prefs::new().unwrap();
-    println!("Channel: {}", prefs.to_str());
-    prefs.store_config();
-
-    println!("Control_cmd: {:?}", prefs.get_avail_vol_control_cmd());
 
     ui_entry::init(apps);
 
