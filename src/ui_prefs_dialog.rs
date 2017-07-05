@@ -7,18 +7,14 @@ use support_alsa::*;
 
 
 
-create_builder_item!(
-    PrefsDialog,
-    prefs_dialog: gtk::Dialog,
-    card_combo: gtk::ComboBoxText,
-    chan_combo: gtk::ComboBoxText
-);
+create_builder_item!(PrefsDialog,
+                     prefs_dialog: gtk::Dialog,
+                     card_combo: gtk::ComboBoxText,
+                     chan_combo: gtk::ComboBoxText);
 
 
 pub fn show_prefs_dialog(appstate: Rc<AppS>) {
-    let builder_prefs_dialog = gtk::Builder::new_from_string(
-        include_str!("../data/ui/prefs-dialog.glade"),
-    );
+    let builder_prefs_dialog = gtk::Builder::new_from_string(include_str!("../data/ui/prefs-dialog.glade"));
     let prefs_dialog = Rc::new(PrefsDialog::new(builder_prefs_dialog));
     init_prefs_dialog(&appstate, &prefs_dialog);
     {
@@ -51,9 +47,9 @@ pub fn init_prefs_dialog(appstate: &Rc<AppS>, prefs_dialog: &Rc<PrefsDialog>) {
         let pd = prefs_dialog.clone();
 
         // TODO: refill channel combo
-        card_combo.connect_changed(
-            move |_| { on_card_combo_changed(&apps, &pd); },
-        );
+        card_combo.connect_changed(move |_| {
+                                       on_card_combo_changed(&apps, &pd);
+                                   });
     }
     /* card_combo.connect_changed */
     {
@@ -61,9 +57,9 @@ pub fn init_prefs_dialog(appstate: &Rc<AppS>, prefs_dialog: &Rc<PrefsDialog>) {
         let chan_combo = &prefs_dialog.chan_combo;
         let pd = prefs_dialog.clone();
 
-        chan_combo.connect_changed(
-            move |_| { on_chan_combo_changed(&apps, &pd); },
-        );
+        chan_combo.connect_changed(move |_| {
+                                       on_chan_combo_changed(&apps, &pd);
+                                   });
     }
 }
 
@@ -75,8 +71,8 @@ fn on_prefs_dialog_show(appstate: &AppS, prefs_dialog: &PrefsDialog) {
 
 
     /* set card combo */
-    let cur_card_name =
-        try_w!(acard.card_name(), "Can't get current card name!");
+    let cur_card_name = try_w!(acard.card_name(),
+                               "Can't get current card name!");
     let available_card_names = get_alsa_card_names();
 
     /* set_active_id doesn't work, so save the index */
@@ -117,9 +113,8 @@ fn on_prefs_dialog_show(appstate: &AppS, prefs_dialog: &PrefsDialog) {
 fn on_card_combo_changed(appstate: &AppS, prefs_dialog: &PrefsDialog) {
     let card_combo = &prefs_dialog.card_combo;
     let chan_combo = &prefs_dialog.chan_combo;
-    let active_card_item = try_w!(card_combo.get_active_text().ok_or(
-        "No active Card item found",
-    ));
+    let active_card_item =
+        try_w!(card_combo.get_active_text().ok_or("No active Card item found"));
     let active_chan_item = chan_combo.get_active_id();
     let cur_card_name = {
         let acard = appstate.audio.acard.borrow();
@@ -127,11 +122,9 @@ fn on_card_combo_changed(appstate: &AppS, prefs_dialog: &PrefsDialog) {
     };
 
     if active_card_item != cur_card_name {
-        appstate.audio.switch_acard(
-            Some(cur_card_name),
-            active_chan_item,
-            AudioUser::PrefsWindow
-        );
+        appstate.audio.switch_acard(Some(cur_card_name),
+                                    active_chan_item,
+                                    AudioUser::PrefsWindow);
     }
 }
 
@@ -139,9 +132,8 @@ fn on_card_combo_changed(appstate: &AppS, prefs_dialog: &PrefsDialog) {
 fn on_chan_combo_changed(appstate: &AppS, prefs_dialog: &PrefsDialog) {
     let card_combo = &prefs_dialog.card_combo;
     let chan_combo = &prefs_dialog.chan_combo;
-    let active_chan_item = try_w!(chan_combo.get_active_text().ok_or(
-        "No active Chan item found",
-    ));
+    let active_chan_item =
+        try_w!(chan_combo.get_active_text().ok_or("No active Chan item found"));
     let cur_card_name = {
         let acard = appstate.audio.acard.borrow();
         acard.card_name().ok()
@@ -152,10 +144,8 @@ fn on_chan_combo_changed(appstate: &AppS, prefs_dialog: &PrefsDialog) {
     };
 
     if active_chan_item != cur_chan_name {
-        appstate.audio.switch_acard(
-            cur_card_name,
-            Some(active_chan_item),
-            AudioUser::PrefsWindow
-        );
+        appstate.audio.switch_acard(cur_card_name,
+                                    Some(active_chan_item),
+                                    AudioUser::PrefsWindow);
     }
 }

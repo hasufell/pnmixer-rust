@@ -81,7 +81,9 @@ pub fn get_selem_names(mixer: &Mixer) -> Vec<String> {
 
 pub fn get_selem_by_name(mixer: &Mixer, name: String) -> Result<Selem> {
     for selem in get_selems(mixer) {
-        let n = selem.get_id().get_name().map(|y| String::from(y))?;
+        let n = selem.get_id()
+            .get_name()
+            .map(|y| String::from(y))?;
 
         if n == name {
             return Ok(selem);
@@ -103,4 +105,3 @@ pub fn percent_to_vol(vol: f64, range: (i64, i64)) -> i64 {
     /* TODO: precision? Use direction. */
     return _v as i64;
 }
-

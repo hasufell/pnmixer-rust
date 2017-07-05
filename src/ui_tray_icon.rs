@@ -34,7 +34,12 @@ impl TrayIcon {
         let audio_pix = AudioPix::new_from_pnmixer()?;
         let status_icon = gtk::StatusIcon::new();
 
-        return Ok(TrayIcon { volmeter, audio_pix, status_icon, icon_size: Cell::new(ICON_MIN_SIZE) });
+        return Ok(TrayIcon {
+                      volmeter,
+                      audio_pix,
+                      status_icon,
+                      icon_size: Cell::new(ICON_MIN_SIZE),
+                  });
     }
 
     fn update(&self, audio: &Audio, m_size: Option<i64>) {
@@ -45,14 +50,13 @@ impl TrayIcon {
                 } else {
                     self.icon_size.set(s);
                 }
-            },
+            }
             None => (),
         }
 
         let cur_vol = try_w!(audio.vol());
         let pixbuf = self.audio_pix.select_pix(audio.vol_level());
-        let vol_pix = try_w!(self.volmeter.meter_draw(cur_vol as i64,
-                                                      &pixbuf));
+        let vol_pix = try_w!(self.volmeter.meter_draw(cur_vol as i64, &pixbuf));
 
         self.status_icon.set_from_pixbuf(Some(&vol_pix));
     }
@@ -76,37 +80,30 @@ impl VolMeter {
     // TODO: take settings
     pub fn new() -> VolMeter {
         return VolMeter {
-            red: 245,
-            green: 121,
-            blue: 0,
-            x_offset_pct: 10,
-            y_offset_pct: 10,
-            /* dynamic */
-            width: Cell::new(0),
-            row: RefCell::new(vec![]),
-        };
+                   red: 245,
+                   green: 121,
+                   blue: 0,
+                   x_offset_pct: 10,
+                   y_offset_pct: 10,
+                   /* dynamic */
+                   width: Cell::new(0),
+                   row: RefCell::new(vec![]),
+               };
     }
 
     // TODO: cache input pixbuf?
-    fn meter_draw(
-        &self,
-        volume: i64,
-        pixbuf: &gdk_pixbuf::Pixbuf,
-    ) -> Result<gdk_pixbuf::Pixbuf> {
+    fn meter_draw(&self,
+                  volume: i64,
+                  pixbuf: &gdk_pixbuf::Pixbuf)
+                  -> Result<gdk_pixbuf::Pixbuf> {
 
-        ensure!(
-            pixbuf.get_colorspace() == GDK_COLORSPACE_RGB,
-            "Invalid colorspace in pixbuf"
-        );
-        ensure!(
-            pixbuf.get_bits_per_sample() == 8,
-            "Invalid bits per sample in pixbuf"
-        );
+        ensure!(pixbuf.get_colorspace() == GDK_COLORSPACE_RGB,
+                "Invalid colorspace in pixbuf");
+        ensure!(pixbuf.get_bits_per_sample() == 8,
+                "Invalid bits per sample in pixbuf");
         ensure!(pixbuf.get_has_alpha(), "No alpha channel in pixbuf");
-        ensure!(
-            pixbuf.get_n_channels() == 4,
-            "Invalid number of channels in pixbuf"
-        );
+        ensure!(pixbuf.get_n_channels() == 4,
+                "Invalid number of channels in pixbuf");
 
         let i_width = pixbuf.get_width() as i64;
         let i_height = pixbuf.get_height() as i64;
@@ -115,21 +112,16 @@ impl VolMeter {
 
         let vm_width = i_width / 6;
         let x = (self.x_offset_pct as f64 *
-                     ((i_width - vm_width) as f64 / 100.0)) as
-            i64;
-        ensure!(
-            x >= 0 && (x + vm_width) <= i_width,
-            "x coordinate invalid: {}",
-            x
-        );
+                 ((i_width - vm_width) as f64 / 100.0)) as i64;
+        ensure!(x >= 0 && (x + vm_width) <= i_width,
+                "x coordinate invalid: {}",
+                x);
         let y = (self.y_offset_pct as f64 * (i_height as f64 / 100.0)) as i64;
         let vm_height =
             ((i_height - (y * 2)) as f64 * (volume as f64 / 100.0)) as i64;
-        ensure!(
-            y >= 0 && (y + vm_height) <= i_height,
-            "y coordinate invalid: {}",
-            y
-        );
+        ensure!(y >= 0 && (y + vm_height) <= i_height,
+                "y coordinate invalid: {}",
+                y);
 
         /* Let's check if the icon width changed, in which case we
          * must reinit our internal row of pixels.
@@ -165,9 +157,8 @@ impl VolMeter {
                 let p_index = ((row_offset * rowstride) + col_offset) as usize;
 
                 let row = self.row.borrow();
-                pixels[p_index..p_index + row.len()].copy_from_slice(
-                    row.as_ref(),
-                );
+                pixels[p_index..p_index + row.len()]
+                    .copy_from_slice(row.as_ref());
 
             }
         }
@@ -215,9 +206,7 @@ impl AudioPix {
     }
 
     pub fn new_from_pnmixer() -> Result<AudioPix> {
-        gtk::IconTheme::get_default().ok_or(
-            "Couldn't get default icon theme",
-        )?;
+        gtk::IconTheme::get_default().ok_or("Couldn't get default icon theme")?;
         let pix = AudioPix {
             muted: pixbuf_new_from_file("pnmixer-muted.png")?,
             low: pixbuf_new_from_file("pnmixer-low.png")?,
@@ -273,7 +262,9 @@ pub fn init_tray_icon(appstate: Rc<AppS>) {
     /* tray_icon.connect_activate */
     {
         let apps = appstate.clone();
-        tray_icon.status_icon.connect_activate(move |_| on_tray_icon_activate(&apps));
+        tray_icon.status_icon.connect_activate(move |_| {
+                                                   on_tray_icon_activate(&apps)
+                                               });
     }
 
     /* tray_icon.connect_scroll_event */
@@ -322,10 +313,9 @@ fn on_tray_icon_popup_menu(appstate: &AppS) {
 }
 
 
-fn on_tray_icon_scroll_event(
-    appstate: &AppS,
-    event: &gdk::EventScroll,
-) -> bool {
+fn on_tray_icon_scroll_event(appstate: &AppS,
+                             event: &gdk::EventScroll)
+                             -> bool {
 
     let audio = &appstate.audio;
 
@@ -344,10 +334,9 @@ fn on_tray_icon_scroll_event(
 }
 
 
-fn on_tray_button_release_event(
-    appstate: &AppS,
-    event_button: &gdk::EventButton,
-) -> bool {
+fn on_tray_button_release_event(appstate: &AppS,
+                                event_button: &gdk::EventButton)
+                                -> bool {
     let button = event_button.get_button();
 
     if button != 2 {

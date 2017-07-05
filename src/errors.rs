@@ -2,12 +2,15 @@ use alsa;
 use glib;
 use std::convert::From;
 use std;
+use toml;
 
 
 
 error_chain! {
     foreign_links {
         Alsa(alsa::Error);
+        IO(std::io::Error);
+        Toml(toml::de::Error);
     }
 
 }

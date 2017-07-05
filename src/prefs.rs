@@ -1,52 +1,35 @@
 use errors::*;
-use std::path::Path;
-use glib;
 use toml;
+use xdg;
+use std::fs::File;
+use std::io::prelude::*;
 
 
 
-const DEFAULT_PREFS: &str = "[device_prefs]
-card = \"default\"
-channel = \"Master\"
 
-[view_prefs]
-draw_vol_meter = true
-vol_meter_offset = 10
-vol_meter_color = { red = 245, blue = 121, green = 0 }
-system_theme = true
-
-[behavior_prefs]
-vol_control_cmd = \"\"
-vol_scroll_step = 5.0
-middle_click_action = \"ToggleMute\"
-
-[notify_prefs]
-enable_notifications = true
-notifcation_timeout = 1500
-notify_mouse_scroll = true
-notify_popup = true
-notify_external = true";
-
-
-const VOL_CONTROL_COMMANDS: [&str; 3] = [
-    "gnome-alsamixer",
-    "xfce4-mixer",
-    "alsamixergui"
-];
+const VOL_CONTROL_COMMANDS: [&str; 3] =
+    ["gnome-alsamixer", "xfce4-mixer", "alsamixergui"];
 
 
 
 #[derive(Deserialize, Debug, Serialize)]
+#[serde(tag = "action", rename_all = "snake_case")]
 pub enum MiddleClickAction {
     ToggleMute,
     ShowPreferences,
     VolumeControl,
-    CustomCommand(String),
+    CustomCommand { cmd: String },
+}
+
+impl Default for MiddleClickAction {
+    fn default() -> MiddleClickAction {
+        return MiddleClickAction::ToggleMute;
+    }
 }
 
 
-
 #[derive(Deserialize, Debug, Serialize)]
+#[serde(default)]
 pub struct Prefs {
     pub device_prefs: DevicePrefs,
     pub view_prefs: ViewPrefs,
@@ -55,38 +38,99 @@ pub struct Prefs {
     // TODO: HotKeys?
 }
 
+impl Default for Prefs {
+    fn default() -> Prefs {
+        return Prefs {
+                   device_prefs: DevicePrefs::default(),
+                   view_prefs: ViewPrefs::default(),
+                   behavior_prefs: BehaviorPrefs::default(),
+                   notify_prefs: NotifyPrefs::default(),
+               };
+    }
+}
+
+
 #[derive(Deserialize, Debug, Serialize)]
+#[serde(default)]
 pub struct DevicePrefs {
     pub card: String,
     pub channel: String,
     // TODO: normalize volume?
 }
 
+impl Default for DevicePrefs {
+    fn default() -> DevicePrefs {
+        return DevicePrefs {
+                   card: String::from("(default)"),
+                   channel: String::from("Master"),
+               };
+    }
+}
+
+
 #[derive(Deserialize, Debug, Serialize)]
+#[serde(default)]
 pub struct ViewPrefs {
     pub draw_vol_meter: bool,
     pub vol_meter_offset: i64,
-    pub vol_meter_color: VolColor,
     pub system_theme: bool,
+    pub vol_meter_color: VolColor,
     // TODO: Display text folume/text volume pos?
 }
 
+impl Default for ViewPrefs {
+    fn default() -> ViewPrefs {
+        return ViewPrefs {
+                   draw_vol_meter: true,
+                   vol_meter_offset: 10,
+                   system_theme: true,
+                   vol_meter_color: VolColor::default(),
+               };
+    }
+}
+
+
 #[derive(Deserialize, Debug, Serialize)]
+#[serde(default)]
 pub struct VolColor {
     pub red: u8,
     pub green: u8,
     pub blue: u8,
 }
 
+impl Default for VolColor {
+    fn default() -> VolColor {
+        return VolColor {
+                   red: 245,
+                   green: 180,
+                   blue: 0,
+               };
+    }
+}
+
+
 #[derive(Deserialize, Debug, Serialize)]
+#[serde(default)]
 pub struct BehaviorPrefs {
-    pub vol_control_cmd: String,
+    vol_control_cmd: Option<String>,
     pub vol_scroll_step: f64,
     pub middle_click_action: MiddleClickAction,
     // TODO: fine scroll step?
 }
 
+impl Default for BehaviorPrefs {
+    fn default() -> BehaviorPrefs {
+        return BehaviorPrefs {
+                   vol_control_cmd: None,
+                   vol_scroll_step: 5.0,
+                   middle_click_action: MiddleClickAction::default(),
+               };
+    }
+}
+
+
 #[derive(Deserialize, Debug, Serialize)]
+#[serde(default)]
 pub struct NotifyPrefs {
     pub enable_notifications: bool,
     pub notifcation_timeout: i64,
@@ -96,44 +140,84 @@ pub struct NotifyPrefs {
     // TODO: notify_hotkeys?
 }
 
+impl Default for NotifyPrefs {
+    fn default() -> NotifyPrefs {
+        return NotifyPrefs {
+                   enable_notifications: true,
+                   notifcation_timeout: 1500,
+                   notify_mouse_scroll: true,
+                   notify_popup: true,
+                   notify_external: true,
+               };
+    }
+}
+
+
+
+
 
 impl Prefs {
-    // pub fn set_blah(&mut self) {
-        // self.vol_scroll_step = 5.0;
-    // }
+    pub fn new() -> Result<Prefs> {
+        let m_config_file = get_xdg_dirs().find_config_file("pnmixer.toml");
+        match m_config_file {
+            Some(c) => {
+                debug!("Config file present at {:?}, using it.", c);
 
-    // pub fn new() -> Prefs {
-        // // load from config
+                let mut f = File::open(c)?;
+                let mut buffer = vec![];
+                f.read_to_end(&mut buffer)?;
 
-    // }
+                let prefs = toml::from_slice(buffer.as_slice())?;
 
-    // pub fn reload_from_config(&self) {
+                return Ok(prefs);
+            }
+            None => {
+                debug!("No config file present, creating one with defaults.");
 
-    // }
+                let prefs = Prefs::default();
+                prefs.store_config()?;
 
-
-    // pub fn save_to_config() -> Result<()> {
-
-    // }
-
-
-    // fn config_path() -> String {
-
-    // }
-
-
-    fn ensure_config_path() {
+                return Ok(prefs);
+            }
+        }
 
     }
 
-    pub fn new_from_def() -> Prefs {
-        let prefs: Prefs = toml::from_str(DEFAULT_PREFS).unwrap();
-        return prefs;
+
+    pub fn reload_config(&mut self) -> Result<()> {
+        debug!("Reloading config...");
+
+        let new_prefs = Prefs::new()?;
+        *self = new_prefs;
+
+        return Ok(());
+    }
+
+
+    pub fn store_config(&self) -> Result<()> {
+        let config_path = get_xdg_dirs().place_config_file("pnmixer.toml")
+            .from_err()?;
+
+        debug!("Storing config in {:?}", config_path);
+
+        let mut f = File::create(config_path)?;
+        f.write_all(self.to_str().as_bytes())?;
+
+        return Ok(());
     }
 
 
     pub fn to_str(&self) -> String {
         return toml::to_string(self).unwrap();
     }
+
+
+    // TODO: implement
+    pub fn vol_control_cmd() -> String {
+        return String::from("");
+    }
 }
 
+fn get_xdg_dirs() -> xdg::BaseDirectories {
+    return xdg::BaseDirectories::with_prefix("pnmixer-rs").unwrap();
+}

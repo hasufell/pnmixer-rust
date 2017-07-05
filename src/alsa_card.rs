@@ -36,11 +36,10 @@ pub struct AlsaCard {
 
 
 impl AlsaCard {
-    pub fn new(
-        card_name: Option<String>,
-        elem_name: Option<String>,
-        cb: Rc<Fn(AlsaEvent)>,
-    ) -> Result<Box<AlsaCard>> {
+    pub fn new(card_name: Option<String>,
+               elem_name: Option<String>,
+               cb: Rc<Fn(AlsaEvent)>)
+               -> Result<Box<AlsaCard>> {
         let card = {
             match card_name {
                 Some(name) => get_alsa_card_by_name(name)?,
@@ -51,26 +50,26 @@ impl AlsaCard {
 
         let vec_pollfd = PollDescriptors::get(&mixer)?;
 
-        let selem_id = get_selem_by_name(
-            &mixer,
-            elem_name.unwrap_or(String::from("Master")),
-        ).unwrap()
-            .get_id();
+        let selem_id =
+            get_selem_by_name(&mixer,
+                              elem_name.unwrap_or(String::from("Master")))
+                    .unwrap()
+                    .get_id();
 
         let acard = Box::new(AlsaCard {
-            _cannot_construct: (),
-            card: card,
-            mixer: mixer,
-            selem_id: selem_id,
-            watch_ids: Cell::new(vec![]),
-            cb: cb,
-        });
+                                 _cannot_construct: (),
+                                 card: card,
+                                 mixer: mixer,
+                                 selem_id: selem_id,
+                                 watch_ids: Cell::new(vec![]),
+                                 cb: cb,
+                             });
 
         /* TODO: callback is registered here, which must be unregistered
          * when the card is destroyed!!
          * poll descriptors must be unwatched too */
-        let watch_ids =
-            AlsaCard::watch_poll_descriptors(vec_pollfd, acard.as_ref());
+        let watch_ids = AlsaCard::watch_poll_descriptors(vec_pollfd,
+                                                         acard.as_ref());
         acard.watch_ids.set(watch_ids);
 
         return Ok(acard);
@@ -83,7 +82,9 @@ impl AlsaCard {
 
 
     pub fn chan_name(&self) -> Result<String> {
-        let n = self.selem_id.get_name().map(|y| String::from(y))?;
+        let n = self.selem_id
+            .get_name()
+            .map(|y| String::from(y))?;
         return Ok(n);
     }
 
@@ -112,9 +113,7 @@ impl AlsaCard {
         }
 
         let range = selem.get_playback_volume_range();
-        selem.set_playback_volume_all(
-            percent_to_vol(new_vol, range),
-        )?;
+        selem.set_playback_volume_all(percent_to_vol(new_vol, range))?;
 
         return Ok(());
     }
@@ -141,10 +140,9 @@ impl AlsaCard {
     }
 
 
-    fn watch_poll_descriptors(
-        polls: Vec<pollfd>,
-        acard: &AlsaCard,
-    ) -> Vec<c_uint> {
+    fn watch_poll_descriptors(polls: Vec<pollfd>,
+                              acard: &AlsaCard)
+                              -> Vec<c_uint> {
         let mut watch_ids: Vec<c_uint> = vec![];
         let acard_ptr =
             unsafe { mem::transmute::<&AlsaCard, glib_sys::gpointer>(acard) };
@@ -201,11 +199,10 @@ impl Drop for AlsaCard {
 }
 
 
-extern "C" fn watch_cb(
-    chan: *mut glib_sys::GIOChannel,
-    cond: glib_sys::GIOCondition,
-    data: glib_sys::gpointer,
-) -> glib_sys::gboolean {
+extern "C" fn watch_cb(chan: *mut glib_sys::GIOChannel,
+                       cond: glib_sys::GIOCondition,
+                       data: glib_sys::gpointer)
+                       -> glib_sys::gboolean {
 
     let acard =
         unsafe { mem::transmute::<glib_sys::gpointer, &AlsaCard>(data) };
@@ -224,15 +221,14 @@ extern "C" fn watch_cb(
     let mut buf: Vec<u8> = vec![0; 256];
 
     while sread > 0 {
-        let stat: glib_sys::GIOStatus = unsafe {
-            glib_sys::g_io_channel_read_chars(
-                chan,
-                buf.as_mut_ptr() as *mut u8,
-                256,
-                &mut sread as *mut size_t,
-                ptr::null_mut(),
-            )
-        };
+        let stat: glib_sys::GIOStatus =
+            unsafe {
+                glib_sys::g_io_channel_read_chars(chan,
+                                                  buf.as_mut_ptr() as *mut u8,
+                                                  256,
+                                                  &mut sread as *mut size_t,
+                                                  ptr::null_mut())
+            };
 
         match stat {
             glib_sys::G_IO_STATUS_AGAIN => {
@@ -250,4 +246,3 @@ extern "C" fn watch_cb(
 
     return true as glib_sys::gboolean;
 }
-

@@ -26,6 +26,7 @@ extern crate gobject_sys;
 extern crate gtk;
 extern crate gtk_sys;
 extern crate libc;
+extern crate xdg;
 
 use std::rc::Rc;
 
@@ -63,10 +64,11 @@ fn main() {
 
     let apps = Rc::new(AppS::new());
 
-    let mut prefs = prefs::Prefs::new_from_def();
-    prefs.behavior_prefs.middle_click_action = MiddleClickAction::CustomCommand(String::from("Gaga"));
+    let mut prefs = prefs::Prefs::new().unwrap();
     println!("Channel: {:?}", prefs.to_str());
+    prefs.store_config();
 
+    // println!("Channel: {:?}", prefs.to_str());
 
     ui_entry::init(apps);
 
