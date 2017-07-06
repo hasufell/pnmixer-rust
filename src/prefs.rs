@@ -36,16 +36,16 @@ impl Default for MiddleClickAction {
 #[serde(default)]
 pub struct DevicePrefs {
     pub card: String,
-    pub channel: String, 
+    pub channel: String,
     // TODO: normalize volume?
 }
 
 impl Default for DevicePrefs {
     fn default() -> DevicePrefs {
         return DevicePrefs {
-                   card: String::from("(default)"),
-                   channel: String::from("Master"),
-               };
+            card: String::from("(default)"),
+            channel: String::from("Master"),
+        };
     }
 }
 
@@ -56,18 +56,18 @@ pub struct ViewPrefs {
     pub draw_vol_meter: bool,
     pub vol_meter_offset: i64,
     pub system_theme: bool,
-    pub vol_meter_color: VolColor, 
+    pub vol_meter_color: VolColor,
     // TODO: Display text folume/text volume pos?
 }
 
 impl Default for ViewPrefs {
     fn default() -> ViewPrefs {
         return ViewPrefs {
-                   draw_vol_meter: true,
-                   vol_meter_offset: 10,
-                   system_theme: true,
-                   vol_meter_color: VolColor::default(),
-               };
+            draw_vol_meter: true,
+            vol_meter_offset: 10,
+            system_theme: true,
+            vol_meter_color: VolColor::default(),
+        };
     }
 }
 
@@ -83,10 +83,10 @@ pub struct VolColor {
 impl Default for VolColor {
     fn default() -> VolColor {
         return VolColor {
-                   red: 245,
-                   green: 180,
-                   blue: 0,
-               };
+            red: 245,
+            green: 180,
+            blue: 0,
+        };
     }
 }
 
@@ -96,17 +96,17 @@ impl Default for VolColor {
 pub struct BehaviorPrefs {
     pub vol_control_cmd: Option<String>,
     pub vol_scroll_step: f64,
-    pub middle_click_action: MiddleClickAction, 
+    pub middle_click_action: MiddleClickAction,
     // TODO: fine scroll step?
 }
 
 impl Default for BehaviorPrefs {
     fn default() -> BehaviorPrefs {
         return BehaviorPrefs {
-                   vol_control_cmd: None,
-                   vol_scroll_step: 5.0,
-                   middle_click_action: MiddleClickAction::default(),
-               };
+            vol_control_cmd: None,
+            vol_scroll_step: 5.0,
+            middle_click_action: MiddleClickAction::default(),
+        };
     }
 }
 
@@ -118,19 +118,19 @@ pub struct NotifyPrefs {
     pub notifcation_timeout: i64,
     pub notify_mouse_scroll: bool,
     pub notify_popup: bool,
-    pub notify_external: bool, 
+    pub notify_external: bool,
     // TODO: notify_hotkeys?
 }
 
 impl Default for NotifyPrefs {
     fn default() -> NotifyPrefs {
         return NotifyPrefs {
-                   enable_notifications: true,
-                   notifcation_timeout: 1500,
-                   notify_mouse_scroll: true,
-                   notify_popup: true,
-                   notify_external: true,
-               };
+            enable_notifications: true,
+            notifcation_timeout: 1500,
+            notify_mouse_scroll: true,
+            notify_popup: true,
+            notify_external: true,
+        };
     }
 }
 
@@ -141,7 +141,7 @@ pub struct Prefs {
     pub device_prefs: DevicePrefs,
     pub view_prefs: ViewPrefs,
     pub behavior_prefs: BehaviorPrefs,
-    pub notify_prefs: NotifyPrefs, 
+    pub notify_prefs: NotifyPrefs,
     // TODO: HotKeys?
 }
 
@@ -184,8 +184,8 @@ impl Prefs {
 
 
     pub fn store_config(&self) -> Result<()> {
-        let config_path = get_xdg_dirs().place_config_file("pnmixer.toml")
-            .from_err()?;
+        let config_path =
+            get_xdg_dirs().place_config_file("pnmixer.toml").from_err()?;
 
         debug!("Storing config in {:?}", config_path);
 
@@ -218,9 +218,10 @@ impl Prefs {
 }
 
 impl Display for Prefs {
-    fn fmt(&self,
-           f: &mut Formatter)
-           -> std::result::Result<(), std::fmt::Error> {
+    fn fmt(
+        &self,
+        f: &mut Formatter,
+    ) -> std::result::Result<(), std::fmt::Error> {
         let s = self.to_str();
         return write!(f, "{}", s);
     }

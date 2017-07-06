@@ -14,21 +14,15 @@ pub fn init_popup_menu(appstate: Rc<AppS>) {
     /* about_item.connect_activate_link */
     {
         let apps = appstate.clone();
-        let about_item = &appstate.clone()
-                              .gui
-                              .popup_menu
-                              .about_item;
-        about_item.connect_activate(move |_| {
-                                        on_about_item_activate(&apps);
-                                    });
+        let about_item = &appstate.clone().gui.popup_menu.about_item;
+        about_item.connect_activate(
+            move |_| { on_about_item_activate(&apps); },
+        );
     }
 
     /* about_item.connect_activate_link */
     {
-        let prefs_item = &appstate.clone()
-                              .gui
-                              .popup_menu
-                              .prefs_item;
+        let prefs_item = &appstate.clone().gui.popup_menu.prefs_item;
         prefs_item.connect_activate(
             move |_| { on_prefs_item_activate(appstate.clone()); },
         );

@@ -81,9 +81,7 @@ pub fn get_selem_names(mixer: &Mixer) -> Vec<String> {
 
 pub fn get_selem_by_name(mixer: &Mixer, name: String) -> Result<Selem> {
     for selem in get_selems(mixer) {
-        let n = selem.get_id()
-            .get_name()
-            .map(|y| String::from(y))?;
+        let n = selem.get_id().get_name().map(|y| String::from(y))?;
 
         if n == name {
             return Ok(selem);
