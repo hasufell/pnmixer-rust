@@ -248,8 +248,7 @@ impl PrefsDialog {
         let behavior_prefs = BehaviorPrefs {
             vol_control_cmd,
             vol_scroll_step: self.scroll_step_spin.get_value(),
-            middle_click_action: From::from(self.middle_click_combo
-                                                .get_active()),
+            middle_click_action: self.middle_click_combo.get_active().into(),
             custom_command,
         };
 

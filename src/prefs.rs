@@ -39,15 +39,15 @@ impl From<i32> for MiddleClickAction {
             1 => MiddleClickAction::ShowPreferences,
             2 => MiddleClickAction::VolumeControl,
             3 => MiddleClickAction::CustomCommand,
-            _ => Default::default(),
+            _ => MiddleClickAction::ToggleMute,
         }
     }
 }
 
 
-impl Into<i32> for MiddleClickAction {
-    fn into(self) -> i32 {
-        match self {
+impl From<MiddleClickAction> for i32 {
+    fn from(action: MiddleClickAction) -> Self {
+        match action {
             MiddleClickAction::ToggleMute => 0,
             MiddleClickAction::ShowPreferences => 1,
             MiddleClickAction::VolumeControl => 2,
