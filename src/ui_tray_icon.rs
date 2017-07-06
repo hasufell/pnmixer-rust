@@ -43,19 +43,18 @@ impl TrayIcon {
         let status_icon = gtk::StatusIcon::new();
 
         return Ok(TrayIcon {
-            volmeter,
-            audio_pix: RefCell::new(audio_pix),
-            status_icon,
-            icon_size: Cell::new(ICON_MIN_SIZE),
-        });
+                      volmeter,
+                      audio_pix: RefCell::new(audio_pix),
+                      status_icon,
+                      icon_size: Cell::new(ICON_MIN_SIZE),
+                  });
     }
 
-    fn update(
-        &self,
-        prefs: &Prefs,
-        audio: &Audio,
-        m_size: Option<i32>,
-    ) -> Result<()> {
+    fn update(&self,
+              prefs: &Prefs,
+              audio: &Audio,
+              m_size: Option<i32>)
+              -> Result<()> {
         match m_size {
             Some(s) => {
                 if s < ICON_MIN_SIZE {
@@ -105,37 +104,30 @@ pub struct VolMeter {
 impl VolMeter {
     pub fn new(prefs: &Prefs) -> VolMeter {
         return VolMeter {
-            red: prefs.view_prefs.vol_meter_color.red,
-            green: prefs.view_prefs.vol_meter_color.green,
-            blue: prefs.view_prefs.vol_meter_color.blue,
-            x_offset_pct: prefs.view_prefs.vol_meter_offset,
-            y_offset_pct: 10,
-            /* dynamic */
-            width: Cell::new(0),
-            row: RefCell::new(vec![]),
-        };
+                   red: prefs.view_prefs.vol_meter_color.red,
+                   green: prefs.view_prefs.vol_meter_color.green,
+                   blue: prefs.view_prefs.vol_meter_color.blue,
+                   x_offset_pct: prefs.view_prefs.vol_meter_offset as i64,
+                   y_offset_pct: 10,
+                   /* dynamic */
+                   width: Cell::new(0),
+                   row: RefCell::new(vec![]),
+               };
     }
 
     // TODO: cache input pixbuf?
-    fn meter_draw(
-        &self,
-        volume: i64,
-        pixbuf: &gdk_pixbuf::Pixbuf,
-    ) -> Result<gdk_pixbuf::Pixbuf> {
+    fn meter_draw(&self,
+                  volume: i64,
+                  pixbuf: &gdk_pixbuf::Pixbuf)
+                  -> Result<gdk_pixbuf::Pixbuf> {
 
-        ensure!(
-            pixbuf.get_colorspace() == GDK_COLORSPACE_RGB,
-            "Invalid colorspace in pixbuf"
-        );
-        ensure!(
-            pixbuf.get_bits_per_sample() == 8,
-            "Invalid bits per sample in pixbuf"
-        );
+        ensure!(pixbuf.get_colorspace() == GDK_COLORSPACE_RGB,
+                "Invalid colorspace in pixbuf");
+        ensure!(pixbuf.get_bits_per_sample() == 8,
+                "Invalid bits per sample in pixbuf");
         ensure!(pixbuf.get_has_alpha(), "No alpha channel in pixbuf");
-        ensure!(
-            pixbuf.get_n_channels() == 4,
-            "Invalid number of channels in pixbuf"
-        );
+        ensure!(pixbuf.get_n_channels() == 4,
+                "Invalid number of channels in pixbuf");
 
         let i_width = pixbuf.get_width() as i64;
         let i_height = pixbuf.get_height() as i64;
@@ -144,21 +136,16 @@ impl VolMeter {
 
         let vm_width = i_width / 6;
         let x = (self.x_offset_pct as f64 *
-                     ((i_width - vm_width) as f64 / 100.0)) as
-            i64;
-        ensure!(
-            x >= 0 && (x + vm_width) <= i_width,
-            "x coordinate invalid: {}",
-            x
-        );
+                 ((i_width - vm_width) as f64 / 100.0)) as i64;
+        ensure!(x >= 0 && (x + vm_width) <= i_width,
+                "x coordinate invalid: {}",
+                x);
         let y = (self.y_offset_pct as f64 * (i_height as f64 / 100.0)) as i64;
         let vm_height =
             ((i_height - (y * 2)) as f64 * (volume as f64 / 100.0)) as i64;
-        ensure!(
-            y >= 0 && (y + vm_height) <= i_height,
-            "y coordinate invalid: {}",
-            y
-        );
+        ensure!(y >= 0 && (y + vm_height) <= i_height,
+                "y coordinate invalid: {}",
+                y);
 
         /* Let's check if the icon width changed, in which case we
          * must reinit our internal row of pixels.
@@ -194,9 +181,8 @@ impl VolMeter {
                 let p_index = ((row_offset * rowstride) + col_offset) as usize;
 
                 let row = self.row.borrow();
-                pixels[p_index..p_index + row.len()].copy_from_slice(
-                    row.as_ref(),
-                );
+                pixels[p_index..p_index + row.len()]
+                    .copy_from_slice(row.as_ref());
 
             }
         }
@@ -319,14 +305,10 @@ pub fn init_tray_icon(appstate: Rc<AppS>) {
     {
         let apps = appstate.clone();
         tray_icon.status_icon.connect_size_changed(move |_, size| {
-            try_wr!(
-                apps.gui.tray_icon.update(
-                    &apps.prefs.borrow_mut(),
-                    &apps.audio,
-                    Some(size),
-                ),
-                false
-            );
+            try_wr!(apps.gui.tray_icon.update(&apps.prefs.borrow_mut(),
+                                              &apps.audio,
+                                              Some(size)),
+                    false);
             return false;
         });
     }
@@ -334,9 +316,9 @@ pub fn init_tray_icon(appstate: Rc<AppS>) {
     /* tray_icon.connect_activate */
     {
         let apps = appstate.clone();
-        tray_icon.status_icon.connect_activate(
-            move |_| on_tray_icon_activate(&apps),
-        );
+        tray_icon.status_icon.connect_activate(move |_| {
+                                                   on_tray_icon_activate(&apps)
+                                               });
     }
 
     /* tray_icon.connect_scroll_event */
@@ -385,10 +367,9 @@ fn on_tray_icon_popup_menu(appstate: &AppS) {
 }
 
 
-fn on_tray_icon_scroll_event(
-    appstate: &AppS,
-    event: &gdk::EventScroll,
-) -> bool {
+fn on_tray_icon_scroll_event(appstate: &AppS,
+                             event: &gdk::EventScroll)
+                             -> bool {
 
     let scroll_dir: gdk::ScrollDirection = event.get_direction();
     match scroll_dir {
@@ -405,10 +386,9 @@ fn on_tray_icon_scroll_event(
 }
 
 
-fn on_tray_button_release_event(
-    appstate: &AppS,
-    event_button: &gdk::EventButton,
-) -> bool {
+fn on_tray_button_release_event(appstate: &AppS,
+                                event_button: &gdk::EventButton)
+                                -> bool {
     let button = event_button.get_button();
 
     if button != 2 {
