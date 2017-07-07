@@ -1,46 +1,95 @@
 use app_state::*;
+use audio::{AudioUser, AudioSignal};
 use gtk::prelude::*;
 use gtk;
 use std::rc::Rc;
+use support_cmd::*;
 use ui_prefs_dialog::*;
-
 
 
 const VERSION: &'static str = env!("CARGO_PKG_VERSION");
 
 
 
-create_builder_item!(PopupMenu,
-                     menu_window: gtk::Window,
-                     menubar: gtk::MenuBar,
-                     menu: gtk::Menu,
-                     about_item: gtk::MenuItem,
-                     prefs_item: gtk::MenuItem);
+create_builder_item!(
+    PopupMenu,
+    menu_window: gtk::Window,
+    menubar: gtk::MenuBar,
+    menu: gtk::Menu,
+    about_item: gtk::MenuItem,
+    mixer_item: gtk::MenuItem,
+    mute_item: gtk::MenuItem,
+    mute_check: gtk::CheckButton,
+    prefs_item: gtk::MenuItem,
+    quit_item: gtk::MenuItem,
+    reload_item: gtk::MenuItem
+);
 
 
 
 pub fn init_popup_menu(appstate: Rc<AppS>) {
-
-    /* about_item.connect_activate_link */
+    /* audio.connect_handler */
     {
         let apps = appstate.clone();
-        let about_item = &appstate.clone()
-                              .gui
-                              .popup_menu
-                              .about_item;
-        about_item.connect_activate(move |_| {
-                                        on_about_item_activate(&apps);
-                                    });
+        appstate.audio.connect_handler(Box::new(move |s, u| {
+            /* skip if window is hidden */
+            if !apps.gui.popup_menu.menu.get_visible() {
+                return;
+            }
+            match (s, u) {
+                (AudioSignal::ValuesChanged, _) => {
+                    let muted = try_w!(apps.audio.get_mute());
+                    apps.gui.popup_menu.mute_check.set_active(muted);
+                }
+                _ => (),
+            }
+        }));
+
+    }
+
+    /* popup_menu.menu.connect_show */
+    {
+        let apps = appstate.clone();
+        appstate.gui.popup_menu.menu.connect_show(move |_| {
+            let muted = try_w!(apps.audio.get_mute());
+            apps.gui.popup_menu.mute_check.set_active(muted);
+        });
+
+    }
+
+    /* mixer_item.connect_activate_link */
+    {
+        let apps = appstate.clone();
+        let mixer_item = &appstate.gui.popup_menu.mixer_item;
+        mixer_item.connect_activate(move |_| {
+            try_w!(execute_vol_control_command(&apps.prefs.borrow()));
+        });
     }
 
     /* about_item.connect_activate_link */
     {
-        let prefs_item = &appstate.clone()
-                              .gui
-                              .popup_menu
-                              .prefs_item;
+        let apps = appstate.clone();
+        let mute_item = &appstate.gui.popup_menu.mute_item;
+        mute_item.connect_activate(move |_| {
+            try_w!(apps.audio.toggle_mute(AudioUser::Popup));
+        });
+    }
+
+    /* about_item.connect_activate_link */
+    {
+        let apps = appstate.clone();
+        let about_item = &appstate.gui.popup_menu.about_item;
+        about_item.connect_activate(
+            move |_| { on_about_item_activate(&apps); },
+        );
+    }
+
+    /* about_item.connect_activate_link */
+    {
+        let apps = appstate.clone();
+        let prefs_item = &appstate.gui.popup_menu.prefs_item;
         prefs_item.connect_activate(
-            move |_| { on_prefs_item_activate(appstate.clone()); },
+            move |_| { on_prefs_item_activate(&apps); },
         );
     }
 }
@@ -86,7 +135,8 @@ Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.",
 }
 
 
-fn on_prefs_item_activate(appstate: Rc<AppS>) {
+fn on_prefs_item_activate(appstate: &Rc<AppS>) {
     /* TODO: only create if needed */
     show_prefs_dialog(appstate);
 }
+

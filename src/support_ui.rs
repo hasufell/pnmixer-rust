@@ -21,18 +21,21 @@ pub fn copy_pixbuf(pixbuf: &gdk_pixbuf::Pixbuf) -> gdk_pixbuf::Pixbuf {
 }
 
 
-pub fn pixbuf_new_from_theme(icon_name: &str,
-                             size: i32,
-                             theme: &gtk::IconTheme)
-                             -> Result<gdk_pixbuf::Pixbuf> {
+pub fn pixbuf_new_from_theme(
+    icon_name: &str,
+    size: i32,
+    theme: &gtk::IconTheme,
+) -> Result<gdk_pixbuf::Pixbuf> {
 
-    let icon_info =
-        theme.lookup_icon(icon_name, size, gtk::IconLookupFlags::empty())
-            .ok_or(format!("Couldn't find icon {}", icon_name))?;
+    let icon_info = theme
+        .lookup_icon(icon_name, size, gtk::IconLookupFlags::empty())
+        .ok_or(format!("Couldn't find icon {}", icon_name))?;
 
-    debug!("Loading stock icon {} from {:?}",
-           icon_name,
-           icon_info.get_filename().unwrap_or(PathBuf::new()));
+    debug!(
+        "Loading stock icon {} from {:?}",
+        icon_name,
+        icon_info.get_filename().unwrap_or(PathBuf::new())
+    );
 
     // TODO: propagate error
     let pixbuf = icon_info.load_icon().unwrap();

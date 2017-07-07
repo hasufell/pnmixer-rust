@@ -46,8 +46,9 @@ mod ui_popup_window;
 mod ui_prefs_dialog;
 mod ui_tray_icon;
 mod prefs;
-mod support_ui;
 mod support_alsa;
+mod support_cmd;
+mod support_ui;
 
 use app_state::*;
 

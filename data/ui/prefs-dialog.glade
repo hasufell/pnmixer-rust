@@ -805,12 +805,6 @@
                           <object class="GtkComboBoxText" id="middle_click_combo">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <items>
-                              <item id="mute" translatable="yes">Mute/Unmute</item>
-                              <item id="prefs" translatable="yes">Show Preferences</item>
-                              <item id="mixer" translatable="yes">Volume Control</item>
-                              <item id="custom" translatable="yes">Custom (set below)</item>
-                            </items>
                             <signal name="changed" handler="on_middle_click_combo_changed" swapped="no"/>
                           </object>
                           <packing>
