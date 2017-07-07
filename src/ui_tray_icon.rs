@@ -415,7 +415,9 @@ fn on_tray_button_release_event(appstate: &AppS,
 
     match middle_click_action {
         &MiddleClickAction::ToggleMute => {
-            try_wr!(audio.toggle_mute(AudioUser::Popup), false);
+            if audio.has_mute() {
+                try_wr!(audio.toggle_mute(AudioUser::Popup), false);
+            }
         }
         &MiddleClickAction::ShowPreferences => (),
         &MiddleClickAction::VolumeControl => {

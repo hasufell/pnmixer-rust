@@ -329,7 +329,7 @@ fn fill_card_combo(appstate: &AppS) {
     /* set card combo */
     let cur_card_name = try_w!(acard.card_name(),
                                "Can't get current card name!");
-    let available_card_names = get_alsa_card_names();
+    let available_card_names = get_playable_alsa_card_names();
 
     /* set_active_id doesn't work, so save the index */
     let mut c_index: i32 = -1;
@@ -362,7 +362,7 @@ fn fill_chan_combo(appstate: &AppS, cardname: Option<String>) {
     /* set chan combo */
     let cur_chan_name = try_w!(cur_acard.chan_name());
     let mixer = try_w!(get_mixer(&card));
-    let available_chan_names = get_selem_names(&mixer);
+    let available_chan_names = get_playable_selem_names(&mixer);
 
     /* set_active_id doesn't work, so save the index */
     let mut c_index: i32 = -1;

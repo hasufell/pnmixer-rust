@@ -38,13 +38,7 @@ pub fn init_popup_menu(appstate: Rc<AppS>) {
                 return;
             }
             match (s, u) {
-                (_, _) => {
-                    let muted = try_w!(apps.audio.get_mute());
-                    apps.gui
-                        .popup_menu
-                        .mute_check
-                        .set_active(muted);
-                }
+                (_, _) => set_mute_check(&apps)
             }
         }));
 
@@ -57,11 +51,7 @@ pub fn init_popup_menu(appstate: Rc<AppS>) {
             .popup_menu
             .menu
             .connect_show(move |_| {
-                let muted = try_w!(apps.audio.get_mute());
-                apps.gui
-                    .popup_menu
-                    .mute_check
-                    .set_active(muted);
+                set_mute_check(&apps)
             });
 
     }
@@ -75,12 +65,14 @@ pub fn init_popup_menu(appstate: Rc<AppS>) {
         });
     }
 
-    /* about_item.connect_activate_link */
+    /* mute_item.connect_activate_link */
     {
         let apps = appstate.clone();
         let mute_item = &appstate.gui.popup_menu.mute_item;
         mute_item.connect_activate(move |_| {
-            try_w!(apps.audio.toggle_mute(AudioUser::Popup));
+            if apps.audio.has_mute() {
+                try_w!(apps.audio.toggle_mute(AudioUser::Popup));
+            }
         });
     }
 
@@ -93,7 +85,7 @@ pub fn init_popup_menu(appstate: Rc<AppS>) {
                                     });
     }
 
-    /* about_item.connect_activate_link */
+    /* prefs_item.connect_activate_link */
     {
         let apps = appstate.clone();
         let prefs_item = &appstate.gui.popup_menu.prefs_item;
@@ -156,4 +148,31 @@ Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.",
 fn on_prefs_item_activate(appstate: &Rc<AppS>) {
     /* TODO: only create if needed */
     show_prefs_dialog(appstate);
+}
+
+
+fn set_mute_check(apps: &Rc<AppS>) {
+    let mute_check = &apps.gui
+                .popup_menu
+                .mute_check;
+    let m_muted = apps.audio.get_mute();
+    match m_muted {
+        Ok(muted) => {
+            mute_check
+                .set_sensitive(false);
+            mute_check
+                .set_active(muted);
+            mute_check.set_tooltip_text(
+                "");
+        },
+        Err(_) => {
+            mute_check
+                .set_active(true);
+            mute_check
+                .set_sensitive(false);
+            mute_check.set_tooltip_text(
+                "Soundcard has no mute switch",
+            );
+        }
+    }
 }

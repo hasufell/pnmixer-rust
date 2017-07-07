@@ -30,10 +30,14 @@ impl AppS {
         let gui =
             Gui::new(builder_popup_window, builder_popup_menu, &prefs.borrow());
 
+        let card_name = prefs.borrow().device_prefs.card.clone();
+        let chan_name = prefs.borrow().device_prefs.channel.clone();
+
         return AppS {
                    _cant_construct: (),
                    gui: gui,
-                   audio: Audio::new(None, Some(String::from("Master")))
+                   audio: Audio::new(Some(card_name),
+                                     Some(chan_name))
                        .unwrap(),
                    prefs: prefs,
                };
@@ -54,6 +58,7 @@ impl AppS {
         return self.gui.popup_window.update(&self.audio);
     }
 
+    // TODO
     pub fn show_preferences(&self) {
         // show_prefs_dialog(self);
     }

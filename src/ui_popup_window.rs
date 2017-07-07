@@ -48,12 +48,13 @@ impl PopupWindow {
     }
 
     pub fn update_mute_check(&self, audio: &Audio) {
-        let muted = audio.get_mute();
+        let m_muted = audio.get_mute();
 
         glib::signal_handler_block(&self.mute_check, self.toggle_signal.get());
 
-        match muted {
+        match m_muted {
             Ok(val) => {
+                self.mute_check.set_sensitive(true);
                 self.mute_check.set_active(val);
                 self.mute_check.set_tooltip_text("");
             }

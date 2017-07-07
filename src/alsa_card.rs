@@ -44,23 +44,35 @@ impl AlsaCard {
             match card_name {
                 Some(name) => {
                     if name == "(default)" {
-                        get_default_alsa_card()
+                        let default = get_default_alsa_card();
+                        if alsa_card_has_playable_selem(&default) {
+                            default
+                        } else {
+                            warn!("Default alsa card not playabla, trying others");
+                            get_first_playable_alsa_card()?
+                        }
                     } else {
-                        get_alsa_card_by_name(name)?
+                        let mycard = get_alsa_card_by_name(name.clone());
+                        match mycard {
+                            Ok(card) => card,
+                            Err(_) => {
+                                warn!("Card {} not playable, trying others", name);
+                                get_first_playable_alsa_card()?
+                            }
+                        }
                     }
                 },
-                None => get_default_alsa_card(),
+                None => get_first_playable_alsa_card()?,
             }
         };
         let mixer = get_mixer(&card)?;
 
-        let vec_pollfd = PollDescriptors::get(&mixer)?;
-
         let selem_id =
-            get_selem_by_name(&mixer,
-                              elem_name.unwrap_or(String::from("Master")))
-                    .unwrap()
+            get_playable_selem_by_name(&mixer,
+                              elem_name.unwrap_or(String::from("Master")))?
                     .get_id();
+
+        let vec_pollfd = PollDescriptors::get(&mixer)?;
 
         let acard = Box::new(AlsaCard {
                                  _cannot_construct: (),
@@ -114,7 +126,7 @@ impl AlsaCard {
     pub fn set_vol(&self, new_vol: f64) -> Result<()> {
         let selem = self.selem();
         /* auto-unmute */
-        if self.get_mute()? {
+        if self.has_mute() && self.get_mute()? {
             self.set_mute(false)?;
         }
 
@@ -241,6 +253,7 @@ extern "C" fn watch_cb(chan: *mut glib_sys::GIOChannel,
                 debug!("G_IO_STATUS_AGAIN");
                 continue;
             }
+            // TODO: handle these failure cases
             glib_sys::G_IO_STATUS_NORMAL => debug!("G_IO_STATUS_NORMAL"),
             glib_sys::G_IO_STATUS_ERROR => debug!("G_IO_STATUS_ERROR"),
             glib_sys::G_IO_STATUS_EOF => debug!("G_IO_STATUS_EOF"),
