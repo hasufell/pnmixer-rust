@@ -6,14 +6,72 @@ use gdk::{GrabOwnership, GrabStatus, BUTTON_PRESS_MASK, KEY_PRESS_MASK};
 use gdk;
 use gdk_sys::{GDK_KEY_Escape, GDK_CURRENT_TIME};
 use glib;
+use gtk::ToggleButtonExt;
 use gtk::prelude::*;
 use gtk;
+use std::cell::Cell;
 use std::rc::Rc;
 
 
 
+pub struct PopupWindow {
+    _cant_construct: (),
+    pub popup_window: gtk::Window,
+    pub vol_scale_adj: gtk::Adjustment,
+    pub vol_scale: gtk::Scale,
+    pub mute_check: gtk::CheckButton,
+    pub toggle_signal: Cell<u64>,
+}
+
+impl PopupWindow {
+    pub fn new(builder: gtk::Builder) -> PopupWindow {
+        return PopupWindow {
+            _cant_construct: (),
+            popup_window: builder.get_object("popup_window").unwrap(),
+            vol_scale_adj: builder.get_object("vol_scale_adj").unwrap(),
+            vol_scale: builder.get_object("vol_scale").unwrap(),
+            mute_check: builder.get_object("mute_check").unwrap(),
+            toggle_signal: Cell::new(0),
+        };
+    }
+
+    pub fn update(&self, audio: &Audio) -> Result<()> {
+        let cur_vol = audio.vol()?;
+        set_slider(&self.vol_scale_adj, cur_vol);
+
+        self.update_mute_check(&audio);
+
+        self.vol_scale.grab_focus();
+        grab_devices(&self.popup_window)?;
+
+        return Ok(());
+    }
+
+    pub fn update_mute_check(&self, audio: &Audio) {
+        let muted = audio.get_mute();
+
+        glib::signal_handler_block(&self.mute_check, self.toggle_signal.get());
+
+        match muted {
+            Ok(val) => {
+                self.mute_check.set_active(val);
+                self.mute_check.set_tooltip_text("");
+            }
+            Err(_) => {
+                /* can't figure out whether channel is muted, grey out */
+                self.mute_check.set_active(true);
+                self.mute_check.set_sensitive(false);
+                self.mute_check.set_tooltip_text("Soundcard has no mute switch");
+            }
+        }
+
+        glib::signal_handler_unblock(&self.mute_check, self.toggle_signal.get());
+    }
+}
+
+
+
 pub fn init_popup_window(appstate: Rc<AppS>) {
-    let mut toggle_signal = 0;
 
     /* mute_check.connect_toggled */
     {
@@ -22,10 +80,11 @@ pub fn init_popup_window(appstate: Rc<AppS>) {
                               .gui
                               .popup_window
                               .mute_check;
-        toggle_signal =
+        let toggle_signal =
             mute_check.connect_toggled(move |_| {
                                            on_mute_check_toggled(&_appstate)
                                        });
+        appstate.gui.popup_window.toggle_signal.set(toggle_signal);
     }
 
     /* popup_window.connect_show */
@@ -35,10 +94,8 @@ pub fn init_popup_window(appstate: Rc<AppS>) {
                                 .gui
                                 .popup_window
                                 .popup_window;
-        popup_window.connect_show(move |w| {
-                                      on_popup_window_show(w,
-                                                           &_appstate,
-                                                           toggle_signal)
+        popup_window.connect_show(move |_| {
+                                      on_popup_window_show(&_appstate)
                                   });
     }
 
@@ -56,38 +113,24 @@ pub fn init_popup_window(appstate: Rc<AppS>) {
 
     /* popup_window.connect_event */
     {
-        let _appstate = appstate.clone();
         let popup_window = &appstate.clone()
                                 .gui
                                 .popup_window
                                 .popup_window;
         popup_window.connect_event(move |w, e| {
-                                       on_popup_window_event(w, e, &_appstate)
+                                       on_popup_window_event(w, e)
                                    });
     }
 }
 
 
-fn on_popup_window_show(window: &gtk::Window,
-                        appstate: &AppS,
-                        toggle_signal: u64) {
-    let audio = &appstate.audio;
-    let popup_window = &appstate.gui.popup_window;
-
-    let cur_vol = try_w!(audio.vol());
-    set_slider(&popup_window.vol_scale_adj, cur_vol);
-
-    let muted = audio.get_mute();
-    update_mute_check(&appstate, toggle_signal, muted);
-
-    popup_window.vol_scale.grab_focus();
-    try_w!(grab_devices(window));
+fn on_popup_window_show(appstate: &AppS) {
+    try_w!(appstate.gui.popup_window.update(&appstate.audio));
 }
 
 
 fn on_popup_window_event(w: &gtk::Window,
-                         e: &gdk::Event,
-                         appstate: &AppS)
+                         e: &gdk::Event)
                          -> gtk::Inhibit {
     match gdk::Event::get_event_type(e) {
         gdk::EventType::GrabBroken => w.hide(),
@@ -135,36 +178,12 @@ fn on_mute_check_toggled(appstate: &AppS) {
 }
 
 
-pub fn update_mute_check(appstate: &AppS,
-                         toggle_signal: u64,
-                         muted: Result<bool>) {
-    let check_button = &appstate.gui.popup_window.mute_check;
-
-    glib::signal_handler_block(check_button, toggle_signal);
-
-    match muted {
-        Ok(val) => {
-            check_button.set_active(val);
-            check_button.set_tooltip_text("");
-        }
-        Err(_) => {
-            /* can't figure out whether channel is muted, grey out */
-            check_button.set_active(true);
-            check_button.set_sensitive(false);
-            check_button.set_tooltip_text("Soundcard has no mute switch");
-        }
-    }
-
-    glib::signal_handler_unblock(check_button, toggle_signal);
-}
-
-
 pub fn set_slider(vol_scale_adj: &gtk::Adjustment, scale: f64) {
     vol_scale_adj.set_value(scale);
 }
 
 
-fn grab_devices(window: &gtk::Window) -> Result<()> {
+pub fn grab_devices(window: &gtk::Window) -> Result<()> {
     let device = gtk::get_current_event_device().ok_or("No current device")?;
 
     let gdk_window = window.get_window().ok_or("No window?!")?;

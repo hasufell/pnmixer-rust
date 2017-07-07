@@ -13,7 +13,7 @@ use std::rc::Rc;
 use support_ui::*;
 
 
-// TODO: on_apply
+// TODO tooltip
 
 
 const ICON_MIN_SIZE: i32 = 16;
@@ -21,7 +21,8 @@ const ICON_MIN_SIZE: i32 = 16;
 
 
 pub struct TrayIcon {
-    pub volmeter: Option<VolMeter>,
+    _cant_construct: (),
+    pub volmeter: RefCell<Option<VolMeter>>,
     pub audio_pix: RefCell<AudioPix>,
     pub status_icon: gtk::StatusIcon,
     pub icon_size: Cell<i32>,
@@ -34,15 +35,16 @@ impl TrayIcon {
 
         let volmeter = {
             if draw_vol_meter {
-                Some(VolMeter::new(prefs))
+                RefCell::new(Some(VolMeter::new(prefs)))
             } else {
-                None
+                RefCell::new(None)
             }
         };
         let audio_pix = AudioPix::new(ICON_MIN_SIZE, prefs)?;
         let status_icon = gtk::StatusIcon::new();
 
         return Ok(TrayIcon {
+                      _cant_construct: (),
                       volmeter,
                       audio_pix: RefCell::new(audio_pix),
                       status_icon,
@@ -50,7 +52,33 @@ impl TrayIcon {
                   });
     }
 
-    fn update(&self,
+
+    fn update_pixbuf(&self, cur_vol: f64, vol_level: VolLevel) -> Result<()> {
+        let audio_pix = self.audio_pix.borrow();
+        let pixbuf = audio_pix.select_pix(vol_level);
+
+        let vol_borrow = self.volmeter.borrow();
+        let volmeter = &vol_borrow.as_ref();
+        match volmeter {
+            &Some(v) => {
+                let vol_pix = v.meter_draw(cur_vol as i64, &pixbuf)?;
+                self.status_icon.set_from_pixbuf(Some(&vol_pix));
+            }
+            &None => self.status_icon.set_from_pixbuf(Some(pixbuf)),
+        };
+
+        return Ok(());
+    }
+
+
+    pub fn update_audio(&self,
+                        audio: &Audio) -> Result<()> {
+
+        return self.update_pixbuf(audio.vol()?, audio.vol_level());
+    }
+
+
+    pub fn update_all(&self,
               prefs: &Prefs,
               audio: &Audio,
               m_size: Option<i32>)
@@ -63,41 +91,30 @@ impl TrayIcon {
                 } else {
                     self.icon_size.set(s);
                 }
-                /* if icon size changed, we have to re-init audio pix */
-                let pixbuf = AudioPix::new(self.icon_size.get(), &prefs)?;
-                *self.audio_pix.borrow_mut() = pixbuf;
             }
             None => (),
         }
 
-        let cur_vol = audio.vol()?;
-        let audio_pix = self.audio_pix.borrow();
-        let pixbuf = audio_pix.select_pix(audio.vol_level());
+        let audio_pix = AudioPix::new(self.icon_size.get(), &prefs)?;
+        *self.audio_pix.borrow_mut() = audio_pix;
+        let volmeter = VolMeter::new(&prefs);
+        *self.volmeter.borrow_mut() = Some(volmeter);
 
-        let volmeter = &self.volmeter.as_ref();
-        match volmeter {
-            &Some(v) => {
-                let vol_pix = v.meter_draw(cur_vol as i64, &pixbuf)?;
-                self.status_icon.set_from_pixbuf(Some(&vol_pix));
-            }
-            &None => self.status_icon.set_from_pixbuf(Some(pixbuf)),
-        };
-
-        return Ok(());
+        return self.update_pixbuf(audio.vol()?, audio.vol_level());
     }
 }
 
 
 
 pub struct VolMeter {
-    pub red: u8,
-    pub green: u8,
-    pub blue: u8,
-    pub x_offset_pct: i64,
-    pub y_offset_pct: i64,
+    red: u8,
+    green: u8,
+    blue: u8,
+    x_offset_pct: i64,
+    y_offset_pct: i64,
     /* dynamic */
-    pub width: Cell<i64>,
-    pub row: RefCell<Vec<u8>>,
+    width: Cell<i64>,
+    row: RefCell<Vec<u8>>,
 }
 
 
@@ -280,7 +297,7 @@ impl AudioPix {
 pub fn init_tray_icon(appstate: Rc<AppS>) {
     let audio = &appstate.audio;
     let tray_icon = &appstate.gui.tray_icon;
-    try_e!(tray_icon.update(&appstate.prefs.borrow_mut(), &audio, None));
+    try_e!(tray_icon.update_all(&appstate.prefs.borrow_mut(), &audio, None));
 
     tray_icon.status_icon.set_visible(true);
 
@@ -290,10 +307,8 @@ pub fn init_tray_icon(appstate: Rc<AppS>) {
         appstate.audio.connect_handler(
             Box::new(move |s, u| match (s, u) {
                 (AudioSignal::ValuesChanged, _) => {
-                    try_w!(apps.gui.tray_icon.update(
-                        &apps.prefs.borrow_mut(),
+                    try_w!(apps.gui.tray_icon.update_audio(
                         &apps.audio,
-                        None,
                     ));
                 }
                 _ => (),
@@ -305,7 +320,7 @@ pub fn init_tray_icon(appstate: Rc<AppS>) {
     {
         let apps = appstate.clone();
         tray_icon.status_icon.connect_size_changed(move |_, size| {
-            try_wr!(apps.gui.tray_icon.update(&apps.prefs.borrow_mut(),
+            try_wr!(apps.gui.tray_icon.update_all(&apps.prefs.borrow_mut(),
                                               &apps.audio,
                                               Some(size)),
                     false);

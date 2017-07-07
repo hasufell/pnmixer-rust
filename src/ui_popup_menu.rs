@@ -1,12 +1,22 @@
 use app_state::*;
 use gtk::prelude::*;
-use std::rc::Rc;
 use gtk;
+use std::rc::Rc;
 use ui_prefs_dialog::*;
 
 
 
 const VERSION: &'static str = env!("CARGO_PKG_VERSION");
+
+
+
+create_builder_item!(PopupMenu,
+                     menu_window: gtk::Window,
+                     menubar: gtk::MenuBar,
+                     menu: gtk::Menu,
+                     about_item: gtk::MenuItem,
+                     prefs_item: gtk::MenuItem);
+
 
 
 pub fn init_popup_menu(appstate: Rc<AppS>) {
