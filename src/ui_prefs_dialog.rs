@@ -1,5 +1,5 @@
 use app_state::*;
-use audio::AudioUser;
+use audio::{AudioUser, AudioSignal};
 use gdk;
 use gtk::ResponseType;
 use gtk::prelude::*;
@@ -7,6 +7,7 @@ use gtk;
 use prefs::*;
 use std::rc::Rc;
 use support_alsa::*;
+use errors::*;
 
 
 
@@ -45,9 +46,7 @@ pub struct PrefsDialog {
 
 impl PrefsDialog {
     pub fn new() -> PrefsDialog {
-        let builder = gtk::Builder::new_from_string(
-            include_str!("../data/ui/prefs-dialog.glade"),
-        );
+        let builder = gtk::Builder::new_from_string(include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/data/ui/prefs-dialog.glade")));
         let prefs_dialog = PrefsDialog {
             _cant_construct: (),
             prefs_dialog: builder.get_object("prefs_dialog").unwrap(),
@@ -55,21 +54,17 @@ impl PrefsDialog {
             card_combo: builder.get_object("card_combo").unwrap(),
             chan_combo: builder.get_object("chan_combo").unwrap(),
 
-            vol_meter_draw_check: builder
-                .get_object("vol_meter_draw_check")
+            vol_meter_draw_check: builder.get_object("vol_meter_draw_check")
                 .unwrap(),
-            vol_meter_pos_spin: builder
-                .get_object("vol_meter_pos_spin")
+            vol_meter_pos_spin: builder.get_object("vol_meter_pos_spin")
                 .unwrap(),
-            vol_meter_color_button: builder
-                .get_object("vol_meter_color_button")
+            vol_meter_color_button: builder.get_object("vol_meter_color_button")
                 .unwrap(),
             system_theme: builder.get_object("system_theme").unwrap(),
 
             vol_control_entry: builder.get_object("vol_control_entry").unwrap(),
             scroll_step_spin: builder.get_object("scroll_step_spin").unwrap(),
-            middle_click_combo: builder
-                .get_object("middle_click_combo")
+            middle_click_combo: builder.get_object("middle_click_combo")
                 .unwrap(),
             custom_entry: builder.get_object("custom_entry").unwrap(),
 
@@ -88,26 +83,14 @@ impl PrefsDialog {
 
     pub fn from_prefs(&self, prefs: &Prefs) {
         /* DevicePrefs */
+        /* filled on show signal with audio info */
         self.card_combo.remove_all();
-        self.card_combo.append_text(
-            prefs.device_prefs.card.as_str(),
-        );
-        self.card_combo.set_active(0);
-
         self.chan_combo.remove_all();
-        self.chan_combo.append_text(
-            prefs.device_prefs.channel.as_str(),
-        );
-        self.chan_combo.set_active(0);
 
         /* ViewPrefs */
-        self.vol_meter_draw_check.set_active(
-            prefs.view_prefs.draw_vol_meter,
-        );
-        self.vol_meter_pos_spin.set_value(
-            prefs.view_prefs.vol_meter_offset as
-                f64,
-        );
+        self.vol_meter_draw_check.set_active(prefs.view_prefs.draw_vol_meter);
+        self.vol_meter_pos_spin.set_value(prefs.view_prefs.vol_meter_offset as
+                                          f64);
 
         // TODO don't convert like that
         let rgba = gdk::RGBA {
@@ -120,17 +103,12 @@ impl PrefsDialog {
         self.system_theme.set_active(prefs.view_prefs.system_theme);
 
         /* BehaviorPrefs */
-        self.vol_control_entry.set_text(
-            prefs
-                .behavior_prefs
-                .vol_control_cmd
-                .as_ref()
-                .unwrap_or(&String::from(""))
-                .as_str(),
-        );
-        self.scroll_step_spin.set_value(
-            prefs.behavior_prefs.vol_scroll_step,
-        );
+        self.vol_control_entry.set_text(prefs.behavior_prefs
+                                            .vol_control_cmd
+                                            .as_ref()
+                                            .unwrap_or(&String::from(""))
+                                            .as_str());
+        self.scroll_step_spin.set_value(prefs.behavior_prefs.vol_scroll_step);
 
         // TODO: make sure these values always match, must be a better way
         //       also check to_prefs()
@@ -138,53 +116,38 @@ impl PrefsDialog {
         self.middle_click_combo.append_text("Show Preferences");
         self.middle_click_combo.append_text("Volume Control");
         self.middle_click_combo.append_text("Custom Command (set below)");
-        self.middle_click_combo.set_active(
-            prefs
-                .behavior_prefs
-                .middle_click_action
-                .into(),
-        );
-        self.custom_entry.set_text(
-            prefs
-                .behavior_prefs
-                .custom_command
-                .as_ref()
-                .unwrap_or(&String::from(""))
-                .as_str(),
-        );
+        self.middle_click_combo.set_active(prefs.behavior_prefs
+                                               .middle_click_action
+                                               .into());
+        self.custom_entry.set_text(prefs.behavior_prefs
+                                       .custom_command
+                                       .as_ref()
+                                       .unwrap_or(&String::from(""))
+                                       .as_str());
 
         /* NotifyPrefs */
-        self.noti_enable_check.set_active(
-            prefs
-                .notify_prefs
-                .enable_notifications,
-        );
-        self.noti_timeout_spin.set_value(
-            prefs.notify_prefs.notifcation_timeout as
-                f64,
-        );
-        self.noti_mouse_check.set_active(
-            prefs.notify_prefs.notify_mouse_scroll,
-        );
-        self.noti_popup_check.set_active(
-            prefs.notify_prefs.notify_popup,
-        );
-        self.noti_ext_check.set_active(
-            prefs.notify_prefs.notify_external,
-        );
+        self.noti_enable_check
+            .set_active(prefs.notify_prefs.enable_notifications);
+        self.noti_timeout_spin
+            .set_value(prefs.notify_prefs.notifcation_timeout as f64);
+        self.noti_mouse_check
+            .set_active(prefs.notify_prefs.notify_mouse_scroll);
+        self.noti_popup_check.set_active(prefs.notify_prefs.notify_popup);
+        self.noti_ext_check.set_active(prefs.notify_prefs.notify_external);
     }
 
 
     pub fn to_prefs(&self) -> Prefs {
         // TODO: remove duplication with default instance
-        let device_prefs = DevicePrefs {
-            card: self.card_combo.get_active_text().unwrap_or(
-                String::from("(default)"),
-            ),
-            channel: self.chan_combo.get_active_text().unwrap_or(
-                String::from("Master"),
-            ),
-        };
+        let device_prefs =
+            DevicePrefs {
+                card: self.card_combo
+                    .get_active_text()
+                    .unwrap_or(String::from("(default)")),
+                channel: self.chan_combo
+                    .get_active_text()
+                    .unwrap_or(String::from("Master")),
+            };
 
         // TODO don't convert like that
         let vol_meter_color = VolColor {
@@ -200,16 +163,19 @@ impl PrefsDialog {
             vol_meter_color,
         };
 
-        let vol_control_cmd = self.vol_control_entry.get_text().and_then(|x| {
-            if x.is_empty() { None } else { Some(x) }
-        });
+        let vol_control_cmd =
+            self.vol_control_entry.get_text().and_then(|x| if x.is_empty() {
+                                                           None
+                                                       } else {
+                                                           Some(x)
+                                                       });
 
         let custom_command =
             self.custom_entry.get_text().and_then(|x| if x.is_empty() {
-                None
-            } else {
-                Some(x)
-            });
+                                                      None
+                                                  } else {
+                                                      Some(x)
+                                                  });
 
         let behavior_prefs = BehaviorPrefs {
             vol_control_cmd,
@@ -221,25 +187,28 @@ impl PrefsDialog {
         let notify_prefs = NotifyPrefs {
             enable_notifications: self.noti_enable_check.get_active(),
             notifcation_timeout: self.noti_timeout_spin.get_value_as_int() as
-                i64,
+                                 i64,
             notify_mouse_scroll: self.noti_mouse_check.get_active(),
             notify_popup: self.noti_popup_check.get_active(),
             notify_external: self.noti_ext_check.get_active(),
         };
 
         return Prefs {
-            device_prefs,
-            view_prefs,
-            behavior_prefs,
-            notify_prefs,
-        };
+                   device_prefs,
+                   view_prefs,
+                   behavior_prefs,
+                   notify_prefs,
+               };
 
     }
 }
 
 
 pub fn show_prefs_dialog(appstate: &Rc<AppS>) {
-    if appstate.gui.prefs_dialog.borrow().is_some() {
+    if appstate.gui
+           .prefs_dialog
+           .borrow()
+           .is_some() {
         return;
     }
 
@@ -260,6 +229,22 @@ pub fn show_prefs_dialog(appstate: &Rc<AppS>) {
 
 /* TODO: do the references get dropped when the dialog window is gone? */
 pub fn init_prefs_dialog(appstate: &Rc<AppS>) {
+    /* audio.connect_handler */
+    {
+        let apps = appstate.clone();
+        appstate.audio.connect_handler(Box::new(move |s, u| {
+            match (s, u) {
+                (AudioSignal::CardInitialized, _) => (),
+                (AudioSignal::CardCleanedUp, _) => {
+                    fill_card_combo(&apps);
+                    fill_chan_combo(&apps, None);
+                },
+                _ => (),
+            }
+        }));
+
+    }
+
 
     /* prefs_dialog.connect_show */
     {
@@ -267,11 +252,30 @@ pub fn init_prefs_dialog(appstate: &Rc<AppS>) {
         let m_pd = appstate.gui.prefs_dialog.borrow();
         let pd = m_pd.as_ref().unwrap();
         pd.prefs_dialog.connect_show(
-            move |_| { on_prefs_dialog_show(&apps); },
+            move |_| {
+                fill_card_combo(&apps);
+                fill_chan_combo(&apps, None);
+            }
         );
     }
 
-    /* prefs_dialog.connect_show */
+    /* card_combo.connect_changed */
+    {
+        let apps = appstate.clone();
+        let m_cc = appstate.gui.prefs_dialog.borrow();
+        let card_combo = &m_cc.as_ref().unwrap().card_combo;
+
+        card_combo.connect_changed(move |_| {
+            let m_cc = apps.gui.prefs_dialog.borrow();
+            let card_combo = &m_cc.as_ref().unwrap().card_combo;
+            let card_name = card_combo
+                    .get_active_text().unwrap();
+            fill_chan_combo(&apps, Some(card_name));
+            return;
+        });
+    }
+
+    /* prefs_dialog.connect_response */
     {
         let apps = appstate.clone();
         let m_pd = appstate.gui.prefs_dialog.borrow();
@@ -298,47 +302,33 @@ pub fn init_prefs_dialog(appstate: &Rc<AppS>) {
                 // TODO: update popup, tray_icon, hotkeys, notification and audio
                 try_w!(apps.update_tray_icon());
                 try_w!(apps.update_popup_window());
+                {
+                    let prefs = apps.prefs.borrow();
+                    let card = &prefs.device_prefs.card;
+                    let channel = &prefs.device_prefs.channel;
+                    try_w!(apps.audio.switch_acard(
+                            Some(card.clone()),
+                            Some(channel.clone()),
+                            AudioUser::PrefsWindow));
+                }
                 let prefs = apps.prefs.borrow_mut();
                 try_w!(prefs.store_config());
                }
 
         });
     }
-
-    // TODO: fix combo box behavior and filling
-    /*  DEVICE TAB */
-
-    /* card_combo.connect_changed */
-    {
-        let apps = appstate.clone();
-        let m_cc = appstate.gui.prefs_dialog.borrow();
-        let card_combo = &m_cc.as_ref().unwrap().card_combo;
-
-        // TODO: refill channel combo
-        card_combo.connect_changed(move |_| { on_card_combo_changed(&apps); });
-    }
-    /* card_combo.connect_changed */
-    {
-        let apps = appstate.clone();
-        let m_cc = appstate.gui.prefs_dialog.borrow();
-        let chan_combo = &m_cc.as_ref().unwrap().chan_combo;
-
-        chan_combo.connect_changed(move |_| { on_chan_combo_changed(&apps); });
-    }
 }
 
 
-fn on_prefs_dialog_show(appstate: &AppS) {
+fn fill_card_combo(appstate: &AppS) {
     let m_cc = appstate.gui.prefs_dialog.borrow();
     let card_combo = &m_cc.as_ref().unwrap().card_combo;
-    let m_cc = appstate.gui.prefs_dialog.borrow();
-    let chan_combo = &m_cc.as_ref().unwrap().chan_combo;
+    card_combo.remove_all();
     let acard = appstate.audio.acard.borrow();
 
-
     /* set card combo */
-    let cur_card_name =
-        try_w!(acard.card_name(), "Can't get current card name!");
+    let cur_card_name = try_w!(acard.card_name(),
+                               "Can't get current card name!");
     let available_card_names = get_alsa_card_names();
 
     /* set_active_id doesn't work, so save the index */
@@ -353,12 +343,26 @@ fn on_prefs_dialog_show(appstate: &AppS) {
 
     // TODO, block signal?
     card_combo.set_active(c_index);
+}
 
 
+fn fill_chan_combo(appstate: &AppS, cardname: Option<String>) {
+    let m_cc = appstate.gui.prefs_dialog.borrow();
+    let chan_combo = &m_cc.as_ref().unwrap().chan_combo;
+    chan_combo.remove_all();
+
+    let cur_acard = appstate.audio.acard.borrow();
+    let card = match cardname {
+        Some(name) => {
+            try_w!(get_alsa_card_by_name(name).from_err())
+        },
+        None => cur_acard.as_ref().card,
+    };
 
     /* set chan combo */
-    let cur_chan_name = try_w!(acard.chan_name());
-    let available_chan_names = get_selem_names(&acard.mixer);
+    let cur_chan_name = try_w!(cur_acard.chan_name());
+    let mixer = try_w!(get_mixer(&card));
+    let available_chan_names = get_selem_names(&mixer);
 
     /* set_active_id doesn't work, so save the index */
     let mut c_index: i32 = -1;
@@ -375,53 +379,3 @@ fn on_prefs_dialog_show(appstate: &AppS) {
 
 }
 
-
-fn on_card_combo_changed(appstate: &AppS) {
-    let m_cc = appstate.gui.prefs_dialog.borrow();
-    let card_combo = &m_cc.as_ref().unwrap().card_combo;
-    let m_cc = appstate.gui.prefs_dialog.borrow();
-    let chan_combo = &m_cc.as_ref().unwrap().chan_combo;
-    let active_card_item = try_w!(card_combo.get_active_text().ok_or(
-        "No active Card item found",
-    ));
-    let active_chan_item = chan_combo.get_active_id();
-    let cur_card_name = {
-        let acard = appstate.audio.acard.borrow();
-        try_w!(acard.card_name(), "Can't get current card name!")
-    };
-
-    if active_card_item != cur_card_name {
-        appstate.audio.switch_acard(
-            Some(cur_card_name),
-            active_chan_item,
-            AudioUser::PrefsWindow,
-        );
-    }
-}
-
-
-fn on_chan_combo_changed(appstate: &AppS) {
-    let m_cc = appstate.gui.prefs_dialog.borrow();
-    let card_combo = &m_cc.as_ref().unwrap().card_combo;
-    let m_cc = appstate.gui.prefs_dialog.borrow();
-    let chan_combo = &m_cc.as_ref().unwrap().chan_combo;
-    let active_chan_item = try_w!(chan_combo.get_active_text().ok_or(
-        "No active Chan item found",
-    ));
-    let cur_card_name = {
-        let acard = appstate.audio.acard.borrow();
-        acard.card_name().ok()
-    };
-    let cur_chan_name = {
-        let acard = appstate.audio.acard.borrow();
-        try_w!(acard.chan_name())
-    };
-
-    if active_chan_item != cur_chan_name {
-        appstate.audio.switch_acard(
-            cur_card_name,
-            Some(active_chan_item),
-            AudioUser::PrefsWindow,
-        );
-    }
-}

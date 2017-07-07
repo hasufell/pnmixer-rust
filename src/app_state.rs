@@ -23,22 +23,20 @@ pub struct AppS {
 
 impl AppS {
     pub fn new() -> AppS {
-        let builder_popup_window = gtk::Builder::new_from_string(include_str!(
-            "../data/ui/popup-window.glade"
-        ));
-        let builder_popup_menu = gtk::Builder::new_from_string(
-            include_str!("../data/ui/popup-menu.glade"),
-        );
+        let builder_popup_window =
+            gtk::Builder::new_from_string(include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/data/ui/popup-window.glade")));
+        let builder_popup_menu = gtk::Builder::new_from_string(include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/data/ui/popup-menu.glade")));
         let prefs = RefCell::new(Prefs::new().unwrap());
         let gui =
             Gui::new(builder_popup_window, builder_popup_menu, &prefs.borrow());
 
         return AppS {
-            _cant_construct: (),
-            gui: gui,
-            audio: Audio::new(None, Some(String::from("Master"))).unwrap(),
-            prefs: prefs,
-        };
+                   _cant_construct: (),
+                   gui: gui,
+                   audio: Audio::new(None, Some(String::from("Master")))
+                       .unwrap(),
+                   prefs: prefs,
+               };
     }
 
 
@@ -46,11 +44,9 @@ impl AppS {
 
     pub fn update_tray_icon(&self) -> Result<()> {
         debug!("Update tray icon!");
-        return self.gui.tray_icon.update_all(
-            &self.prefs.borrow(),
-            &self.audio,
-            None,
-        );
+        return self.gui.tray_icon.update_all(&self.prefs.borrow(),
+                                             &self.audio,
+                                             None);
     }
 
     pub fn update_popup_window(&self) -> Result<()> {
@@ -61,5 +57,4 @@ impl AppS {
     pub fn show_preferences(&self) {
         // show_prefs_dialog(self);
     }
-
 }

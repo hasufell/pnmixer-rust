@@ -73,10 +73,9 @@ pub struct Audio {
 
 
 impl Audio {
-    pub fn new(
-        card_name: Option<String>,
-        elem_name: Option<String>,
-    ) -> Result<Audio> {
+    pub fn new(card_name: Option<String>,
+               elem_name: Option<String>)
+               -> Result<Audio> {
 
         let handlers = Handlers::new();
         let last_action_timestamp = Rc::new(RefCell::new(0));
@@ -85,8 +84,10 @@ impl Audio {
             let myhandler = handlers.clone();
             let ts = last_action_timestamp.clone();
             Rc::new(move |event| {
-                on_alsa_event(&mut *ts.borrow_mut(), &myhandler.borrow(), event)
-            })
+                        on_alsa_event(&mut *ts.borrow_mut(),
+                                      &myhandler.borrow(),
+                                      event)
+                    })
         };
 
         let audio = Audio {
@@ -101,40 +102,44 @@ impl Audio {
     }
 
 
-    pub fn switch_acard(
-        &self,
-        card_name: Option<String>,
-        elem_name: Option<String>,
-        user: AudioUser,
-    ) -> Result<()> {
+    pub fn switch_acard(&self,
+                        card_name: Option<String>,
+                        elem_name: Option<String>,
+                        user: AudioUser)
+                        -> Result<()> {
         debug!("Switching cards");
-        debug!(
-            "Old card name: {}",
-            self.acard.borrow().card_name().unwrap()
-        );
-        debug!(
-            "Old chan name: {}",
-            self.acard.borrow().chan_name().unwrap()
-        );
-        let cb = self.acard.borrow().cb.clone();
+        debug!("Old card name: {}",
+               self.acard
+                   .borrow()
+                   .card_name()
+                   .unwrap());
+        debug!("Old chan name: {}",
+               self.acard
+                   .borrow()
+                   .chan_name()
+                   .unwrap());
+        let cb = self.acard
+            .borrow()
+            .cb
+            .clone();
         {
             let mut ac = self.acard.borrow_mut();
             *ac = AlsaCard::new(card_name, elem_name, cb)?;
         }
-        debug!(
-            "Old card name: {}",
-            self.acard.borrow().card_name().unwrap()
-        );
-        debug!(
-            "Old chan name: {}",
-            self.acard.borrow().chan_name().unwrap()
-        );
+        debug!("Old card name: {}",
+               self.acard
+                   .borrow()
+                   .card_name()
+                   .unwrap());
+        debug!("Old chan name: {}",
+               self.acard
+                   .borrow()
+                   .chan_name()
+                   .unwrap());
 
-        invoke_handlers(
-            &self.handlers.borrow(),
-            AudioSignal::CardInitialized,
-            user,
-        );
+        invoke_handlers(&self.handlers.borrow(),
+                        AudioSignal::CardInitialized,
+                        user);
 
         return Ok(());
     }
@@ -167,20 +172,24 @@ impl Audio {
             *rc = glib::get_monotonic_time();
         }
 
-        debug!(
-            "Setting vol on card {:?} and chan {:?} to {:?} by user {:?}",
-            self.acard.borrow().card_name().unwrap(),
-            self.acard.borrow().chan_name().unwrap(),
-            new_vol,
-            user
-        );
-        self.acard.borrow().set_vol(new_vol)?;
+        debug!("Setting vol on card {:?} and chan {:?} to {:?} by user {:?}",
+               self.acard
+                   .borrow()
+                   .card_name()
+                   .unwrap(),
+               self.acard
+                   .borrow()
+                   .chan_name()
+                   .unwrap(),
+               new_vol,
+               user);
+        self.acard
+            .borrow()
+            .set_vol(new_vol)?;
 
-        invoke_handlers(
-            &self.handlers.borrow(),
-            AudioSignal::ValuesChanged,
-            user,
-        );
+        invoke_handlers(&self.handlers.borrow(),
+                        AudioSignal::ValuesChanged,
+                        user);
         return Ok(());
     }
 
@@ -193,21 +202,23 @@ impl Audio {
         let old_vol = self.vol()?;
         let new_vol = f64::ceil(old_vol + (self.scroll_step.get() as f64));
 
-        debug!(
-            "Increase vol on card {:?} and chan {:?} by {:?} to {:?}",
-            self.acard.borrow().card_name().unwrap(),
-            self.acard.borrow().chan_name().unwrap(),
-            (new_vol - old_vol),
-            new_vol
-        );
+        debug!("Increase vol on card {:?} and chan {:?} by {:?} to {:?}",
+               self.acard
+                   .borrow()
+                   .card_name()
+                   .unwrap(),
+               self.acard
+                   .borrow()
+                   .chan_name()
+                   .unwrap(),
+               (new_vol - old_vol),
+               new_vol);
 
         self.set_vol(new_vol, user)?;
 
-        invoke_handlers(
-            &self.handlers.borrow(),
-            AudioSignal::ValuesChanged,
-            user,
-        );
+        invoke_handlers(&self.handlers.borrow(),
+                        AudioSignal::ValuesChanged,
+                        user);
         return Ok(());
     }
 
@@ -220,21 +231,23 @@ impl Audio {
         let old_vol = self.vol()?;
         let new_vol = old_vol - (self.scroll_step.get() as f64);
 
-        debug!(
-            "Decrease vol on card {:?} and chan {:?} by {:?} to {:?}",
-            self.acard.borrow().card_name().unwrap(),
-            self.acard.borrow().chan_name().unwrap(),
-            (new_vol - old_vol),
-            new_vol
-        );
+        debug!("Decrease vol on card {:?} and chan {:?} by {:?} to {:?}",
+               self.acard
+                   .borrow()
+                   .card_name()
+                   .unwrap(),
+               self.acard
+                   .borrow()
+                   .chan_name()
+                   .unwrap(),
+               (new_vol - old_vol),
+               new_vol);
 
         self.set_vol(new_vol, user)?;
 
-        invoke_handlers(
-            &self.handlers.borrow(),
-            AudioSignal::ValuesChanged,
-            user,
-        );
+        invoke_handlers(&self.handlers.borrow(),
+                        AudioSignal::ValuesChanged,
+                        user);
         return Ok(());
     }
 
@@ -253,21 +266,25 @@ impl Audio {
         let mut rc = self.last_action_timestamp.borrow_mut();
         *rc = glib::get_monotonic_time();
 
-        debug!(
-            "Setting mute to {} on card {:?} and chan {:?} by user {:?}",
-            mute,
-            self.acard.borrow().card_name().unwrap(),
-            self.acard.borrow().chan_name().unwrap(),
-            user
-        );
+        debug!("Setting mute to {} on card {:?} and chan {:?} by user {:?}",
+               mute,
+               self.acard
+                   .borrow()
+                   .card_name()
+                   .unwrap(),
+               self.acard
+                   .borrow()
+                   .chan_name()
+                   .unwrap(),
+               user);
 
-        self.acard.borrow().set_mute(mute)?;
+        self.acard
+            .borrow()
+            .set_mute(mute)?;
 
-        invoke_handlers(
-            &self.handlers.borrow(),
-            AudioSignal::ValuesChanged,
-            user,
-        );
+        invoke_handlers(&self.handlers.borrow(),
+                        AudioSignal::ValuesChanged,
+                        user);
         return Ok(());
     }
 
@@ -284,16 +301,12 @@ impl Audio {
 }
 
 
-fn invoke_handlers(
-    handlers: &Vec<Box<Fn(AudioSignal, AudioUser)>>,
-    signal: AudioSignal,
-    user: AudioUser,
-) {
-    debug!(
-        "Invoking handlers for signal {:?} by user {:?}",
-        signal,
-        user
-    );
+fn invoke_handlers(handlers: &Vec<Box<Fn(AudioSignal, AudioUser)>>,
+                   signal: AudioSignal,
+                   user: AudioUser) {
+    debug!("Invoking handlers for signal {:?} by user {:?}",
+           signal,
+           user);
     for handler in handlers {
         let unboxed = handler.as_ref();
         unboxed(signal, user);
@@ -301,11 +314,9 @@ fn invoke_handlers(
 }
 
 
-fn on_alsa_event(
-    last_action_timestamp: &mut i64,
-    handlers: &Vec<Box<Fn(AudioSignal, AudioUser)>>,
-    alsa_event: AlsaEvent,
-) {
+fn on_alsa_event(last_action_timestamp: &mut i64,
+                 handlers: &Vec<Box<Fn(AudioSignal, AudioUser)>>,
+                 alsa_event: AlsaEvent) {
     let last: i64 = *last_action_timestamp;
 
     if last != 0 {
@@ -325,11 +336,9 @@ fn on_alsa_event(
         AlsaEvent::AlsaCardDiconnected => debug!("AlsaCardDiconnected"),
         AlsaEvent::AlsaCardValuesChanged => {
             debug!("AlsaCardValuesChanged");
-            invoke_handlers(
-                handlers,
-                self::AudioSignal::ValuesChanged,
-                self::AudioUser::Unknown,
-            );
+            invoke_handlers(handlers,
+                            self::AudioSignal::ValuesChanged,
+                            self::AudioUser::Unknown);
         }
         e => warn!("Unhandled alsa event: {:?}", e),
     }

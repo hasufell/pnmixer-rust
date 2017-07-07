@@ -20,18 +20,17 @@ pub struct Gui {
 }
 
 impl Gui {
-    pub fn new(
-        builder_popup_window: gtk::Builder,
-        builder_popup_menu: gtk::Builder,
-        prefs: &Prefs,
-    ) -> Gui {
+    pub fn new(builder_popup_window: gtk::Builder,
+               builder_popup_menu: gtk::Builder,
+               prefs: &Prefs)
+               -> Gui {
         return Gui {
-            _cant_construct: (),
-            tray_icon: TrayIcon::new(prefs).unwrap(),
-            popup_window: PopupWindow::new(builder_popup_window),
-            popup_menu: PopupMenu::new(builder_popup_menu),
-            prefs_dialog: RefCell::new(None),
-        };
+                   _cant_construct: (),
+                   tray_icon: TrayIcon::new(prefs).unwrap(),
+                   popup_window: PopupWindow::new(builder_popup_window),
+                   popup_menu: PopupMenu::new(builder_popup_menu),
+                   prefs_dialog: RefCell::new(None),
+               };
     }
 }
 

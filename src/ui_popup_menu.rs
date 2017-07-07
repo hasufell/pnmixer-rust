@@ -11,19 +11,17 @@ const VERSION: &'static str = env!("CARGO_PKG_VERSION");
 
 
 
-create_builder_item!(
-    PopupMenu,
-    menu_window: gtk::Window,
-    menubar: gtk::MenuBar,
-    menu: gtk::Menu,
-    about_item: gtk::MenuItem,
-    mixer_item: gtk::MenuItem,
-    mute_item: gtk::MenuItem,
-    mute_check: gtk::CheckButton,
-    prefs_item: gtk::MenuItem,
-    quit_item: gtk::MenuItem,
-    reload_item: gtk::MenuItem
-);
+create_builder_item!(PopupMenu,
+                     menu_window: gtk::Window,
+                     menubar: gtk::MenuBar,
+                     menu: gtk::Menu,
+                     about_item: gtk::MenuItem,
+                     mixer_item: gtk::MenuItem,
+                     mute_item: gtk::MenuItem,
+                     mute_check: gtk::CheckButton,
+                     prefs_item: gtk::MenuItem,
+                     quit_item: gtk::MenuItem,
+                     reload_item: gtk::MenuItem);
 
 
 
@@ -33,15 +31,20 @@ pub fn init_popup_menu(appstate: Rc<AppS>) {
         let apps = appstate.clone();
         appstate.audio.connect_handler(Box::new(move |s, u| {
             /* skip if window is hidden */
-            if !apps.gui.popup_menu.menu.get_visible() {
+            if !apps.gui
+                    .popup_menu
+                    .menu
+                    .get_visible() {
                 return;
             }
             match (s, u) {
-                (AudioSignal::ValuesChanged, _) => {
+                (_, _) => {
                     let muted = try_w!(apps.audio.get_mute());
-                    apps.gui.popup_menu.mute_check.set_active(muted);
+                    apps.gui
+                        .popup_menu
+                        .mute_check
+                        .set_active(muted);
                 }
-                _ => (),
             }
         }));
 
@@ -50,10 +53,16 @@ pub fn init_popup_menu(appstate: Rc<AppS>) {
     /* popup_menu.menu.connect_show */
     {
         let apps = appstate.clone();
-        appstate.gui.popup_menu.menu.connect_show(move |_| {
-            let muted = try_w!(apps.audio.get_mute());
-            apps.gui.popup_menu.mute_check.set_active(muted);
-        });
+        appstate.gui
+            .popup_menu
+            .menu
+            .connect_show(move |_| {
+                let muted = try_w!(apps.audio.get_mute());
+                apps.gui
+                    .popup_menu
+                    .mute_check
+                    .set_active(muted);
+            });
 
     }
 
@@ -79,18 +88,27 @@ pub fn init_popup_menu(appstate: Rc<AppS>) {
     {
         let apps = appstate.clone();
         let about_item = &appstate.gui.popup_menu.about_item;
-        about_item.connect_activate(
-            move |_| { on_about_item_activate(&apps); },
-        );
+        about_item.connect_activate(move |_| {
+                                        on_about_item_activate(&apps);
+                                    });
     }
 
     /* about_item.connect_activate_link */
     {
         let apps = appstate.clone();
         let prefs_item = &appstate.gui.popup_menu.prefs_item;
-        prefs_item.connect_activate(
-            move |_| { on_prefs_item_activate(&apps); },
-        );
+        prefs_item.connect_activate(move |_| {
+                                        on_prefs_item_activate(&apps);
+                                    });
+    }
+
+
+    /* quit_item.connect_activate_link */
+    {
+        let quit_item = &appstate.gui.popup_menu.quit_item;
+        quit_item.connect_activate(|_| {
+                                        gtk::main_quit();
+                                    });
     }
 }
 
@@ -139,4 +157,3 @@ fn on_prefs_item_activate(appstate: &Rc<AppS>) {
     /* TODO: only create if needed */
     show_prefs_dialog(appstate);
 }
-
