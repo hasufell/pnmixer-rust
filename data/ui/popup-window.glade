@@ -16,9 +16,6 @@
     <property name="skip_taskbar_hint">True</property>
     <property name="skip_pager_hint">True</property>
     <property name="decorated">False</property>
-    <signal name="button-press-event" handler="on_popup_window_event" swapped="no"/>
-    <signal name="grab-broken-event" handler="on_popup_window_event" swapped="no"/>
-    <signal name="key-press-event" handler="on_popup_window_event" swapped="no"/>
     <child>
       <object class="GtkBox" id="vbox1">
         <property name="visible">True</property>
@@ -36,7 +33,6 @@
             <property name="round_digits">0</property>
             <property name="digits">0</property>
             <property name="height_request">200</property>
-            <signal name="value-changed" handler="on_vol_scale_value_changed" swapped="no"/>
           </object>
           <packing>
             <property name="expand">True</property>
@@ -58,7 +54,6 @@
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
                 <property name="draw_indicator">True</property>
-                <signal name="toggled" handler="on_mute_check_toggled" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -73,7 +68,6 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <signal name="clicked" handler="on_mixer_button_clicked" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">False</property>

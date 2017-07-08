@@ -127,7 +127,7 @@ fn create_about_dialog() -> gtk::AboutDialog {
     let about_dialog: gtk::AboutDialog = gtk::AboutDialog::new();
 
     about_dialog.set_license(Some(
-        "PNMixer is free software; you can redistribute it and/or modify it
+        "PNMixer-rs is free software; you can redistribute it and/or modify it
 under the terms of the GNU General Public License v3 as published
 by the Free Software Foundation.
 
@@ -143,7 +143,7 @@ Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.",
     about_dialog.set_copyright(Some("Copyright © 2017 Julian Ospald"));
     about_dialog.set_authors(&["Julian Ospald"]);
     about_dialog.set_artists(&["Paul Davey"]);
-    about_dialog.set_program_name("pnmixer-rs");
+    about_dialog.set_program_name("PNMixer-rs");
     about_dialog.set_logo_icon_name("pnmixer");
     about_dialog.set_version(VERSION);
     about_dialog.set_website("https://github.com/hasufell/pnmixer-rust");

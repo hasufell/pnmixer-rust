@@ -43,16 +43,28 @@ pub fn pixbuf_new_from_theme(icon_name: &str,
 
 pub fn pixbuf_new_from_file(filename: &str) -> Result<gdk_pixbuf::Pixbuf> {
     ensure!(!filename.is_empty(), "Filename is empty");
+    let mut syspath = String::new();
+    let sysdir = option_env!("PIXMAPSDIR").map(|s|{
+        syspath = format!("{}/{}", s, filename);
+        Path::new(syspath.as_str())
+    });
+    let cargopath = format!("./data/pixmaps/{}",
+                                     filename);
+    let cargodir = Path::new(cargopath.as_str());
 
-    let s = format!("{}/data/pixmaps/{}", env!("CARGO_MANIFEST_DIR"), filename);
-    let path = Path::new(s.as_str());
+    // prefer local dir
+    let final_dir = {
+        if cargodir.exists() {
+            cargodir
+        } else if sysdir.is_some() && sysdir.unwrap().exists() {
+            sysdir.unwrap()
+        } else {
+            bail!("No valid path found")
+        }
+    };
 
-    if path.exists() {
-        let str_path = path.to_str().ok_or("Path is not valid unicode")?;
-
-        // TODO: propagate error
-        return Ok(gdk_pixbuf::Pixbuf::new_from_file(str_path).unwrap());
-    } else {
-        bail!("Uh-oh");
-    }
+    let str_path = final_dir.to_str().ok_or("Path is not valid unicode")?;
+    debug!("Loading icon from {}", str_path);
+    // TODO: propagate error
+    return Ok(gdk_pixbuf::Pixbuf::new_from_file(str_path).unwrap());
 }

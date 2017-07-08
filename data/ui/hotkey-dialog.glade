@@ -12,8 +12,6 @@
     <property name="destroy_with_parent">True</property>
     <property name="icon_name">input-keyboard</property>
     <property name="type_hint">dialog</property>
-    <signal name="key-press-event" handler="on_hotkey_dialog_key_press_event" swapped="no"/>
-    <signal name="key-release-event" handler="on_hotkey_dialog_key_release_event" swapped="no"/>
     <child internal-child="vbox">
       <object class="GtkBox" id="dialog-vbox1">
         <property name="visible">True</property>

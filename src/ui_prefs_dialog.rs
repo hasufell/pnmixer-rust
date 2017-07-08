@@ -6,7 +6,6 @@ use gtk::ResponseType;
 use gtk::prelude::*;
 use gtk;
 use prefs::*;
-use std::mem;
 use std::rc::Rc;
 use support_alsa::*;
 use support_audio::*;
@@ -34,6 +33,7 @@ pub struct PrefsDialog {
     /* BehaviorPrefs */
     vol_control_entry: gtk::Entry,
     scroll_step_spin: gtk::SpinButton,
+    fine_scroll_step_spin: gtk::SpinButton,
     middle_click_combo: gtk::ComboBoxText,
     custom_entry: gtk::Entry,
 
@@ -68,6 +68,8 @@ impl PrefsDialog {
 
             vol_control_entry: builder.get_object("vol_control_entry").unwrap(),
             scroll_step_spin: builder.get_object("scroll_step_spin").unwrap(),
+            fine_scroll_step_spin: builder.get_object("fine_scroll_step_spin")
+                .unwrap(),
             middle_click_combo: builder.get_object("middle_click_combo")
                 .unwrap(),
             custom_entry: builder.get_object("custom_entry").unwrap(),
@@ -113,6 +115,8 @@ impl PrefsDialog {
                                             .unwrap_or(&String::from(""))
                                             .as_str());
         self.scroll_step_spin.set_value(prefs.behavior_prefs.vol_scroll_step);
+        self.fine_scroll_step_spin
+            .set_value(prefs.behavior_prefs.vol_fine_scroll_step);
 
         // TODO: make sure these values always match, must be a better way
         //       also check to_prefs()
@@ -184,6 +188,7 @@ impl PrefsDialog {
         let behavior_prefs = BehaviorPrefs {
             vol_control_cmd,
             vol_scroll_step: self.scroll_step_spin.get_value(),
+            vol_fine_scroll_step: self.fine_scroll_step_spin.get_value(),
             middle_click_action: self.middle_click_combo.get_active().into(),
             custom_command,
         };
@@ -234,6 +239,11 @@ pub fn show_prefs_dialog(appstate: &Rc<AppS>) {
 pub fn init_prefs_callback(appstate: Rc<AppS>) {
     let apps = appstate.clone();
     appstate.audio.connect_handler(Box::new(move |s, u| {
+        /* skip if prefs window is not present */
+        if apps.gui.prefs_dialog.borrow().is_none() {
+            return;
+        }
+
         match (s, u) {
             (AudioSignal::CardInitialized, _) => (),
             (AudioSignal::CardCleanedUp, _) => {

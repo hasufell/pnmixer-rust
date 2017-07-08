@@ -9,6 +9,7 @@ use glib;
 use gtk::ToggleButtonExt;
 use gtk::prelude::*;
 use gtk;
+use prefs::*;
 use std::cell::Cell;
 use std::rc::Rc;
 use support_cmd::*;
@@ -71,6 +72,13 @@ impl PopupWindow {
         glib::signal_handler_unblock(&self.mute_check,
                                      self.toggle_signal.get());
     }
+
+    fn set_vol_increment(&self, prefs: &Prefs) {
+        self.vol_scale_adj
+            .set_page_increment(prefs.behavior_prefs.vol_scroll_step);
+        self.vol_scale_adj
+            .set_step_increment(prefs.behavior_prefs.vol_fine_scroll_step);
+    }
 }
 
 
@@ -104,7 +112,6 @@ pub fn init_popup_window(appstate: Rc<AppS>) {
                 }
             }
         }));
-
     }
 
     /* mute_check.connect_toggled */
@@ -174,6 +181,7 @@ pub fn init_popup_window(appstate: Rc<AppS>) {
 
 
 fn on_popup_window_show(appstate: &AppS) {
+    appstate.gui.popup_window.set_vol_increment(&appstate.prefs.borrow());
     try_w!(appstate.gui.popup_window.update(&appstate.audio));
     appstate.gui
         .popup_window

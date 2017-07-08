@@ -5,6 +5,7 @@ use prefs::*;
 use std::cell::RefCell;
 use ui_entry::Gui;
 use ui_prefs_dialog::show_prefs_dialog;
+use notif::*;
 
 
 // TODO: notify popups
@@ -17,6 +18,7 @@ pub struct AppS {
     _cant_construct: (),
     pub gui: Gui,
     pub audio: Audio,
+    pub notif: Notif,
     pub prefs: RefCell<Prefs>,
 }
 
@@ -42,11 +44,14 @@ impl AppS {
             .channel
             .clone();
 
+        let notif = Notif::new(&prefs.borrow());
+
         return AppS {
                    _cant_construct: (),
-                   gui: gui,
+                   gui,
                    audio: Audio::new(Some(card_name), Some(chan_name)).unwrap(),
-                   prefs: prefs,
+                   notif,
+                   prefs,
                };
     }
 
@@ -63,10 +68,5 @@ impl AppS {
     pub fn update_popup_window(&self) -> Result<()> {
         debug!("Update PopupWindow!");
         return self.gui.popup_window.update(&self.audio);
-    }
-
-    // TODO
-    pub fn show_preferences(&self) {
-        // show_prefs_dialog(self);
     }
 }

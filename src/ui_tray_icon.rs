@@ -1,9 +1,11 @@
 use app_state::*;
 use audio::*;
 use errors::*;
+use glib;
+use gio;
 use gdk;
 use gdk_pixbuf;
-use gdk_pixbuf_sys::GDK_COLORSPACE_RGB;
+use gdk_pixbuf_sys;
 use gtk::prelude::*;
 use gtk;
 use prefs::{Prefs, MiddleClickAction};
@@ -12,6 +14,7 @@ use std::cell::RefCell;
 use std::rc::Rc;
 use support_cmd::*;
 use support_ui::*;
+use ui_prefs_dialog::show_prefs_dialog;
 
 
 // TODO tooltip
@@ -78,6 +81,36 @@ impl TrayIcon {
     }
 
 
+    fn update_tooltip(&self, audio: &Audio) {
+        let cardname = audio.acard
+            .borrow()
+            .card_name()
+            .unwrap_or(String::from("Unknown card"));
+        let channame = audio.acard
+            .borrow()
+            .chan_name()
+            .unwrap_or(String::from("unknown channel"));
+        let vol = audio.vol()
+            .map(|s| format!("{}", s.round()))
+            .unwrap_or(String::from("unknown volume"));
+        let mute_info = {
+            if !audio.has_mute() {
+                "\nNo mute switch"
+            } else if audio.get_mute().unwrap_or(false) {
+                "\nMuted"
+            } else {
+                ""
+            }
+        };
+        self.status_icon.set_tooltip_text(format!("{} ({})\nVolume: {}{}",
+                                                  cardname,
+                                                  channame,
+                                                  vol,
+                                                  mute_info)
+                                                  .as_str());
+    }
+
+
     pub fn update_all(&self,
                       prefs: &Prefs,
                       audio: &Audio,
@@ -104,6 +137,7 @@ impl TrayIcon {
             *self.volmeter.borrow_mut() = Some(volmeter);
         }
 
+        self.update_tooltip(&audio);
         return self.update_pixbuf(audio.vol()?, audio.vol_level());
     }
 }
@@ -142,7 +176,7 @@ impl VolMeter {
                   pixbuf: &gdk_pixbuf::Pixbuf)
                   -> Result<gdk_pixbuf::Pixbuf> {
 
-        ensure!(pixbuf.get_colorspace() == GDK_COLORSPACE_RGB,
+        ensure!(pixbuf.get_colorspace() == gdk_pixbuf_sys::GDK_COLORSPACE_RGB,
                 "Invalid colorspace in pixbuf");
         ensure!(pixbuf.get_bits_per_sample() == 8,
                 "Invalid bits per sample in pixbuf");
@@ -310,6 +344,7 @@ pub fn init_tray_icon(appstate: Rc<AppS>) {
         let apps = appstate.clone();
         appstate.audio.connect_handler(Box::new(move |s, u| match (s, u) {
                                                     (_, _) => {
+            apps.gui.tray_icon.update_tooltip(&apps.audio);
             try_w!(apps.gui.tray_icon.update_audio(&apps.audio));
         }
                                                 }));
@@ -400,7 +435,7 @@ fn on_tray_icon_scroll_event(appstate: &AppS,
 }
 
 
-fn on_tray_button_release_event(appstate: &AppS,
+fn on_tray_button_release_event(appstate: &Rc<AppS>,
                                 event_button: &gdk::EventButton)
                                 -> bool {
     let button = event_button.get_button();
@@ -421,7 +456,8 @@ fn on_tray_button_release_event(appstate: &AppS,
                 try_wr!(audio.toggle_mute(AudioUser::Popup), false);
             }
         }
-        &MiddleClickAction::ShowPreferences => (),
+        // TODO
+        &MiddleClickAction::ShowPreferences => show_prefs_dialog(&appstate),
         &MiddleClickAction::VolumeControl => {
             try_wr!(execute_vol_control_command(&appstate.prefs.borrow()),
                     false);

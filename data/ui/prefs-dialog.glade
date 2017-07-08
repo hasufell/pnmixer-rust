@@ -69,7 +69,6 @@
                 <property name="receives_default">False</property>
                 <property name="halign">start</property>
                 <property name="draw_indicator">True</property>
-                <signal name="toggled" handler="on_noti_enable_check_toggled" swapped="no"/>
               </object>
               <packing>
                 <property name="left_attach">0</property>
@@ -233,7 +232,7 @@
   </object>
   <object class="GtkDialog" id="prefs_dialog">
     <property name="can_focus">False</property>
-    <property name="title" translatable="yes">PNMixer Preferences</property>
+    <property name="title" translatable="yes">PNMixer-rs Preferences</property>
     <property name="resizable">False</property>
     <property name="icon_name">preferences-system</property>
     <property name="type_hint">dialog</property>
@@ -447,7 +446,6 @@
                           <object class="GtkComboBoxText" id="card_combo">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <signal name="changed" handler="on_card_combo_changed" swapped="no"/>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
@@ -581,7 +579,6 @@
                             <property name="receives_default">False</property>
                             <property name="halign">start</property>
                             <property name="draw_indicator">True</property>
-                            <signal name="toggled" handler="on_vol_meter_draw_check_toggled" swapped="no"/>
                           </object>
                           <packing>
                             <property name="left_attach">0</property>
@@ -744,6 +741,35 @@
                             <property name="top_attach">0</property>
                           </packing>
                         </child>
+                        <child>
+                          <object class="GtkLabel" id="label32">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="halign">start</property>
+                            <property name="label" translatable="yes">Fine Scroll Step:</property>
+                          </object>
+                          <packing>
+                            <property name="left_attach">0</property>
+                            <property name="top_attach">1</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkSpinButton" id="fine_scroll_step_spin">
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="invisible_char">•</property>
+                            <property name="text" translatable="yes">0,00</property>
+                            <property name="primary_icon_activatable">False</property>
+                            <property name="secondary_icon_activatable">False</property>
+                            <property name="adjustment">fine_scroll_step_adjustment</property>
+                            <property name="digits">2</property>
+                            <property name="numeric">True</property>
+                          </object>
+                          <packing>
+                            <property name="left_attach">1</property>
+                            <property name="top_attach">1</property>
+                          </packing>
+                        </child>
                       </object>
                     </child>
                     <child type="label">
@@ -805,7 +831,6 @@
                           <object class="GtkComboBoxText" id="middle_click_combo">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <signal name="changed" handler="on_middle_click_combo_changed" swapped="no"/>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
@@ -891,7 +916,6 @@
                             <property name="receives_default">False</property>
                             <property name="halign">start</property>
                             <property name="draw_indicator">True</property>
-                            <signal name="toggled" handler="on_hotkeys_enable_check_toggled" swapped="no"/>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -976,7 +1000,6 @@
                               <object class="GtkEventBox" id="hotkeys_mute_eventbox">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <signal name="button-press-event" handler="on_hotkey_event_box_button_press_event" swapped="no"/>
                                 <child>
                                   <object class="GtkLabel" id="hotkeys_mute_label">
                                     <property name="visible">True</property>
@@ -997,7 +1020,6 @@
                               <object class="GtkEventBox" id="hotkeys_up_eventbox">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <signal name="button-press-event" handler="on_hotkey_event_box_button_press_event" swapped="no"/>
                                 <child>
                                   <object class="GtkLabel" id="hotkeys_up_label">
                                     <property name="visible">True</property>
@@ -1018,7 +1040,6 @@
                               <object class="GtkEventBox" id="hotkeys_down_eventbox">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <signal name="button-press-event" handler="on_hotkey_event_box_button_press_event" swapped="no"/>
                                 <child>
                                   <object class="GtkLabel" id="hotkeys_down_label">
                                     <property name="visible">True</property>

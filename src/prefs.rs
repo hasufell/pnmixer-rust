@@ -122,6 +122,7 @@ impl Default for VolColor {
 pub struct BehaviorPrefs {
     pub vol_control_cmd: Option<String>,
     pub vol_scroll_step: f64,
+    pub vol_fine_scroll_step: f64,
     pub middle_click_action: MiddleClickAction,
     pub custom_command: Option<String>, // TODO: fine scroll step?
 }
@@ -131,6 +132,7 @@ impl Default for BehaviorPrefs {
         return BehaviorPrefs {
                    vol_control_cmd: None,
                    vol_scroll_step: 5.0,
+                   vol_fine_scroll_step: 1.0,
                    middle_click_action: MiddleClickAction::default(),
                    custom_command: None,
                };

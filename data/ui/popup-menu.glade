@@ -31,7 +31,6 @@
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="tooltip_text" translatable="yes">Mute/Unmute Volume</property>
-                    <signal name="activate" handler="on_mute_item_activate" swapped="no"/>
                     <child>
                       <object class="GtkBox" id="box0">
                         <property name="visible">True</property>
@@ -71,7 +70,6 @@
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="tooltip_text" translatable="yes">Open Volume Control</property>
-                    <signal name="activate" handler="on_mixer_item_activate" swapped="no"/>
                     <child>
                       <object class="GtkBox" id="box1">
                         <property name="visible">True</property>
@@ -108,7 +106,6 @@
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="tooltip_text" translatable="yes">Preferences</property>
-                    <signal name="activate" handler="on_prefs_item_activate" swapped="no"/>
                     <child>
                       <object class="GtkBox" id="box2">
                         <property name="visible">True</property>
@@ -146,7 +143,6 @@
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="tooltip_text" translatable="yes">Reload Sound</property>
-                    <signal name="activate" handler="on_reload_item_activate" swapped="no"/>
                     <child>
                       <object class="GtkBox" id="box3">
                         <property name="visible">True</property>
@@ -184,7 +180,6 @@
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="tooltip_text" translatable="yes">About</property>
-                    <signal name="activate" handler="on_about_item_activate" swapped="no"/>
                     <child>
                       <object class="GtkBox" id="box4">
                         <property name="visible">True</property>
@@ -229,7 +224,6 @@
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="tooltip_text" translatable="yes">Quit</property>
-                    <signal name="activate" handler="gtk_main_quit" swapped="no"/>
                     <child>
                       <object class="GtkBox" id="box5">
                         <property name="visible">True</property>

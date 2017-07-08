@@ -6,23 +6,24 @@ authors = ["Julian Ospald <hasufell@posteo.de>"]
 [dependencies]
 alsa = "^0.1.8"
 alsa-sys = "^0.1.1"
-libc = "^0.2.23"
-gdk-sys = { git = "https://github.com/gtk-rs/sys" }
+error-chain = { path = "3rdparty/error-chain" }
+ffi = "^0.0.2"
+flexi_logger = "^0.5.1"
 gdk-pixbuf = { git = "https://github.com/gtk-rs/gdk-pixbuf.git" }
 gdk-pixbuf-sys = { git = "https://github.com/gtk-rs/sys" }
-gtk-sys = { git = "https://github.com/gtk-rs/sys" }
+gdk-sys = { git = "https://github.com/gtk-rs/sys" }
+gio = { git = "https://github.com/gtk-rs/gio.git" }
 glib = { git = "https://github.com/gtk-rs/glib.git" }
 glib-sys = { git = "https://github.com/gtk-rs/sys" }
 gobject-sys = { git = "https://github.com/gtk-rs/sys" }
-ffi = "^0.0.2"
-flexi_logger = "^0.5.1"
+gtk-sys = { git = "https://github.com/gtk-rs/sys" }
+libc = "^0.2.23"
 log = "^0.3.8"
-error-chain = { path = "3rdparty/error-chain" }
-toml = "^0.4.2"
-serde_derive = "^1.0.9"
 serde = "^1.0.9"
-xdg = "*"
+serde_derive = "^1.0.9"
+toml = "^0.4.2"
 which = "*"
+xdg = "*"
 
 [dependencies.gtk]
 git = "https://github.com/gtk-rs/gtk.git"
@@ -33,12 +34,12 @@ git = "https://github.com/gtk-rs/gdk.git"
 features = [ "v3_10", "v3_12", "v3_22" ]
 
 [profile.dev]
-opt-level = 2      # controls the `--opt-level` the compiler builds with
+opt-level = 0      # controls the `--opt-level` the compiler builds with
 debug = true       # controls whether the compiler passes `-C debuginfo`
                    # a value of `true` is equivalent to `2`
 rpath = false      # controls whether the compiler passes `-C rpath`
 lto = false        # controls `-C lto` for binaries and staticlibs
-debug-assertions = true # controls whether debug assertions are enabled
+debug-assertions = false # controls whether debug assertions are enabled
 codegen-units = 1  # controls whether the compiler passes `-C codegen-units`
                    # `codegen-units` is ignored when `lto = true`
 panic = 'unwind'   # panic strategy (`-C panic=...`), can also be 'abort'

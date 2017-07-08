@@ -90,9 +90,22 @@ impl Audio {
                     })
         };
 
+        let acard = AlsaCard::new(card_name, elem_name, cb);
+
+        /* additionally dispatch signals */
+        if acard.is_err() {
+            invoke_handlers(&handlers.borrow(),
+                            AudioSignal::NoCard,
+                            AudioUser::Unknown);
+        } else {
+            invoke_handlers(&handlers.borrow(),
+                            AudioSignal::CardInitialized,
+                            AudioUser::Unknown);
+        }
+
         let audio = Audio {
             _cannot_construct: (),
-            acard: RefCell::new(AlsaCard::new(card_name, elem_name, cb)?),
+            acard: RefCell::new(acard?),
             last_action_timestamp: last_action_timestamp.clone(),
             handlers: handlers.clone(),
             scroll_step: Cell::new(5),
@@ -126,17 +139,10 @@ impl Audio {
             let mut ac = self.acard.borrow_mut();
             *ac = AlsaCard::new(card_name, elem_name, cb)?;
         }
-        debug!("Old card name: {}",
-               self.acard
-                   .borrow()
-                   .card_name()
-                   .unwrap());
-        debug!("Old chan name: {}",
-               self.acard
-                   .borrow()
-                   .chan_name()
-                   .unwrap());
 
+        // invoke_handlers(&self.handlers.borrow(),
+                        // AudioSignal::CardCleanedUp,
+                        // user);
         invoke_handlers(&self.handlers.borrow(),
                         AudioSignal::CardInitialized,
                         user);
@@ -216,9 +222,6 @@ impl Audio {
 
         self.set_vol(new_vol, user)?;
 
-        invoke_handlers(&self.handlers.borrow(),
-                        AudioSignal::ValuesChanged,
-                        user);
         return Ok(());
     }
 
@@ -245,9 +248,6 @@ impl Audio {
 
         self.set_vol(new_vol, user)?;
 
-        invoke_handlers(&self.handlers.borrow(),
-                        AudioSignal::ValuesChanged,
-                        user);
         return Ok(());
     }
 
@@ -307,6 +307,11 @@ fn invoke_handlers(handlers: &Vec<Box<Fn(AudioSignal, AudioUser)>>,
     debug!("Invoking handlers for signal {:?} by user {:?}",
            signal,
            user);
+    if handlers.is_empty() {
+        debug!("No handler found");
+    } else {
+        debug!("Executing handlers")
+    }
     for handler in handlers {
         let unboxed = handler.as_ref();
         unboxed(signal, user);
@@ -332,10 +337,17 @@ fn on_alsa_event(last_action_timestamp: &mut i64,
     /* external change */
     match alsa_event {
         // TODO: invoke handlers with AudioUserUnknown
-        AlsaEvent::AlsaCardError => debug!("AlsaCardError"),
-        AlsaEvent::AlsaCardDiconnected => debug!("AlsaCardDiconnected"),
+        AlsaEvent::AlsaCardError => {
+            invoke_handlers(handlers,
+                            self::AudioSignal::CardError,
+                            self::AudioUser::Unknown);
+        },
+        AlsaEvent::AlsaCardDiconnected => {
+            invoke_handlers(handlers,
+                            self::AudioSignal::CardDisconnected,
+                            self::AudioUser::Unknown);
+        },
         AlsaEvent::AlsaCardValuesChanged => {
-            debug!("AlsaCardValuesChanged");
             invoke_handlers(handlers,
                             self::AudioSignal::ValuesChanged,
                             self::AudioUser::Unknown);
