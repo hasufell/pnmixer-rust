@@ -72,7 +72,7 @@ impl TrayIcon {
     }
 
 
-    pub fn update_audio(&self, audio: &Audio) -> Result<()> {
+    fn update_audio(&self, audio: &Audio) -> Result<()> {
 
         return self.update_pixbuf(audio.vol()?, audio.vol_level());
     }
@@ -97,8 +97,12 @@ impl TrayIcon {
 
         let audio_pix = AudioPix::new(self.icon_size.get(), &prefs)?;
         *self.audio_pix.borrow_mut() = audio_pix;
-        let volmeter = VolMeter::new(&prefs);
-        *self.volmeter.borrow_mut() = Some(volmeter);
+
+        let draw_vol_meter = prefs.view_prefs.draw_vol_meter;
+        if draw_vol_meter {
+            let volmeter = VolMeter::new(&prefs);
+            *self.volmeter.borrow_mut() = Some(volmeter);
+        }
 
         return self.update_pixbuf(audio.vol()?, audio.vol_level());
     }
@@ -119,7 +123,7 @@ pub struct VolMeter {
 
 
 impl VolMeter {
-    pub fn new(prefs: &Prefs) -> VolMeter {
+    fn new(prefs: &Prefs) -> VolMeter {
         return VolMeter {
                    red: prefs.view_prefs.vol_meter_color.red,
                    green: prefs.view_prefs.vol_meter_color.green,
@@ -223,7 +227,7 @@ pub struct AudioPix {
 
 
 impl AudioPix {
-    pub fn new(size: i32, prefs: &Prefs) -> Result<AudioPix> {
+    fn new(size: i32, prefs: &Prefs) -> Result<AudioPix> {
         let system_theme = prefs.view_prefs.system_theme;
 
         let pix = {
@@ -282,7 +286,7 @@ impl AudioPix {
     }
 
 
-    pub fn select_pix(&self, vol_level: VolLevel) -> &gdk_pixbuf::Pixbuf {
+    fn select_pix(&self, vol_level: VolLevel) -> &gdk_pixbuf::Pixbuf {
         match vol_level {
             VolLevel::Muted => &self.muted,
             VolLevel::Low => &self.low,
@@ -304,13 +308,11 @@ pub fn init_tray_icon(appstate: Rc<AppS>) {
     /* connect audio handler */
     {
         let apps = appstate.clone();
-        appstate.audio.connect_handler(
-            Box::new(move |s, u| match (s, u) {
-                (_, _) => {
-                    try_w!(apps.gui.tray_icon.update_audio(&apps.audio));
-                },
-            }),
-        );
+        appstate.audio.connect_handler(Box::new(move |s, u| match (s, u) {
+                                                    (_, _) => {
+            try_w!(apps.gui.tray_icon.update_audio(&apps.audio));
+        }
+                                                }));
     }
 
     /* tray_icon.connect_size_changed */

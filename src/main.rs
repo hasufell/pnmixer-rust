@@ -47,6 +47,7 @@ mod ui_prefs_dialog;
 mod ui_tray_icon;
 mod prefs;
 mod support_alsa;
+mod support_audio;
 mod support_cmd;
 mod support_ui;
 

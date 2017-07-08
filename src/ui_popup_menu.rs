@@ -3,6 +3,7 @@ use audio::{AudioUser, AudioSignal};
 use gtk::prelude::*;
 use gtk;
 use std::rc::Rc;
+use support_audio::*;
 use support_cmd::*;
 use ui_prefs_dialog::*;
 
@@ -38,7 +39,7 @@ pub fn init_popup_menu(appstate: Rc<AppS>) {
                 return;
             }
             match (s, u) {
-                (_, _) => set_mute_check(&apps)
+                (_, _) => set_mute_check(&apps),
             }
         }));
 
@@ -50,9 +51,7 @@ pub fn init_popup_menu(appstate: Rc<AppS>) {
         appstate.gui
             .popup_menu
             .menu
-            .connect_show(move |_| {
-                set_mute_check(&apps)
-            });
+            .connect_show(move |_| set_mute_check(&apps));
 
     }
 
@@ -94,13 +93,22 @@ pub fn init_popup_menu(appstate: Rc<AppS>) {
                                     });
     }
 
+    /* reload_item.connect_activate_link */
+    {
+        let apps = appstate.clone();
+        let reload_item = &appstate.gui.popup_menu.reload_item;
+        reload_item.connect_activate(move |_| {
+                                         try_w!(audio_reload(&apps.audio,
+                                                 &apps.prefs.borrow(),
+                                                 AudioUser::Popup))
+                                     });
+    }
+
 
     /* quit_item.connect_activate_link */
     {
         let quit_item = &appstate.gui.popup_menu.quit_item;
-        quit_item.connect_activate(|_| {
-                                        gtk::main_quit();
-                                    });
+        quit_item.connect_activate(|_| { gtk::main_quit(); });
     }
 }
 
@@ -152,27 +160,18 @@ fn on_prefs_item_activate(appstate: &Rc<AppS>) {
 
 
 fn set_mute_check(apps: &Rc<AppS>) {
-    let mute_check = &apps.gui
-                .popup_menu
-                .mute_check;
+    let mute_check = &apps.gui.popup_menu.mute_check;
     let m_muted = apps.audio.get_mute();
     match m_muted {
         Ok(muted) => {
-            mute_check
-                .set_sensitive(false);
-            mute_check
-                .set_active(muted);
-            mute_check.set_tooltip_text(
-                "");
-        },
+            mute_check.set_sensitive(false);
+            mute_check.set_active(muted);
+            mute_check.set_tooltip_text("");
+        }
         Err(_) => {
-            mute_check
-                .set_active(true);
-            mute_check
-                .set_sensitive(false);
-            mute_check.set_tooltip_text(
-                "Soundcard has no mute switch",
-            );
+            mute_check.set_active(true);
+            mute_check.set_sensitive(false);
+            mute_check.set_tooltip_text("Soundcard has no mute switch");
         }
     }
 }

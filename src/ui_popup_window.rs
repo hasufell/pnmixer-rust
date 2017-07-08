@@ -235,7 +235,7 @@ pub fn set_slider(vol_scale_adj: &gtk::Adjustment, scale: f64) {
 }
 
 
-pub fn grab_devices(window: &gtk::Window) -> Result<()> {
+fn grab_devices(window: &gtk::Window) -> Result<()> {
     let device = gtk::get_current_event_device().ok_or("No current device")?;
 
     let gdk_window = window.get_window().ok_or("No window?!")?;

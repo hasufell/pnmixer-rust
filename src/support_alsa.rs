@@ -30,7 +30,7 @@ pub fn get_first_playable_alsa_card() -> Result<Card> {
                 if alsa_card_has_playable_selem(&card) {
                     return Ok(card);
                 }
-            },
+            }
             _ => (),
         }
     }
@@ -50,7 +50,7 @@ pub fn get_playable_alsa_card_names() -> Vec<String> {
                         vec.push(m_name.unwrap())
                     }
                 }
-            },
+            }
             _ => (),
         }
     }
@@ -104,6 +104,15 @@ pub fn get_playable_selems(mixer: &Mixer) -> Vec<Selem> {
 }
 
 
+pub fn get_first_playable_selem(mixer: &Mixer) -> Result<Selem> {
+    for s in mixer.iter().map(get_selem).filter(selem_is_playable) {
+        return Ok(s);
+    }
+
+    bail!("No playable Selem found!")
+}
+
+
 pub fn get_playable_selem_names(mixer: &Mixer) -> Vec<String> {
     let mut vec = vec![];
     for selem in get_playable_selems(mixer) {
@@ -118,7 +127,9 @@ pub fn get_playable_selem_names(mixer: &Mixer) -> Vec<String> {
 }
 
 
-pub fn get_playable_selem_by_name(mixer: &Mixer, name: String) -> Result<Selem> {
+pub fn get_playable_selem_by_name(mixer: &Mixer,
+                                  name: String)
+                                  -> Result<Selem> {
     for selem in get_playable_selems(mixer) {
         let n = selem.get_id()
             .get_name()

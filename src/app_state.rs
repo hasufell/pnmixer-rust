@@ -24,21 +24,28 @@ pub struct AppS {
 impl AppS {
     pub fn new() -> AppS {
         let builder_popup_window =
-            gtk::Builder::new_from_string(include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/data/ui/popup-window.glade")));
-        let builder_popup_menu = gtk::Builder::new_from_string(include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/data/ui/popup-menu.glade")));
+            gtk::Builder::new_from_string(include_str!(concat!(env!("CARGO_MANIFEST_DIR"),
+                                                               "/data/ui/popup-window.glade")));
+        let builder_popup_menu =
+            gtk::Builder::new_from_string(include_str!(concat!(env!("CARGO_MANIFEST_DIR"),
+                                                               "/data/ui/popup-menu.glade")));
         let prefs = RefCell::new(Prefs::new().unwrap());
         let gui =
             Gui::new(builder_popup_window, builder_popup_menu, &prefs.borrow());
 
-        let card_name = prefs.borrow().device_prefs.card.clone();
-        let chan_name = prefs.borrow().device_prefs.channel.clone();
+        let card_name = prefs.borrow()
+            .device_prefs
+            .card
+            .clone();
+        let chan_name = prefs.borrow()
+            .device_prefs
+            .channel
+            .clone();
 
         return AppS {
                    _cant_construct: (),
                    gui: gui,
-                   audio: Audio::new(Some(card_name),
-                                     Some(chan_name))
-                       .unwrap(),
+                   audio: Audio::new(Some(card_name), Some(chan_name)).unwrap(),
                    prefs: prefs,
                };
     }

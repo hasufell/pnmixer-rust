@@ -56,21 +56,30 @@ impl AlsaCard {
                         match mycard {
                             Ok(card) => card,
                             Err(_) => {
-                                warn!("Card {} not playable, trying others", name);
+                                warn!("Card {} not playable, trying others",
+                                      name);
                                 get_first_playable_alsa_card()?
                             }
                         }
                     }
-                },
+                }
                 None => get_first_playable_alsa_card()?,
             }
         };
         let mixer = get_mixer(&card)?;
 
-        let selem_id =
-            get_playable_selem_by_name(&mixer,
-                              elem_name.unwrap_or(String::from("Master")))?
-                    .get_id();
+        let selem_id = {
+            let requested_selem =
+                get_playable_selem_by_name(&mixer,
+                                           elem_name.unwrap_or(String::from("Master")));
+            match requested_selem {
+                Ok(s) => s.get_id(),
+                Err(_) => {
+                    warn!("No playable Selem found, trying others");
+                    get_first_playable_selem(&mixer)?.get_id()
+                }
+            }
+        };
 
         let vec_pollfd = PollDescriptors::get(&mixer)?;
 
