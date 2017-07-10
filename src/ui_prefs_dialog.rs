@@ -19,6 +19,7 @@ use support_audio::*;
 pub struct PrefsDialog {
     _cant_construct: (),
     prefs_dialog: gtk::Dialog,
+    notebook: gtk::Notebook,
 
     /* DevicePrefs */
     card_combo: gtk::ComboBoxText,
@@ -38,11 +39,16 @@ pub struct PrefsDialog {
     custom_entry: gtk::Entry,
 
     /* NotifyPrefs */
+    #[cfg(feature = "notify")]
     noti_enable_check: gtk::CheckButton,
+    #[cfg(feature = "notify")]
     noti_timeout_spin: gtk::SpinButton,
     // pub noti_hotkey_check: gtk::CheckButton,
+    #[cfg(feature = "notify")]
     noti_mouse_check: gtk::CheckButton,
+    #[cfg(feature = "notify")]
     noti_popup_check: gtk::CheckButton,
+    #[cfg(feature = "notify")]
     noti_ext_check: gtk::CheckButton,
 }
 
@@ -54,6 +60,7 @@ impl PrefsDialog {
         let prefs_dialog = PrefsDialog {
             _cant_construct: (),
             prefs_dialog: builder.get_object("prefs_dialog").unwrap(),
+            notebook: builder.get_object("notebook").unwrap(),
 
             card_combo: builder.get_object("card_combo").unwrap(),
             chan_combo: builder.get_object("chan_combo").unwrap(),
@@ -74,15 +81,26 @@ impl PrefsDialog {
                 .unwrap(),
             custom_entry: builder.get_object("custom_entry").unwrap(),
 
+            #[cfg(feature = "notify")]
             noti_enable_check: builder.get_object("noti_enable_check").unwrap(),
+            #[cfg(feature = "notify")]
             noti_timeout_spin: builder.get_object("noti_timeout_spin").unwrap(),
             // noti_hotkey_check: builder.get_object("noti_hotkey_check").unwrap(),
+            #[cfg(feature = "notify")]
             noti_mouse_check: builder.get_object("noti_mouse_check").unwrap(),
+            #[cfg(feature = "notify")]
             noti_popup_check: builder.get_object("noti_popup_check").unwrap(),
+            #[cfg(feature = "notify")]
             noti_ext_check: builder.get_object("noti_ext_check").unwrap(),
         };
 
+        #[cfg(feature = "notify")]
+        let notify_tab: gtk::Box = builder.get_object("noti_vbox_enabled").unwrap();
+        #[cfg(not(feature = "notify"))]
+        let notify_tab: gtk::Box = builder.get_object("noti_vbox_disabled").unwrap();
 
+        prefs_dialog.notebook.append_page(&notify_tab,
+                                          Some(&gtk::Label::new(Some("Notifications"))));
         return prefs_dialog;
     }
 
@@ -134,13 +152,18 @@ impl PrefsDialog {
                                        .as_str());
 
         /* NotifyPrefs */
+        #[cfg(feature = "notify")]
         self.noti_enable_check
             .set_active(prefs.notify_prefs.enable_notifications);
+        #[cfg(feature = "notify")]
         self.noti_timeout_spin
             .set_value(prefs.notify_prefs.notifcation_timeout as f64);
+        #[cfg(feature = "notify")]
         self.noti_mouse_check
             .set_active(prefs.notify_prefs.notify_mouse_scroll);
+        #[cfg(feature = "notify")]
         self.noti_popup_check.set_active(prefs.notify_prefs.notify_popup);
+        #[cfg(feature = "notify")]
         self.noti_ext_check.set_active(prefs.notify_prefs.notify_external);
     }
 
@@ -193,6 +216,7 @@ impl PrefsDialog {
             custom_command,
         };
 
+        #[cfg(feature = "notify")]
         let notify_prefs = NotifyPrefs {
             enable_notifications: self.noti_enable_check.get_active(),
             notifcation_timeout: self.noti_timeout_spin.get_value_as_int() as
@@ -206,6 +230,7 @@ impl PrefsDialog {
                    device_prefs,
                    view_prefs,
                    behavior_prefs,
+                   #[cfg(feature = "notify")]
                    notify_prefs,
                };
 
@@ -240,7 +265,10 @@ pub fn init_prefs_callback(appstate: Rc<AppS>) {
     let apps = appstate.clone();
     appstate.audio.connect_handler(Box::new(move |s, u| {
         /* skip if prefs window is not present */
-        if apps.gui.prefs_dialog.borrow().is_none() {
+        if apps.gui
+               .prefs_dialog
+               .borrow()
+               .is_none() {
             return;
         }
 
@@ -249,7 +277,7 @@ pub fn init_prefs_callback(appstate: Rc<AppS>) {
             (AudioSignal::CardCleanedUp, _) => {
                 fill_card_combo(&apps);
                 fill_chan_combo(&apps, None);
-            },
+            }
             _ => (),
         }
     }));
@@ -308,6 +336,8 @@ fn init_prefs_dialog(appstate: &Rc<AppS>) {
             if response_id == ResponseType::Ok.into() ||
                response_id == ResponseType::Apply.into() {
                 // TODO: update popup, tray_icon, hotkeys, notification and audio
+                #[cfg(feature = "notify")]
+                try_w!(apps.notif.reload(&apps.prefs.borrow()));
                 try_w!(apps.update_tray_icon());
                 try_w!(apps.update_popup_window());
                 {

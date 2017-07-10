@@ -262,17 +262,17 @@ extern "C" fn watch_cb(chan: *mut glib_sys::GIOChannel,
             glib_sys::G_IO_STATUS_AGAIN => {
                 debug!("G_IO_STATUS_AGAIN");
                 continue;
-            },
+            }
             // TODO: handle these failure cases
             glib_sys::G_IO_STATUS_NORMAL => {
                 error!("Alsa failed to clear the channel");
                 cb(AlsaEvent::AlsaCardError);
-            },
+            }
             glib_sys::G_IO_STATUS_ERROR => (),
             glib_sys::G_IO_STATUS_EOF => {
                 error!("GIO error has occurred");
                 cb(AlsaEvent::AlsaCardError);
-            },
+            }
             _ => warn!("Unknown status from g_io_channel_read_chars()"),
         }
         return true as glib_sys::gboolean;

@@ -140,6 +140,7 @@ impl Default for BehaviorPrefs {
 }
 
 
+#[cfg(feature = "notify")]
 #[derive(Deserialize, Debug, Serialize)]
 #[serde(default)]
 pub struct NotifyPrefs {
@@ -151,6 +152,7 @@ pub struct NotifyPrefs {
     // TODO: notify_hotkeys?
 }
 
+#[cfg(feature = "notify")]
 impl Default for NotifyPrefs {
     fn default() -> NotifyPrefs {
         return NotifyPrefs {
@@ -170,6 +172,7 @@ pub struct Prefs {
     pub device_prefs: DevicePrefs,
     pub view_prefs: ViewPrefs,
     pub behavior_prefs: BehaviorPrefs,
+    #[cfg(feature = "notify")]
     pub notify_prefs: NotifyPrefs, 
     // TODO: HotKeys?
 }

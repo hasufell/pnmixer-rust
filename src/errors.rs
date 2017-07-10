@@ -1,9 +1,10 @@
 use alsa;
-use glib;
-use libnotify;
 use std::convert::From;
 use std;
 use toml;
+
+#[cfg(feature = "notify")]
+use libnotify;
 
 
 
@@ -12,10 +13,11 @@ error_chain! {
         Alsa(alsa::Error);
         IO(std::io::Error);
         Toml(toml::de::Error);
-        Libnotify(libnotify::errors::Error);
+        Libnotify(libnotify::errors::Error) #[cfg(feature = "notify")];
     }
-
 }
+
+
 
 
 #[macro_export]
@@ -64,7 +66,7 @@ macro_rules! try_wr {
 macro_rules! try_r {
     ($expr:expr, $ret:expr) => (match $expr {
         ::std::result::Result::Ok(val) => val,
-        ::std::result::Result::Err(err) => {
+        ::std::result::Result::Err(_) => {
             return $ret;
         },
     });

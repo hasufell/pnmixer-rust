@@ -44,12 +44,13 @@ pub fn pixbuf_new_from_theme(icon_name: &str,
 pub fn pixbuf_new_from_file(filename: &str) -> Result<gdk_pixbuf::Pixbuf> {
     ensure!(!filename.is_empty(), "Filename is empty");
     let mut syspath = String::new();
-    let sysdir = option_env!("PIXMAPSDIR").map(|s|{
-        syspath = format!("{}/{}", s, filename);
-        Path::new(syspath.as_str())
-    });
-    let cargopath = format!("./data/pixmaps/{}",
-                                     filename);
+    let sysdir = option_env!("PIXMAPSDIR").map(|s| {
+                                                   syspath = format!("{}/{}",
+                                                                     s,
+                                                                     filename);
+                                                   Path::new(syspath.as_str())
+                                               });
+    let cargopath = format!("./data/pixmaps/{}", filename);
     let cargodir = Path::new(cargopath.as_str());
 
     // prefer local dir

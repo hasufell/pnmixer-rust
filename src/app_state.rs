@@ -1,12 +1,12 @@
 use audio::Audio;
 use errors::*;
 use gtk;
-use notif;
 use prefs::*;
 use std::cell::RefCell;
-use std::rc::Rc;
 use ui_entry::Gui;
 
+#[cfg(feature = "notify")]
+use notif::*;
 
 // TODO: notify popups
 
@@ -19,6 +19,8 @@ pub struct AppS {
     pub gui: Gui,
     pub audio: Audio,
     pub prefs: RefCell<Prefs>,
+    #[cfg(feature = "notify")]
+    pub notif: Notif,
 }
 
 
@@ -42,14 +44,17 @@ impl AppS {
             .device_prefs
             .channel
             .clone();
-
-        // let notif = Notif::new(&prefs.borrow());
+        // TODO: better error handling
+        #[cfg(feature = "notify")]
+        let notif = Notif::new(&prefs.borrow()).unwrap();
 
         return AppS {
                    _cant_construct: (),
                    gui,
                    audio: Audio::new(Some(card_name), Some(chan_name)).unwrap(),
                    prefs,
+                   #[cfg(feature = "notify")]
+                   notif,
                };
     }
 

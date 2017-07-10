@@ -5,7 +5,7 @@ use gtk::MessageDialogExt;
 use gtk::WidgetExt;
 use gtk::WindowExt;
 use gtk;
-use gtk_sys::{GTK_DIALOG_DESTROY_WITH_PARENT, GTK_RESPONSE_YES};
+use gtk_sys::{GTK_RESPONSE_YES};
 use prefs::*;
 use std::cell::RefCell;
 use std::rc::Rc;
@@ -14,8 +14,9 @@ use ui_popup_menu::*;
 use ui_popup_window::*;
 use ui_prefs_dialog::*;
 use ui_tray_icon::*;
-use notif::*;
 
+#[cfg(feature = "notify")]
+use notif::*;
 
 
 
@@ -26,6 +27,7 @@ pub struct Gui {
     pub popup_menu: PopupMenu,
     /* prefs_dialog is dynamically created and destroyed */
     pub prefs_dialog: RefCell<Option<PrefsDialog>>,
+
 }
 
 impl Gui {
@@ -72,6 +74,8 @@ pub fn init(appstate: Rc<AppS>) {
     init_popup_window(appstate.clone());
     init_popup_menu(appstate.clone());
     init_prefs_callback(appstate.clone());
+
+    #[cfg(feature = "notify")]
     init_notify(appstate.clone());
 }
 
@@ -79,13 +83,11 @@ pub fn init(appstate: Rc<AppS>) {
 fn run_audio_error_dialog(parent: &gtk::Window) -> i32 {
     error!("Connection with audio failed, you probably need to restart pnmixer.");
 
-    let dialog = gtk::MessageDialog::new(
-            Some(parent),
-            gtk::DIALOG_DESTROY_WITH_PARENT,
-            gtk::MessageType::Error,
-            gtk::ButtonsType::YesNo,
-            "Warning: Connection to sound system failed."
-        );
+    let dialog = gtk::MessageDialog::new(Some(parent),
+                                         gtk::DIALOG_DESTROY_WITH_PARENT,
+                                         gtk::MessageType::Error,
+                                         gtk::ButtonsType::YesNo,
+                                         "Warning: Connection to sound system failed.");
     dialog.set_property_secondary_text(Some("Do you want to re-initialize the audio connection ?
 
 If you do not, you will either need to restart PNMixer

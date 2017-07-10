@@ -141,8 +141,8 @@ impl Audio {
         }
 
         // invoke_handlers(&self.handlers.borrow(),
-                        // AudioSignal::CardCleanedUp,
-                        // user);
+        // AudioSignal::CardCleanedUp,
+        // user);
         invoke_handlers(&self.handlers.borrow(),
                         AudioSignal::CardInitialized,
                         user);
@@ -341,12 +341,12 @@ fn on_alsa_event(last_action_timestamp: &mut i64,
             invoke_handlers(handlers,
                             self::AudioSignal::CardError,
                             self::AudioUser::Unknown);
-        },
+        }
         AlsaEvent::AlsaCardDiconnected => {
             invoke_handlers(handlers,
                             self::AudioSignal::CardDisconnected,
                             self::AudioUser::Unknown);
-        },
+        }
         AlsaEvent::AlsaCardValuesChanged => {
             invoke_handlers(handlers,
                             self::AudioSignal::ValuesChanged,

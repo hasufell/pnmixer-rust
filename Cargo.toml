@@ -24,7 +24,7 @@ serde_derive = "^1.0.9"
 toml = "^0.4.2"
 which = "*"
 xdg = "*"
-libnotify = { path = "3rdparty/rust-libnotify" }
+libnotify = { path = "3rdparty/rust-libnotify", optional = true }
 
 [dependencies.gtk]
 git = "https://github.com/gtk-rs/gtk.git"
@@ -45,3 +45,6 @@ codegen-units = 1  # controls whether the compiler passes `-C codegen-units`
                    # `codegen-units` is ignored when `lto = true`
 panic = 'unwind'   # panic strategy (`-C panic=...`), can also be 'abort'
 
+
+[features]
+notify = ["libnotify"]

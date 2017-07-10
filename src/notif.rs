@@ -30,7 +30,6 @@ pub struct Notif {
     from_popup: Cell<bool>,
     from_tray: Cell<bool>,
     // TODO: from hotkey
-
     from_external: Cell<bool>,
 
     volume_notif: libnotify::Notification,
@@ -58,18 +57,16 @@ impl Notif {
         let timeout = prefs.notify_prefs.notifcation_timeout;
 
         self.enabled.set(prefs.notify_prefs.enable_notifications);
-        self.enabled.set(prefs.notify_prefs.notify_popup);
-        self.enabled.set(prefs.notify_prefs.notify_mouse_scroll);
-        self.enabled.set(prefs.notify_prefs.notify_external);
+        self.from_popup.set(prefs.notify_prefs.notify_popup);
+        self.from_tray.set(prefs.notify_prefs.notify_mouse_scroll);
+        self.from_external.set(prefs.notify_prefs.notify_external);
 
-        self.volume_notif
-            .set_notification_timeout(timeout as i32);
+        self.volume_notif.set_notification_timeout(timeout as i32);
         self.volume_notif
             .set_hint("x-canonical-private-synchronous", Some("".to_variant()))?;
 
 
-        self.text_notif
-            .set_notification_timeout(timeout as i32);
+        self.text_notif.set_notification_timeout(timeout as i32);
         self.text_notif
             .set_hint("x-canonical-private-synchronous", Some("".to_variant()))?;
 
@@ -95,17 +92,19 @@ impl Notif {
                 VolLevel::Muted => String::from("Volume muted"),
                 _ => {
                     format!("{} ({})\nVolume: {}",
-                            audio.acard.borrow().card_name()?,
-                            audio.acard.borrow().chan_name()?,
+                            audio.acard
+                                .borrow()
+                                .card_name()?,
+                            audio.acard
+                                .borrow()
+                                .chan_name()?,
                             vol)
                 }
             }
         };
 
-        self.volume_notif
-            .update(summary.as_str(), None, Some(icon))?;
-        self.volume_notif
-            .set_hint("value", Some(vol.to_variant()))?;
+        self.volume_notif.update(summary.as_str(), None, Some(icon))?;
+        self.volume_notif.set_hint("value", Some((vol as i32).to_variant()))?;
         self.volume_notif.show()?;
 
         return Ok(());
@@ -113,8 +112,7 @@ impl Notif {
 
 
     pub fn show_text_notif(&self, summary: &str, body: &str) -> Result<()> {
-        self.text_notif
-            .update(summary, Some(body), None)?;
+        self.text_notif.update(summary, Some(body), None)?;
         self.text_notif.show()?;
 
         return Ok(());
@@ -124,25 +122,35 @@ impl Notif {
 
 
 pub fn init_notify(appstate: Rc<AppS>) {
+    debug!("Blah");
     {
         /* connect handler */
         let apps = appstate.clone();
-        let notif = try_e!(Notif::new(&apps.prefs.borrow()));
-        appstate.audio.connect_handler(
-            Box::new(move |s, u| match (s, u) {
-                (AudioSignal::CardDisconnected, _) => (),
-                (AudioSignal::CardError, _) => (),
-                (AudioSignal::ValuesChanged, AudioUser::TrayIcon) => {
-                    try_w!(notif.show_volume_notif(&apps.audio))
-                },
+        appstate.audio.connect_handler(Box::new(move |s, u| {
+            let notif = &apps.notif;
+            if !notif.enabled.get() {
+                return;
+            }
+            match (s,
+                   u,
+                   (notif.from_popup.get(),
+                    notif.from_tray.get(),
+                    notif.from_external.get())) {
+                (AudioSignal::CardDisconnected, _, _) => (),
+                (AudioSignal::CardError, _, _) => (),
+                (AudioSignal::ValuesChanged,
+                 AudioUser::TrayIcon,
+                 (_, true, _)) => try_w!(notif.show_volume_notif(&apps.audio)),
+                (AudioSignal::ValuesChanged,
+                 AudioUser::Popup,
+                 (true, _, _)) => try_w!(notif.show_volume_notif(&apps.audio)),
+                (AudioSignal::ValuesChanged,
+                 AudioUser::Unknown,
+                 (_, _, true)) => try_w!(notif.show_volume_notif(&apps.audio)),
+
                 _ => (),
-                }
-            )
-        );
+            }
+        }));
 
     }
 }
-
-
-
-
