@@ -3,9 +3,6 @@ use std::convert::From;
 use std;
 use toml;
 
-#[cfg(feature = "notify")]
-use libnotify;
-
 
 
 error_chain! {
@@ -13,7 +10,6 @@ error_chain! {
         Alsa(alsa::Error);
         IO(std::io::Error);
         Toml(toml::de::Error);
-        Libnotify(libnotify::errors::Error) #[cfg(feature = "notify")];
     }
 }
 

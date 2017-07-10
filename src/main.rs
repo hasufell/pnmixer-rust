@@ -61,6 +61,10 @@ mod notif;
 
 
 use app_state::*;
+#[cfg(feature = "notify")]
+use libnotify::functions::*;
+#[cfg(feature = "notify")]
+use libnotify::manual_functions::*;
 
 
 
@@ -69,7 +73,7 @@ fn main() {
 
     // TODO: error handling
     #[cfg(feature = "notify")]
-    libnotify::init("PNMixer-rs").unwrap();
+    init("PNMixer-rs");
 
     flexi_logger::LogOptions::new()
        .log_to_file(false)
@@ -84,5 +88,5 @@ fn main() {
     gtk::main();
 
     #[cfg(feature = "notify")]
-    libnotify::uninit();
+    uninit();
 }
