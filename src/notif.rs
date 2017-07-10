@@ -1,28 +1,28 @@
 use app_state::*;
 use audio::*;
+use errors::*;
+use glib::Variant;
+use glib::prelude::*;
 use gtk::DialogExt;
 use gtk::MessageDialogExt;
 use gtk::WidgetExt;
 use gtk::WindowExt;
 use gtk;
 use gtk_sys::{GTK_DIALOG_DESTROY_WITH_PARENT, GTK_RESPONSE_YES};
+use libnotify;
 use prefs::*;
 use std::cell::Cell;
 use std::cell::RefCell;
 use std::rc::Rc;
+use std::thread;
+use std::time::Duration;
 use support_audio::*;
 use support_ui::*;
 use ui_popup_menu::*;
 use ui_popup_window::*;
 use ui_prefs_dialog::*;
 use ui_tray_icon::*;
-use errors::*;
 
-use libnotify;
-use std::thread;
-use std::time::Duration;
-use glib::Variant;
-use glib::prelude::*;
 
 
 pub struct Notif {
@@ -136,6 +136,7 @@ pub fn init_notify(appstate: Rc<AppS>) {
                    (notif.from_popup.get(),
                     notif.from_tray.get(),
                     notif.from_external.get())) {
+                // TODO
                 (AudioSignal::CardDisconnected, _, _) => (),
                 (AudioSignal::CardError, _, _) => (),
                 (AudioSignal::ValuesChanged,

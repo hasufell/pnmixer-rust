@@ -9,12 +9,9 @@ use ui_entry::Gui;
 #[cfg(feature = "notify")]
 use notif::*;
 
-// TODO: notify popups
 
 
 // TODO: destructors
-
-// TODO: glade stuff, config, alsacard
 pub struct AppS {
     _cant_construct: (),
     pub gui: Gui,

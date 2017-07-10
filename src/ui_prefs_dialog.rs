@@ -8,11 +8,6 @@ use gtk;
 use prefs::*;
 use std::rc::Rc;
 use support_alsa::*;
-use support_audio::*;
-
-
-
-// TODO: reference count leak
 
 
 
@@ -153,18 +148,16 @@ impl PrefsDialog {
 
         /* NotifyPrefs */
         #[cfg(feature = "notify")]
-        self.noti_enable_check
-            .set_active(prefs.notify_prefs.enable_notifications);
-        #[cfg(feature = "notify")]
-        self.noti_timeout_spin
-            .set_value(prefs.notify_prefs.notifcation_timeout as f64);
-        #[cfg(feature = "notify")]
-        self.noti_mouse_check
-            .set_active(prefs.notify_prefs.notify_mouse_scroll);
-        #[cfg(feature = "notify")]
-        self.noti_popup_check.set_active(prefs.notify_prefs.notify_popup);
-        #[cfg(feature = "notify")]
-        self.noti_ext_check.set_active(prefs.notify_prefs.notify_external);
+        {
+            self.noti_enable_check
+                .set_active(prefs.notify_prefs.enable_notifications);
+            self.noti_timeout_spin
+                .set_value(prefs.notify_prefs.notifcation_timeout as f64);
+            self.noti_mouse_check
+                .set_active(prefs.notify_prefs.notify_mouse_scroll);
+            self.noti_popup_check.set_active(prefs.notify_prefs.notify_popup);
+            self.noti_ext_check.set_active(prefs.notify_prefs.notify_external);
+        }
     }
 
 
