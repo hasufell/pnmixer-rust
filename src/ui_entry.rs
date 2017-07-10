@@ -6,7 +6,6 @@ use gtk::WidgetExt;
 use gtk::WindowExt;
 use gtk;
 use gtk_sys::{GTK_DIALOG_DESTROY_WITH_PARENT, GTK_RESPONSE_YES};
-use notif::*;
 use prefs::*;
 use std::cell::RefCell;
 use std::rc::Rc;
@@ -15,6 +14,7 @@ use ui_popup_menu::*;
 use ui_popup_window::*;
 use ui_prefs_dialog::*;
 use ui_tray_icon::*;
+use notif::*;
 
 
 
@@ -72,6 +72,7 @@ pub fn init(appstate: Rc<AppS>) {
     init_popup_window(appstate.clone());
     init_popup_menu(appstate.clone());
     init_prefs_callback(appstate.clone());
+    init_notify(appstate.clone());
 }
 
 

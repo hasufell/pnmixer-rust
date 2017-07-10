@@ -1,5 +1,6 @@
 use alsa;
 use glib;
+use libnotify;
 use std::convert::From;
 use std;
 use toml;
@@ -11,6 +12,7 @@ error_chain! {
         Alsa(alsa::Error);
         IO(std::io::Error);
         Toml(toml::de::Error);
+        Libnotify(libnotify::errors::Error);
     }
 
 }

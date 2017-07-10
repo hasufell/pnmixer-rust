@@ -29,6 +29,7 @@ extern crate gtk_sys;
 extern crate libc;
 extern crate which;
 extern crate xdg;
+extern crate libnotify;
 
 use std::rc::Rc;
 
@@ -41,16 +42,19 @@ mod glade_helpers;
 mod alsa_card;
 mod app_state;
 mod audio;
-mod ui_entry;
-mod ui_popup_menu;
-mod ui_popup_window;
-mod ui_prefs_dialog;
-mod ui_tray_icon;
 mod prefs;
 mod support_alsa;
 mod support_audio;
 mod support_cmd;
 mod support_ui;
+mod ui_entry;
+mod ui_popup_menu;
+mod ui_popup_window;
+mod ui_prefs_dialog;
+mod ui_tray_icon;
+mod notif;
+
+
 
 use app_state::*;
 
@@ -58,6 +62,19 @@ use app_state::*;
 
 fn main() {
     gtk::init().unwrap();
+
+    libnotify::init("PNMixer-rs").unwrap();
+
+    {
+        // Create a new notification and show it
+        let n = libnotify::Notification::new("Summary", Some("Optional Body"), None)
+            .unwrap();
+        n.show().unwrap();
+        // You can also use the .show() convenience method on the context
+        n.update("I am another notification", None, None).unwrap();
+        n.show().unwrap();
+        // we are done, deinit
+    }
 
     flexi_logger::LogOptions::new()
        .log_to_file(false)
@@ -70,4 +87,5 @@ fn main() {
     ui_entry::init(apps);
 
     gtk::main();
+    libnotify::uninit();
 }
