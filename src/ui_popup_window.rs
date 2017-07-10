@@ -24,6 +24,7 @@ pub struct PopupWindow {
     pub mute_check: gtk::CheckButton,
     pub mixer_button: gtk::Button,
     pub toggle_signal: Cell<u64>,
+    pub changed_signal: Cell<u64>,
 }
 
 impl PopupWindow {
@@ -36,6 +37,7 @@ impl PopupWindow {
                    mute_check: builder.get_object("mute_check").unwrap(),
                    mixer_button: builder.get_object("mixer_button").unwrap(),
                    toggle_signal: Cell::new(0),
+                   changed_signal: Cell::new(0),
                };
     }
 
@@ -148,9 +150,14 @@ pub fn init_popup_window(appstate: Rc<AppS>) {
                                  .gui
                                  .popup_window
                                  .vol_scale_adj;
-        vol_scale_adj.connect_value_changed(
+        let changed_signal = vol_scale_adj.connect_value_changed(
             move |_| on_vol_scale_value_changed(&_appstate),
         );
+
+        appstate.gui
+            .popup_window
+            .changed_signal
+            .set(changed_signal);
     }
 
     /* popup_window.connect_event */
@@ -181,10 +188,13 @@ pub fn init_popup_window(appstate: Rc<AppS>) {
 
 
 fn on_popup_window_show(appstate: &AppS) {
+    let popup_window = &appstate.gui.popup_window;
     appstate.gui.popup_window.set_vol_increment(&appstate.prefs.borrow());
+    glib::signal_handler_block(&popup_window.vol_scale_adj, popup_window.changed_signal.get());
     try_w!(appstate.gui.popup_window.update(&appstate.audio));
-    appstate.gui
-        .popup_window
+    glib::signal_handler_unblock(&popup_window.vol_scale_adj,
+                                 popup_window.changed_signal.get());
+    popup_window
         .vol_scale
         .grab_focus();
     try_w!(grab_devices(&appstate.gui.popup_window.popup_window));

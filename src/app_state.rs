@@ -1,8 +1,9 @@
-use audio::Audio;
+use audio::{Audio, AudioUser};
 use errors::*;
 use gtk;
 use prefs::*;
 use std::cell::RefCell;
+use support_audio::*;
 use ui_entry::Gui;
 
 #[cfg(feature = "notify")]
@@ -71,5 +72,24 @@ impl AppS {
     pub fn update_popup_window(&self) -> Result<()> {
         debug!("Update PopupWindow!");
         return self.gui.popup_window.update(&self.audio);
+    }
+
+    #[cfg(feature = "notify")]
+    pub fn update_notify(&self) -> Result<()> {
+        return self.notif.reload(&self.prefs.borrow());
+    }
+
+    #[cfg(not(feature = "notify"))]
+    pub fn update_notify(&self) -> Result<()> {
+        return Ok(());
+    }
+
+    pub fn update_audio(&self, user: AudioUser) -> Result<()> {
+        return audio_reload(&self.audio, &self.prefs.borrow(), user);
+    }
+
+    pub fn update_config(&self) -> Result<()> {
+        let prefs = self.prefs.borrow_mut();
+        return prefs.store_config();
     }
 }

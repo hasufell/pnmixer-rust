@@ -335,17 +335,12 @@ fn init_prefs_dialog(appstate: &Rc<AppS>) {
 
             if response_id == ResponseType::Ok.into() ||
                response_id == ResponseType::Apply.into() {
-                // TODO: update popup, tray_icon, hotkeys, notification and audio
-                #[cfg(feature = "notify")]
-                try_w!(apps.notif.reload(&apps.prefs.borrow()));
+                // TODO: update hotkeys
+                try_w!(apps.update_notify());
                 try_w!(apps.update_tray_icon());
                 try_w!(apps.update_popup_window());
-                {
-                    let prefs = apps.prefs.borrow();
-                    try_w!(audio_reload(&apps.audio, &prefs, AudioUser::PrefsWindow));
-                }
-                let prefs = apps.prefs.borrow_mut();
-                try_w!(prefs.store_config());
+                try_w!(apps.update_audio(AudioUser::PrefsWindow));
+                try_w!(apps.update_config());
                }
 
         });
