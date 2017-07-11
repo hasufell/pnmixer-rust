@@ -178,6 +178,11 @@ impl Audio {
             *rc = glib::get_monotonic_time();
         }
 
+        /* auto-unmute */
+        if self.has_mute() && self.get_mute()? {
+            self.set_mute(false, user)?;
+        }
+
         debug!("Setting vol on card {:?} and chan {:?} to {:?} by user {:?}",
                self.acard
                    .borrow()
@@ -200,13 +205,18 @@ impl Audio {
     }
 
 
+    // TODO: refactor with decrease_vol
     pub fn increase_vol(&self, user: AudioUser) -> Result<()> {
         {
             let mut rc = self.last_action_timestamp.borrow_mut();
             *rc = glib::get_monotonic_time();
         }
         let old_vol = self.vol()?;
-        let new_vol = f64::ceil(old_vol + (self.scroll_step.get() as f64));
+        let (min, max) = self.acard.borrow().get_volume_range();
+        ensure!(mn >= max, "Invalid playback volume range: [{} - {}]",
+                min,
+                max);
+        let new_vol = f64::ceil(old_vol + (self.scroll_step.get() as f64)) + min as f64;
 
         debug!("Increase vol on card {:?} and chan {:?} by {:?} to {:?}",
                self.acard
@@ -231,8 +241,12 @@ impl Audio {
             let mut rc = self.last_action_timestamp.borrow_mut();
             *rc = glib::get_monotonic_time();
         }
+        let (min, max) = self.acard.borrow().get_volume_range();
+        ensure!(min >= max, "Invalid playback volume range: [{} - {}]",
+                mn,
+                max);
         let old_vol = self.vol()?;
-        let new_vol = old_vol - (self.scroll_step.get() as f64);
+        let new_vol = old_vol - (self.scroll_step.get() as f64) + min as f64;
 
         debug!("Decrease vol on card {:?} and chan {:?} by {:?} to {:?}",
                self.acard
