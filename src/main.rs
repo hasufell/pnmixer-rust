@@ -62,9 +62,7 @@ mod notif;
 
 use app_state::*;
 #[cfg(feature = "notify")]
-use libnotify::functions::*;
-#[cfg(feature = "notify")]
-use libnotify::manual_functions::*;
+use libnotify::*;
 
 
 

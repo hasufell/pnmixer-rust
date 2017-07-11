@@ -44,8 +44,8 @@ impl Notif {
             from_tray: Cell::new(false),
             from_external: Cell::new(false),
 
-            volume_notif: libnotify::Notification::new("", None, None).unwrap(),
-            text_notif: libnotify::Notification::new("", None, None).unwrap(),
+            volume_notif: libnotify::Notification::new("", None, None),
+            text_notif: libnotify::Notification::new("", None, None),
         };
 
         notif.reload(prefs)?;
@@ -61,14 +61,14 @@ impl Notif {
         self.from_tray.set(prefs.notify_prefs.notify_mouse_scroll);
         self.from_external.set(prefs.notify_prefs.notify_external);
 
-        self.volume_notif.set_notification_timeout(timeout as i32);
+        self.volume_notif.set_timeout(timeout as i32);
         self.volume_notif
-            .set_hint("x-canonical-private-synchronous", Some("".to_variant()))?;
+            .set_hint("x-canonical-private-synchronous", Some("".to_variant()));
 
 
-        self.text_notif.set_notification_timeout(timeout as i32);
+        self.text_notif.set_timeout(timeout as i32);
         self.text_notif
-            .set_hint("x-canonical-private-synchronous", Some("".to_variant()))?;
+            .set_hint("x-canonical-private-synchronous", Some("".to_variant()));
 
         return Ok(());
     }
@@ -103,17 +103,21 @@ impl Notif {
             }
         };
 
-        self.volume_notif.update(summary.as_str(), None, Some(icon))?;
-        self.volume_notif.set_hint("value", Some((vol as i32).to_variant()))?;
-        self.volume_notif.show()?;
+        // TODO: error handling
+        self.volume_notif.update(summary.as_str(), None, Some(icon)).unwrap();
+        self.volume_notif.set_hint("value", Some((vol as i32).to_variant()));
+        // TODO: error handling
+        self.volume_notif.show().unwrap();
 
         return Ok(());
     }
 
 
     pub fn show_text_notif(&self, summary: &str, body: &str) -> Result<()> {
-        self.text_notif.update(summary, Some(body), None)?;
-        self.text_notif.show()?;
+        // TODO: error handling
+        self.text_notif.update(summary, Some(body), None).unwrap();
+        // TODO: error handling
+        self.text_notif.show().unwrap();
 
         return Ok(());
     }
