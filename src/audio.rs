@@ -6,6 +6,7 @@ use std::cell::Ref;
 use std::cell::RefCell;
 use std::f64;
 use std::rc::Rc;
+use support_audio::*;
 
 
 
@@ -152,7 +153,9 @@ impl Audio {
 
 
     pub fn vol(&self) -> Result<f64> {
-        return self.acard.borrow().get_vol();
+        let alsa_vol = self.acard.borrow().get_vol()?;
+        return vol_to_percent(alsa_vol,
+                              self.acard.borrow().get_volume_range());
     }
 
 
@@ -172,7 +175,7 @@ impl Audio {
     }
 
 
-    pub fn set_vol(&self, new_vol: f64, user: AudioUser) -> Result<()> {
+    pub fn set_vol(&self, new_vol: f64, user: AudioUser, dir: VolDir) -> Result<()> {
         {
             let mut rc = self.last_action_timestamp.borrow_mut();
             *rc = glib::get_monotonic_time();
@@ -194,10 +197,15 @@ impl Audio {
                    .unwrap(),
                new_vol,
                user);
+
+        let alsa_vol = percent_to_vol(new_vol,
+                                      self.acard.borrow().get_volume_range(),
+                                      dir)?;
         self.acard
             .borrow()
-            .set_vol(new_vol)?;
+            .set_vol(alsa_vol)?;
 
+        // TODO: only invoke handlers if volume did not change
         invoke_handlers(&self.handlers.borrow(),
                         AudioSignal::ValuesChanged,
                         user);
@@ -205,64 +213,19 @@ impl Audio {
     }
 
 
-    // TODO: refactor with decrease_vol
     pub fn increase_vol(&self, user: AudioUser) -> Result<()> {
-        {
-            let mut rc = self.last_action_timestamp.borrow_mut();
-            *rc = glib::get_monotonic_time();
-        }
         let old_vol = self.vol()?;
-        let (min, max) = self.acard.borrow().get_volume_range();
-        ensure!(mn >= max, "Invalid playback volume range: [{} - {}]",
-                min,
-                max);
-        let new_vol = f64::ceil(old_vol + (self.scroll_step.get() as f64)) + min as f64;
+        let new_vol = old_vol + (self.scroll_step.get() as f64);
 
-        debug!("Increase vol on card {:?} and chan {:?} by {:?} to {:?}",
-               self.acard
-                   .borrow()
-                   .card_name()
-                   .unwrap(),
-               self.acard
-                   .borrow()
-                   .chan_name()
-                   .unwrap(),
-               (new_vol - old_vol),
-               new_vol);
-
-        self.set_vol(new_vol, user)?;
-
-        return Ok(());
+        return self.set_vol(new_vol, user, VolDir::Up);
     }
 
 
     pub fn decrease_vol(&self, user: AudioUser) -> Result<()> {
-        {
-            let mut rc = self.last_action_timestamp.borrow_mut();
-            *rc = glib::get_monotonic_time();
-        }
-        let (min, max) = self.acard.borrow().get_volume_range();
-        ensure!(min >= max, "Invalid playback volume range: [{} - {}]",
-                mn,
-                max);
         let old_vol = self.vol()?;
-        let new_vol = old_vol - (self.scroll_step.get() as f64) + min as f64;
+        let new_vol = old_vol - (self.scroll_step.get() as f64);
 
-        debug!("Decrease vol on card {:?} and chan {:?} by {:?} to {:?}",
-               self.acard
-                   .borrow()
-                   .card_name()
-                   .unwrap(),
-               self.acard
-                   .borrow()
-                   .chan_name()
-                   .unwrap(),
-               (new_vol - old_vol),
-               new_vol);
-
-        self.set_vol(new_vol, user)?;
-
-        return Ok(());
+        return self.set_vol(new_vol, user, VolDir::Down);
     }
 
 

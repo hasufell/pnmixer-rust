@@ -12,6 +12,7 @@ use gtk;
 use prefs::*;
 use std::cell::Cell;
 use std::rc::Rc;
+use support_audio::*;
 use support_cmd::*;
 
 
@@ -232,13 +233,16 @@ fn on_popup_window_event(w: &gtk::Window, e: &gdk::Event) -> gtk::Inhibit {
 
 fn on_vol_scale_value_changed(appstate: &AppS) {
     let audio = &appstate.audio;
+    let old_vol = try_w!(audio.vol());
 
     let val = appstate.gui
         .popup_window
         .vol_scale
         .get_value();
 
-    try_w!(audio.set_vol(val, AudioUser::Popup));
+    let dir = vol_change_to_voldir(old_vol, val);
+
+    try_w!(audio.set_vol(val, AudioUser::Popup, dir));
 }
 
 

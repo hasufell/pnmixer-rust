@@ -147,16 +147,3 @@ pub fn selem_is_playable(selem: &Selem) -> bool {
     return selem.has_playback_volume();
 }
 
-
-pub fn vol_to_percent(vol: i64, range: (i64, i64)) -> f64 {
-    let (min, max) = range;
-    return ((vol - min) as f64) / ((max - min) as f64) * 100.0;
-}
-
-
-pub fn percent_to_vol(vol: f64, range: (i64, i64)) -> i64 {
-    let (min, max) = range;
-    let _v = vol / 100.0 * ((max - min) as f64) + (min as f64);
-    /* TODO: precision? Use direction. */
-    return _v as i64;
-}

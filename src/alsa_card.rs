@@ -121,24 +121,17 @@ impl AlsaCard {
     }
 
 
-    pub fn get_vol(&self) -> Result<f64> {
+    pub fn get_vol(&self) -> Result<i64> {
         let selem = self.selem();
-        let range = self.get_volume_range();
-        let volume = selem.get_playback_volume(FrontRight).map(|v| {
-            return vol_to_percent(v, range);
-        });
+        let volume = selem.get_playback_volume(FrontRight);
 
         return volume.from_err();
     }
 
 
-    pub fn set_vol(&self, new_vol: f64) -> Result<()> {
+    pub fn set_vol(&self, new_vol: i64) -> Result<()> {
         let selem = self.selem();
-
-        let range = self.get_volume_range();
-        selem.set_playback_volume_all(percent_to_vol(new_vol, range))?;
-
-        return Ok(());
+        return selem.set_playback_volume_all(new_vol).from_err();
     }
 
 

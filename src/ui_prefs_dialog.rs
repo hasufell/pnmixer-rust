@@ -173,7 +173,7 @@ impl PrefsDialog {
                     .unwrap_or(String::from("Master")),
             };
 
-        // TODO don't convert like that
+        // TODO save raw values?
         let vol_meter_color = VolColor {
             red: (self.vol_meter_color_button.get_rgba().red * 255.0) as u8,
             green: (self.vol_meter_color_button.get_rgba().green * 255.0) as u8,
