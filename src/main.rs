@@ -71,7 +71,7 @@ fn main() {
 
     // TODO: error handling
     #[cfg(feature = "notify")]
-    init("PNMixer-rs");
+    init("PNMixer-rs").unwrap();
 
     flexi_logger::LogOptions::new()
        .log_to_file(false)

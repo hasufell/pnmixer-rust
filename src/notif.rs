@@ -24,6 +24,8 @@ use ui_prefs_dialog::*;
 use ui_tray_icon::*;
 
 
+// TODO: more notifications, such as on alsa error
+
 
 pub struct Notif {
     enabled: Cell<bool>,
