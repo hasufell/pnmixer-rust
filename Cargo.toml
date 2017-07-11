@@ -6,7 +6,7 @@ authors = ["Julian Ospald <hasufell@posteo.de>"]
 [dependencies]
 alsa = "^0.1.8"
 alsa-sys = "^0.1.1"
-error-chain = { path = "3rdparty/error-chain" }
+error-chain = { git = "https://github.com/hasufell/error-chain.git", branch = "PR-from-error" }
 ffi = "^0.0.2"
 flexi_logger = "^0.5.1"
 gdk-pixbuf = { git = "https://github.com/gtk-rs/gdk-pixbuf.git" }
@@ -24,7 +24,7 @@ serde_derive = "^1.0.9"
 toml = "^0.4.2"
 which = "*"
 xdg = "*"
-libnotify = { path = "3rdparty/rust-libnotify", optional = true }
+libnotify = { path = "3rdparty/libnotify", optional = true }
 
 [dependencies.gtk]
 git = "https://github.com/gtk-rs/gtk.git"

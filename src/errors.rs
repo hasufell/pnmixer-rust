@@ -11,7 +11,6 @@ error_chain! {
         Alsa(alsa::Error);
         IO(std::io::Error);
         Toml(toml::de::Error);
-        Glib(glib::BoolError);
     }
 }
 
