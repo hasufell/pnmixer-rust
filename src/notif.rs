@@ -99,7 +99,7 @@ impl Notif {
                             audio.acard
                                 .borrow()
                                 .chan_name()?,
-                            vol)
+                            vol as i32)
                 }
             }
         };
