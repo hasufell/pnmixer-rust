@@ -181,6 +181,21 @@ impl Audio {
             *rc = glib::get_monotonic_time();
         }
 
+        let alsa_vol = percent_to_vol(new_vol,
+                                      self.acard.borrow().get_volume_range(),
+                                      dir)?;
+
+        /* only invoke handlers etc. if volume did actually change */
+        {
+            let old_alsa_vol = percent_to_vol(self.vol()?,
+                                          self.acard.borrow().get_volume_range(),
+                                          dir)?;
+
+            if old_alsa_vol == alsa_vol {
+                return Ok(());
+            }
+        }
+
         /* auto-unmute */
         if self.has_mute() && self.get_mute()? {
             self.set_mute(false, user)?;
@@ -198,14 +213,10 @@ impl Audio {
                new_vol,
                user);
 
-        let alsa_vol = percent_to_vol(new_vol,
-                                      self.acard.borrow().get_volume_range(),
-                                      dir)?;
         self.acard
             .borrow()
             .set_vol(alsa_vol)?;
 
-        // TODO: only invoke handlers if volume did not change
         invoke_handlers(&self.handlers.borrow(),
                         AudioSignal::ValuesChanged,
                         user);
@@ -313,7 +324,6 @@ fn on_alsa_event(last_action_timestamp: &mut i64,
 
     /* external change */
     match alsa_event {
-        // TODO: invoke handlers with AudioUserUnknown
         AlsaEvent::AlsaCardError => {
             invoke_handlers(handlers,
                             self::AudioSignal::CardError,

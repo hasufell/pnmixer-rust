@@ -101,17 +101,17 @@ impl Default for ViewPrefs {
 #[derive(Deserialize, Debug, Serialize)]
 #[serde(default)]
 pub struct VolColor {
-    pub red: u8,
-    pub green: u8,
-    pub blue: u8,
+    pub red: f64,
+    pub green: f64,
+    pub blue: f64,
 }
 
 impl Default for VolColor {
     fn default() -> VolColor {
         return VolColor {
-                   red: 245,
-                   green: 180,
-                   blue: 0,
+                   red: 0.960784313725,
+                   green: 0.705882352941,
+                   blue: 0.0,
                };
     }
 }

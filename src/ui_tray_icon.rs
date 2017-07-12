@@ -159,9 +159,9 @@ pub struct VolMeter {
 impl VolMeter {
     fn new(prefs: &Prefs) -> VolMeter {
         return VolMeter {
-                   red: prefs.view_prefs.vol_meter_color.red,
-                   green: prefs.view_prefs.vol_meter_color.green,
-                   blue: prefs.view_prefs.vol_meter_color.blue,
+                   red: (prefs.view_prefs.vol_meter_color.red * 255.0) as u8,
+                   green: (prefs.view_prefs.vol_meter_color.green * 255.0) as u8,
+                   blue: (prefs.view_prefs.vol_meter_color.blue * 255.0) as u8,
                    x_offset_pct: prefs.view_prefs.vol_meter_offset as i64,
                    y_offset_pct: 10,
                    /* dynamic */

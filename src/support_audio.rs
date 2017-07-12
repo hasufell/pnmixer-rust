@@ -3,6 +3,7 @@ use errors::*;
 use prefs::*;
 
 
+#[derive(Clone, Copy, Debug)]
 pub enum VolDir {
     Up,
     Down,

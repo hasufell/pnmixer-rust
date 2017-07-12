@@ -111,11 +111,10 @@ impl PrefsDialog {
         self.vol_meter_pos_spin.set_value(prefs.view_prefs.vol_meter_offset as
                                           f64);
 
-        // TODO don't convert like that
         let rgba = gdk::RGBA {
-            red: prefs.view_prefs.vol_meter_color.red as f64 / 255.0,
-            green: prefs.view_prefs.vol_meter_color.green as f64 / 255.0,
-            blue: prefs.view_prefs.vol_meter_color.blue as f64 / 255.0,
+            red: prefs.view_prefs.vol_meter_color.red,
+            green: prefs.view_prefs.vol_meter_color.green,
+            blue: prefs.view_prefs.vol_meter_color.blue,
             alpha: 1.0,
         };
         self.vol_meter_color_button.set_rgba(&rgba);
@@ -162,22 +161,27 @@ impl PrefsDialog {
 
 
     fn to_prefs(&self) -> Prefs {
-        // TODO: remove duplication with default instance
+        let card = self.card_combo.get_active_text();
+        let channel = self.chan_combo.get_active_text();
+
+        if card.is_none() || channel.is_none() {
+            return Prefs::default();
+        }
+
         let device_prefs =
             DevicePrefs {
                 card: self.card_combo
                     .get_active_text()
-                    .unwrap_or(String::from("(default)")),
+                    .unwrap(),
                 channel: self.chan_combo
                     .get_active_text()
-                    .unwrap_or(String::from("Master")),
+                    .unwrap(),
             };
 
-        // TODO save raw values?
         let vol_meter_color = VolColor {
-            red: (self.vol_meter_color_button.get_rgba().red * 255.0) as u8,
-            green: (self.vol_meter_color_button.get_rgba().green * 255.0) as u8,
-            blue: (self.vol_meter_color_button.get_rgba().blue * 255.0) as u8,
+            red: (self.vol_meter_color_button.get_rgba().red),
+            green: (self.vol_meter_color_button.get_rgba().green),
+            blue: (self.vol_meter_color_button.get_rgba().blue),
         };
 
         let view_prefs = ViewPrefs {

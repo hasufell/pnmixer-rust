@@ -92,9 +92,6 @@ impl AlsaCard {
                                  cb: cb,
                              });
 
-        /* TODO: callback is registered here, which must be unregistered
-         * when the card is destroyed!!
-         * poll descriptors must be unwatched too */
         let watch_ids = AlsaCard::watch_poll_descriptors(vec_pollfd,
                                                          acard.as_ref());
         acard.watch_ids.set(watch_ids);
@@ -199,7 +196,6 @@ impl AlsaCard {
 }
 
 
-// TODO: test that this is actually triggered when switching cards
 impl Drop for AlsaCard {
     // call Box::new(x), transmute the Box into a raw pointer, and then
     // std::mem::forget
@@ -258,7 +254,6 @@ extern "C" fn watch_cb(chan: *mut glib_sys::GIOChannel,
                 debug!("G_IO_STATUS_AGAIN");
                 continue;
             }
-            // TODO: handle these failure cases
             glib_sys::G_IO_STATUS_NORMAL => {
                 error!("Alsa failed to clear the channel");
                 cb(AlsaEvent::AlsaCardError);
