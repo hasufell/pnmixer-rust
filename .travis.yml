@@ -15,18 +15,27 @@ addons:
     - libnotify-dev
     - libx11-dev
     - pkg-config
+    # for build.sh
+    - gperf
+    - libegl1-mesa-dev
+    - libfreetype6-dev
+    - libmount-dev
+    - libpng-dev
+    - libxml-parser-perl
+    - libxtst-dev
+    - xutils-dev
 before_script:
 - |
   pip install 'travis-cargo<0.2' --user &&
   export PATH=$HOME/.local/bin:$PATH
 script:
 - |
-  travis-cargo build
+  ./.travis/build.sh
   # travis-cargo test &&
   # travis-cargo --only stable doc
 # after_success:
 # - travis-cargo --only stable doc-upload
-# env:
-  # global:
-  # - TRAVIS_CARGO_NIGHTLY_FEATURE=""
+env:
+  global:
+  - TRAVIS_CARGO_NIGHTLY_FEATURE=""
   # - secure:
