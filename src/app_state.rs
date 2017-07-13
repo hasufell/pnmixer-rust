@@ -4,8 +4,10 @@
 use audio::{Audio, AudioUser};
 use errors::*;
 use gtk;
+use hotkeys::Hotkeys;
 use prefs::*;
 use std::cell::RefCell;
+use std::rc::Rc;
 use support_audio::*;
 use ui_entry::Gui;
 
@@ -21,12 +23,15 @@ pub struct AppS {
     /// Mostly static GUI state.
     pub gui: Gui,
     /// Audio state.
-    pub audio: Audio,
+    pub audio: Rc<Audio>,
     /// Preferences state.
     pub prefs: RefCell<Prefs>,
     #[cfg(feature = "notify")]
-    /// Notification state.
-    pub notif: Notif,
+    /// Notification state. In case of initialization failure, this
+    /// is set to `None`.
+    pub notif: Option<Notif>,
+    /// Hotkey state.
+    pub hotkeys: RefCell<Box<Hotkeys>>, // Gets an Rc to Audio.
 }
 
 
@@ -39,9 +44,8 @@ impl AppS {
         let builder_popup_menu =
             gtk::Builder::new_from_string(include_str!(concat!(env!("CARGO_MANIFEST_DIR"),
                                                                "/data/ui/popup-menu.glade")));
-        let prefs = RefCell::new(Prefs::new().unwrap());
-        let gui =
-            Gui::new(builder_popup_window, builder_popup_menu, &prefs.borrow());
+        let prefs = RefCell::new(unwrap_error!(Prefs::new(), None));
+
 
         let card_name = prefs.borrow()
             .device_prefs
@@ -53,15 +57,26 @@ impl AppS {
             .clone();
         // TODO: better error handling
         #[cfg(feature = "notify")]
-        let notif = Notif::new(&prefs.borrow()).unwrap();
+        let notif = result_warn!(Notif::new(&prefs.borrow()), None).ok();
+
+        let audio = Rc::new(unwrap_error!(Audio::new(Some(card_name),
+                                                     Some(chan_name)),
+                                          None));
+        let hotkeys = unwrap_error!(wresult_warn!(Hotkeys::new(&prefs.borrow(),
+            audio.clone()), None),
+                                    None);
+
+        let gui =
+            Gui::new(builder_popup_window, builder_popup_menu, &prefs.borrow());
 
         return AppS {
                    _cant_construct: (),
                    gui,
-                   audio: Audio::new(Some(card_name), Some(chan_name)).unwrap(),
+                   audio: audio,
                    prefs,
                    #[cfg(feature = "notify")]
                    notif,
+                   hotkeys: RefCell::new(hotkeys),
                };
     }
 
@@ -84,15 +99,16 @@ impl AppS {
 
     #[cfg(feature = "notify")]
     /// Update the notification state.
-    pub fn update_notify(&self) -> Result<()> {
-        return self.notif.reload(&self.prefs.borrow());
+    pub fn update_notify(&self) {
+        match self.notif {
+            Some(ref n) => n.reload(&self.prefs.borrow()),
+            None => warn!("Notification system not unitialized, skipping update"),
+        }
     }
 
     #[cfg(not(feature = "notify"))]
     /// Update the notification state.
-    pub fn update_notify(&self) -> Result<()> {
-        return Ok(());
-    }
+    pub fn update_notify(&self) {}
 
     /// Update the audio state.
     pub fn update_audio(&self, user: AudioUser) -> Result<()> {
@@ -103,5 +119,11 @@ impl AppS {
     pub fn update_config(&self) -> Result<()> {
         let prefs = self.prefs.borrow_mut();
         return prefs.store_config();
+    }
+
+    /// Update hotkey state.
+    pub fn update_hotkeys(&self) -> Result<()> {
+        let prefs = self.prefs.borrow();
+        return self.hotkeys.borrow_mut().reload(&prefs);
     }
 }

@@ -205,7 +205,8 @@ pub fn init_popup_window(appstate: Rc<AppS>) {
                 .popup_window
                 .popup_window
                 .hide();
-            try_w!(execute_vol_control_command(&apps.prefs.borrow()));
+            let _ = result_warn!(execute_vol_control_command(&apps.prefs.borrow()),
+                Some(&apps.gui.popup_menu.menu_window));
         });
     }
 }

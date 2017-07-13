@@ -21,7 +21,7 @@ pub struct Notif {
     enabled: Cell<bool>,
     from_popup: Cell<bool>,
     from_tray: Cell<bool>,
-    // TODO: from hotkey
+    from_hotkeys: Cell<bool>,
     from_external: Cell<bool>,
 
     volume_notif: libnotify::Notification,
@@ -30,30 +30,36 @@ pub struct Notif {
 
 impl Notif {
     /// Create a new notification instance from the current preferences.
+    /// This should only be done once at startup. This also initializes
+    /// the libnotify system.
     pub fn new(prefs: &Prefs) -> Result<Self> {
+        libnotify::init("PNMixer-rs")?;
+
         let notif = Notif {
             enabled: Cell::new(false),
             from_popup: Cell::new(false),
             from_tray: Cell::new(false),
+            from_hotkeys: Cell::new(false),
             from_external: Cell::new(false),
 
             volume_notif: libnotify::Notification::new("", None, None),
             text_notif: libnotify::Notification::new("", None, None),
         };
 
-        notif.reload(prefs)?;
+        notif.reload(prefs);
 
         return Ok(notif);
     }
 
     /// Reload the notification instance from the current
     /// preferences.
-    pub fn reload(&self, prefs: &Prefs) -> Result<()> {
+    pub fn reload(&self, prefs: &Prefs) {
         let timeout = prefs.notify_prefs.notifcation_timeout;
 
         self.enabled.set(prefs.notify_prefs.enable_notifications);
         self.from_popup.set(prefs.notify_prefs.notify_popup);
         self.from_tray.set(prefs.notify_prefs.notify_mouse_scroll);
+        self.from_hotkeys.set(prefs.notify_prefs.notify_hotkeys);
         self.from_external.set(prefs.notify_prefs.notify_external);
 
         self.volume_notif.set_timeout(timeout as i32);
@@ -64,8 +70,6 @@ impl Notif {
         self.text_notif.set_timeout(timeout as i32);
         self.text_notif.set_hint("x-canonical-private-synchronous",
                                  Some("".to_variant()));
-
-        return Ok(());
     }
 
     /// Shows a volume notification, e.g. for volume or mute state change.
@@ -120,38 +124,46 @@ impl Notif {
     }
 }
 
+impl Drop for Notif {
+    fn drop(&mut self) {
+        libnotify::uninit();
+    }
+}
+
 
 
 /// Initialize the notification subsystem.
 pub fn init_notify(appstate: Rc<AppS>) {
-    debug!("Blah");
     {
         /* connect handler */
         let apps = appstate.clone();
         appstate.audio.connect_handler(Box::new(move |s, u| {
             let notif = &apps.notif;
-            if !notif.enabled.get() {
+            if notif.is_none() || !notif.as_ref().unwrap().enabled.get() {
                 return;
             }
+            let notif = notif.as_ref().unwrap();
             match (s,
                    u,
                    (notif.from_popup.get(),
                     notif.from_tray.get(),
-                    notif.from_external.get())) {
+                    notif.from_external.get(),
+                    notif.from_hotkeys.get())) {
                 (AudioSignal::NoCard, _, _) => try_w!(notif.show_text_notif("No sound card", "No playable soundcard found")),
                 (AudioSignal::CardDisconnected, _, _) => try_w!(notif.show_text_notif("Soundcard disconnected", "Soundcard has been disconnected, reloading sound system...")),
                 (AudioSignal::CardError, _, _) => (),
                 (AudioSignal::ValuesChanged,
                  AudioUser::TrayIcon,
-                 (_, true, _)) => try_w!(notif.show_volume_notif(&apps.audio)),
+                 (_, true, _, _)) => try_w!(notif.show_volume_notif(&apps.audio)),
                 (AudioSignal::ValuesChanged,
                  AudioUser::Popup,
-                 (true, _, _)) => try_w!(notif.show_volume_notif(&apps.audio)),
+                 (true, _, _, _)) => try_w!(notif.show_volume_notif(&apps.audio)),
                 (AudioSignal::ValuesChanged,
                  AudioUser::Unknown,
-                 (_, _, true)) => try_w!(notif.show_volume_notif(&apps.audio)),
-
-                 // TODO hotkeys
+                 (_, _, true, _)) => try_w!(notif.show_volume_notif(&apps.audio)),
+                (AudioSignal::ValuesChanged,
+                 AudioUser::Hotkeys,
+                 (_, _, _, true)) => try_w!(notif.show_volume_notif(&apps.audio)),
                 _ => (),
             }
         }));

@@ -165,8 +165,8 @@ pub struct NotifyPrefs {
     pub notifcation_timeout: i64,
     pub notify_mouse_scroll: bool,
     pub notify_popup: bool,
-    pub notify_external: bool, 
-    // TODO: notify_hotkeys?
+    pub notify_external: bool,
+    pub notify_hotkeys: bool,
 }
 
 #[cfg(feature = "notify")]
@@ -178,8 +178,20 @@ impl Default for NotifyPrefs {
                    notify_mouse_scroll: true,
                    notify_popup: true,
                    notify_external: true,
+                   notify_hotkeys: true,
                };
     }
+}
+
+
+#[derive(Deserialize, Debug, Serialize, Default)]
+/// Hotkey preferences.
+/// The `String`s represent gtk accelerator strings.
+pub struct HotkeyPrefs {
+    pub enable_hotkeys: bool,
+    pub mute_unmute_key: Option<String>,
+    pub vol_up_key: Option<String>,
+    pub vol_down_key: Option<String>,
 }
 
 
@@ -191,8 +203,8 @@ pub struct Prefs {
     pub view_prefs: ViewPrefs,
     pub behavior_prefs: BehaviorPrefs,
     #[cfg(feature = "notify")]
-    pub notify_prefs: NotifyPrefs, 
-    // TODO: HotKeys?
+    pub notify_prefs: NotifyPrefs,
+    pub hotkey_prefs: HotkeyPrefs,
 }
 
 impl Prefs {
@@ -223,6 +235,7 @@ impl Prefs {
     }
 
 
+    // TODO: unused
     /// Reload the current preferences from the config file.
     pub fn reload_config(&mut self) -> Result<()> {
         debug!("Reloading config...");
@@ -241,8 +254,10 @@ impl Prefs {
 
         debug!("Storing config in {:?}", config_path);
 
-        let mut f = File::create(config_path)?;
-        f.write_all(self.to_str().as_bytes())?;
+        let mut f = File::create(config_path)
+            .chain_err(|| "Could not open/create config file for writing")?;
+        f.write_all(self.to_str().as_bytes())
+            .chain_err(|| "Could not write to config file")?;
 
         return Ok(());
     }

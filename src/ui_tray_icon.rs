@@ -42,7 +42,8 @@ pub struct TrayIcon {
 impl TrayIcon {
     /// Constructor. `audio_pix` is initialized as empty GdkPixbuf, to save
     /// one iteration of png decoding (`update_all()` is triggered immediately
-    /// on startup through `tray_icon.connect_size_changed`.
+    /// on startup through `tray_icon.connect_size_changed` usually,
+    /// otherwise we have to trigger it manually).
     pub fn new(prefs: &Prefs) -> Result<TrayIcon> {
         let draw_vol_meter = prefs.view_prefs.draw_vol_meter;
 
@@ -534,12 +535,15 @@ fn on_tray_button_release_event(appstate: &Rc<AppS>,
         // TODO
         &MiddleClickAction::ShowPreferences => show_prefs_dialog(&appstate),
         &MiddleClickAction::VolumeControl => {
-            try_wr!(execute_vol_control_command(&appstate.prefs.borrow()),
-                    false);
+            let _ = result_warn!(execute_vol_control_command(&appstate.prefs.borrow()),
+                Some(&appstate.gui.popup_menu.menu_window));
         }
         &MiddleClickAction::CustomCommand => {
             match custom_command {
-                &Some(ref cmd) => try_wr!(execute_command(cmd.as_str()), false),
+                &Some(ref cmd) => {
+                    let _ = result_warn!(execute_command(cmd.as_str()),
+                        Some(&appstate.gui.popup_menu.menu_window));
+                }
                 &None => warn!("No custom command found"),
             }
         }
