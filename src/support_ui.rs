@@ -9,7 +9,6 @@ use std::path::*;
 
 
 
-
 pub fn copy_pixbuf(pixbuf: &gdk_pixbuf::Pixbuf) -> gdk_pixbuf::Pixbuf {
 
     let new_pixbuf = unsafe {
@@ -42,49 +41,36 @@ pub fn pixbuf_new_from_theme(icon_name: &str,
 }
 
 
-pub fn pixbuf_new_from_file(filename: &str) -> Result<gdk_pixbuf::Pixbuf> {
-    ensure!(!filename.is_empty(), "Filename is empty");
-    let mut syspath = String::new();
-    let sysdir = option_env!("PIXMAPSDIR").map(|s| {
-                                                   syspath = format!("{}/{}",
-                                                                     s,
-                                                                     filename);
-                                                   Path::new(syspath.as_str())
-                                               });
-    let cargopath = format!("./data/pixmaps/{}", filename);
-    let cargodir = Path::new(cargopath.as_str());
-
-    // prefer local dir
-    let final_dir = {
-        if cargodir.exists() {
-            cargodir
-        } else if sysdir.is_some() && sysdir.unwrap().exists() {
-            sysdir.unwrap()
-        } else {
-            bail!("No valid path found")
-        }
-    };
-
-    let str_path = final_dir.to_str().ok_or("Path is not valid unicode")?;
-    debug!("Loading icon from {}", str_path);
-    // TODO: propagate error
-    return Ok(gdk_pixbuf::Pixbuf::new_from_file(str_path).unwrap());
-}
-
-
-
 #[macro_export]
-macro_rules! pixbuf_new_from_xpm {
-    ($name:ident) => {
+macro_rules! pixbuf_new_from_file {
+    ($name:expr) => {
         {
-            use glib::translate::from_glib_full;
-            use libc::c_char;
-            extern "C" { fn $name() -> *mut *mut c_char; };
+            use gdk_pixbuf;
+            use png;
 
-            unsafe {
-                from_glib_full(
-                    gdk_pixbuf_sys::gdk_pixbuf_new_from_xpm_data($name()))
-            }
+            let bytes = include_bytes!($name);
+            let pixbuf_new_from_bytes = |bytes| -> Result<gdk_pixbuf::Pixbuf> {
+                let decoder = png::Decoder::new(bytes);
+                let (info, mut reader) = decoder.read_info()?;
+                let mut buf = vec![0; info.buffer_size()];
+                reader.next_frame(&mut buf).unwrap();
+
+                ensure!(info.color_type == png::ColorType::RGB ||
+                        info.color_type == png::ColorType::RGBA,
+                        "Only RGB is supported for GDKPixbuf");
+
+                debug!("Loading icon from {}", $name);
+
+                return Ok(gdk_pixbuf::Pixbuf::new_from_vec(buf,
+                                                 gdk_pixbuf_sys::GDK_COLORSPACE_RGB,
+                                                 true,
+                                                 info.bit_depth as i32,
+                                                 info.width as i32,
+                                                 info.height as i32,
+                                                 info.line_size as i32));
+            };
+            pixbuf_new_from_bytes(bytes as &[u8])
         }
     }
 }
+

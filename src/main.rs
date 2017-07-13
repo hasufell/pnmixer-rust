@@ -27,6 +27,7 @@ extern crate gobject_sys;
 extern crate gtk;
 extern crate gtk_sys;
 extern crate libc;
+extern crate png;
 extern crate which;
 extern crate xdg;
 

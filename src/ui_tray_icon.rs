@@ -298,11 +298,11 @@ impl AudioPix {
                 }
             } else {
                 AudioPix {
-                    muted: pixbuf_new_from_xpm!(pnmixer_muted),
-                    low: pixbuf_new_from_xpm!(pnmixer_low),
-                    medium: pixbuf_new_from_xpm!(pnmixer_medium),
-                    high: pixbuf_new_from_xpm!(pnmixer_high),
-                    off: pixbuf_new_from_xpm!(pnmixer_off),
+                    muted: pixbuf_new_from_file!("../data/pixmaps/pnmixer-muted.png")?,
+                    low: pixbuf_new_from_file!("../data/pixmaps/pnmixer-low.png")?,
+                    medium: pixbuf_new_from_file!("../data/pixmaps/pnmixer-medium.png")?,
+                    high: pixbuf_new_from_file!("../data/pixmaps/pnmixer-high.png")?,
+                    off: pixbuf_new_from_file!("../data/pixmaps/pnmixer-off.png")?,
                 }
             }
         };
