@@ -39,7 +39,12 @@ impl TrayIcon {
                 RefCell::new(None)
             }
         };
-        let audio_pix = AudioPix::new(ICON_MIN_SIZE, prefs)?;
+
+        // audio_pix is initialized as empty GdkPixbuf, to save
+        // one iteration of png decoding (update_all is triggered immediately
+        // on startup through tray_icon.connect_size_changed.
+        let audio_pix = AudioPix::default();
+
         let status_icon = gtk::StatusIcon::new();
 
         return Ok(TrayIcon {
@@ -249,6 +254,27 @@ pub struct AudioPix {
     off: gdk_pixbuf::Pixbuf,
 }
 
+impl Default for AudioPix {
+    fn default() -> AudioPix {
+        let dummy_pixbuf = unsafe {
+            gdk_pixbuf::Pixbuf::new(
+                gdk_pixbuf_sys::GDK_COLORSPACE_RGB,
+                false,
+                8,
+                1,
+                1,
+            ).unwrap()
+        };
+        return AudioPix {
+            muted: dummy_pixbuf.clone(),
+            low: dummy_pixbuf.clone(),
+            medium: dummy_pixbuf.clone(),
+            high: dummy_pixbuf.clone(),
+            off: dummy_pixbuf.clone(),
+        };
+    }
+}
+
 
 impl AudioPix {
     fn new(size: i32, prefs: &Prefs) -> Result<AudioPix> {
@@ -323,9 +349,7 @@ impl AudioPix {
 
 
 pub fn init_tray_icon(appstate: Rc<AppS>) {
-    let audio = &appstate.audio;
     let tray_icon = &appstate.gui.tray_icon;
-    try_e!(tray_icon.update_all(&appstate.prefs.borrow_mut(), &audio, None));
 
     tray_icon.status_icon.set_visible(true);
 
