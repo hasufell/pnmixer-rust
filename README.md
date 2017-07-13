@@ -40,10 +40,6 @@ Removed features:
 * slider orientation of volume popup
 * settings for displaying text volume on volume popup
 
-TODO:
-
-* hotkey support
-
 Behavior
 --------
 
@@ -51,7 +47,9 @@ Pretty much the same. Differences are:
 
 * volume slider is shown even when volume is muted
 
-Documentation
--------------
-
 TODO
+----
+
+- [ ] [hotkey support](https://github.com/hasufell/pnmixer-rust/issues/5)
+- [ ] [translation](https://github.com/hasufell/pnmixer-rust/issues/4)
+- [ ] [documentation](https://github.com/hasufell/pnmixer-rust/issues/3)
