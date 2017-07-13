@@ -1,4 +1,0 @@
-[submodule "3rdparty/libnotify"]
-	path = 3rdparty/libnotify
-	url = https://github.com/hasufell/rust-libnotify.git
-	branch = git-deps
