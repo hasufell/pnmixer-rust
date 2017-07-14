@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["init","Initialize the GUI system."]],"struct":[["Gui","The GUI struct mostly describing the main widgets (mostly wrapped) the user interacts with."]]});

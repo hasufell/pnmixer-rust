@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["AppS","The global application state struct."]]});

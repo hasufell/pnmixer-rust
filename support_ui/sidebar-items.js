@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["copy_pixbuf","Copy a `Pixbuf` explicitly, since they don't implement the `Copy` trait. Currently does not call `gdk_pixbuf_copy_options()`."],["pixbuf_new_from_theme","Get a pixbuf by name from the given theme with the requested size. Note that the size is not enforced, but rather a hint."]]});

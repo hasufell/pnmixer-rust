@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `Gui` struct in crate `pnmixerlib`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, Gui">
+
+    <title>pnmixerlib::ui_entry::Gui - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc struct">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'>Struct Gui</p><div class="block items"><ul><li><a href="#fields">Fields</a></li><li><a href="#methods">Methods</a></li></ul></div><p class='location'><a href='../index.html'>pnmixerlib</a>::<wbr><a href='index.html'>ui_entry</a></p><script>window.sidebarCurrent = {name: 'Gui', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>pnmixerlib</a>::<wbr><a href='index.html'>ui_entry</a>::<wbr><a class="struct" href=''>Gui</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../../src/pnmixerlib/ui_entry.rs.html#28-39' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct Gui {
+    pub tray_icon: <a class="struct" href="../../pnmixerlib/ui_tray_icon/struct.TrayIcon.html" title="struct pnmixerlib::ui_tray_icon::TrayIcon">TrayIcon</a>,
+    pub popup_window: <a class="struct" href="../../pnmixerlib/ui_popup_window/struct.PopupWindow.html" title="struct pnmixerlib::ui_popup_window::PopupWindow">PopupWindow</a>,
+    pub popup_menu: <a class="struct" href="../../pnmixerlib/ui_popup_menu/struct.PopupMenu.html" title="struct pnmixerlib::ui_popup_menu::PopupMenu">PopupMenu</a>,
+    pub prefs_dialog: <a class="struct" href="https://doc.rust-lang.org/nightly/core/cell/struct.RefCell.html" title="struct core::cell::RefCell">RefCell</a>&lt;<a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../../pnmixerlib/ui_prefs_dialog/struct.PrefsDialog.html" title="struct pnmixerlib::ui_prefs_dialog::PrefsDialog">PrefsDialog</a>&gt;&gt;,
+    // some fields omitted
+}</pre><div class='docblock'><p>The GUI struct mostly describing the main widgets (mostly wrapped)
+the user interacts with.</p>
+</div><h2 id='fields' class='fields'>Fields</h2><span id='structfield.tray_icon' class="structfield">
+                           <span id='tray_icon.v' class='invisible'>
+                           <code>tray_icon: <a class="struct" href="../../pnmixerlib/ui_tray_icon/struct.TrayIcon.html" title="struct pnmixerlib::ui_tray_icon::TrayIcon">TrayIcon</a></code>
+                           </span></span><div class='docblock'><p>The tray icon.</p>
+</div><span id='structfield.popup_window' class="structfield">
+                           <span id='popup_window.v' class='invisible'>
+                           <code>popup_window: <a class="struct" href="../../pnmixerlib/ui_popup_window/struct.PopupWindow.html" title="struct pnmixerlib::ui_popup_window::PopupWindow">PopupWindow</a></code>
+                           </span></span><div class='docblock'><p>The popup window.</p>
+</div><span id='structfield.popup_menu' class="structfield">
+                           <span id='popup_menu.v' class='invisible'>
+                           <code>popup_menu: <a class="struct" href="../../pnmixerlib/ui_popup_menu/struct.PopupMenu.html" title="struct pnmixerlib::ui_popup_menu::PopupMenu">PopupMenu</a></code>
+                           </span></span><div class='docblock'><p>The popup menu.</p>
+</div><span id='structfield.prefs_dialog' class="structfield">
+                           <span id='prefs_dialog.v' class='invisible'>
+                           <code>prefs_dialog: <a class="struct" href="https://doc.rust-lang.org/nightly/core/cell/struct.RefCell.html" title="struct core::cell::RefCell">RefCell</a>&lt;<a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../../pnmixerlib/ui_prefs_dialog/struct.PrefsDialog.html" title="struct pnmixerlib::ui_prefs_dialog::PrefsDialog">PrefsDialog</a>&gt;&gt;</code>
+                           </span></span><div class='docblock'><p>The preferences dialog.</p>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class="struct" href="../../pnmixerlib/ui_entry/struct.Gui.html" title="struct pnmixerlib::ui_entry::Gui">Gui</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/pnmixerlib/ui_entry.rs.html#41-55' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;builder_popup_window: <a class="struct" href="../../gtk/builder/struct.Builder.html" title="struct gtk::builder::Builder">Builder</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;builder_popup_menu: <a class="struct" href="../../gtk/builder/struct.Builder.html" title="struct gtk::builder::Builder">Builder</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;prefs: &amp;<a class="struct" href="../../pnmixerlib/prefs/struct.Prefs.html" title="struct pnmixerlib::prefs::Prefs">Prefs</a><br>) -&gt; <a class="struct" href="../../pnmixerlib/ui_entry/struct.Gui.html" title="struct pnmixerlib::ui_entry::Gui">Gui</a></code></span></h4>
+<div class='docblock'><p>Constructor. The prefs dialog is initialized as <code>None</code>.</p>
+</div></div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "pnmixerlib";
+    </script>
+    <script src="../../main.js"></script>
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>
