@@ -3,6 +3,16 @@ name = "pnmixer-rs"
 version = "0.1.0"
 authors = ["Julian Ospald <hasufell@posteo.de>"]
 
+[lib]
+name = "pnmixerlib"
+path = "src/lib.rs"
+doc = true
+
+[[bin]]
+name = "pnmixer-rs"
+path = "src/bin.rs"
+doc = false
+
 [dependencies]
 alsa = "^0.1.8"
 alsa-sys = "^0.1.1"
