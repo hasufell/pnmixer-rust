@@ -4,7 +4,6 @@
 
 use app_state::*;
 use audio::{AudioUser, AudioSignal};
-use errors::*;
 use gdk;
 use gtk::ResponseType;
 use gtk::prelude::*;

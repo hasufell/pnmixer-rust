@@ -1,7 +1,6 @@
 #![allow(missing_docs)]
 
 use alsa;
-use glib;
 use png;
 use std::convert::From;
 use std;

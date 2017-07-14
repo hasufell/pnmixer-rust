@@ -5,12 +5,10 @@
 
 
 use alsa::card::Card;
-use alsa::mixer::{Mixer, Selem, SelemId, Elem};
+use alsa::mixer::{Mixer, Selem, Elem};
 use alsa;
 use errors::*;
 use libc::c_int;
-use std::iter::Map;
-use std::iter::Filter;
 
 
 

@@ -73,7 +73,10 @@ impl TrayIcon {
 
     /// Update the volume meter Pixbuf, which is drawn on top of the
     /// actual Pixbuf.
-    fn update_vol_meter(&self, cur_vol: f64, vol_level: VolLevel) -> Result<()> {
+    fn update_vol_meter(&self,
+                        cur_vol: f64,
+                        vol_level: VolLevel)
+                        -> Result<()> {
         let audio_pix = self.audio_pix.borrow();
         let pixbuf = audio_pix.select_pix(vol_level);
 
@@ -279,22 +282,22 @@ pub struct AudioPix {
 
 impl Default for AudioPix {
     fn default() -> AudioPix {
-        let dummy_pixbuf = unsafe {
-            gdk_pixbuf::Pixbuf::new(
-                gdk_pixbuf_sys::GDK_COLORSPACE_RGB,
-                false,
-                8,
-                1,
-                1,
-            ).unwrap()
-        };
+        let dummy_pixbuf =
+            unsafe {
+                gdk_pixbuf::Pixbuf::new(gdk_pixbuf_sys::GDK_COLORSPACE_RGB,
+                                        false,
+                                        8,
+                                        1,
+                                        1)
+                        .unwrap()
+            };
         return AudioPix {
-            muted: dummy_pixbuf.clone(),
-            low: dummy_pixbuf.clone(),
-            medium: dummy_pixbuf.clone(),
-            high: dummy_pixbuf.clone(),
-            off: dummy_pixbuf.clone(),
-        };
+                   muted: dummy_pixbuf.clone(),
+                   low: dummy_pixbuf.clone(),
+                   medium: dummy_pixbuf.clone(),
+                   high: dummy_pixbuf.clone(),
+                   off: dummy_pixbuf.clone(),
+               };
     }
 }
 
@@ -385,8 +388,9 @@ pub fn init_tray_icon(appstate: Rc<AppS>) {
         appstate.audio.connect_handler(Box::new(move |s, u| match (s, u) {
                                                     (_, _) => {
             apps.gui.tray_icon.update_tooltip(&apps.audio);
-            try_w!(apps.gui.tray_icon.update_vol_meter(try_w!(apps.audio.vol()),
-                apps.audio.vol_level()));
+            try_w!(apps.gui.tray_icon.update_vol_meter(try_w!(apps.audio
+                                                                  .vol()),
+                                                       apps.audio.vol_level()));
         }
                                                 }));
     }

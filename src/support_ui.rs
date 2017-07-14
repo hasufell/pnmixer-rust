@@ -82,4 +82,3 @@ macro_rules! pixbuf_new_from_png {
         }
     }
 }
-

@@ -184,9 +184,6 @@ impl Audio {
             *ac = AlsaCard::new(card_name, elem_name, cb)?;
         }
 
-        // invoke_handlers(&self.handlers.borrow(),
-        // AudioSignal::CardCleanedUp,
-        // user);
         invoke_handlers(&self.handlers.borrow(),
                         AudioSignal::CardInitialized,
                         user);
@@ -448,5 +445,4 @@ fn on_alsa_event(last_action_timestamp: &mut i64,
         }
         e => warn!("Unhandled alsa event: {:?}", e),
     }
-
 }

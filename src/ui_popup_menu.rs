@@ -12,7 +12,7 @@
 //! * Quit
 
 use app_state::*;
-use audio::{AudioUser, AudioSignal};
+use audio::AudioUser;
 use gtk::prelude::*;
 use gtk;
 use std::rc::Rc;

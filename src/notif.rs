@@ -7,28 +7,11 @@
 use app_state::*;
 use audio::*;
 use errors::*;
-use glib::Variant;
 use glib::prelude::*;
-use gtk::DialogExt;
-use gtk::MessageDialogExt;
-use gtk::WidgetExt;
-use gtk::WindowExt;
-use gtk;
-use gtk_sys::{GTK_DIALOG_DESTROY_WITH_PARENT, GTK_RESPONSE_YES};
 use libnotify;
 use prefs::*;
 use std::cell::Cell;
-use std::cell::RefCell;
 use std::rc::Rc;
-use std::thread;
-use std::time::Duration;
-use support_audio::*;
-use support_ui::*;
-use ui_popup_menu::*;
-use ui_popup_window::*;
-use ui_prefs_dialog::*;
-use ui_tray_icon::*;
-
 
 
 
