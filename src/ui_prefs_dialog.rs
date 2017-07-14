@@ -1,3 +1,7 @@
+//! The preferences window subsystem, when the user clicks the "Preferences"
+//! menu item on the popup menu.
+
+
 use app_state::*;
 use audio::{AudioUser, AudioSignal};
 use errors::*;
@@ -11,6 +15,8 @@ use support_alsa::*;
 
 
 
+/// The main preferences dialog, holding all the relevant subwidgets we
+/// need to convert its state to preferences and back.
 pub struct PrefsDialog {
     _cant_construct: (),
     prefs_dialog: gtk::Dialog,
@@ -109,6 +115,7 @@ impl PrefsDialog {
     }
 
 
+    /// Import the given preferences into the preferences dialog state.
     fn from_prefs(&self, prefs: &Prefs) {
         /* DevicePrefs */
         /* filled on show signal with audio info */
@@ -171,6 +178,8 @@ impl PrefsDialog {
     }
 
 
+    /// Export the dialog state to the `Prefs` struct, which can be used
+    /// to write them to the config file.
     fn to_prefs(&self) -> Prefs {
         let card = self.card_combo.get_active_text();
         let channel = self.chan_combo.get_active_text();
@@ -242,6 +251,8 @@ impl PrefsDialog {
 }
 
 
+/// Show the preferences dialog. This is created and destroyed dynamically
+/// and not persistent across the application lifetime.
 pub fn show_prefs_dialog(appstate: &Rc<AppS>) {
     if appstate.gui
            .prefs_dialog
@@ -265,6 +276,8 @@ pub fn show_prefs_dialog(appstate: &Rc<AppS>) {
 }
 
 
+/// Initialize the internal prefs dialog handler that connects to the audio
+/// system.
 pub fn init_prefs_callback(appstate: Rc<AppS>) {
     let apps = appstate.clone();
     appstate.audio.connect_handler(Box::new(move |s, u| {
@@ -288,6 +301,7 @@ pub fn init_prefs_callback(appstate: Rc<AppS>) {
 }
 
 
+/// Initialize the preferences dialog gtk callbacks.
 fn init_prefs_dialog(appstate: &Rc<AppS>) {
 
     /* prefs_dialog.connect_show */
@@ -355,6 +369,7 @@ fn init_prefs_dialog(appstate: &Rc<AppS>) {
 }
 
 
+/// Fill the card combo box in the Devices tab.
 fn fill_card_combo(appstate: &AppS) {
     let m_cc = appstate.gui.prefs_dialog.borrow();
     let card_combo = &m_cc.as_ref().unwrap().card_combo;
@@ -381,6 +396,7 @@ fn fill_card_combo(appstate: &AppS) {
 }
 
 
+/// Fill the channel combo box in the Devices tab.
 fn fill_chan_combo(appstate: &AppS, cardname: Option<String>) {
     let m_cc = appstate.gui.prefs_dialog.borrow();
     let chan_combo = &m_cc.as_ref().unwrap().chan_combo;

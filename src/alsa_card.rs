@@ -1,3 +1,10 @@
+//! Alsa audio subsystem.
+//!
+//! This mod mainly defines the `AlsaCard` struct, which is the only data
+//! structure interacting directly with the alsa library.
+//! No other struct should directly interact with the alsa bindings.
+
+
 use alsa::card::Card;
 use alsa::mixer::SelemChannelId::*;
 use alsa::mixer::{Mixer, Selem, SelemId};
@@ -18,24 +25,54 @@ use support_alsa::*;
 
 
 #[derive(Clone, Copy, Debug)]
+/// An "external" alsa card event, potentially triggered by anything.
 pub enum AlsaEvent {
+    /// An error.
     AlsaCardError,
+    /// Alsa card is disconnected.
     AlsaCardDiconnected,
+    /// The values of the mixer changed, including mute state.
     AlsaCardValuesChanged,
 }
 
 
+/// A fairly high-level alsa card struct. We save some redundant
+/// information in order to access it more easily, in addition to
+/// some information that is not purely alsa related (like callbacks).
 pub struct AlsaCard {
     _cannot_construct: (),
+    /// The raw alsa card.
     pub card: Card,
+    /// The raw mixer.
     pub mixer: Mixer,
+    /// The simple element ID. `Selem` doesn't implement the Copy trait
+    /// so we save the ID instead and can get the `Selem` by lookup.
     pub selem_id: SelemId,
+    /// Watch IDs from polling the alsa card. We need them when we
+    /// drop the card, so we can unregister the polling.
     pub watch_ids: Cell<Vec<u32>>,
+    /// Callback for the various `AlsaEvent`s.
     pub cb: Rc<Fn(AlsaEvent)>,
 }
 
 
 impl AlsaCard {
+    /// Create a new alsa card. Tries very hard to get a valid, playable
+    /// card and mixer, so this is not a 'strict' function.
+    /// ## `card_name`
+    /// If a card name is provided, it will be tried. If `None` is provided
+    /// or the given card name does not exist or is not playable, any other
+    /// playable card is tried.
+    /// ## `elem_name`
+    /// If an elem name is provided, it will be tried. If `None` is provided
+    /// or the given elem name does not exist or is not playable, any other
+    /// playable elem is tried.
+    /// ## `cb`
+    /// Callback for the various `AlsaEvent`s.
+    ///
+    /// # Returns
+    ///
+    /// `Ok(Box<AlsaCard>)` on success, `Err(error)` otherwise.
     pub fn new(card_name: Option<String>,
                elem_name: Option<String>,
                cb: Rc<Fn(AlsaEvent)>)
@@ -100,11 +137,13 @@ impl AlsaCard {
     }
 
 
+    /// Get the name of the alsa card.
     pub fn card_name(&self) -> Result<String> {
         return self.card.get_name().from_err();
     }
 
 
+    /// Get the name of the channel.
     pub fn chan_name(&self) -> Result<String> {
         let n = self.selem_id
             .get_name()
@@ -113,11 +152,17 @@ impl AlsaCard {
     }
 
 
+    /// Get the `Selem`, looked up by the `SelemId`.
     pub fn selem(&self) -> Selem {
         return self.mixer.find_selem(&self.selem_id).unwrap();
     }
 
 
+    /// Get the current volume. The returned value corresponds to the
+    /// volume range and might need to be interpreted (such as converting
+    /// to percentage). This always gets
+    /// the volume of the `FrontRight` channel, because the seems to be
+    /// the safest bet.
     pub fn get_vol(&self) -> Result<i64> {
         let selem = self.selem();
         let volume = selem.get_playback_volume(FrontRight);
@@ -126,24 +171,36 @@ impl AlsaCard {
     }
 
 
+    /// Sets the volume of the current card configuration.
+    /// ## `new_vol`
+    /// The volume corresponding to the volume range of the `Selem`. This
+    /// might need to be translated properly first from other formats
+    /// (like percentage).
     pub fn set_vol(&self, new_vol: i64) -> Result<()> {
         let selem = self.selem();
         return selem.set_playback_volume_all(new_vol).from_err();
     }
 
 
+    /// Gets the volume range of the currently selected card configuration.
+    ///
+    /// # Returns
+    ///
+    /// `(min, max)`
     pub fn get_volume_range(&self) -> (i64, i64) {
         let selem = self.selem();
         return selem.get_playback_volume_range();
     }
 
 
+    /// Whether the current card configuration can be muted.
     pub fn has_mute(&self) -> bool {
         let selem = self.selem();
         return selem.has_playback_switch();
     }
 
 
+    /// Get the mute state of the current card configuration.
     pub fn get_mute(&self) -> Result<bool> {
         let selem = self.selem();
         let val = selem.get_playback_switch(FrontRight)?;
@@ -151,6 +208,9 @@ impl AlsaCard {
     }
 
 
+    /// Set the mute state of the current card configuration.
+    /// ## `mute`
+    /// Passing `true` here means the card will be muted.
     pub fn set_mute(&self, mute: bool) -> Result<()> {
         let selem = self.selem();
         /* true -> mute, false -> unmute */
@@ -159,6 +219,9 @@ impl AlsaCard {
     }
 
 
+    /// Watch the given alsa card poll descriptors and
+    /// return the corresponding watch IDs for saving
+    /// in the `AlsaCard` struct.
     fn watch_poll_descriptors(polls: Vec<pollfd>,
                               acard: &AlsaCard)
                               -> Vec<c_uint> {
@@ -186,6 +249,7 @@ impl AlsaCard {
     }
 
 
+    /// Unwatch the given poll descriptors.
     fn unwatch_poll_descriptors(watch_ids: &Vec<u32>) {
         for watch_id in watch_ids {
             unsafe {
@@ -197,19 +261,7 @@ impl AlsaCard {
 
 
 impl Drop for AlsaCard {
-    // call Box::new(x), transmute the Box into a raw pointer, and then
-    // std::mem::forget
-    //
-    // if you unregister the callback, you should keep a raw pointer to the
-    // box
-    //
-    // For instance, `register` could return a raw pointer to the
-    // Box + a std::marker::PhantomData with the appropriate
-    // lifetime (if applicable)
-    //
-    // The struct could implement Drop, which unregisters the
-    // callback and frees the Box, by simply transmuting the
-    // raw pointer to a Box<T>
+    /// Destructs the watch IDs corresponding to the current poll descriptors.
     fn drop(&mut self) {
         debug!("Destructing watch_ids: {:?}", self.watch_ids.get_mut());
         AlsaCard::unwatch_poll_descriptors(&self.watch_ids.get_mut());
@@ -217,6 +269,7 @@ impl Drop for AlsaCard {
 }
 
 
+/// The C callback function registered in `watch_poll_descriptors()`.
 extern "C" fn watch_cb(chan: *mut glib_sys::GIOChannel,
                        cond: glib_sys::GIOCondition,
                        data: glib_sys::gpointer)

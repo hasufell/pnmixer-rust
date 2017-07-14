@@ -1,9 +1,18 @@
+#![allow(missing_docs)] // enum
+
+//! Helper functions of the audio subsystem.
+//!
+//! These functions are not directly connected to the `Audio` struct,
+//! but are important helpers.
+
+
 use audio::{Audio, AudioUser};
 use errors::*;
 use prefs::*;
 
 
 #[derive(Clone, Copy, Debug)]
+/// The direction of a volume change.
 pub enum VolDir {
     Up,
     Down,
@@ -11,6 +20,15 @@ pub enum VolDir {
 }
 
 
+/// Convert a volume change to the `VolDir` type.
+/// ## `old`
+/// The old volume value.
+/// ## `new`
+/// The new volume value.
+///
+/// # Returns
+///
+/// The direction of the volume change as `Voldir`.
 pub fn vol_change_to_voldir(old: f64, new: f64) -> VolDir {
     if old < new {
         return VolDir::Up;
@@ -22,6 +40,9 @@ pub fn vol_change_to_voldir(old: f64, new: f64) -> VolDir {
 }
 
 
+/// Kinda mimics `lrint` from libm. If the direction of the volume change
+/// is `Up` then calls `ceil()`, if it's `Down`, then calls `floor()`, otherwise
+/// returns the value unchanged.
 pub fn lrint(v: f64, dir: VolDir) -> f64 {
     match dir {
         VolDir::Up => v.ceil(),
@@ -30,6 +51,8 @@ pub fn lrint(v: f64, dir: VolDir) -> f64 {
     }
 }
 
+
+/// Reload the audio system.
 pub fn audio_reload(audio: &Audio,
                     prefs: &Prefs,
                     user: AudioUser)
@@ -41,6 +64,9 @@ pub fn audio_reload(audio: &Audio,
 }
 
 
+/// Converts the actual volume of the audio configuration, which depends
+/// on the volume range, to a scale of 0-100, reprenting the percentage
+/// of the volume level.
 pub fn vol_to_percent(vol: i64, range: (i64, i64)) -> Result<f64> {
     let (min, max) = range;
     ensure!(min < max,
@@ -52,6 +78,9 @@ pub fn vol_to_percent(vol: i64, range: (i64, i64)) -> Result<f64> {
 }
 
 
+/// Converts the percentage of the volume level (0-100) back to the actual
+/// low-level representation of the volume, which depends on the volume
+/// range.
 pub fn percent_to_vol(vol: f64, range: (i64, i64), dir: VolDir) -> Result<i64> {
     let (min, max) = range;
     ensure!(min < max,

@@ -1,3 +1,5 @@
+#![allow(missing_docs)]
+
 #[macro_export]
 macro_rules! create_builder_item {
     ($sname:ident, $($element: ident: $ty: ty),+) => {

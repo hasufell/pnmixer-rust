@@ -1,3 +1,9 @@
+//! The tray icon subsystem.
+//!
+//! This manages the tray icon Pixbuf as well as the callbacks on left and
+//! right-click.
+
+
 use app_state::*;
 use audio::*;
 use errors::*;
@@ -19,16 +25,24 @@ use ui_prefs_dialog::show_prefs_dialog;
 const ICON_MIN_SIZE: i32 = 16;
 
 
+/// The tray icon struct, describing the complete visual state.
 pub struct TrayIcon {
     _cant_construct: (),
+    /// The volume meter to draw on the actual Pixbuf, if requested.
     pub volmeter: RefCell<Option<VolMeter>>,
+    /// The actual Pixbuf tray icon.
     pub audio_pix: RefCell<AudioPix>,
+    /// The gtk `StatusIcon` widget, used to register callbacks.
     pub status_icon: gtk::StatusIcon,
+    /// The current icon size.
     pub icon_size: Cell<i32>,
 }
 
 
 impl TrayIcon {
+    /// Constructor. `audio_pix` is initialized as empty GdkPixbuf, to save
+    /// one iteration of png decoding (`update_all()` is triggered immediately
+    /// on startup through `tray_icon.connect_size_changed`.
     pub fn new(prefs: &Prefs) -> Result<TrayIcon> {
         let draw_vol_meter = prefs.view_prefs.draw_vol_meter;
 
@@ -57,6 +71,8 @@ impl TrayIcon {
     }
 
 
+    /// Update the volume meter Pixbuf, which is drawn on top of the
+    /// actual Pixbuf.
     fn update_vol_meter(&self, cur_vol: f64, vol_level: VolLevel) -> Result<()> {
         let audio_pix = self.audio_pix.borrow();
         let pixbuf = audio_pix.select_pix(vol_level);
@@ -75,6 +91,7 @@ impl TrayIcon {
     }
 
 
+    /// Update the tooltip of the tray icon.
     fn update_tooltip(&self, audio: &Audio) {
         let cardname = audio.acard
             .borrow()
@@ -105,6 +122,7 @@ impl TrayIcon {
     }
 
 
+    /// Update the whole tray icon state.
     pub fn update_all(&self,
                       prefs: &Prefs,
                       audio: &Audio,
@@ -138,6 +156,8 @@ impl TrayIcon {
 
 
 
+/// The volume meter, describes by its colors, offset and width/row
+/// properties.
 pub struct VolMeter {
     red: u8,
     green: u8,
@@ -151,6 +171,7 @@ pub struct VolMeter {
 
 
 impl VolMeter {
+    /// Constructor. `width` and `row` are initialized with default values.
     fn new(prefs: &Prefs) -> VolMeter {
         return VolMeter {
                    red: (prefs.view_prefs.vol_meter_color.red * 255.0) as u8,
@@ -166,6 +187,7 @@ impl VolMeter {
     }
 
     // TODO: cache input pixbuf?
+    /// Draw the volume meter on top of the actual tray icon Pixbuf.
     fn meter_draw(&self,
                   volume: i64,
                   pixbuf: &gdk_pixbuf::Pixbuf)
@@ -246,6 +268,7 @@ impl VolMeter {
 
 
 #[derive(Clone, Debug)]
+/// The actual tray icon Pixbuf, which depends on the current volume level.
 pub struct AudioPix {
     muted: gdk_pixbuf::Pixbuf,
     low: gdk_pixbuf::Pixbuf,
@@ -277,6 +300,7 @@ impl Default for AudioPix {
 
 
 impl AudioPix {
+    /// Constructor.
     fn new(size: i32, prefs: &Prefs) -> Result<AudioPix> {
         let system_theme = prefs.view_prefs.system_theme;
 
@@ -336,6 +360,7 @@ impl AudioPix {
     }
 
 
+    /// Select the try icon Pixbuf depending on the `VolLevel`.
     fn select_pix(&self, vol_level: VolLevel) -> &gdk_pixbuf::Pixbuf {
         match vol_level {
             VolLevel::Muted => &self.muted,
@@ -348,6 +373,7 @@ impl AudioPix {
 }
 
 
+/// Initialize the tray icon subsystem.
 pub fn init_tray_icon(appstate: Rc<AppS>) {
     let tray_icon = &appstate.gui.tray_icon;
 
@@ -424,6 +450,7 @@ pub fn init_tray_icon(appstate: Rc<AppS>) {
 }
 
 
+/// When the tray icon is activated.
 fn on_tray_icon_activate(appstate: &AppS) {
     let popup_window = &appstate.gui.popup_window.popup_window;
 
@@ -435,6 +462,7 @@ fn on_tray_icon_activate(appstate: &AppS) {
 }
 
 
+/// When the popup menu is shown, hide the popup window, if any.
 fn on_tray_icon_popup_menu(appstate: &AppS) {
     let popup_window = &appstate.gui.popup_window.popup_window;
     let popup_menu = &appstate.gui.popup_menu.menu;
@@ -444,6 +472,8 @@ fn on_tray_icon_popup_menu(appstate: &AppS) {
 }
 
 
+/// When the mouse scroll event happens while the mouse pointer is
+/// on the tray icon.
 fn on_tray_icon_scroll_event(appstate: &AppS,
                              event: &gdk::EventScroll)
                              -> bool {
@@ -473,6 +503,9 @@ fn on_tray_icon_scroll_event(appstate: &AppS,
 }
 
 
+/// Basically when the tray icon is clicked (although we connect to the `release`
+/// event). This decides whether it was a left, right or middle-click and
+/// takes appropriate actions.
 fn on_tray_button_release_event(appstate: &Rc<AppS>,
                                 event_button: &gdk::EventButton)
                                 -> bool {

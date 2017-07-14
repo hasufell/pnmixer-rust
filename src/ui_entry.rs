@@ -1,3 +1,6 @@
+//! Global GUI state.
+
+
 use app_state::*;
 use audio::{AudioUser, AudioSignal};
 use gtk::DialogExt;
@@ -20,16 +23,23 @@ use notif::*;
 
 
 
+/// The GUI struct mostly describing the main widgets (mostly wrapped)
+/// the user interacts with.
 pub struct Gui {
     _cant_construct: (),
+    /// The tray icon.
     pub tray_icon: TrayIcon,
+    /// The popup window.
     pub popup_window: PopupWindow,
+    /// The popup menu.
     pub popup_menu: PopupMenu,
     /* prefs_dialog is dynamically created and destroyed */
+    /// The preferences dialog.
     pub prefs_dialog: RefCell<Option<PrefsDialog>>,
 }
 
 impl Gui {
+    /// Constructor. The prefs dialog is initialized as `None`.
     pub fn new(builder_popup_window: gtk::Builder,
                builder_popup_menu: gtk::Builder,
                prefs: &Prefs)
@@ -45,6 +55,7 @@ impl Gui {
 }
 
 
+/// Initialize the GUI system.
 pub fn init(appstate: Rc<AppS>) {
     {
         /* "global" audio signal handler */
@@ -79,6 +90,14 @@ pub fn init(appstate: Rc<AppS>) {
 }
 
 
+/// Used to run a dialog when an audio error occured, suggesting the user
+/// may reload the audio system either manually or by confirming the dialog
+/// via the confirmation button.
+///
+/// # Returns
+///
+/// `GTK_RESPONSE_YES` if the user wants to reload the audio system,
+/// `GTK_RESPONSE_NO` otherwise.
 fn run_audio_error_dialog(parent: &gtk::Window) -> i32 {
     error!("Connection with audio failed, you probably need to restart pnmixer.");
 

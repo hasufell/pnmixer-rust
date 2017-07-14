@@ -1,3 +1,5 @@
+#![warn(missing_docs)]
+
 #![feature(alloc_system)]
 extern crate alloc_system;
 

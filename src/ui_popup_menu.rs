@@ -1,3 +1,16 @@
+#![allow(missing_docs)] // glade_helpers
+
+//! The popup menu subsystem when the user right-clicks on the tray icon.
+//!
+//! Shows the menu with the following entries:
+//!
+//! * Mute
+//! * Volume Control
+//! * Preferences
+//! * Reload Sound
+//! * About
+//! * Quit
+
 use app_state::*;
 use audio::{AudioUser, AudioSignal};
 use gtk::prelude::*;
@@ -26,6 +39,7 @@ create_builder_item!(PopupMenu,
 
 
 
+/// Initialize the popup menu subsystem, registering all callbacks.
 pub fn init_popup_menu(appstate: Rc<AppS>) {
     /* audio.connect_handler */
     {
@@ -113,6 +127,7 @@ pub fn init_popup_menu(appstate: Rc<AppS>) {
 }
 
 
+/// When the about menu item is activated.
 fn on_about_item_activate(appstate: &AppS) {
     let popup_menu = &appstate.gui.popup_menu.menu_window;
     let about_dialog = create_about_dialog();
@@ -123,6 +138,7 @@ fn on_about_item_activate(appstate: &AppS) {
 }
 
 
+/// Create the About dialog from scratch.
 fn create_about_dialog() -> gtk::AboutDialog {
     let about_dialog: gtk::AboutDialog = gtk::AboutDialog::new();
 
@@ -153,12 +169,14 @@ Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.",
 }
 
 
+/// When the Preferences item is activated.
 fn on_prefs_item_activate(appstate: &Rc<AppS>) {
     /* TODO: only create if needed */
     show_prefs_dialog(appstate);
 }
 
 
+/// When the Mute item is checked.
 fn set_mute_check(apps: &Rc<AppS>) {
     let mute_check = &apps.gui.popup_menu.mute_check;
     let m_muted = apps.audio.get_mute();

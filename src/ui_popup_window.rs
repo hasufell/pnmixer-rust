@@ -1,3 +1,9 @@
+//! The popup window subsystem when the user left-clicks on the tray icon.
+//!
+//! This shows the manipulatable volume slider with the current volume and
+//! the mute checkbox.
+
+
 use app_state::*;
 use audio::*;
 use errors::*;
@@ -17,18 +23,30 @@ use support_cmd::*;
 
 
 
+/// The main struct for the popup window, holding all relevant sub-widgets
+/// and some mutable state.
 pub struct PopupWindow {
     _cant_construct: (),
+    /// The main window for the popup window widget.
     pub popup_window: gtk::Window,
+    /// The volume scale adjustment.
     pub vol_scale_adj: gtk::Adjustment,
+    /// The volume scale.
     pub vol_scale: gtk::Scale,
+    /// The mute check button.
     pub mute_check: gtk::CheckButton,
+    /// The button to start the external mixer.
     pub mixer_button: gtk::Button,
-    pub toggle_signal: Cell<u64>,
-    pub changed_signal: Cell<u64>,
+    /// Signal for mute_check.connect_toggled callback,
+    /// so we can block it temporarily.
+    toggle_signal: Cell<u64>,
+    /// Signal for vol_scale_adj.connect_value_changed callback,
+    /// so we can block it temporarily.
+    changed_signal: Cell<u64>,
 }
 
 impl PopupWindow {
+    /// Constructor.
     pub fn new(builder: gtk::Builder) -> PopupWindow {
         return PopupWindow {
                    _cant_construct: (),
@@ -42,6 +60,8 @@ impl PopupWindow {
                };
     }
 
+    /// Update the popup window state, including the slider
+    /// and the mute checkbutton.
     pub fn update(&self, audio: &Audio) -> Result<()> {
         let cur_vol = audio.vol()?;
         set_slider(&self.vol_scale_adj, cur_vol);
@@ -51,6 +71,7 @@ impl PopupWindow {
         return Ok(());
     }
 
+    /// Update the mute checkbutton.
     pub fn update_mute_check(&self, audio: &Audio) {
         let m_muted = audio.get_mute();
 
@@ -76,6 +97,8 @@ impl PopupWindow {
                                      self.toggle_signal.get());
     }
 
+    /// Set the page increment fro the volume scale adjustment based on the
+    /// preferences.
     fn set_vol_increment(&self, prefs: &Prefs) {
         self.vol_scale_adj
             .set_page_increment(prefs.behavior_prefs.vol_scroll_step);
@@ -85,7 +108,7 @@ impl PopupWindow {
 }
 
 
-
+/// Initialize the popup window subsystem.
 pub fn init_popup_window(appstate: Rc<AppS>) {
     /* audio.connect_handler */
     {
@@ -188,6 +211,7 @@ pub fn init_popup_window(appstate: Rc<AppS>) {
 }
 
 
+/// When the popup window is shown.
 fn on_popup_window_show(appstate: &AppS) {
     let popup_window = &appstate.gui.popup_window;
     appstate.gui.popup_window.set_vol_increment(&appstate.prefs.borrow());
@@ -201,6 +225,7 @@ fn on_popup_window_show(appstate: &AppS) {
 }
 
 
+/// On key or button press event on the popup window.
 fn on_popup_window_event(w: &gtk::Window, e: &gdk::Event) -> gtk::Inhibit {
     match gdk::Event::get_event_type(e) {
         gdk::EventType::GrabBroken => w.hide(),
@@ -230,6 +255,7 @@ fn on_popup_window_event(w: &gtk::Window, e: &gdk::Event) -> gtk::Inhibit {
 }
 
 
+/// When the volume scale slider is moved.
 fn on_vol_scale_value_changed(appstate: &AppS) {
     let audio = &appstate.audio;
     let old_vol = try_w!(audio.vol());
@@ -251,17 +277,20 @@ fn on_vol_scale_value_changed(appstate: &AppS) {
 }
 
 
+/// When the mute checkbutton is toggled.
 fn on_mute_check_toggled(appstate: &AppS) {
     let audio = &appstate.audio;
     try_w!(audio.toggle_mute(AudioUser::Popup))
 }
 
 
+/// Set the volume slider to the given value.
 pub fn set_slider(vol_scale_adj: &gtk::Adjustment, scale: f64) {
     vol_scale_adj.set_value(scale);
 }
 
 
+/// Grab all devices, keyboard and mouse.
 fn grab_devices(window: &gtk::Window) -> Result<()> {
     let device = gtk::get_current_event_device().ok_or("No current device")?;
 

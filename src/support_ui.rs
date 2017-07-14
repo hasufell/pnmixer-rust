@@ -1,3 +1,6 @@
+//! Helper functions for the UI, mostly pixbuf functions.
+
+
 use errors::*;
 use gdk_pixbuf;
 use gdk_pixbuf_sys;
@@ -9,6 +12,8 @@ use std::path::*;
 
 
 
+/// Copy a `Pixbuf` explicitly, since they don't implement the `Copy` trait.
+/// Currently does not call `gdk_pixbuf_copy_options()`.
 pub fn copy_pixbuf(pixbuf: &gdk_pixbuf::Pixbuf) -> gdk_pixbuf::Pixbuf {
 
     let new_pixbuf = unsafe {
@@ -21,6 +26,8 @@ pub fn copy_pixbuf(pixbuf: &gdk_pixbuf::Pixbuf) -> gdk_pixbuf::Pixbuf {
 }
 
 
+/// Get a pixbuf by name from the given theme with the requested size.
+/// Note that the size is not enforced, but rather a hint.
 pub fn pixbuf_new_from_theme(icon_name: &str,
                              size: i32,
                              theme: &gtk::IconTheme)
@@ -42,6 +49,8 @@ pub fn pixbuf_new_from_theme(icon_name: &str,
 
 
 #[macro_export]
+/// Create a pixbuf from the given PNG file. Includes the file as bytes
+/// in the binary and decodes it.
 macro_rules! pixbuf_new_from_file {
     ($name:expr) => {
         {

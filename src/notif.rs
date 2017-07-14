@@ -1,3 +1,9 @@
+//! The notification subsystem.
+//!
+//! This subsystem utilizes libnotify to send notifications as popups
+//! to the desktop.
+
+
 use app_state::*;
 use audio::*;
 use errors::*;
@@ -26,6 +32,8 @@ use ui_tray_icon::*;
 
 
 
+/// An expression of our notification system. Holds all the relevant information
+/// needed by Gtk+ callbacks to interact with libnotify.
 pub struct Notif {
     enabled: Cell<bool>,
     from_popup: Cell<bool>,
@@ -38,6 +46,7 @@ pub struct Notif {
 }
 
 impl Notif {
+    /// Create a new notification instance from the current preferences.
     pub fn new(prefs: &Prefs) -> Result<Self> {
         let notif = Notif {
             enabled: Cell::new(false),
@@ -54,6 +63,8 @@ impl Notif {
         return Ok(notif);
     }
 
+    /// Reload the notification instance from the current
+    /// preferences.
     pub fn reload(&self, prefs: &Prefs) -> Result<()> {
         let timeout = prefs.notify_prefs.notifcation_timeout;
 
@@ -74,6 +85,7 @@ impl Notif {
         return Ok(());
     }
 
+    /// Shows a volume notification, e.g. for volume or mute state change.
     pub fn show_volume_notif(&self, audio: &Audio) -> Result<()> {
         let vol = audio.vol()?;
         let vol_level = audio.vol_level();
@@ -114,6 +126,7 @@ impl Notif {
     }
 
 
+    /// Shows a text notification, e.g. for warnings or errors.
     pub fn show_text_notif(&self, summary: &str, body: &str) -> Result<()> {
         // TODO: error handling
         self.text_notif.update(summary, Some(body), None).unwrap();
@@ -126,6 +139,7 @@ impl Notif {
 
 
 
+/// Initialize the notification subsystem.
 pub fn init_notify(appstate: Rc<AppS>) {
     debug!("Blah");
     {

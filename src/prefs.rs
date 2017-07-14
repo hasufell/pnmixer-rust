@@ -1,3 +1,12 @@
+#![allow(missing_docs)]
+
+//! The preferences subsystem.
+//!
+//! These are the global application preferences, which can be set
+//! by the user. They read from a file in TOML format, presented
+//! in the preferences dialog and saved back to the file on request.
+
+
 use errors::*;
 use std::fmt::Display;
 use std::fmt::Formatter;
@@ -18,6 +27,7 @@ const VOL_CONTROL_COMMANDS: [&str; 3] =
 
 #[derive(Deserialize, Debug, Serialize, Clone, Copy)]
 #[serde(rename_all = "snake_case")]
+/// When the tray icon is middle-clicked.
 pub enum MiddleClickAction {
     ToggleMute,
     ShowPreferences,
@@ -60,6 +70,7 @@ impl From<MiddleClickAction> for i32 {
 
 #[derive(Deserialize, Debug, Serialize)]
 #[serde(default)]
+/// Device preferences tab.
 pub struct DevicePrefs {
     pub card: String,
     pub channel: String, 
@@ -78,6 +89,7 @@ impl Default for DevicePrefs {
 
 #[derive(Deserialize, Debug, Serialize)]
 #[serde(default)]
+/// View preferences tab.
 pub struct ViewPrefs {
     pub draw_vol_meter: bool,
     pub vol_meter_offset: i32,
@@ -100,6 +112,7 @@ impl Default for ViewPrefs {
 
 #[derive(Deserialize, Debug, Serialize)]
 #[serde(default)]
+/// Volume color setting in the view preferences tab.
 pub struct VolColor {
     pub red: f64,
     pub green: f64,
@@ -119,6 +132,7 @@ impl Default for VolColor {
 
 #[derive(Deserialize, Debug, Serialize)]
 #[serde(default)]
+/// Behavior preferences tab.
 pub struct BehaviorPrefs {
     pub unmute_on_vol_change: bool,
     pub vol_control_cmd: Option<String>,
@@ -145,6 +159,7 @@ impl Default for BehaviorPrefs {
 #[cfg(feature = "notify")]
 #[derive(Deserialize, Debug, Serialize)]
 #[serde(default)]
+/// Notifications preferences tab.
 pub struct NotifyPrefs {
     pub enable_notifications: bool,
     pub notifcation_timeout: i64,
@@ -170,6 +185,7 @@ impl Default for NotifyPrefs {
 
 #[derive(Deserialize, Debug, Serialize, Default)]
 #[serde(default)]
+/// Main preferences struct, holding all sub-preferences.
 pub struct Prefs {
     pub device_prefs: DevicePrefs,
     pub view_prefs: ViewPrefs,
@@ -207,6 +223,7 @@ impl Prefs {
     }
 
 
+    /// Reload the current preferences from the config file.
     pub fn reload_config(&mut self) -> Result<()> {
         debug!("Reloading config...");
 
@@ -217,6 +234,7 @@ impl Prefs {
     }
 
 
+    /// Store the current preferences to the config file.
     pub fn store_config(&self) -> Result<()> {
         let config_path = get_xdg_dirs().place_config_file("pnmixer.toml")
             .from_err()?;
@@ -230,11 +248,16 @@ impl Prefs {
     }
 
 
+    /// Conver the current preferences to a viewable String.
     pub fn to_str(&self) -> String {
         return toml::to_string(self).unwrap();
     }
 
 
+    /// Get an available volume control command, which must exist in `$PATH`.
+    /// Tries hard to fine one,
+    /// starting with the given preference setting and falling back to the
+    /// `VOL_CONTROL_COMMANDS` slice.
     pub fn get_avail_vol_control_cmd(&self) -> Option<String> {
         match self.behavior_prefs.vol_control_cmd {
             Some(ref c) => return Some(c.clone()),
@@ -261,6 +284,7 @@ impl Display for Prefs {
 }
 
 
+/// Get the set of XDG directories, relative to our project.
 fn get_xdg_dirs() -> xdg::BaseDirectories {
     return xdg::BaseDirectories::with_prefix("pnmixer-rs").unwrap();
 }
