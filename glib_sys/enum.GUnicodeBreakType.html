@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `GUnicodeBreakType` enum in crate `glib_sys`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, GUnicodeBreakType">
+
+    <title>glib_sys::GUnicodeBreakType - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc enum">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'>Enum GUnicodeBreakType</p><div class="block items"><ul><li><a href="#variants">Variants</a></li><li><a href="#implementations">Trait Implementations</a></li></ul></div><p class='location'><a href='index.html'>glib_sys</a></p><script>window.sidebarCurrent = {name: 'GUnicodeBreakType', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Enum <a href='index.html'>glib_sys</a>::<wbr><a class="enum" href=''>GUnicodeBreakType</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../src/glib_sys/lib.rs.html#708-749' title='goto source code'>[src]</a></span></h1>
+<pre class='rust enum'><div class="docblock attributes">#[repr(C)]
+</div>pub enum GUnicodeBreakType {
+    Mandatory,
+    CarriageReturn,
+    LineFeed,
+    CombiningMark,
+    Surrogate,
+    ZeroWidthSpace,
+    Inseparable,
+    NonBreakingGlue,
+    Contingent,
+    Space,
+    After,
+    Before,
+    BeforeAndAfter,
+    Hyphen,
+    NonStarter,
+    OpenPunctuation,
+    ClosePunctuation,
+    Quotation,
+    Exclamation,
+    Ideographic,
+    Numeric,
+    InfixSeparator,
+    Symbol,
+    Alphabetic,
+    Prefix,
+    Postfix,
+    ComplexContext,
+    Ambiguous,
+    Unknown,
+    NextLine,
+    WordJoiner,
+    HangulLJamo,
+    HangulVJamo,
+    HangulTJamo,
+    HangulLvSyllable,
+    HangulLvtSyllable,
+    CloseParanthesis,
+    ConditionalJapaneseStarter,
+    HebrewLetter,
+    RegionalIndicator,
+}</pre><h2 id='variants' class='variants'>Variants</h2>
+<span id='variant.Mandatory' class='variant'><span id='Mandatory.v' class='invisible'><code>Mandatory</code></span></span><span id='variant.CarriageReturn' class='variant'><span id='CarriageReturn.v' class='invisible'><code>CarriageReturn</code></span></span><span id='variant.LineFeed' class='variant'><span id='LineFeed.v' class='invisible'><code>LineFeed</code></span></span><span id='variant.CombiningMark' class='variant'><span id='CombiningMark.v' class='invisible'><code>CombiningMark</code></span></span><span id='variant.Surrogate' class='variant'><span id='Surrogate.v' class='invisible'><code>Surrogate</code></span></span><span id='variant.ZeroWidthSpace' class='variant'><span id='ZeroWidthSpace.v' class='invisible'><code>ZeroWidthSpace</code></span></span><span id='variant.Inseparable' class='variant'><span id='Inseparable.v' class='invisible'><code>Inseparable</code></span></span><span id='variant.NonBreakingGlue' class='variant'><span id='NonBreakingGlue.v' class='invisible'><code>NonBreakingGlue</code></span></span><span id='variant.Contingent' class='variant'><span id='Contingent.v' class='invisible'><code>Contingent</code></span></span><span id='variant.Space' class='variant'><span id='Space.v' class='invisible'><code>Space</code></span></span><span id='variant.After' class='variant'><span id='After.v' class='invisible'><code>After</code></span></span><span id='variant.Before' class='variant'><span id='Before.v' class='invisible'><code>Before</code></span></span><span id='variant.BeforeAndAfter' class='variant'><span id='BeforeAndAfter.v' class='invisible'><code>BeforeAndAfter</code></span></span><span id='variant.Hyphen' class='variant'><span id='Hyphen.v' class='invisible'><code>Hyphen</code></span></span><span id='variant.NonStarter' class='variant'><span id='NonStarter.v' class='invisible'><code>NonStarter</code></span></span><span id='variant.OpenPunctuation' class='variant'><span id='OpenPunctuation.v' class='invisible'><code>OpenPunctuation</code></span></span><span id='variant.ClosePunctuation' class='variant'><span id='ClosePunctuation.v' class='invisible'><code>ClosePunctuation</code></span></span><span id='variant.Quotation' class='variant'><span id='Quotation.v' class='invisible'><code>Quotation</code></span></span><span id='variant.Exclamation' class='variant'><span id='Exclamation.v' class='invisible'><code>Exclamation</code></span></span><span id='variant.Ideographic' class='variant'><span id='Ideographic.v' class='invisible'><code>Ideographic</code></span></span><span id='variant.Numeric' class='variant'><span id='Numeric.v' class='invisible'><code>Numeric</code></span></span><span id='variant.InfixSeparator' class='variant'><span id='InfixSeparator.v' class='invisible'><code>InfixSeparator</code></span></span><span id='variant.Symbol' class='variant'><span id='Symbol.v' class='invisible'><code>Symbol</code></span></span><span id='variant.Alphabetic' class='variant'><span id='Alphabetic.v' class='invisible'><code>Alphabetic</code></span></span><span id='variant.Prefix' class='variant'><span id='Prefix.v' class='invisible'><code>Prefix</code></span></span><span id='variant.Postfix' class='variant'><span id='Postfix.v' class='invisible'><code>Postfix</code></span></span><span id='variant.ComplexContext' class='variant'><span id='ComplexContext.v' class='invisible'><code>ComplexContext</code></span></span><span id='variant.Ambiguous' class='variant'><span id='Ambiguous.v' class='invisible'><code>Ambiguous</code></span></span><span id='variant.Unknown' class='variant'><span id='Unknown.v' class='invisible'><code>Unknown</code></span></span><span id='variant.NextLine' class='variant'><span id='NextLine.v' class='invisible'><code>NextLine</code></span></span><span id='variant.WordJoiner' class='variant'><span id='WordJoiner.v' class='invisible'><code>WordJoiner</code></span></span><span id='variant.HangulLJamo' class='variant'><span id='HangulLJamo.v' class='invisible'><code>HangulLJamo</code></span></span><span id='variant.HangulVJamo' class='variant'><span id='HangulVJamo.v' class='invisible'><code>HangulVJamo</code></span></span><span id='variant.HangulTJamo' class='variant'><span id='HangulTJamo.v' class='invisible'><code>HangulTJamo</code></span></span><span id='variant.HangulLvSyllable' class='variant'><span id='HangulLvSyllable.v' class='invisible'><code>HangulLvSyllable</code></span></span><span id='variant.HangulLvtSyllable' class='variant'><span id='HangulLvtSyllable.v' class='invisible'><code>HangulLvtSyllable</code></span></span><span id='variant.CloseParanthesis' class='variant'><span id='CloseParanthesis.v' class='invisible'><code>CloseParanthesis</code></span></span><span id='variant.ConditionalJapaneseStarter' class='variant'><span id='ConditionalJapaneseStarter.v' class='invisible'><code>ConditionalJapaneseStarter</code></span></span><span id='variant.HebrewLetter' class='variant'><span id='HebrewLetter.v' class='invisible'><code>HebrewLetter</code></span></span><span id='variant.RegionalIndicator' class='variant'><span id='RegionalIndicator.v' class='invisible'><code>RegionalIndicator</code></span></span><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html" title="trait core::clone::Clone">Clone</a> for <a class="enum" href="../glib_sys/enum.GUnicodeBreakType.html" title="enum glib_sys::GUnicodeBreakType">GUnicodeBreakType</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/glib_sys/lib.rs.html#706' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.clone' class="method"><span id='clone.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class="enum" href="../glib_sys/enum.GUnicodeBreakType.html" title="enum glib_sys::GUnicodeBreakType">GUnicodeBreakType</a></code></span></h4>
+<div class='docblock'><p>Returns a copy of the value. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">Read more</a></p>
+</div><h4 id='method.clone_from' class="method"><span id='clone_from.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div></span></h4>
+<div class='docblock'><p>Performs copy-assignment from <code>source</code>. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from">Read more</a></p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html" title="trait core::marker::Copy">Copy</a> for <a class="enum" href="../glib_sys/enum.GUnicodeBreakType.html" title="enum glib_sys::GUnicodeBreakType">GUnicodeBreakType</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/glib_sys/lib.rs.html#706' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'></div><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> for <a class="enum" href="../glib_sys/enum.GUnicodeBreakType.html" title="enum glib_sys::GUnicodeBreakType">GUnicodeBreakType</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/glib_sys/lib.rs.html#706' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.fmt' class="method"><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html" title="type core::fmt::Result">Result</a></code></span></h4>
+<div class='docblock'><p>Formats the value using the given formatter.</p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/cmp/trait.Eq.html" title="trait core::cmp::Eq">Eq</a> for <a class="enum" href="../glib_sys/enum.GUnicodeBreakType.html" title="enum glib_sys::GUnicodeBreakType">GUnicodeBreakType</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/glib_sys/lib.rs.html#706' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'></div><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html" title="trait core::cmp::PartialEq">PartialEq</a> for <a class="enum" href="../glib_sys/enum.GUnicodeBreakType.html" title="enum glib_sys::GUnicodeBreakType">GUnicodeBreakType</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/glib_sys/lib.rs.html#706' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.eq' class="method"><span id='eq.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#tymethod.eq' class='fnname'>eq</a>(&amp;self, __arg_0: &amp;<a class="enum" href="../glib_sys/enum.GUnicodeBreakType.html" title="enum glib_sys::GUnicodeBreakType">GUnicodeBreakType</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h4>
+<div class='docblock'><p>This method tests for <code>self</code> and <code>other</code> values to be equal, and is used by <code>==</code>. <a href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#tymethod.eq">Read more</a></p>
+</div><h4 id='method.ne' class="method"><span id='ne.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#method.ne' class='fnname'>ne</a>(&amp;self, other: &amp;Rhs) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div></span></h4>
+<div class='docblock'><p>This method tests for <code>!=</code>.</p>
+</div></div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "glib_sys";
+    </script>
+    <script src="../main.js"></script>
+    <script defer src="../search-index.js"></script>
+</body>
+</html>

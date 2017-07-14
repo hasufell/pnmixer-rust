@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `seq` mod in crate `alsa`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, seq">
+
+    <title>alsa::seq - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc mod">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'>Module seq</p><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#constants">Constants</a></li><li><a href="#traits">Traits</a></li></ul></div><p class='location'><a href='../index.html'>alsa</a></p><script>window.sidebarCurrent = {name: 'seq', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Module <a href='../index.html'>alsa</a>::<wbr><a class="mod" href=''>seq</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../../src/alsa/seq.rs.html#1-1283' title='goto source code'>[src]</a></span></h1>
+<div class='docblock'><p>MIDI sequencer I/O and enumeration</p>
+</div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.Addr.html"
+                                  title='struct alsa::seq::Addr'>Addr</a></td>
+                           <td class='docblock-short'>
+                                <p><a href="http://www.alsa-project.org/alsa-doc/alsa-lib/structsnd__seq__addr__t.html">snd_seq_addr_t</a> wrapper</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.ClientInfo.html"
+                                  title='struct alsa::seq::ClientInfo'>ClientInfo</a></td>
+                           <td class='docblock-short'>
+                                <p><a href="http://www.alsa-project.org/alsa-doc/alsa-lib/group___seq_client.html">snd_seq_client_info_t</a> wrapper</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.ClientIter.html"
+                                  title='struct alsa::seq::ClientIter'>ClientIter</a></td>
+                           <td class='docblock-short'>
+                                <p>Iterates over clients connected to the seq API (both kernel and userspace clients).</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.Connect.html"
+                                  title='struct alsa::seq::Connect'>Connect</a></td>
+                           <td class='docblock-short'>
+                                <p><a href="http://www.alsa-project.org/alsa-doc/alsa-lib/structsnd__seq__connect__t.html">snd_seq_connect_t</a> wrapper</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.EvCtrl.html"
+                                  title='struct alsa::seq::EvCtrl'>EvCtrl</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.EvNote.html"
+                                  title='struct alsa::seq::EvNote'>EvNote</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.EvQueueControl.html"
+                                  title='struct alsa::seq::EvQueueControl'>EvQueueControl</a></td>
+                           <td class='docblock-short'>
+                                <p><a href="http://www.alsa-project.org/alsa-doc/alsa-lib/structsnd__seq__ev__queue__control__t.html">snd_seq_ev_queue_control_t</a> wrapper</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.EvResult.html"
+                                  title='struct alsa::seq::EvResult'>EvResult</a></td>
+                           <td class='docblock-short'>
+                                <p><a href="http://www.alsa-project.org/alsa-doc/alsa-lib/structsnd__seq__result__t.html">snd_seq_result_t</a> wrapper</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.Event.html"
+                                  title='struct alsa::seq::Event'>Event</a></td>
+                           <td class='docblock-short'>
+                                <p><a href="http://www.alsa-project.org/alsa-doc/alsa-lib/structsnd__seq__event__t.html">snd_seq_event_t</a> wrapper</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.Input.html"
+                                  title='struct alsa::seq::Input'>Input</a></td>
+                           <td class='docblock-short'>
+                                <p>Struct for receiving input events from a sequencer. The methods offered by this
+object may modify the internal input buffer of the sequencer, which must not happen
+while an <code>Event</code> is alive that has been obtained from a call to <code>event_input</code> (which
+takes <code>Input</code> by mutable reference for this reason). This is because the event might
+directly reference the sequencer&#39;s input buffer for variable-length messages (e.g. Sysex).</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.MidiEvent.html"
+                                  title='struct alsa::seq::MidiEvent'>MidiEvent</a></td>
+                           <td class='docblock-short'>
+                                <p><a href="http://www.alsa-project.org/alsa-doc/alsa-lib/group___m_i_d_i___event.html">snd_midi_event_t</a> Wrapper</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.PortCap.html"
+                                  title='struct alsa::seq::PortCap'>PortCap</a></td>
+                           <td class='docblock-short'>
+                                <p>[SND_SEQ_PORT_CAP_xxx]<a href="http://www.alsa-project.org/alsa-doc/alsa-lib/group___seq_port.html">http://www.alsa-project.org/alsa-doc/alsa-lib/group___seq_port.html</a>) constants </p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.PortInfo.html"
+                                  title='struct alsa::seq::PortInfo'>PortInfo</a></td>
+                           <td class='docblock-short'>
+                                <p><a href="http://www.alsa-project.org/alsa-doc/alsa-lib/group___seq_port.html">snd_seq_port_info_t</a> wrapper</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.PortIter.html"
+                                  title='struct alsa::seq::PortIter'>PortIter</a></td>
+                           <td class='docblock-short'>
+                                <p>Iterates over clients connected to the seq API (both kernel and userspace clients).</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.PortSubscribe.html"
+                                  title='struct alsa::seq::PortSubscribe'>PortSubscribe</a></td>
+                           <td class='docblock-short'>
+                                <p><a href="http://www.alsa-project.org/alsa-doc/alsa-lib/group___seq_subscribe.html">snd_seq_port_subscribe_t</a> wrapper</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.PortType.html"
+                                  title='struct alsa::seq::PortType'>PortType</a></td>
+                           <td class='docblock-short'>
+                                <p>[SND_SEQ_PORT_TYPE_xxx]<a href="http://www.alsa-project.org/alsa-doc/alsa-lib/group___seq_port.html">http://www.alsa-project.org/alsa-doc/alsa-lib/group___seq_port.html</a>) constants </p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.QueueTempo.html"
+                                  title='struct alsa::seq::QueueTempo'>QueueTempo</a></td>
+                           <td class='docblock-short'>
+                                <p><a href="http://www.alsa-project.org/alsa-doc/alsa-lib/group___seq_queue.html">snd_seq_queue_tempo_t</a> wrapper</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.Seq.html"
+                                  title='struct alsa::seq::Seq'>Seq</a></td>
+                           <td class='docblock-short'>
+                                <p><a href="http://www.alsa-project.org/alsa-doc/alsa-lib/group___sequencer.html">snd_seq_t</a> wrapper</p>
+                           </td>
+                       </tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.EventType.html"
+                                  title='enum alsa::seq::EventType'>EventType</a></td>
+                           <td class='docblock-short'>
+                                <p><a href="http://www.alsa-project.org/alsa-doc/alsa-lib/group___seq_events.html">SND_SEQ_EVENT_xxx</a> constants</p>
+                           </td>
+                       </tr></table><h2 id='constants' class='section-header'><a href="#constants">Constants</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.APPLICATION.html"
+                                  title='constant alsa::seq::APPLICATION'>APPLICATION</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.DIRECT_SAMPLE.html"
+                                  title='constant alsa::seq::DIRECT_SAMPLE'>DIRECT_SAMPLE</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.DUPLEX.html"
+                                  title='constant alsa::seq::DUPLEX'>DUPLEX</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.HARDWARE.html"
+                                  title='constant alsa::seq::HARDWARE'>HARDWARE</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.MIDI_GENERIC.html"
+                                  title='constant alsa::seq::MIDI_GENERIC'>MIDI_GENERIC</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.MIDI_GM.html"
+                                  title='constant alsa::seq::MIDI_GM'>MIDI_GM</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.MIDI_GM2.html"
+                                  title='constant alsa::seq::MIDI_GM2'>MIDI_GM2</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.MIDI_GS.html"
+                                  title='constant alsa::seq::MIDI_GS'>MIDI_GS</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.MIDI_MT32.html"
+                                  title='constant alsa::seq::MIDI_MT32'>MIDI_MT32</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.MIDI_XG.html"
+                                  title='constant alsa::seq::MIDI_XG'>MIDI_XG</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.NO_EXPORT.html"
+                                  title='constant alsa::seq::NO_EXPORT'>NO_EXPORT</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.PORT.html"
+                                  title='constant alsa::seq::PORT'>PORT</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.READ.html"
+                                  title='constant alsa::seq::READ'>READ</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.SAMPLE.html"
+                                  title='constant alsa::seq::SAMPLE'>SAMPLE</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.SOFTWARE.html"
+                                  title='constant alsa::seq::SOFTWARE'>SOFTWARE</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.SPECIFIC.html"
+                                  title='constant alsa::seq::SPECIFIC'>SPECIFIC</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.SUBS_READ.html"
+                                  title='constant alsa::seq::SUBS_READ'>SUBS_READ</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.SUBS_WRITE.html"
+                                  title='constant alsa::seq::SUBS_WRITE'>SUBS_WRITE</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.SYNC_READ.html"
+                                  title='constant alsa::seq::SYNC_READ'>SYNC_READ</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.SYNC_WRITE.html"
+                                  title='constant alsa::seq::SYNC_WRITE'>SYNC_WRITE</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.SYNTH.html"
+                                  title='constant alsa::seq::SYNTH'>SYNTH</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.SYNTHESIZER.html"
+                                  title='constant alsa::seq::SYNTHESIZER'>SYNTHESIZER</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.WRITE.html"
+                                  title='constant alsa::seq::WRITE'>WRITE</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="trait" href="trait.EventData.html"
+                                  title='trait alsa::seq::EventData'>EventData</a></td>
+                           <td class='docblock-short'>
+                                <p>Low level methods to set/get data on an Event. Don&#39;t use these directly, use generic methods on Event instead.</p>
+                           </td>
+                       </tr></table></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "alsa";
+    </script>
+    <script src="../../main.js"></script>
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>

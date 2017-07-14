@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `GtkBuildableIface` struct in crate `gtk_sys`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, GtkBuildableIface">
+
+    <title>gtk_sys::GtkBuildableIface - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc struct">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'>Struct GtkBuildableIface</p><div class="block items"><ul><li><a href="#fields">Fields</a></li></ul></div><p class='location'><a href='index.html'>gtk_sys</a></p><script>window.sidebarCurrent = {name: 'GtkBuildableIface', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Struct <a href='index.html'>gtk_sys</a>::<wbr><a class="struct" href=''>GtkBuildableIface</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../src/gtk_sys/lib.rs.html#2495-2507' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'><div class="docblock attributes">#[repr(C)]
+</div>pub struct GtkBuildableIface {
+    pub g_iface: <a class="struct" href="../gobject_sys/struct.GTypeInterface.html" title="struct gobject_sys::GTypeInterface">GTypeInterface</a>,
+    pub set_name: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkBuildable.html" title="struct gtk_sys::GtkBuildable">GtkBuildable</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="type" href="../libc/unix/notbsd/linux/other/b64/x86_64/type.c_char.html" title="type libc::unix::notbsd::linux::other::b64::x86_64::c_char">c_char</a>)&gt;,
+    pub get_name: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkBuildable.html" title="struct gtk_sys::GtkBuildable">GtkBuildable</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="type" href="../libc/unix/notbsd/linux/other/b64/x86_64/type.c_char.html" title="type libc::unix::notbsd::linux::other::b64::x86_64::c_char">c_char</a>&gt;,
+    pub add_child: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkBuildable.html" title="struct gtk_sys::GtkBuildable">GtkBuildable</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkBuilder.html" title="struct gtk_sys::GtkBuilder">GtkBuilder</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gobject_sys/struct.GObject.html" title="struct gobject_sys::GObject">GObject</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="type" href="../libc/unix/notbsd/linux/other/b64/x86_64/type.c_char.html" title="type libc::unix::notbsd::linux::other::b64::x86_64::c_char">c_char</a>)&gt;,
+    pub set_buildable_property: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkBuildable.html" title="struct gtk_sys::GtkBuildable">GtkBuildable</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkBuilder.html" title="struct gtk_sys::GtkBuilder">GtkBuilder</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="type" href="../libc/unix/notbsd/linux/other/b64/x86_64/type.c_char.html" title="type libc::unix::notbsd::linux::other::b64::x86_64::c_char">c_char</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="struct" href="../gobject_sys/struct.GValue.html" title="struct gobject_sys::GValue">GValue</a>)&gt;,
+    pub construct_child: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkBuildable.html" title="struct gtk_sys::GtkBuildable">GtkBuildable</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkBuilder.html" title="struct gtk_sys::GtkBuilder">GtkBuilder</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="type" href="../libc/unix/notbsd/linux/other/b64/x86_64/type.c_char.html" title="type libc::unix::notbsd::linux::other::b64::x86_64::c_char">c_char</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gobject_sys/struct.GObject.html" title="struct gobject_sys::GObject">GObject</a>&gt;,
+    pub custom_tag_start: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkBuildable.html" title="struct gtk_sys::GtkBuildable">GtkBuildable</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkBuilder.html" title="struct gtk_sys::GtkBuilder">GtkBuilder</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gobject_sys/struct.GObject.html" title="struct gobject_sys::GObject">GObject</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="type" href="../libc/unix/notbsd/linux/other/b64/x86_64/type.c_char.html" title="type libc::unix::notbsd::linux::other::b64::x86_64::c_char">c_char</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../glib_sys/struct.GMarkupParser.html" title="struct glib_sys::GMarkupParser">GMarkupParser</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="type" href="../glib_sys/type.gpointer.html" title="type glib_sys::gpointer">gpointer</a>) -&gt; <a class="type" href="../glib_sys/type.gboolean.html" title="type glib_sys::gboolean">gboolean</a>&gt;,
+    pub custom_tag_end: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkBuildable.html" title="struct gtk_sys::GtkBuildable">GtkBuildable</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkBuilder.html" title="struct gtk_sys::GtkBuilder">GtkBuilder</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gobject_sys/struct.GObject.html" title="struct gobject_sys::GObject">GObject</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="type" href="../libc/unix/notbsd/linux/other/b64/x86_64/type.c_char.html" title="type libc::unix::notbsd::linux::other::b64::x86_64::c_char">c_char</a>, _: <a class="type" href="../glib_sys/type.gpointer.html" title="type glib_sys::gpointer">gpointer</a>)&gt;,
+    pub custom_finished: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkBuildable.html" title="struct gtk_sys::GtkBuildable">GtkBuildable</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkBuilder.html" title="struct gtk_sys::GtkBuilder">GtkBuilder</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gobject_sys/struct.GObject.html" title="struct gobject_sys::GObject">GObject</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="type" href="../libc/unix/notbsd/linux/other/b64/x86_64/type.c_char.html" title="type libc::unix::notbsd::linux::other::b64::x86_64::c_char">c_char</a>, _: <a class="type" href="../glib_sys/type.gpointer.html" title="type glib_sys::gpointer">gpointer</a>)&gt;,
+    pub parser_finished: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkBuildable.html" title="struct gtk_sys::GtkBuildable">GtkBuildable</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkBuilder.html" title="struct gtk_sys::GtkBuilder">GtkBuilder</a>)&gt;,
+    pub get_internal_child: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkBuildable.html" title="struct gtk_sys::GtkBuildable">GtkBuildable</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkBuilder.html" title="struct gtk_sys::GtkBuilder">GtkBuilder</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="type" href="../libc/unix/notbsd/linux/other/b64/x86_64/type.c_char.html" title="type libc::unix::notbsd::linux::other::b64::x86_64::c_char">c_char</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gobject_sys/struct.GObject.html" title="struct gobject_sys::GObject">GObject</a>&gt;,
+}</pre><h2 id='fields' class='fields'>Fields</h2><span id='structfield.g_iface' class="structfield">
+                           <span id='g_iface.v' class='invisible'>
+                           <code>g_iface: <a class="struct" href="../gobject_sys/struct.GTypeInterface.html" title="struct gobject_sys::GTypeInterface">GTypeInterface</a></code>
+                           </span></span><span id='structfield.set_name' class="structfield">
+                           <span id='set_name.v' class='invisible'>
+                           <code>set_name: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkBuildable.html" title="struct gtk_sys::GtkBuildable">GtkBuildable</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="type" href="../libc/unix/notbsd/linux/other/b64/x86_64/type.c_char.html" title="type libc::unix::notbsd::linux::other::b64::x86_64::c_char">c_char</a>)&gt;</code>
+                           </span></span><span id='structfield.get_name' class="structfield">
+                           <span id='get_name.v' class='invisible'>
+                           <code>get_name: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkBuildable.html" title="struct gtk_sys::GtkBuildable">GtkBuildable</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="type" href="../libc/unix/notbsd/linux/other/b64/x86_64/type.c_char.html" title="type libc::unix::notbsd::linux::other::b64::x86_64::c_char">c_char</a>&gt;</code>
+                           </span></span><span id='structfield.add_child' class="structfield">
+                           <span id='add_child.v' class='invisible'>
+                           <code>add_child: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkBuildable.html" title="struct gtk_sys::GtkBuildable">GtkBuildable</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkBuilder.html" title="struct gtk_sys::GtkBuilder">GtkBuilder</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gobject_sys/struct.GObject.html" title="struct gobject_sys::GObject">GObject</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="type" href="../libc/unix/notbsd/linux/other/b64/x86_64/type.c_char.html" title="type libc::unix::notbsd::linux::other::b64::x86_64::c_char">c_char</a>)&gt;</code>
+                           </span></span><span id='structfield.set_buildable_property' class="structfield">
+                           <span id='set_buildable_property.v' class='invisible'>
+                           <code>set_buildable_property: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkBuildable.html" title="struct gtk_sys::GtkBuildable">GtkBuildable</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkBuilder.html" title="struct gtk_sys::GtkBuilder">GtkBuilder</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="type" href="../libc/unix/notbsd/linux/other/b64/x86_64/type.c_char.html" title="type libc::unix::notbsd::linux::other::b64::x86_64::c_char">c_char</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="struct" href="../gobject_sys/struct.GValue.html" title="struct gobject_sys::GValue">GValue</a>)&gt;</code>
+                           </span></span><span id='structfield.construct_child' class="structfield">
+                           <span id='construct_child.v' class='invisible'>
+                           <code>construct_child: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkBuildable.html" title="struct gtk_sys::GtkBuildable">GtkBuildable</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkBuilder.html" title="struct gtk_sys::GtkBuilder">GtkBuilder</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="type" href="../libc/unix/notbsd/linux/other/b64/x86_64/type.c_char.html" title="type libc::unix::notbsd::linux::other::b64::x86_64::c_char">c_char</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gobject_sys/struct.GObject.html" title="struct gobject_sys::GObject">GObject</a>&gt;</code>
+                           </span></span><span id='structfield.custom_tag_start' class="structfield">
+                           <span id='custom_tag_start.v' class='invisible'>
+                           <code>custom_tag_start: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkBuildable.html" title="struct gtk_sys::GtkBuildable">GtkBuildable</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkBuilder.html" title="struct gtk_sys::GtkBuilder">GtkBuilder</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gobject_sys/struct.GObject.html" title="struct gobject_sys::GObject">GObject</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="type" href="../libc/unix/notbsd/linux/other/b64/x86_64/type.c_char.html" title="type libc::unix::notbsd::linux::other::b64::x86_64::c_char">c_char</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../glib_sys/struct.GMarkupParser.html" title="struct glib_sys::GMarkupParser">GMarkupParser</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="type" href="../glib_sys/type.gpointer.html" title="type glib_sys::gpointer">gpointer</a>) -&gt; <a class="type" href="../glib_sys/type.gboolean.html" title="type glib_sys::gboolean">gboolean</a>&gt;</code>
+                           </span></span><span id='structfield.custom_tag_end' class="structfield">
+                           <span id='custom_tag_end.v' class='invisible'>
+                           <code>custom_tag_end: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkBuildable.html" title="struct gtk_sys::GtkBuildable">GtkBuildable</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkBuilder.html" title="struct gtk_sys::GtkBuilder">GtkBuilder</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gobject_sys/struct.GObject.html" title="struct gobject_sys::GObject">GObject</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="type" href="../libc/unix/notbsd/linux/other/b64/x86_64/type.c_char.html" title="type libc::unix::notbsd::linux::other::b64::x86_64::c_char">c_char</a>, _: <a class="type" href="../glib_sys/type.gpointer.html" title="type glib_sys::gpointer">gpointer</a>)&gt;</code>
+                           </span></span><span id='structfield.custom_finished' class="structfield">
+                           <span id='custom_finished.v' class='invisible'>
+                           <code>custom_finished: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkBuildable.html" title="struct gtk_sys::GtkBuildable">GtkBuildable</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkBuilder.html" title="struct gtk_sys::GtkBuilder">GtkBuilder</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gobject_sys/struct.GObject.html" title="struct gobject_sys::GObject">GObject</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="type" href="../libc/unix/notbsd/linux/other/b64/x86_64/type.c_char.html" title="type libc::unix::notbsd::linux::other::b64::x86_64::c_char">c_char</a>, _: <a class="type" href="../glib_sys/type.gpointer.html" title="type glib_sys::gpointer">gpointer</a>)&gt;</code>
+                           </span></span><span id='structfield.parser_finished' class="structfield">
+                           <span id='parser_finished.v' class='invisible'>
+                           <code>parser_finished: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkBuildable.html" title="struct gtk_sys::GtkBuildable">GtkBuildable</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkBuilder.html" title="struct gtk_sys::GtkBuilder">GtkBuilder</a>)&gt;</code>
+                           </span></span><span id='structfield.get_internal_child' class="structfield">
+                           <span id='get_internal_child.v' class='invisible'>
+                           <code>get_internal_child: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkBuildable.html" title="struct gtk_sys::GtkBuildable">GtkBuildable</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkBuilder.html" title="struct gtk_sys::GtkBuilder">GtkBuilder</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="type" href="../libc/unix/notbsd/linux/other/b64/x86_64/type.c_char.html" title="type libc::unix::notbsd::linux::other::b64::x86_64::c_char">c_char</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gobject_sys/struct.GObject.html" title="struct gobject_sys::GObject">GObject</a>&gt;</code>
+                           </span></span></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "gtk_sys";
+    </script>
+    <script src="../main.js"></script>
+    <script defer src="../search-index.js"></script>
+</body>
+</html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `LogOptions` struct in crate `flexi_logger`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, LogOptions">
+
+    <title>flexi_logger::LogOptions - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    
+
+    <link rel="shortcut icon" href="http://www.rust-lang.org/favicon.ico">
+    
+</head>
+<body class="rustdoc struct">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        <a href='../flexi_logger/index.html'><img src='http://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png' alt='logo' width='100'></a>
+        <p class='location'>Struct LogOptions</p><div class="block items"><ul><li><a href="#methods">Methods</a></li></ul></div><p class='location'><a href='index.html'>flexi_logger</a></p><script>window.sidebarCurrent = {name: 'LogOptions', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Struct <a href='index.html'>flexi_logger</a>::<wbr><a class="struct" href=''>LogOptions</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../src/flexi_logger/log_options.rs.html#128' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct LogOptions(_);</pre><div class='docblock'><p>Allows initializing flexi_logger to your needs.</p>
+
+<p>In order to initialize flexi_logger, create an instance of LogOptions,
+use one or several of its methods to adapt the configuration to your needs, and finally
+call init() with your desired loglevel-specification.</p>
+
+<h2 id='examples' class='section-header'><a href='#examples'>Examples</a></h2>
+<h3 id='use-defaults-only' class='section-header'><a href='#use-defaults-only'>Use defaults only</a></h3>
+<p>If you initialize flexi_logger with default settings, then it behaves like env_logger:</p>
+
+<pre class="rust rust-example-rendered">
+<span class="kw">use</span> <span class="ident">flexi_logger</span>::<span class="ident">LogOptions</span>;
+
+<span class="ident">LogOptions</span>::<span class="ident">new</span>().<span class="ident">init</span>(<span class="prelude-val">None</span>).<span class="ident">unwrap</span>();</pre>
+
+<h3 id='write-to-files-use-a-detailed-log-line-format-that-contains-the-module-and-line-number' class='section-header'><a href='#write-to-files-use-a-detailed-log-line-format-that-contains-the-module-and-line-number'>Write to files, use a detailed log-line format that contains the module and line number</a></h3>
+<p>Here we configure flexi_logger to write log entries with
+time and location info into a log file in folder &quot;log_files&quot;,
+and we provide the loglevel-specification programmatically:</p>
+
+<pre class="rust rust-example-rendered">
+<span class="kw">use</span> <span class="ident">flexi_logger</span>::{<span class="ident">LogOptions</span>,<span class="ident">opt_format</span>};
+
+<span class="ident">LogOptions</span>::<span class="ident">new</span>()
+            .<span class="ident">log_to_file</span>(<span class="bool-val">true</span>)
+            .<span class="ident">directory</span>(<span class="prelude-val">Some</span>(<span class="string">&quot;log_files&quot;</span>.<span class="ident">to_string</span>()))
+            .<span class="ident">format</span>(<span class="ident">opt_format</span>)
+            .<span class="ident">init</span>(<span class="prelude-val">Some</span>(<span class="string">&quot;myprog=debug,mylib=warn&quot;</span>.<span class="ident">to_string</span>()) )
+            .<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span>{<span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Logger initialization failed with {}&quot;</span>,<span class="ident">e</span>)});</pre>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class="struct" href="../flexi_logger/struct.LogOptions.html" title="struct flexi_logger::LogOptions">LogOptions</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/flexi_logger/log_options.rs.html#131-260' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>() -&gt; <a class="struct" href="../flexi_logger/struct.LogOptions.html" title="struct flexi_logger::LogOptions">LogOptions</a></code></span></h4>
+<div class='docblock'><p>The defaults for the logger initialization are</p>
+
+<ul>
+<li> log_to_file(false)</li>
+<li> print_message(true)</li>
+<li> duplicate_error(true)</li>
+<li> duplicate_info(false)</li>
+<li> format(flexi_logger::default_format)</li>
+<li> directory(None)</li>
+<li> suffix(Some(&quot;log&quot;.to_string()))</li>
+<li> timestamp(false)</li>
+<li> rotate_over_size(None)</li>
+<li> discriminant(None)</li>
+<li> symlink(None)</li>
+</ul>
+</div><h4 id='method.log_to_file' class="method"><span id='log_to_file.v' class='invisible'><code>fn <a href='#method.log_to_file' class='fnname'>log_to_file</a>(self, log_to_file: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>) -&gt; <a class="struct" href="../flexi_logger/struct.LogOptions.html" title="struct flexi_logger::LogOptions">LogOptions</a></code></span></h4>
+<div class='docblock'><p>Sets the option for logging to a file.</p>
+
+<p>If this option is set to true,  all logs will be written to a file, otherwise to stderr.</p>
+</div><h4 id='method.print_message' class="method"><span id='print_message.v' class='invisible'><code>fn <a href='#method.print_message' class='fnname'>print_message</a>(self, print_message: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>) -&gt; <a class="struct" href="../flexi_logger/struct.LogOptions.html" title="struct flexi_logger::LogOptions">LogOptions</a></code></span></h4>
+<div class='docblock'><p>Sets the option for printing out an info message when a new output file is used.</p>
+
+<p>If this option is set to true, an info message is printed to stdout when a new file is used for log-output.</p>
+</div><h4 id='method.duplicate_error' class="method"><span id='duplicate_error.v' class='invisible'><code>fn <a href='#method.duplicate_error' class='fnname'>duplicate_error</a>(self, duplicate_error: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>) -&gt; <a class="struct" href="../flexi_logger/struct.LogOptions.html" title="struct flexi_logger::LogOptions">LogOptions</a></code></span></h4>
+<div class='docblock'><p>Sets the option for duplicating logged error messages to stdout.</p>
+
+<p>If this option is true and duplicate_error is set to true,
+then all logged error messages are additionally written to stdout.</p>
+</div><h4 id='method.duplicate_info' class="method"><span id='duplicate_info.v' class='invisible'><code>fn <a href='#method.duplicate_info' class='fnname'>duplicate_info</a>(self, duplicate_info: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>) -&gt; <a class="struct" href="../flexi_logger/struct.LogOptions.html" title="struct flexi_logger::LogOptions">LogOptions</a></code></span></h4>
+<div class='docblock'><p>Sets the option for duplicating logged error, warning and info messages to stdout.</p>
+
+<p>If log_to_file is true and duplicate_info is set to true,
+then all logged error, warning, and info messages are additionally written to stdout.</p>
+</div><h4 id='method.format' class="method"><span id='format.v' class='invisible'><code>fn <a href='#method.format' class='fnname'>format</a>(self, format: fn(_: &amp;<a class="struct" href="../flexi_logger/struct.LogRecord.html" title="struct flexi_logger::LogRecord">LogRecord</a>) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>) -&gt; <a class="struct" href="../flexi_logger/struct.LogOptions.html" title="struct flexi_logger::LogOptions">LogOptions</a></code></span></h4>
+<div class='docblock'><p>Specifies a formatting function for the log entries.</p>
+
+<p>The function being used by default is <a href="fn.default_format.html">formats::default_format</a>.</p>
+</div><h4 id='method.directory' class="method"><span id='directory.v' class='invisible'><code>fn <a href='#method.directory' class='fnname'>directory</a>(self, directory: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;) -&gt; <a class="struct" href="../flexi_logger/struct.LogOptions.html" title="struct flexi_logger::LogOptions">LogOptions</a></code></span></h4>
+<div class='docblock'><p>Specifies a folder for the log files.</p>
+
+<p>This parameter only has an effect if log_to_file is set to true.
+If set to None, the log files are created in the folder where the program was started,
+otherwise in the specified folder.
+If the folder does not exist, the initialization will fail.</p>
+</div><h4 id='method.suffix' class="method"><span id='suffix.v' class='invisible'><code>fn <a href='#method.suffix' class='fnname'>suffix</a>(self, suffix: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;) -&gt; <a class="struct" href="../flexi_logger/struct.LogOptions.html" title="struct flexi_logger::LogOptions">LogOptions</a></code></span></h4>
+<div class='docblock'><p>Specifies a suffix for the log files.</p>
+
+<p>This parameter only has an effect if log_to_file is set to true.</p>
+
+<p>If not set to None, then the log files are created with the specified suffix.</p>
+</div><h4 id='method.timestamp' class="method"><span id='timestamp.v' class='invisible'><code>fn <a href='#method.timestamp' class='fnname'>timestamp</a>(self, timestamp: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>) -&gt; <a class="struct" href="../flexi_logger/struct.LogOptions.html" title="struct flexi_logger::LogOptions">LogOptions</a></code></span></h4>
+<div class='docblock'><p>Sets the option for including a timestamp into the name of the log files.</p>
+
+<p>This parameter only has an effect if log_to_file is set to true.</p>
+
+<p>If set to true, then the names of the log files will include a timestamp.</p>
+</div><h4 id='method.rotate_over_size' class="method"><span id='rotate_over_size.v' class='invisible'><code>fn <a href='#method.rotate_over_size' class='fnname'>rotate_over_size</a>(self, rotate_over_size: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>&gt;) -&gt; <a class="struct" href="../flexi_logger/struct.LogOptions.html" title="struct flexi_logger::LogOptions">LogOptions</a></code></span></h4>
+<div class='docblock'><p>Sets the option for specifying a maximum size for log files in bytes.</p>
+
+<p>This parameter only has an effect if log_to_file is set to true.</p>
+
+<p>If set to None, the log file will grow indefinitely.
+If a value is set, then when the log file reaches or exceeds the specified file size, the file will be closed
+and a new file will be opened. The filename pattern changes - instead of the
+timestamp a serial number is included into the filename.</p>
+</div><h4 id='method.discriminant' class="method"><span id='discriminant.v' class='invisible'><code>fn <a href='#method.discriminant' class='fnname'>discriminant</a>(self, discriminant: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;) -&gt; <a class="struct" href="../flexi_logger/struct.LogOptions.html" title="struct flexi_logger::LogOptions">LogOptions</a></code></span></h4>
+<div class='docblock'><p>Sets the option for specifying an additional part of the log file name.</p>
+
+<p>This parameter only has an effect if log_to_file is set to true.</p>
+
+<p>If specified, the additional part of the log file name is inserted after the program name.</p>
+</div><h4 id='method.symlink' class="method"><span id='symlink.v' class='invisible'><code>fn <a href='#method.symlink' class='fnname'>symlink</a>(self, create_symlink: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;) -&gt; <a class="struct" href="../flexi_logger/struct.LogOptions.html" title="struct flexi_logger::LogOptions">LogOptions</a></code></span></h4>
+<div class='docblock'><p>Sets the option for including a timestamp into the name of the log files.</p>
+
+<p>This parameter only has an effect if log_to_file is set to true.</p>
+
+<p>If a String is specified, it will be used on linux systems to create in the current folder
+a symbolic link to the current log file.</p>
+</div><h4 id='method.init' class="method"><span id='init.v' class='invisible'><code>fn <a href='#method.init' class='fnname'>init</a>(self, loglevelspec: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>, <a class="enum" href="../flexi_logger/enum.FlexiLoggerError.html" title="enum flexi_logger::FlexiLoggerError">FlexiLoggerError</a>&gt;</code></span></h4>
+<div class='docblock'><p>Consumes the LogOptions object and initializes the flexi_logger.</p>
+</div></div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "flexi_logger";
+    </script>
+    <script src="../main.js"></script>
+    <script defer src="../search-index.js"></script>
+</body>
+</html>

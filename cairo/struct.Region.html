@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `Region` struct in crate `cairo`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, Region">
+
+    <title>cairo::Region - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc struct">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'>Struct Region</p><div class="block items"><ul><li><a href="#methods">Methods</a></li><li><a href="#implementations">Trait Implementations</a></li></ul></div><p class='location'><a href='index.html'>cairo</a></p><script>window.sidebarCurrent = {name: 'Region', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Struct <a href='index.html'>cairo</a>::<wbr><a class="struct" href=''>Region</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../src/cairo/region.rs.html#14' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct Region(_);</pre><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class="struct" href="../cairo/struct.Region.html" title="struct cairo::Region">Region</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/cairo/region.rs.html#82-222' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.create' class="method"><span id='create.v' class='invisible'><code>fn <a href='#method.create' class='fnname'>create</a>() -&gt; <a class="struct" href="../cairo/struct.Region.html" title="struct cairo::Region">Region</a></code></span></h4>
+<h4 id='method.create_rectangle' class="method"><span id='create_rectangle.v' class='invisible'><code>fn <a href='#method.create_rectangle' class='fnname'>create_rectangle</a>(rectangle: &amp;<a class="struct" href="../cairo/struct.RectangleInt.html" title="struct cairo::RectangleInt">RectangleInt</a>) -&gt; <a class="struct" href="../cairo/struct.Region.html" title="struct cairo::Region">Region</a></code></span></h4>
+<h4 id='method.copy' class="method"><span id='copy.v' class='invisible'><code>fn <a href='#method.copy' class='fnname'>copy</a>(&amp;self) -&gt; <a class="struct" href="../cairo/struct.Region.html" title="struct cairo::Region">Region</a></code></span></h4>
+<h4 id='method.status' class="method"><span id='status.v' class='invisible'><code>fn <a href='#method.status' class='fnname'>status</a>(&amp;self) -&gt; <a class="enum" href="../cairo/enum.Status.html" title="enum cairo::Status">Status</a></code></span></h4>
+<h4 id='method.get_extents' class="method"><span id='get_extents.v' class='invisible'><code>fn <a href='#method.get_extents' class='fnname'>get_extents</a>(&amp;self, rectangle: &amp;mut <a class="struct" href="../cairo/struct.RectangleInt.html" title="struct cairo::RectangleInt">RectangleInt</a>)</code></span></h4>
+<h4 id='method.num_rectangles' class="method"><span id='num_rectangles.v' class='invisible'><code>fn <a href='#method.num_rectangles' class='fnname'>num_rectangles</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a></code></span></h4>
+<h4 id='method.get_rectangle' class="method"><span id='get_rectangle.v' class='invisible'><code>fn <a href='#method.get_rectangle' class='fnname'>get_rectangle</a>(&amp;self, nth: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>) -&gt; <a class="struct" href="../cairo/struct.RectangleInt.html" title="struct cairo::RectangleInt">RectangleInt</a></code></span></h4>
+<h4 id='method.is_empty' class="method"><span id='is_empty.v' class='invisible'><code>fn <a href='#method.is_empty' class='fnname'>is_empty</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h4>
+<h4 id='method.contains_point' class="method"><span id='contains_point.v' class='invisible'><code>fn <a href='#method.contains_point' class='fnname'>contains_point</a>(&amp;self, x: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>, y: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h4>
+<h4 id='method.contains_rectangle' class="method"><span id='contains_rectangle.v' class='invisible'><code>fn <a href='#method.contains_rectangle' class='fnname'>contains_rectangle</a>(&amp;self, rectangle: &amp;<a class="struct" href="../cairo/struct.RectangleInt.html" title="struct cairo::RectangleInt">RectangleInt</a>) -&gt; <a class="enum" href="../cairo/enum.RegionOverlap.html" title="enum cairo::RegionOverlap">RegionOverlap</a></code></span></h4>
+<h4 id='method.translate' class="method"><span id='translate.v' class='invisible'><code>fn <a href='#method.translate' class='fnname'>translate</a>(&amp;self, dx: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>, dy: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>)</code></span></h4>
+<h4 id='method.intersect' class="method"><span id='intersect.v' class='invisible'><code>fn <a href='#method.intersect' class='fnname'>intersect</a>(&amp;self, other: &amp;<a class="struct" href="../cairo/struct.Region.html" title="struct cairo::Region">Region</a>) -&gt; <a class="enum" href="../cairo/enum.Status.html" title="enum cairo::Status">Status</a></code></span></h4>
+<h4 id='method.intersect_rectangle' class="method"><span id='intersect_rectangle.v' class='invisible'><code>fn <a href='#method.intersect_rectangle' class='fnname'>intersect_rectangle</a>(&amp;self, rectangle: &amp;<a class="struct" href="../cairo/struct.RectangleInt.html" title="struct cairo::RectangleInt">RectangleInt</a>) -&gt; <a class="enum" href="../cairo/enum.Status.html" title="enum cairo::Status">Status</a></code></span></h4>
+<h4 id='method.subtract' class="method"><span id='subtract.v' class='invisible'><code>fn <a href='#method.subtract' class='fnname'>subtract</a>(&amp;self, other: &amp;<a class="struct" href="../cairo/struct.Region.html" title="struct cairo::Region">Region</a>) -&gt; <a class="enum" href="../cairo/enum.Status.html" title="enum cairo::Status">Status</a></code></span></h4>
+<h4 id='method.subtract_rectangle' class="method"><span id='subtract_rectangle.v' class='invisible'><code>fn <a href='#method.subtract_rectangle' class='fnname'>subtract_rectangle</a>(&amp;self, rectangle: &amp;<a class="struct" href="../cairo/struct.RectangleInt.html" title="struct cairo::RectangleInt">RectangleInt</a>) -&gt; <a class="enum" href="../cairo/enum.Status.html" title="enum cairo::Status">Status</a></code></span></h4>
+<h4 id='method.union' class="method"><span id='union.v' class='invisible'><code>fn <a href='#method.union' class='fnname'>union</a>(&amp;self, other: &amp;<a class="struct" href="../cairo/struct.Region.html" title="struct cairo::Region">Region</a>) -&gt; <a class="enum" href="../cairo/enum.Status.html" title="enum cairo::Status">Status</a></code></span></h4>
+<h4 id='method.union_rectangle' class="method"><span id='union_rectangle.v' class='invisible'><code>fn <a href='#method.union_rectangle' class='fnname'>union_rectangle</a>(&amp;self, rectangle: &amp;<a class="struct" href="../cairo/struct.RectangleInt.html" title="struct cairo::RectangleInt">RectangleInt</a>) -&gt; <a class="enum" href="../cairo/enum.Status.html" title="enum cairo::Status">Status</a></code></span></h4>
+<h4 id='method.xor' class="method"><span id='xor.v' class='invisible'><code>fn <a href='#method.xor' class='fnname'>xor</a>(&amp;self, other: &amp;<a class="struct" href="../cairo/struct.Region.html" title="struct cairo::Region">Region</a>) -&gt; <a class="enum" href="../cairo/enum.Status.html" title="enum cairo::Status">Status</a></code></span></h4>
+<h4 id='method.xor_rectangle' class="method"><span id='xor_rectangle.v' class='invisible'><code>fn <a href='#method.xor_rectangle' class='fnname'>xor_rectangle</a>(&amp;self, rectangle: &amp;<a class="struct" href="../cairo/struct.RectangleInt.html" title="struct cairo::RectangleInt">RectangleInt</a>) -&gt; <a class="enum" href="../cairo/enum.Status.html" title="enum cairo::Status">Status</a></code></span></h4>
+</div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html" title="trait core::convert::AsRef">AsRef</a>&lt;<a class="struct" href="../cairo/struct.Region.html" title="struct cairo::Region">Region</a>&gt; for <a class="struct" href="../cairo/struct.Region.html" title="struct cairo::Region">Region</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/cairo/region.rs.html#56-60' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.as_ref' class="method"><span id='as_ref.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html#tymethod.as_ref' class='fnname'>as_ref</a>(&amp;self) -&gt; &amp;<a class="struct" href="../cairo/struct.Region.html" title="struct cairo::Region">Region</a></code></span></h4>
+<div class='docblock'><p>Performs the conversion.</p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html" title="trait core::clone::Clone">Clone</a> for <a class="struct" href="../cairo/struct.Region.html" title="struct cairo::Region">Region</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/cairo/region.rs.html#62-66' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.clone' class="method"><span id='clone.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class="struct" href="../cairo/struct.Region.html" title="struct cairo::Region">Region</a></code></span></h4>
+<div class='docblock'><p>Returns a copy of the value. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">Read more</a></p>
+</div><h4 id='method.clone_from' class="method"><span id='clone_from.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div></span></h4>
+<div class='docblock'><p>Performs copy-assignment from <code>source</code>. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from">Read more</a></p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/drop/trait.Drop.html" title="trait core::ops::drop::Drop">Drop</a> for <a class="struct" href="../cairo/struct.Region.html" title="struct cairo::Region">Region</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/cairo/region.rs.html#68-72' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.drop' class="method"><span id='drop.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/ops/drop/trait.Drop.html#tymethod.drop' class='fnname'>drop</a>(&amp;mut self)</code></span></h4>
+<div class='docblock'><p>A method called when the value goes out of scope. <a href="https://doc.rust-lang.org/nightly/core/ops/drop/trait.Drop.html#tymethod.drop">Read more</a></p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html" title="trait core::cmp::PartialEq">PartialEq</a> for <a class="struct" href="../cairo/struct.Region.html" title="struct cairo::Region">Region</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/cairo/region.rs.html#74-80' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.eq' class="method"><span id='eq.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#tymethod.eq' class='fnname'>eq</a>(&amp;self, other: &amp;<a class="struct" href="../cairo/struct.Region.html" title="struct cairo::Region">Region</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h4>
+<div class='docblock'><p>This method tests for <code>self</code> and <code>other</code> values to be equal, and is used by <code>==</code>. <a href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#tymethod.eq">Read more</a></p>
+</div><h4 id='method.ne' class="method"><span id='ne.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#method.ne' class='fnname'>ne</a>(&amp;self, other: &amp;Rhs) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div></span></h4>
+<div class='docblock'><p>This method tests for <code>!=</code>.</p>
+</div></div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "cairo";
+    </script>
+    <script src="../main.js"></script>
+    <script defer src="../search-index.js"></script>
+</body>
+</html>

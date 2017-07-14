@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `PlacesSidebarExt` trait in crate `gtk`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, PlacesSidebarExt">
+
+    <title>gtk::PlacesSidebarExt - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc trait">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'>Trait PlacesSidebarExt</p><div class="block items"><ul><li><a href="#required-methods">Required Methods</a></li><li><a href="#implementors">Implementors</a></li></ul></div><p class='location'><a href='index.html'>gtk</a></p><script>window.sidebarCurrent = {name: 'PlacesSidebarExt', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Trait <a href='index.html'>gtk</a>::<wbr><a class="trait" href=''>PlacesSidebarExt</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../src/gtk/auto/places_sidebar.rs.html#43-186' title='goto source code'>[src]</a></span></h1>
+<pre class='rust trait'>pub trait PlacesSidebarExt {
+    fn <a href='#tymethod.get_local_only' class='fnname'>get_local_only</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>;
+    fn <a href='#tymethod.get_open_flags' class='fnname'>get_open_flags</a>(&amp;self) -&gt; <a class="struct" href="../gtk/struct.PlacesOpenFlags.html" title="struct gtk::PlacesOpenFlags">PlacesOpenFlags</a>;
+    fn <a href='#tymethod.get_show_connect_to_server' class='fnname'>get_show_connect_to_server</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>;
+    fn <a href='#tymethod.get_show_desktop' class='fnname'>get_show_desktop</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>;
+    fn <a href='#tymethod.get_show_enter_location' class='fnname'>get_show_enter_location</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>;
+    fn <a href='#tymethod.get_show_other_locations' class='fnname'>get_show_other_locations</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>;
+    fn <a href='#tymethod.get_show_recent' class='fnname'>get_show_recent</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>;
+    fn <a href='#tymethod.get_show_trash' class='fnname'>get_show_trash</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>;
+    fn <a href='#tymethod.set_drop_targets_visible' class='fnname'>set_drop_targets_visible</a>(&amp;self, visible: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>, context: &amp;<a class="struct" href="../gdk/auto/drag_context/struct.DragContext.html" title="struct gdk::auto::drag_context::DragContext">DragContext</a>);
+    fn <a href='#tymethod.set_local_only' class='fnname'>set_local_only</a>(&amp;self, local_only: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>);
+    fn <a href='#tymethod.set_open_flags' class='fnname'>set_open_flags</a>(&amp;self, flags: <a class="struct" href="../gtk/struct.PlacesOpenFlags.html" title="struct gtk::PlacesOpenFlags">PlacesOpenFlags</a>);
+    fn <a href='#tymethod.set_show_connect_to_server' class='fnname'>set_show_connect_to_server</a>(&amp;self, show_connect_to_server: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>);
+    fn <a href='#tymethod.set_show_desktop' class='fnname'>set_show_desktop</a>(&amp;self, show_desktop: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>);
+    fn <a href='#tymethod.set_show_enter_location' class='fnname'>set_show_enter_location</a>(&amp;self, show_enter_location: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>);
+    fn <a href='#tymethod.set_show_other_locations' class='fnname'>set_show_other_locations</a>(&amp;self, show_other_locations: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>);
+    fn <a href='#tymethod.set_show_recent' class='fnname'>set_show_recent</a>(&amp;self, show_recent: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>);
+    fn <a href='#tymethod.set_show_trash' class='fnname'>set_show_trash</a>(&amp;self, show_trash: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>);
+    fn <a href='#tymethod.get_property_local_only' class='fnname'>get_property_local_only</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>;
+    fn <a href='#tymethod.set_property_local_only' class='fnname'>set_property_local_only</a>(&amp;self, local_only: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>);
+    fn <a href='#tymethod.get_property_open_flags' class='fnname'>get_property_open_flags</a>(&amp;self) -&gt; <a class="struct" href="../gtk/struct.PlacesOpenFlags.html" title="struct gtk::PlacesOpenFlags">PlacesOpenFlags</a>;
+    fn <a href='#tymethod.set_property_open_flags' class='fnname'>set_property_open_flags</a>(&amp;self, open_flags: <a class="struct" href="../gtk/struct.PlacesOpenFlags.html" title="struct gtk::PlacesOpenFlags">PlacesOpenFlags</a>);
+    fn <a href='#tymethod.get_property_populate_all' class='fnname'>get_property_populate_all</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>;
+    fn <a href='#tymethod.set_property_populate_all' class='fnname'>set_property_populate_all</a>(&amp;self, populate_all: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>);
+    fn <a href='#tymethod.set_property_show_connect_to_server' class='fnname'>set_property_show_connect_to_server</a>(&amp;self, show_connect_to_server: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>);
+    fn <a href='#tymethod.get_property_show_desktop' class='fnname'>get_property_show_desktop</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>;
+    fn <a href='#tymethod.set_property_show_desktop' class='fnname'>set_property_show_desktop</a>(&amp;self, show_desktop: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>);
+    fn <a href='#tymethod.get_property_show_enter_location' class='fnname'>get_property_show_enter_location</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>;
+    fn <a href='#tymethod.set_property_show_enter_location' class='fnname'>set_property_show_enter_location</a>(&amp;self, show_enter_location: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>);
+    fn <a href='#tymethod.get_property_show_other_locations' class='fnname'>get_property_show_other_locations</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>;
+    fn <a href='#tymethod.set_property_show_other_locations' class='fnname'>set_property_show_other_locations</a>(&amp;self, show_other_locations: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>);
+    fn <a href='#tymethod.get_property_show_recent' class='fnname'>get_property_show_recent</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>;
+    fn <a href='#tymethod.set_property_show_recent' class='fnname'>set_property_show_recent</a>(&amp;self, show_recent: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>);
+    fn <a href='#tymethod.get_property_show_trash' class='fnname'>get_property_show_trash</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>;
+    fn <a href='#tymethod.set_property_show_trash' class='fnname'>set_property_show_trash</a>(&amp;self, show_trash: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>);
+    fn <a href='#tymethod.connect_drag_action_ask' class='fnname'>connect_drag_action_ask</a>&lt;F:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/function/trait.Fn.html" title="trait core::ops::function::Fn">Fn</a>(&amp;Self, <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a> + 'static&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;f: F<br>&nbsp;&nbsp;&nbsp;&nbsp;) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>;
+    fn <a href='#tymethod.connect_show_connect_to_server' class='fnname'>connect_show_connect_to_server</a>&lt;F:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/function/trait.Fn.html" title="trait core::ops::function::Fn">Fn</a>(&amp;Self) + 'static&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;f: F<br>&nbsp;&nbsp;&nbsp;&nbsp;) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>;
+    fn <a href='#tymethod.connect_show_enter_location' class='fnname'>connect_show_enter_location</a>&lt;F:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/function/trait.Fn.html" title="trait core::ops::function::Fn">Fn</a>(&amp;Self) + 'static&gt;(&amp;self, f: F) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>;
+    fn <a href='#tymethod.connect_show_error_message' class='fnname'>connect_show_error_message</a>&lt;F:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/function/trait.Fn.html" title="trait core::ops::function::Fn">Fn</a>(&amp;Self, &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>, &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) + 'static&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;f: F<br>&nbsp;&nbsp;&nbsp;&nbsp;) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>;
+    fn <a href='#tymethod.connect_show_other_locations' class='fnname'>connect_show_other_locations</a>&lt;F:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/function/trait.Fn.html" title="trait core::ops::function::Fn">Fn</a>(&amp;Self) + 'static&gt;(&amp;self, f: F) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>;
+    fn <a href='#tymethod.connect_show_other_locations_with_flags' class='fnname'>connect_show_other_locations_with_flags</a>&lt;F:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/function/trait.Fn.html" title="trait core::ops::function::Fn">Fn</a>(&amp;Self, <a class="struct" href="../gtk/struct.PlacesOpenFlags.html" title="struct gtk::PlacesOpenFlags">PlacesOpenFlags</a>) + 'static&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;f: F<br>&nbsp;&nbsp;&nbsp;&nbsp;) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>;
+}</pre>
+            <h2 id='required-methods'>Required Methods</h2>
+            <div class='methods'>
+        <h3 id='tymethod.get_local_only' class='method'><span id='get_local_only.v' class='invisible'><code>fn <a href='#tymethod.get_local_only' class='fnname'>get_local_only</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h3><h3 id='tymethod.get_open_flags' class='method'><span id='get_open_flags.v' class='invisible'><code>fn <a href='#tymethod.get_open_flags' class='fnname'>get_open_flags</a>(&amp;self) -&gt; <a class="struct" href="../gtk/struct.PlacesOpenFlags.html" title="struct gtk::PlacesOpenFlags">PlacesOpenFlags</a></code></span></h3><h3 id='tymethod.get_show_connect_to_server' class='method'><span id='get_show_connect_to_server.v' class='invisible'><code>fn <a href='#tymethod.get_show_connect_to_server' class='fnname'>get_show_connect_to_server</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h3><h3 id='tymethod.get_show_desktop' class='method'><span id='get_show_desktop.v' class='invisible'><code>fn <a href='#tymethod.get_show_desktop' class='fnname'>get_show_desktop</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h3><h3 id='tymethod.get_show_enter_location' class='method'><span id='get_show_enter_location.v' class='invisible'><code>fn <a href='#tymethod.get_show_enter_location' class='fnname'>get_show_enter_location</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h3><h3 id='tymethod.get_show_other_locations' class='method'><span id='get_show_other_locations.v' class='invisible'><code>fn <a href='#tymethod.get_show_other_locations' class='fnname'>get_show_other_locations</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h3><h3 id='tymethod.get_show_recent' class='method'><span id='get_show_recent.v' class='invisible'><code>fn <a href='#tymethod.get_show_recent' class='fnname'>get_show_recent</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h3><h3 id='tymethod.get_show_trash' class='method'><span id='get_show_trash.v' class='invisible'><code>fn <a href='#tymethod.get_show_trash' class='fnname'>get_show_trash</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h3><h3 id='tymethod.set_drop_targets_visible' class='method'><span id='set_drop_targets_visible.v' class='invisible'><code>fn <a href='#tymethod.set_drop_targets_visible' class='fnname'>set_drop_targets_visible</a>(&amp;self, visible: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>, context: &amp;<a class="struct" href="../gdk/auto/drag_context/struct.DragContext.html" title="struct gdk::auto::drag_context::DragContext">DragContext</a>)</code></span></h3><h3 id='tymethod.set_local_only' class='method'><span id='set_local_only.v' class='invisible'><code>fn <a href='#tymethod.set_local_only' class='fnname'>set_local_only</a>(&amp;self, local_only: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>)</code></span></h3><h3 id='tymethod.set_open_flags' class='method'><span id='set_open_flags.v' class='invisible'><code>fn <a href='#tymethod.set_open_flags' class='fnname'>set_open_flags</a>(&amp;self, flags: <a class="struct" href="../gtk/struct.PlacesOpenFlags.html" title="struct gtk::PlacesOpenFlags">PlacesOpenFlags</a>)</code></span></h3><h3 id='tymethod.set_show_connect_to_server' class='method'><span id='set_show_connect_to_server.v' class='invisible'><code>fn <a href='#tymethod.set_show_connect_to_server' class='fnname'>set_show_connect_to_server</a>(&amp;self, show_connect_to_server: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>)</code></span></h3><h3 id='tymethod.set_show_desktop' class='method'><span id='set_show_desktop.v' class='invisible'><code>fn <a href='#tymethod.set_show_desktop' class='fnname'>set_show_desktop</a>(&amp;self, show_desktop: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>)</code></span></h3><h3 id='tymethod.set_show_enter_location' class='method'><span id='set_show_enter_location.v' class='invisible'><code>fn <a href='#tymethod.set_show_enter_location' class='fnname'>set_show_enter_location</a>(&amp;self, show_enter_location: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>)</code></span></h3><h3 id='tymethod.set_show_other_locations' class='method'><span id='set_show_other_locations.v' class='invisible'><code>fn <a href='#tymethod.set_show_other_locations' class='fnname'>set_show_other_locations</a>(&amp;self, show_other_locations: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>)</code></span></h3><h3 id='tymethod.set_show_recent' class='method'><span id='set_show_recent.v' class='invisible'><code>fn <a href='#tymethod.set_show_recent' class='fnname'>set_show_recent</a>(&amp;self, show_recent: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>)</code></span></h3><h3 id='tymethod.set_show_trash' class='method'><span id='set_show_trash.v' class='invisible'><code>fn <a href='#tymethod.set_show_trash' class='fnname'>set_show_trash</a>(&amp;self, show_trash: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>)</code></span></h3><h3 id='tymethod.get_property_local_only' class='method'><span id='get_property_local_only.v' class='invisible'><code>fn <a href='#tymethod.get_property_local_only' class='fnname'>get_property_local_only</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h3><h3 id='tymethod.set_property_local_only' class='method'><span id='set_property_local_only.v' class='invisible'><code>fn <a href='#tymethod.set_property_local_only' class='fnname'>set_property_local_only</a>(&amp;self, local_only: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>)</code></span></h3><h3 id='tymethod.get_property_open_flags' class='method'><span id='get_property_open_flags.v' class='invisible'><code>fn <a href='#tymethod.get_property_open_flags' class='fnname'>get_property_open_flags</a>(&amp;self) -&gt; <a class="struct" href="../gtk/struct.PlacesOpenFlags.html" title="struct gtk::PlacesOpenFlags">PlacesOpenFlags</a></code></span></h3><h3 id='tymethod.set_property_open_flags' class='method'><span id='set_property_open_flags.v' class='invisible'><code>fn <a href='#tymethod.set_property_open_flags' class='fnname'>set_property_open_flags</a>(&amp;self, open_flags: <a class="struct" href="../gtk/struct.PlacesOpenFlags.html" title="struct gtk::PlacesOpenFlags">PlacesOpenFlags</a>)</code></span></h3><h3 id='tymethod.get_property_populate_all' class='method'><span id='get_property_populate_all.v' class='invisible'><code>fn <a href='#tymethod.get_property_populate_all' class='fnname'>get_property_populate_all</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h3><h3 id='tymethod.set_property_populate_all' class='method'><span id='set_property_populate_all.v' class='invisible'><code>fn <a href='#tymethod.set_property_populate_all' class='fnname'>set_property_populate_all</a>(&amp;self, populate_all: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>)</code></span></h3><h3 id='tymethod.set_property_show_connect_to_server' class='method'><span id='set_property_show_connect_to_server.v' class='invisible'><code>fn <a href='#tymethod.set_property_show_connect_to_server' class='fnname'>set_property_show_connect_to_server</a>(&amp;self, show_connect_to_server: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>)</code></span></h3><h3 id='tymethod.get_property_show_desktop' class='method'><span id='get_property_show_desktop.v' class='invisible'><code>fn <a href='#tymethod.get_property_show_desktop' class='fnname'>get_property_show_desktop</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h3><h3 id='tymethod.set_property_show_desktop' class='method'><span id='set_property_show_desktop.v' class='invisible'><code>fn <a href='#tymethod.set_property_show_desktop' class='fnname'>set_property_show_desktop</a>(&amp;self, show_desktop: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>)</code></span></h3><h3 id='tymethod.get_property_show_enter_location' class='method'><span id='get_property_show_enter_location.v' class='invisible'><code>fn <a href='#tymethod.get_property_show_enter_location' class='fnname'>get_property_show_enter_location</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h3><h3 id='tymethod.set_property_show_enter_location' class='method'><span id='set_property_show_enter_location.v' class='invisible'><code>fn <a href='#tymethod.set_property_show_enter_location' class='fnname'>set_property_show_enter_location</a>(&amp;self, show_enter_location: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>)</code></span></h3><h3 id='tymethod.get_property_show_other_locations' class='method'><span id='get_property_show_other_locations.v' class='invisible'><code>fn <a href='#tymethod.get_property_show_other_locations' class='fnname'>get_property_show_other_locations</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h3><h3 id='tymethod.set_property_show_other_locations' class='method'><span id='set_property_show_other_locations.v' class='invisible'><code>fn <a href='#tymethod.set_property_show_other_locations' class='fnname'>set_property_show_other_locations</a>(&amp;self, show_other_locations: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>)</code></span></h3><h3 id='tymethod.get_property_show_recent' class='method'><span id='get_property_show_recent.v' class='invisible'><code>fn <a href='#tymethod.get_property_show_recent' class='fnname'>get_property_show_recent</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h3><h3 id='tymethod.set_property_show_recent' class='method'><span id='set_property_show_recent.v' class='invisible'><code>fn <a href='#tymethod.set_property_show_recent' class='fnname'>set_property_show_recent</a>(&amp;self, show_recent: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>)</code></span></h3><h3 id='tymethod.get_property_show_trash' class='method'><span id='get_property_show_trash.v' class='invisible'><code>fn <a href='#tymethod.get_property_show_trash' class='fnname'>get_property_show_trash</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h3><h3 id='tymethod.set_property_show_trash' class='method'><span id='set_property_show_trash.v' class='invisible'><code>fn <a href='#tymethod.set_property_show_trash' class='fnname'>set_property_show_trash</a>(&amp;self, show_trash: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>)</code></span></h3><h3 id='tymethod.connect_drag_action_ask' class='method'><span id='connect_drag_action_ask.v' class='invisible'><code>fn <a href='#tymethod.connect_drag_action_ask' class='fnname'>connect_drag_action_ask</a>&lt;F:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/function/trait.Fn.html" title="trait core::ops::function::Fn">Fn</a>(&amp;Self, <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a> + 'static&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;f: F<br>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a></code></span></h3><h3 id='tymethod.connect_show_connect_to_server' class='method'><span id='connect_show_connect_to_server.v' class='invisible'><code>fn <a href='#tymethod.connect_show_connect_to_server' class='fnname'>connect_show_connect_to_server</a>&lt;F:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/function/trait.Fn.html" title="trait core::ops::function::Fn">Fn</a>(&amp;Self) + 'static&gt;(&amp;self, f: F) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a></code></span></h3><h3 id='tymethod.connect_show_enter_location' class='method'><span id='connect_show_enter_location.v' class='invisible'><code>fn <a href='#tymethod.connect_show_enter_location' class='fnname'>connect_show_enter_location</a>&lt;F:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/function/trait.Fn.html" title="trait core::ops::function::Fn">Fn</a>(&amp;Self) + 'static&gt;(&amp;self, f: F) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a></code></span></h3><h3 id='tymethod.connect_show_error_message' class='method'><span id='connect_show_error_message.v' class='invisible'><code>fn <a href='#tymethod.connect_show_error_message' class='fnname'>connect_show_error_message</a>&lt;F:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/function/trait.Fn.html" title="trait core::ops::function::Fn">Fn</a>(&amp;Self, &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>, &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) + 'static&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;f: F<br>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a></code></span></h3><h3 id='tymethod.connect_show_other_locations' class='method'><span id='connect_show_other_locations.v' class='invisible'><code>fn <a href='#tymethod.connect_show_other_locations' class='fnname'>connect_show_other_locations</a>&lt;F:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/function/trait.Fn.html" title="trait core::ops::function::Fn">Fn</a>(&amp;Self) + 'static&gt;(&amp;self, f: F) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a></code></span></h3><h3 id='tymethod.connect_show_other_locations_with_flags' class='method'><span id='connect_show_other_locations_with_flags.v' class='invisible'><code>fn <a href='#tymethod.connect_show_other_locations_with_flags' class='fnname'>connect_show_other_locations_with_flags</a>&lt;F:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/function/trait.Fn.html" title="trait core::ops::function::Fn">Fn</a>(&amp;Self, <a class="struct" href="../gtk/struct.PlacesOpenFlags.html" title="struct gtk::PlacesOpenFlags">PlacesOpenFlags</a>) + 'static&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;f: F<br>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a></code></span></h3></div>
+        <h2 id='implementors'>Implementors</h2>
+        <ul class='item-list' id='implementors-list'>
+    <li><code>impl&lt;O:&nbsp;<a class="trait" href="../gtk/trait.IsA.html" title="trait gtk::IsA">IsA</a>&lt;<a class="struct" href="../gtk/struct.PlacesSidebar.html" title="struct gtk::PlacesSidebar">PlacesSidebar</a>&gt; + <a class="trait" href="../gtk/trait.IsA.html" title="trait gtk::IsA">IsA</a>&lt;<a class="struct" href="../gtk/struct.Object.html" title="struct gtk::Object">Object</a>&gt;&gt; PlacesSidebarExt for O</code></li>
+</ul><script type="text/javascript" async
+                         src="../implementors/gtk/trait.PlacesSidebarExt.js">
+                 </script></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "gtk";
+    </script>
+    <script src="../main.js"></script>
+    <script defer src="../search-index.js"></script>
+</body>
+</html>

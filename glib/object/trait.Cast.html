@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `Cast` trait in crate `glib`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, Cast">
+
+    <title>glib::object::Cast - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc trait">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'>Trait Cast</p><div class="block items"><ul><li><a href="#provided-methods">Provided Methods</a></li><li><a href="#implementors">Implementors</a></li></ul></div><p class='location'><a href='../index.html'>glib</a>::<wbr><a href='index.html'>object</a></p><script>window.sidebarCurrent = {name: 'Cast', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>glib</a>::<wbr><a href='index.html'>object</a>::<wbr><a class="trait" href=''>Cast</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../../src/glib/object.rs.html#23-61' title='goto source code'>[src]</a></span></h1>
+<pre class='rust trait'>pub trait Cast: <a class="trait" href="../../glib/object/trait.IsA.html" title="trait glib::object::IsA">IsA</a>&lt;<a class="struct" href="../../glib/object/struct.Object.html" title="struct glib::object::Object">Object</a>&gt; {
+    fn <a href='#method.upcast' class='fnname'>upcast</a>&lt;T&gt;(self) -&gt; T<br>&nbsp;&nbsp;&nbsp; <span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../../glib/types/trait.StaticType.html" title="trait glib::types::StaticType">StaticType</a> + <a class="trait" href="../../glib/wrapper/trait.UnsafeFrom.html" title="trait glib::wrapper::UnsafeFrom">UnsafeFrom</a>&lt;ObjectRef&gt; + <a class="trait" href="../../glib/wrapper/trait.Wrapper.html" title="trait glib::wrapper::Wrapper">Wrapper</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: <a class="trait" href="../../glib/object/trait.IsA.html" title="trait glib::object::IsA">IsA</a>&lt;T&gt;</span>,
+    { ... }
+    fn <a href='#method.downcast' class='fnname'>downcast</a>&lt;T&gt;(self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;T, Self&gt;<br>&nbsp;&nbsp;&nbsp; <span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a> + <a class="trait" href="../../glib/object/trait.Downcast.html" title="trait glib::object::Downcast">Downcast</a>&lt;T&gt;</span>,
+    { ... }
+    fn <a href='#method.is' class='fnname'>is</a>&lt;T&gt;(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a><br>&nbsp;&nbsp;&nbsp; <span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: <a class="trait" href="../../glib/object/trait.Downcast.html" title="trait glib::object::Downcast">Downcast</a>&lt;T&gt;</span>,
+    { ... }
+}</pre><div class='docblock'><p>Upcasting and downcasting support.</p>
+
+<p>Provides conversions up and down the class hierarchy tree.</p>
+</div>
+            <h2 id='provided-methods'>Provided Methods</h2>
+            <div class='methods'>
+        <h3 id='method.upcast' class='method'><span id='upcast.v' class='invisible'><code>fn <a href='#method.upcast' class='fnname'>upcast</a>&lt;T&gt;(self) -&gt; T <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../../glib/types/trait.StaticType.html" title="trait glib::types::StaticType">StaticType</a> + <a class="trait" href="../../glib/wrapper/trait.UnsafeFrom.html" title="trait glib::wrapper::UnsafeFrom">UnsafeFrom</a>&lt;ObjectRef&gt; + <a class="trait" href="../../glib/wrapper/trait.Wrapper.html" title="trait glib::wrapper::Wrapper">Wrapper</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: <a class="trait" href="../../glib/object/trait.IsA.html" title="trait glib::object::IsA">IsA</a>&lt;T&gt;,&nbsp;</span></code></span></h3><div class='docblock'><p>Upcasts an object to a superclass or interface <code>T</code>.</p>
+
+<h1 id='example' class='section-header'><a href='#example'>Example</a></h1>
+<pre class="rust rust-example-rendered">
+<span class="kw">let</span> <span class="ident">button</span> <span class="op">=</span> <span class="ident">gtk</span>::<span class="ident">Button</span>::<span class="ident">new</span>();
+<span class="kw">let</span> <span class="ident">widget</span> <span class="op">=</span> <span class="ident">button</span>.<span class="ident">upcast</span>::<span class="op">&lt;</span><span class="ident">gtk</span>::<span class="ident">Widget</span><span class="op">&gt;</span>();</pre>
+</div><h3 id='method.downcast' class='method'><span id='downcast.v' class='invisible'><code>fn <a href='#method.downcast' class='fnname'>downcast</a>&lt;T&gt;(self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;T, Self&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a> + <a class="trait" href="../../glib/object/trait.Downcast.html" title="trait glib::object::Downcast">Downcast</a>&lt;T&gt;,&nbsp;</span></code></span></h3><div class='docblock'><p>Tries to downcast to a subclass or interface implementor <code>T</code>.</p>
+
+<p>Returns <code>Ok(T)</code> if the object is an instance of <code>T</code> and <code>Err(self)</code>
+otherwise.</p>
+
+<h1 id='example-1' class='section-header'><a href='#example-1'>Example</a></h1>
+<pre class="rust rust-example-rendered">
+<span class="kw">let</span> <span class="ident">button</span> <span class="op">=</span> <span class="ident">gtk</span>::<span class="ident">Button</span>::<span class="ident">new</span>();
+<span class="kw">let</span> <span class="ident">widget</span> <span class="op">=</span> <span class="ident">button</span>.<span class="ident">upcast</span>::<span class="op">&lt;</span><span class="ident">gtk</span>::<span class="ident">Widget</span><span class="op">&gt;</span>();
+<span class="macro">assert</span><span class="macro">!</span>(<span class="ident">widget</span>.<span class="ident">downcast</span>::<span class="op">&lt;</span><span class="ident">gtk</span>::<span class="ident">Button</span><span class="op">&gt;</span>().<span class="ident">is_ok</span>());</pre>
+</div><h3 id='method.is' class='method'><span id='is.v' class='invisible'><code>fn <a href='#method.is' class='fnname'>is</a>&lt;T&gt;(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: <a class="trait" href="../../glib/object/trait.Downcast.html" title="trait glib::object::Downcast">Downcast</a>&lt;T&gt;,&nbsp;</span></code></span></h3><div class='docblock'><p>Returns <code>true</code> if the object is an instance of (can be downcast to) <code>T</code>.</p>
+</div></div>
+        <h2 id='implementors'>Implementors</h2>
+        <ul class='item-list' id='implementors-list'>
+    <li><code>impl&lt;T:&nbsp;<a class="trait" href="../../glib/object/trait.IsA.html" title="trait glib::object::IsA">IsA</a>&lt;<a class="struct" href="../../glib/object/struct.Object.html" title="struct glib::object::Object">Object</a>&gt;&gt; Cast for T</code></li>
+</ul><script type="text/javascript" async
+                         src="../../implementors/glib/object/trait.Cast.js">
+                 </script></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "glib";
+    </script>
+    <script src="../../main.js"></script>
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>

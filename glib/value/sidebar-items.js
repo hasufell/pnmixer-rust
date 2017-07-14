@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["TypedValue","A statically typed `Value`."],["Value","A generic value capable of carrying various types."],["ValueArray",""]],"trait":[["FromValue","Extracts a value."],["FromValueOptional","Extracts a value."],["SetValue","Sets a value."],["SetValueOptional","Sets a value."],["ToValue","Converts to `Value`."]]});

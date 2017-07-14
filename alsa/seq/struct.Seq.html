@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `Seq` struct in crate `alsa`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, Seq">
+
+    <title>alsa::seq::Seq - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc struct">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'>Struct Seq</p><div class="block items"><ul><li><a href="#methods">Methods</a></li><li><a href="#implementations">Trait Implementations</a></li></ul></div><p class='location'><a href='../index.html'>alsa</a>::<wbr><a href='index.html'>seq</a></p><script>window.sidebarCurrent = {name: 'Seq', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>alsa</a>::<wbr><a href='index.html'>seq</a>::<wbr><a class="struct" href=''>Seq</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../../src/alsa/seq.rs.html#47' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct Seq(_, _);</pre><div class='docblock'><p><a href="http://www.alsa-project.org/alsa-doc/alsa-lib/group___sequencer.html">snd_seq_t</a> wrapper</p>
+
+<p>To access the functions `<code>event_input</code>, <code>event_input_pending</code> and <code>set_input_buffer_size</code>,
+you first have to obtain an instance of <code>Input</code> by calling <code>input()</code>. Only one instance of
+<code>Input</code> may exist at any time for a given <code>Seq</code>.</p>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class="struct" href="../../alsa/seq/struct.Seq.html" title="struct alsa::seq::Seq">Seq</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/alsa/seq.rs.html#55-182' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.open' class="method"><span id='open.v' class='invisible'><code>fn <a href='#method.open' class='fnname'>open</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;name: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;&amp;<a class="struct" href="https://doc.rust-lang.org/nightly/std/ffi/c_str/struct.CStr.html" title="struct std::ffi::c_str::CStr">CStr</a>&gt;, <br>&nbsp;&nbsp;&nbsp;&nbsp;dir: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="enum" href="../../alsa/enum.Direction.html" title="enum alsa::Direction">Direction</a>&gt;, <br>&nbsp;&nbsp;&nbsp;&nbsp;nonblock: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a><br>) -&gt; <a class="type" href="../../alsa/type.Result.html" title="type alsa::Result">Result</a>&lt;<a class="struct" href="../../alsa/seq/struct.Seq.html" title="struct alsa::seq::Seq">Seq</a>&gt;</code></span></h4>
+<div class='docblock'><p>Opens the sequencer.</p>
+
+<p>If name is None, &quot;default&quot; will be used. That&#39;s almost always what you usually want to use anyway.</p>
+</div><h4 id='method.set_client_name' class="method"><span id='set_client_name.v' class='invisible'><code>fn <a href='#method.set_client_name' class='fnname'>set_client_name</a>(&amp;self, name: &amp;<a class="struct" href="https://doc.rust-lang.org/nightly/std/ffi/c_str/struct.CStr.html" title="struct std::ffi::c_str::CStr">CStr</a>) -&gt; <a class="type" href="../../alsa/type.Result.html" title="type alsa::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;</code></span></h4>
+<h4 id='method.set_client_event_filter' class="method"><span id='set_client_event_filter.v' class='invisible'><code>fn <a href='#method.set_client_event_filter' class='fnname'>set_client_event_filter</a>(&amp;self, event_type: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>) -&gt; <a class="type" href="../../alsa/type.Result.html" title="type alsa::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;</code></span></h4>
+<h4 id='method.set_client_pool_output' class="method"><span id='set_client_pool_output.v' class='invisible'><code>fn <a href='#method.set_client_pool_output' class='fnname'>set_client_pool_output</a>(&amp;self, size: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>) -&gt; <a class="type" href="../../alsa/type.Result.html" title="type alsa::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;</code></span></h4>
+<h4 id='method.set_client_pool_input' class="method"><span id='set_client_pool_input.v' class='invisible'><code>fn <a href='#method.set_client_pool_input' class='fnname'>set_client_pool_input</a>(&amp;self, size: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>) -&gt; <a class="type" href="../../alsa/type.Result.html" title="type alsa::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;</code></span></h4>
+<h4 id='method.set_client_pool_output_room' class="method"><span id='set_client_pool_output_room.v' class='invisible'><code>fn <a href='#method.set_client_pool_output_room' class='fnname'>set_client_pool_output_room</a>(&amp;self, size: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>) -&gt; <a class="type" href="../../alsa/type.Result.html" title="type alsa::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;</code></span></h4>
+<h4 id='method.client_id' class="method"><span id='client_id.v' class='invisible'><code>fn <a href='#method.client_id' class='fnname'>client_id</a>(&amp;self) -&gt; <a class="type" href="../../alsa/type.Result.html" title="type alsa::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>&gt;</code></span></h4>
+<h4 id='method.drain_output' class="method"><span id='drain_output.v' class='invisible'><code>fn <a href='#method.drain_output' class='fnname'>drain_output</a>(&amp;self) -&gt; <a class="type" href="../../alsa/type.Result.html" title="type alsa::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>&gt;</code></span></h4>
+<h4 id='method.get_any_client_info' class="method"><span id='get_any_client_info.v' class='invisible'><code>fn <a href='#method.get_any_client_info' class='fnname'>get_any_client_info</a>(&amp;self, client: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>) -&gt; <a class="type" href="../../alsa/type.Result.html" title="type alsa::Result">Result</a>&lt;<a class="struct" href="../../alsa/seq/struct.ClientInfo.html" title="struct alsa::seq::ClientInfo">ClientInfo</a>&gt;</code></span></h4>
+<h4 id='method.get_any_port_info' class="method"><span id='get_any_port_info.v' class='invisible'><code>fn <a href='#method.get_any_port_info' class='fnname'>get_any_port_info</a>(&amp;self, a: <a class="struct" href="../../alsa/seq/struct.Addr.html" title="struct alsa::seq::Addr">Addr</a>) -&gt; <a class="type" href="../../alsa/type.Result.html" title="type alsa::Result">Result</a>&lt;<a class="struct" href="../../alsa/seq/struct.PortInfo.html" title="struct alsa::seq::PortInfo">PortInfo</a>&gt;</code></span></h4>
+<h4 id='method.create_port' class="method"><span id='create_port.v' class='invisible'><code>fn <a href='#method.create_port' class='fnname'>create_port</a>(&amp;self, port: &amp;<a class="struct" href="../../alsa/seq/struct.PortInfo.html" title="struct alsa::seq::PortInfo">PortInfo</a>) -&gt; <a class="type" href="../../alsa/type.Result.html" title="type alsa::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;</code></span></h4>
+<h4 id='method.create_simple_port' class="method"><span id='create_simple_port.v' class='invisible'><code>fn <a href='#method.create_simple_port' class='fnname'>create_simple_port</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;name: &amp;<a class="struct" href="https://doc.rust-lang.org/nightly/std/ffi/c_str/struct.CStr.html" title="struct std::ffi::c_str::CStr">CStr</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;caps: <a class="struct" href="../../alsa/seq/struct.PortCap.html" title="struct alsa::seq::PortCap">PortCap</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;t: <a class="struct" href="../../alsa/seq/struct.PortType.html" title="struct alsa::seq::PortType">PortType</a><br>) -&gt; <a class="type" href="../../alsa/type.Result.html" title="type alsa::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>&gt;</code></span></h4>
+<h4 id='method.set_port_info' class="method"><span id='set_port_info.v' class='invisible'><code>fn <a href='#method.set_port_info' class='fnname'>set_port_info</a>(&amp;self, port: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>, info: &amp;mut <a class="struct" href="../../alsa/seq/struct.PortInfo.html" title="struct alsa::seq::PortInfo">PortInfo</a>) -&gt; <a class="type" href="../../alsa/type.Result.html" title="type alsa::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;</code></span></h4>
+<h4 id='method.delete_port' class="method"><span id='delete_port.v' class='invisible'><code>fn <a href='#method.delete_port' class='fnname'>delete_port</a>(&amp;self, port: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>) -&gt; <a class="type" href="../../alsa/type.Result.html" title="type alsa::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;</code></span></h4>
+<h4 id='method.subscribe_port' class="method"><span id='subscribe_port.v' class='invisible'><code>fn <a href='#method.subscribe_port' class='fnname'>subscribe_port</a>(&amp;self, info: &amp;<a class="struct" href="../../alsa/seq/struct.PortSubscribe.html" title="struct alsa::seq::PortSubscribe">PortSubscribe</a>) -&gt; <a class="type" href="../../alsa/type.Result.html" title="type alsa::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;</code></span></h4>
+<h4 id='method.unsubscribe_port' class="method"><span id='unsubscribe_port.v' class='invisible'><code>fn <a href='#method.unsubscribe_port' class='fnname'>unsubscribe_port</a>(&amp;self, sender: <a class="struct" href="../../alsa/seq/struct.Addr.html" title="struct alsa::seq::Addr">Addr</a>, dest: <a class="struct" href="../../alsa/seq/struct.Addr.html" title="struct alsa::seq::Addr">Addr</a>) -&gt; <a class="type" href="../../alsa/type.Result.html" title="type alsa::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;</code></span></h4>
+<h4 id='method.control_queue' class="method"><span id='control_queue.v' class='invisible'><code>fn <a href='#method.control_queue' class='fnname'>control_queue</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;q: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;t: <a class="enum" href="../../alsa/seq/enum.EventType.html" title="enum alsa::seq::EventType">EventType</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;value: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;e: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;&amp;mut <a class="struct" href="../../alsa/seq/struct.Event.html" title="struct alsa::seq::Event">Event</a>&gt;<br>) -&gt; <a class="type" href="../../alsa/type.Result.html" title="type alsa::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;</code></span></h4>
+<h4 id='method.event_output' class="method"><span id='event_output.v' class='invisible'><code>fn <a href='#method.event_output' class='fnname'>event_output</a>(&amp;self, e: &amp;mut <a class="struct" href="../../alsa/seq/struct.Event.html" title="struct alsa::seq::Event">Event</a>) -&gt; <a class="type" href="../../alsa/type.Result.html" title="type alsa::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>&gt;</code></span></h4>
+<h4 id='method.event_output_buffer' class="method"><span id='event_output_buffer.v' class='invisible'><code>fn <a href='#method.event_output_buffer' class='fnname'>event_output_buffer</a>(&amp;self, e: &amp;mut <a class="struct" href="../../alsa/seq/struct.Event.html" title="struct alsa::seq::Event">Event</a>) -&gt; <a class="type" href="../../alsa/type.Result.html" title="type alsa::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>&gt;</code></span></h4>
+<h4 id='method.event_output_direct' class="method"><span id='event_output_direct.v' class='invisible'><code>fn <a href='#method.event_output_direct' class='fnname'>event_output_direct</a>(&amp;self, e: &amp;mut <a class="struct" href="../../alsa/seq/struct.Event.html" title="struct alsa::seq::Event">Event</a>) -&gt; <a class="type" href="../../alsa/type.Result.html" title="type alsa::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>&gt;</code></span></h4>
+<h4 id='method.get_queue_tempo' class="method"><span id='get_queue_tempo.v' class='invisible'><code>fn <a href='#method.get_queue_tempo' class='fnname'>get_queue_tempo</a>(&amp;self, q: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>) -&gt; <a class="type" href="../../alsa/type.Result.html" title="type alsa::Result">Result</a>&lt;<a class="struct" href="../../alsa/seq/struct.QueueTempo.html" title="struct alsa::seq::QueueTempo">QueueTempo</a>&gt;</code></span></h4>
+<h4 id='method.set_queue_tempo' class="method"><span id='set_queue_tempo.v' class='invisible'><code>fn <a href='#method.set_queue_tempo' class='fnname'>set_queue_tempo</a>(&amp;self, q: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>, value: &amp;<a class="struct" href="../../alsa/seq/struct.QueueTempo.html" title="struct alsa::seq::QueueTempo">QueueTempo</a>) -&gt; <a class="type" href="../../alsa/type.Result.html" title="type alsa::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;</code></span></h4>
+<h4 id='method.free_queue' class="method"><span id='free_queue.v' class='invisible'><code>fn <a href='#method.free_queue' class='fnname'>free_queue</a>(&amp;self, q: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>) -&gt; <a class="type" href="../../alsa/type.Result.html" title="type alsa::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;</code></span></h4>
+<h4 id='method.alloc_queue' class="method"><span id='alloc_queue.v' class='invisible'><code>fn <a href='#method.alloc_queue' class='fnname'>alloc_queue</a>(&amp;self) -&gt; <a class="type" href="../../alsa/type.Result.html" title="type alsa::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>&gt;</code></span></h4>
+<h4 id='method.alloc_named_queue' class="method"><span id='alloc_named_queue.v' class='invisible'><code>fn <a href='#method.alloc_named_queue' class='fnname'>alloc_named_queue</a>(&amp;self, n: &amp;<a class="struct" href="https://doc.rust-lang.org/nightly/std/ffi/c_str/struct.CStr.html" title="struct std::ffi::c_str::CStr">CStr</a>) -&gt; <a class="type" href="../../alsa/type.Result.html" title="type alsa::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>&gt;</code></span></h4>
+<h4 id='method.input' class="method"><span id='input.v' class='invisible'><code>fn <a href='#method.input' class='fnname'>input</a>&lt;'a&gt;(&amp;'a self) -&gt; <a class="struct" href="../../alsa/seq/struct.Input.html" title="struct alsa::seq::Input">Input</a>&lt;'a&gt;</code></span></h4>
+<div class='docblock'><p>Call this function to obtain an instance of <code>Input</code> to access the functions <code>event_input</code>,
+<code>event_input_pending</code> and <code>set_input_buffer_size</code>. See the documentation of <code>Input</code> for details.</p>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a> for <a class="struct" href="../../alsa/seq/struct.Seq.html" title="struct alsa::seq::Seq">Seq</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/alsa/seq.rs.html#49' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'></div><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/drop/trait.Drop.html" title="trait core::ops::drop::Drop">Drop</a> for <a class="struct" href="../../alsa/seq/struct.Seq.html" title="struct alsa::seq::Seq">Seq</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/alsa/seq.rs.html#51-53' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.drop' class="method"><span id='drop.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/ops/drop/trait.Drop.html#tymethod.drop' class='fnname'>drop</a>(&amp;mut self)</code></span></h4>
+<div class='docblock'><p>A method called when the value goes out of scope. <a href="https://doc.rust-lang.org/nightly/core/ops/drop/trait.Drop.html#tymethod.drop">Read more</a></p>
+</div></div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "alsa";
+    </script>
+    <script src="../../main.js"></script>
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>

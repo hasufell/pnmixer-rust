@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `PCM` struct in crate `alsa`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, PCM">
+
+    <title>alsa::pcm::PCM - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc struct">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'>Struct PCM</p><div class="block items"><ul><li><a href="#methods">Methods</a></li><li><a href="#implementations">Trait Implementations</a></li></ul></div><p class='location'><a href='../index.html'>alsa</a>::<wbr><a href='index.html'>pcm</a></p><script>window.sidebarCurrent = {name: 'PCM', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>alsa</a>::<wbr><a href='index.html'>pcm</a>::<wbr><a class="struct" href=''>PCM</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../../src/alsa/pcm.rs.html#96' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct PCM(_, _);</pre><div class='docblock'><p><a href="http://www.alsa-project.org/alsa-doc/alsa-lib/group___p_c_m.html">snd_pcm_t</a> wrapper - start here for audio playback and recording</p>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class="struct" href="../../alsa/pcm/struct.PCM.html" title="struct alsa::pcm::PCM">PCM</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/alsa/pcm.rs.html#100-220' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.open' class="method"><span id='open.v' class='invisible'><code>fn <a href='#method.open' class='fnname'>open</a>(name: &amp;<a class="struct" href="https://doc.rust-lang.org/nightly/std/ffi/c_str/struct.CStr.html" title="struct std::ffi::c_str::CStr">CStr</a>, dir: <a class="enum" href="../../alsa/enum.Direction.html" title="enum alsa::Direction">Direction</a>, nonblock: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>) -&gt; <a class="type" href="../../alsa/type.Result.html" title="type alsa::Result">Result</a>&lt;<a class="struct" href="../../alsa/pcm/struct.PCM.html" title="struct alsa::pcm::PCM">PCM</a>&gt;</code></span></h4>
+<h4 id='method.start' class="method"><span id='start.v' class='invisible'><code>fn <a href='#method.start' class='fnname'>start</a>(&amp;self) -&gt; <a class="type" href="../../alsa/type.Result.html" title="type alsa::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;</code></span></h4>
+<h4 id='method.drop' class="method"><span id='drop.v' class='invisible'><code>fn <a href='#method.drop' class='fnname'>drop</a>(&amp;self) -&gt; <a class="type" href="../../alsa/type.Result.html" title="type alsa::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;</code></span></h4>
+<h4 id='method.pause' class="method"><span id='pause.v' class='invisible'><code>fn <a href='#method.pause' class='fnname'>pause</a>(&amp;self, pause: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>) -&gt; <a class="type" href="../../alsa/type.Result.html" title="type alsa::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;</code></span></h4>
+<h4 id='method.resume' class="method"><span id='resume.v' class='invisible'><code>fn <a href='#method.resume' class='fnname'>resume</a>(&amp;self) -&gt; <a class="type" href="../../alsa/type.Result.html" title="type alsa::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;</code></span></h4>
+<h4 id='method.drain' class="method"><span id='drain.v' class='invisible'><code>fn <a href='#method.drain' class='fnname'>drain</a>(&amp;self) -&gt; <a class="type" href="../../alsa/type.Result.html" title="type alsa::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;</code></span></h4>
+<h4 id='method.prepare' class="method"><span id='prepare.v' class='invisible'><code>fn <a href='#method.prepare' class='fnname'>prepare</a>(&amp;self) -&gt; <a class="type" href="../../alsa/type.Result.html" title="type alsa::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;</code></span></h4>
+<h4 id='method.reset' class="method"><span id='reset.v' class='invisible'><code>fn <a href='#method.reset' class='fnname'>reset</a>(&amp;self) -&gt; <a class="type" href="../../alsa/type.Result.html" title="type alsa::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;</code></span></h4>
+<h4 id='method.recover' class="method"><span id='recover.v' class='invisible'><code>fn <a href='#method.recover' class='fnname'>recover</a>(&amp;self, err: <a class="type" href="../../libc/type.c_int.html" title="type libc::c_int">c_int</a>, silent: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>) -&gt; <a class="type" href="../../alsa/type.Result.html" title="type alsa::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;</code></span></h4>
+<h4 id='method.wait' class="method"><span id='wait.v' class='invisible'><code>fn <a href='#method.wait' class='fnname'>wait</a>(&amp;self, timeout_ms: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>&gt;) -&gt; <a class="type" href="../../alsa/type.Result.html" title="type alsa::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>&gt;</code></span></h4>
+<h4 id='method.state' class="method"><span id='state.v' class='invisible'><code>fn <a href='#method.state' class='fnname'>state</a>(&amp;self) -&gt; <a class="enum" href="../../alsa/pcm/enum.State.html" title="enum alsa::pcm::State">State</a></code></span></h4>
+<h4 id='method.bytes_to_frames' class="method"><span id='bytes_to_frames.v' class='invisible'><code>fn <a href='#method.bytes_to_frames' class='fnname'>bytes_to_frames</a>(&amp;self, i: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.isize.html">isize</a>) -&gt; <a class="type" href="../../alsa/pcm/type.Frames.html" title="type alsa::pcm::Frames">Frames</a></code></span></h4>
+<h4 id='method.frames_to_bytes' class="method"><span id='frames_to_bytes.v' class='invisible'><code>fn <a href='#method.frames_to_bytes' class='fnname'>frames_to_bytes</a>(&amp;self, i: <a class="type" href="../../alsa/pcm/type.Frames.html" title="type alsa::pcm::Frames">Frames</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.isize.html">isize</a></code></span></h4>
+<h4 id='method.avail_update' class="method"><span id='avail_update.v' class='invisible'><code>fn <a href='#method.avail_update' class='fnname'>avail_update</a>(&amp;self) -&gt; <a class="type" href="../../alsa/type.Result.html" title="type alsa::Result">Result</a>&lt;<a class="type" href="../../alsa/pcm/type.Frames.html" title="type alsa::pcm::Frames">Frames</a>&gt;</code></span></h4>
+<h4 id='method.avail' class="method"><span id='avail.v' class='invisible'><code>fn <a href='#method.avail' class='fnname'>avail</a>(&amp;self) -&gt; <a class="type" href="../../alsa/type.Result.html" title="type alsa::Result">Result</a>&lt;<a class="type" href="../../alsa/pcm/type.Frames.html" title="type alsa::pcm::Frames">Frames</a>&gt;</code></span></h4>
+<h4 id='method.avail_delay' class="method"><span id='avail_delay.v' class='invisible'><code>fn <a href='#method.avail_delay' class='fnname'>avail_delay</a>(&amp;self) -&gt; <a class="type" href="../../alsa/type.Result.html" title="type alsa::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">(</a><a class="type" href="../../alsa/pcm/type.Frames.html" title="type alsa::pcm::Frames">Frames</a>, <a class="type" href="../../alsa/pcm/type.Frames.html" title="type alsa::pcm::Frames">Frames</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">)</a>&gt;</code></span></h4>
+<h4 id='method.status' class="method"><span id='status.v' class='invisible'><code>fn <a href='#method.status' class='fnname'>status</a>(&amp;self) -&gt; <a class="type" href="../../alsa/type.Result.html" title="type alsa::Result">Result</a>&lt;<a class="struct" href="../../alsa/pcm/struct.Status.html" title="struct alsa::pcm::Status">Status</a>&gt;</code></span></h4>
+<h4 id='method.io_i8' class="method"><span id='io_i8.v' class='invisible'><code>fn <a href='#method.io_i8' class='fnname'>io_i8</a>&lt;'a&gt;(&amp;'a self) -&gt; <a class="type" href="../../alsa/type.Result.html" title="type alsa::Result">Result</a>&lt;<a class="struct" href="../../alsa/pcm/struct.IO.html" title="struct alsa::pcm::IO">IO</a>&lt;'a, <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i8.html">i8</a>&gt;&gt;</code></span></h4>
+<h4 id='method.io_u8' class="method"><span id='io_u8.v' class='invisible'><code>fn <a href='#method.io_u8' class='fnname'>io_u8</a>&lt;'a&gt;(&amp;'a self) -&gt; <a class="type" href="../../alsa/type.Result.html" title="type alsa::Result">Result</a>&lt;<a class="struct" href="../../alsa/pcm/struct.IO.html" title="struct alsa::pcm::IO">IO</a>&lt;'a, <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt;&gt;</code></span></h4>
+<h4 id='method.io_i16' class="method"><span id='io_i16.v' class='invisible'><code>fn <a href='#method.io_i16' class='fnname'>io_i16</a>&lt;'a&gt;(&amp;'a self) -&gt; <a class="type" href="../../alsa/type.Result.html" title="type alsa::Result">Result</a>&lt;<a class="struct" href="../../alsa/pcm/struct.IO.html" title="struct alsa::pcm::IO">IO</a>&lt;'a, <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i16.html">i16</a>&gt;&gt;</code></span></h4>
+<h4 id='method.io_u16' class="method"><span id='io_u16.v' class='invisible'><code>fn <a href='#method.io_u16' class='fnname'>io_u16</a>&lt;'a&gt;(&amp;'a self) -&gt; <a class="type" href="../../alsa/type.Result.html" title="type alsa::Result">Result</a>&lt;<a class="struct" href="../../alsa/pcm/struct.IO.html" title="struct alsa::pcm::IO">IO</a>&lt;'a, <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>&gt;&gt;</code></span></h4>
+<h4 id='method.io_i32' class="method"><span id='io_i32.v' class='invisible'><code>fn <a href='#method.io_i32' class='fnname'>io_i32</a>&lt;'a&gt;(&amp;'a self) -&gt; <a class="type" href="../../alsa/type.Result.html" title="type alsa::Result">Result</a>&lt;<a class="struct" href="../../alsa/pcm/struct.IO.html" title="struct alsa::pcm::IO">IO</a>&lt;'a, <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>&gt;&gt;</code></span></h4>
+<h4 id='method.io_u32' class="method"><span id='io_u32.v' class='invisible'><code>fn <a href='#method.io_u32' class='fnname'>io_u32</a>&lt;'a&gt;(&amp;'a self) -&gt; <a class="type" href="../../alsa/type.Result.html" title="type alsa::Result">Result</a>&lt;<a class="struct" href="../../alsa/pcm/struct.IO.html" title="struct alsa::pcm::IO">IO</a>&lt;'a, <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>&gt;&gt;</code></span></h4>
+<h4 id='method.io_f32' class="method"><span id='io_f32.v' class='invisible'><code>fn <a href='#method.io_f32' class='fnname'>io_f32</a>&lt;'a&gt;(&amp;'a self) -&gt; <a class="type" href="../../alsa/type.Result.html" title="type alsa::Result">Result</a>&lt;<a class="struct" href="../../alsa/pcm/struct.IO.html" title="struct alsa::pcm::IO">IO</a>&lt;'a, <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>&gt;&gt;</code></span></h4>
+<h4 id='method.io_f64' class="method"><span id='io_f64.v' class='invisible'><code>fn <a href='#method.io_f64' class='fnname'>io_f64</a>&lt;'a&gt;(&amp;'a self) -&gt; <a class="type" href="../../alsa/type.Result.html" title="type alsa::Result">Result</a>&lt;<a class="struct" href="../../alsa/pcm/struct.IO.html" title="struct alsa::pcm::IO">IO</a>&lt;'a, <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>&gt;&gt;</code></span></h4>
+<h4 id='method.io' class="method"><span id='io.v' class='invisible'><code>fn <a href='#method.io' class='fnname'>io</a>&lt;'a&gt;(&amp;'a self) -&gt; <a class="struct" href="../../alsa/pcm/struct.IO.html" title="struct alsa::pcm::IO">IO</a>&lt;'a, <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt;</code></span></h4>
+<h4 id='method.hw_params' class="method"><span id='hw_params.v' class='invisible'><code>fn <a href='#method.hw_params' class='fnname'>hw_params</a>(&amp;self, h: &amp;<a class="struct" href="../../alsa/pcm/struct.HwParams.html" title="struct alsa::pcm::HwParams">HwParams</a>) -&gt; <a class="type" href="../../alsa/type.Result.html" title="type alsa::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;</code></span></h4>
+<div class='docblock'><p>Sets hw parameters. Note: No IO object can exist for this PCM
+when hw parameters are set.</p>
+</div><h4 id='method.hw_params_current' class="method"><span id='hw_params_current.v' class='invisible'><code>fn <a href='#method.hw_params_current' class='fnname'>hw_params_current</a>&lt;'a&gt;(&amp;'a self) -&gt; <a class="type" href="../../alsa/type.Result.html" title="type alsa::Result">Result</a>&lt;<a class="struct" href="../../alsa/pcm/struct.HwParams.html" title="struct alsa::pcm::HwParams">HwParams</a>&lt;'a&gt;&gt;</code></span></h4>
+<h4 id='method.sw_params' class="method"><span id='sw_params.v' class='invisible'><code>fn <a href='#method.sw_params' class='fnname'>sw_params</a>(&amp;self, h: &amp;<a class="struct" href="../../alsa/pcm/struct.SwParams.html" title="struct alsa::pcm::SwParams">SwParams</a>) -&gt; <a class="type" href="../../alsa/type.Result.html" title="type alsa::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;</code></span></h4>
+<h4 id='method.sw_params_current' class="method"><span id='sw_params_current.v' class='invisible'><code>fn <a href='#method.sw_params_current' class='fnname'>sw_params_current</a>&lt;'a&gt;(&amp;'a self) -&gt; <a class="type" href="../../alsa/type.Result.html" title="type alsa::Result">Result</a>&lt;<a class="struct" href="../../alsa/pcm/struct.SwParams.html" title="struct alsa::pcm::SwParams">SwParams</a>&lt;'a&gt;&gt;</code></span></h4>
+<h4 id='method.info' class="method"><span id='info.v' class='invisible'><code>fn <a href='#method.info' class='fnname'>info</a>(&amp;self) -&gt; <a class="type" href="../../alsa/type.Result.html" title="type alsa::Result">Result</a>&lt;<a class="struct" href="../../alsa/pcm/struct.Info.html" title="struct alsa::pcm::Info">Info</a>&gt;</code></span></h4>
+<h4 id='method.dump' class="method"><span id='dump.v' class='invisible'><code>fn <a href='#method.dump' class='fnname'>dump</a>(&amp;self, o: &amp;mut <a class="struct" href="../../alsa/struct.Output.html" title="struct alsa::Output">Output</a>) -&gt; <a class="type" href="../../alsa/type.Result.html" title="type alsa::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;</code></span></h4>
+<h4 id='method.dump_hw_setup' class="method"><span id='dump_hw_setup.v' class='invisible'><code>fn <a href='#method.dump_hw_setup' class='fnname'>dump_hw_setup</a>(&amp;self, o: &amp;mut <a class="struct" href="../../alsa/struct.Output.html" title="struct alsa::Output">Output</a>) -&gt; <a class="type" href="../../alsa/type.Result.html" title="type alsa::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;</code></span></h4>
+<h4 id='method.dump_sw_setup' class="method"><span id='dump_sw_setup.v' class='invisible'><code>fn <a href='#method.dump_sw_setup' class='fnname'>dump_sw_setup</a>(&amp;self, o: &amp;mut <a class="struct" href="../../alsa/struct.Output.html" title="struct alsa::Output">Output</a>) -&gt; <a class="type" href="../../alsa/type.Result.html" title="type alsa::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;</code></span></h4>
+<h4 id='method.query_chmaps' class="method"><span id='query_chmaps.v' class='invisible'><code>fn <a href='#method.query_chmaps' class='fnname'>query_chmaps</a>(&amp;self) -&gt; <a class="struct" href="../../alsa/pcm/struct.ChmapsQuery.html" title="struct alsa::pcm::ChmapsQuery">ChmapsQuery</a></code></span></h4>
+<h4 id='method.set_chmap' class="method"><span id='set_chmap.v' class='invisible'><code>fn <a href='#method.set_chmap' class='fnname'>set_chmap</a>(&amp;self, c: &amp;<a class="struct" href="../../alsa/pcm/struct.Chmap.html" title="struct alsa::pcm::Chmap">Chmap</a>) -&gt; <a class="type" href="../../alsa/type.Result.html" title="type alsa::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;</code></span></h4>
+<h4 id='method.get_chmap' class="method"><span id='get_chmap.v' class='invisible'><code>fn <a href='#method.get_chmap' class='fnname'>get_chmap</a>(&amp;self) -&gt; <a class="type" href="../../alsa/type.Result.html" title="type alsa::Result">Result</a>&lt;<a class="struct" href="../../alsa/pcm/struct.Chmap.html" title="struct alsa::pcm::Chmap">Chmap</a>&gt;</code></span></h4>
+</div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a> for <a class="struct" href="../../alsa/pcm/struct.PCM.html" title="struct alsa::pcm::PCM">PCM</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/alsa/pcm.rs.html#98' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'></div><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/drop/trait.Drop.html" title="trait core::ops::drop::Drop">Drop</a> for <a class="struct" href="../../alsa/pcm/struct.PCM.html" title="struct alsa::pcm::PCM">PCM</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/alsa/pcm.rs.html#222-224' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.drop-1' class="method"><span id='drop.v-1' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/ops/drop/trait.Drop.html#tymethod.drop' class='fnname'>drop</a>(&amp;mut self)</code></span></h4>
+<div class='docblock'><p>A method called when the value goes out of scope. <a href="https://doc.rust-lang.org/nightly/core/ops/drop/trait.Drop.html#tymethod.drop">Read more</a></p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="../../alsa/poll/trait.PollDescriptors.html" title="trait alsa::poll::PollDescriptors">PollDescriptors</a> for <a class="struct" href="../../alsa/pcm/struct.PCM.html" title="struct alsa::pcm::PCM">PCM</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/alsa/pcm.rs.html#227-240' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.count' class="method"><span id='count.v' class='invisible'><code>fn <a href='../../alsa/poll/trait.PollDescriptors.html#tymethod.count' class='fnname'>count</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></code></span></h4>
+<h4 id='method.fill' class="method"><span id='fill.v' class='invisible'><code>fn <a href='../../alsa/poll/trait.PollDescriptors.html#tymethod.fill' class='fnname'>fill</a>(&amp;self, p: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;mut [</a><a class="struct" href="../../libc/unix/struct.pollfd.html" title="struct libc::unix::pollfd">pollfd</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>) -&gt; <a class="type" href="../../alsa/type.Result.html" title="type alsa::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>&gt;</code></span></h4>
+<h4 id='method.revents' class="method"><span id='revents.v' class='invisible'><code>fn <a href='../../alsa/poll/trait.PollDescriptors.html#tymethod.revents' class='fnname'>revents</a>(&amp;self, p: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="struct" href="../../libc/unix/struct.pollfd.html" title="struct libc::unix::pollfd">pollfd</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>) -&gt; <a class="type" href="../../alsa/type.Result.html" title="type alsa::Result">Result</a>&lt;<a class="struct" href="../../alsa/poll/struct.PollFlags.html" title="struct alsa::poll::PollFlags">PollFlags</a>&gt;</code></span></h4>
+<h4 id='method.get' class="method"><span id='get.v' class='invisible'><code>fn <a href='../../alsa/poll/trait.PollDescriptors.html#method.get' class='fnname'>get</a>(&amp;self) -&gt; <a class="type" href="../../alsa/type.Result.html" title="type alsa::Result">Result</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="struct" href="../../libc/unix/struct.pollfd.html" title="struct libc::unix::pollfd">pollfd</a>&gt;&gt;</code></span></h4>
+<div class='docblock'><p>Wrapper around count and fill - returns an array of pollfds</p>
+</div></div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "alsa";
+    </script>
+    <script src="../../main.js"></script>
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>

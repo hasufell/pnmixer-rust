@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `GtkRecentChooserIface` struct in crate `gtk_sys`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, GtkRecentChooserIface">
+
+    <title>gtk_sys::GtkRecentChooserIface - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc struct">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'>Struct GtkRecentChooserIface</p><div class="block items"><ul><li><a href="#fields">Fields</a></li></ul></div><p class='location'><a href='index.html'>gtk_sys</a></p><script>window.sidebarCurrent = {name: 'GtkRecentChooserIface', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Struct <a href='index.html'>gtk_sys</a>::<wbr><a class="struct" href=''>GtkRecentChooserIface</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../src/gtk_sys/lib.rs.html#4410-4426' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'><div class="docblock attributes">#[repr(C)]
+</div>pub struct GtkRecentChooserIface {
+    pub base_iface: <a class="struct" href="../gobject_sys/struct.GTypeInterface.html" title="struct gobject_sys::GTypeInterface">GTypeInterface</a>,
+    pub set_current_uri: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkRecentChooser.html" title="struct gtk_sys::GtkRecentChooser">GtkRecentChooser</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="type" href="../libc/unix/notbsd/linux/other/b64/x86_64/type.c_char.html" title="type libc::unix::notbsd::linux::other::b64::x86_64::c_char">c_char</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../glib_sys/struct.GError.html" title="struct glib_sys::GError">GError</a>) -&gt; <a class="type" href="../glib_sys/type.gboolean.html" title="type glib_sys::gboolean">gboolean</a>&gt;,
+    pub get_current_uri: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkRecentChooser.html" title="struct gtk_sys::GtkRecentChooser">GtkRecentChooser</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="type" href="../libc/unix/notbsd/linux/other/b64/x86_64/type.c_char.html" title="type libc::unix::notbsd::linux::other::b64::x86_64::c_char">c_char</a>&gt;,
+    pub select_uri: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkRecentChooser.html" title="struct gtk_sys::GtkRecentChooser">GtkRecentChooser</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="type" href="../libc/unix/notbsd/linux/other/b64/x86_64/type.c_char.html" title="type libc::unix::notbsd::linux::other::b64::x86_64::c_char">c_char</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../glib_sys/struct.GError.html" title="struct glib_sys::GError">GError</a>) -&gt; <a class="type" href="../glib_sys/type.gboolean.html" title="type glib_sys::gboolean">gboolean</a>&gt;,
+    pub unselect_uri: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkRecentChooser.html" title="struct gtk_sys::GtkRecentChooser">GtkRecentChooser</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="type" href="../libc/unix/notbsd/linux/other/b64/x86_64/type.c_char.html" title="type libc::unix::notbsd::linux::other::b64::x86_64::c_char">c_char</a>)&gt;,
+    pub select_all: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkRecentChooser.html" title="struct gtk_sys::GtkRecentChooser">GtkRecentChooser</a>)&gt;,
+    pub unselect_all: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkRecentChooser.html" title="struct gtk_sys::GtkRecentChooser">GtkRecentChooser</a>)&gt;,
+    pub get_items: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkRecentChooser.html" title="struct gtk_sys::GtkRecentChooser">GtkRecentChooser</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../glib_sys/struct.GList.html" title="struct glib_sys::GList">GList</a>&gt;,
+    pub get_recent_manager: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkRecentChooser.html" title="struct gtk_sys::GtkRecentChooser">GtkRecentChooser</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkRecentManager.html" title="struct gtk_sys::GtkRecentManager">GtkRecentManager</a>&gt;,
+    pub add_filter: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkRecentChooser.html" title="struct gtk_sys::GtkRecentChooser">GtkRecentChooser</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkRecentFilter.html" title="struct gtk_sys::GtkRecentFilter">GtkRecentFilter</a>)&gt;,
+    pub remove_filter: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkRecentChooser.html" title="struct gtk_sys::GtkRecentChooser">GtkRecentChooser</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkRecentFilter.html" title="struct gtk_sys::GtkRecentFilter">GtkRecentFilter</a>)&gt;,
+    pub list_filters: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkRecentChooser.html" title="struct gtk_sys::GtkRecentChooser">GtkRecentChooser</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../glib_sys/struct.GSList.html" title="struct glib_sys::GSList">GSList</a>&gt;,
+    pub set_sort_func: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkRecentChooser.html" title="struct gtk_sys::GtkRecentChooser">GtkRecentChooser</a>, _: <a class="type" href="../gtk_sys/type.GtkRecentSortFunc.html" title="type gtk_sys::GtkRecentSortFunc">GtkRecentSortFunc</a>, _: <a class="type" href="../glib_sys/type.gpointer.html" title="type glib_sys::gpointer">gpointer</a>, _: <a class="type" href="../glib_sys/type.GDestroyNotify.html" title="type glib_sys::GDestroyNotify">GDestroyNotify</a>)&gt;,
+    pub item_activated: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkRecentChooser.html" title="struct gtk_sys::GtkRecentChooser">GtkRecentChooser</a>)&gt;,
+    pub selection_changed: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkRecentChooser.html" title="struct gtk_sys::GtkRecentChooser">GtkRecentChooser</a>)&gt;,
+}</pre><h2 id='fields' class='fields'>Fields</h2><span id='structfield.base_iface' class="structfield">
+                           <span id='base_iface.v' class='invisible'>
+                           <code>base_iface: <a class="struct" href="../gobject_sys/struct.GTypeInterface.html" title="struct gobject_sys::GTypeInterface">GTypeInterface</a></code>
+                           </span></span><span id='structfield.set_current_uri' class="structfield">
+                           <span id='set_current_uri.v' class='invisible'>
+                           <code>set_current_uri: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkRecentChooser.html" title="struct gtk_sys::GtkRecentChooser">GtkRecentChooser</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="type" href="../libc/unix/notbsd/linux/other/b64/x86_64/type.c_char.html" title="type libc::unix::notbsd::linux::other::b64::x86_64::c_char">c_char</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../glib_sys/struct.GError.html" title="struct glib_sys::GError">GError</a>) -&gt; <a class="type" href="../glib_sys/type.gboolean.html" title="type glib_sys::gboolean">gboolean</a>&gt;</code>
+                           </span></span><span id='structfield.get_current_uri' class="structfield">
+                           <span id='get_current_uri.v' class='invisible'>
+                           <code>get_current_uri: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkRecentChooser.html" title="struct gtk_sys::GtkRecentChooser">GtkRecentChooser</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="type" href="../libc/unix/notbsd/linux/other/b64/x86_64/type.c_char.html" title="type libc::unix::notbsd::linux::other::b64::x86_64::c_char">c_char</a>&gt;</code>
+                           </span></span><span id='structfield.select_uri' class="structfield">
+                           <span id='select_uri.v' class='invisible'>
+                           <code>select_uri: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkRecentChooser.html" title="struct gtk_sys::GtkRecentChooser">GtkRecentChooser</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="type" href="../libc/unix/notbsd/linux/other/b64/x86_64/type.c_char.html" title="type libc::unix::notbsd::linux::other::b64::x86_64::c_char">c_char</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../glib_sys/struct.GError.html" title="struct glib_sys::GError">GError</a>) -&gt; <a class="type" href="../glib_sys/type.gboolean.html" title="type glib_sys::gboolean">gboolean</a>&gt;</code>
+                           </span></span><span id='structfield.unselect_uri' class="structfield">
+                           <span id='unselect_uri.v' class='invisible'>
+                           <code>unselect_uri: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkRecentChooser.html" title="struct gtk_sys::GtkRecentChooser">GtkRecentChooser</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="type" href="../libc/unix/notbsd/linux/other/b64/x86_64/type.c_char.html" title="type libc::unix::notbsd::linux::other::b64::x86_64::c_char">c_char</a>)&gt;</code>
+                           </span></span><span id='structfield.select_all' class="structfield">
+                           <span id='select_all.v' class='invisible'>
+                           <code>select_all: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkRecentChooser.html" title="struct gtk_sys::GtkRecentChooser">GtkRecentChooser</a>)&gt;</code>
+                           </span></span><span id='structfield.unselect_all' class="structfield">
+                           <span id='unselect_all.v' class='invisible'>
+                           <code>unselect_all: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkRecentChooser.html" title="struct gtk_sys::GtkRecentChooser">GtkRecentChooser</a>)&gt;</code>
+                           </span></span><span id='structfield.get_items' class="structfield">
+                           <span id='get_items.v' class='invisible'>
+                           <code>get_items: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkRecentChooser.html" title="struct gtk_sys::GtkRecentChooser">GtkRecentChooser</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../glib_sys/struct.GList.html" title="struct glib_sys::GList">GList</a>&gt;</code>
+                           </span></span><span id='structfield.get_recent_manager' class="structfield">
+                           <span id='get_recent_manager.v' class='invisible'>
+                           <code>get_recent_manager: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkRecentChooser.html" title="struct gtk_sys::GtkRecentChooser">GtkRecentChooser</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkRecentManager.html" title="struct gtk_sys::GtkRecentManager">GtkRecentManager</a>&gt;</code>
+                           </span></span><span id='structfield.add_filter' class="structfield">
+                           <span id='add_filter.v' class='invisible'>
+                           <code>add_filter: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkRecentChooser.html" title="struct gtk_sys::GtkRecentChooser">GtkRecentChooser</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkRecentFilter.html" title="struct gtk_sys::GtkRecentFilter">GtkRecentFilter</a>)&gt;</code>
+                           </span></span><span id='structfield.remove_filter' class="structfield">
+                           <span id='remove_filter.v' class='invisible'>
+                           <code>remove_filter: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkRecentChooser.html" title="struct gtk_sys::GtkRecentChooser">GtkRecentChooser</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkRecentFilter.html" title="struct gtk_sys::GtkRecentFilter">GtkRecentFilter</a>)&gt;</code>
+                           </span></span><span id='structfield.list_filters' class="structfield">
+                           <span id='list_filters.v' class='invisible'>
+                           <code>list_filters: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkRecentChooser.html" title="struct gtk_sys::GtkRecentChooser">GtkRecentChooser</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../glib_sys/struct.GSList.html" title="struct glib_sys::GSList">GSList</a>&gt;</code>
+                           </span></span><span id='structfield.set_sort_func' class="structfield">
+                           <span id='set_sort_func.v' class='invisible'>
+                           <code>set_sort_func: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkRecentChooser.html" title="struct gtk_sys::GtkRecentChooser">GtkRecentChooser</a>, _: <a class="type" href="../gtk_sys/type.GtkRecentSortFunc.html" title="type gtk_sys::GtkRecentSortFunc">GtkRecentSortFunc</a>, _: <a class="type" href="../glib_sys/type.gpointer.html" title="type glib_sys::gpointer">gpointer</a>, _: <a class="type" href="../glib_sys/type.GDestroyNotify.html" title="type glib_sys::GDestroyNotify">GDestroyNotify</a>)&gt;</code>
+                           </span></span><span id='structfield.item_activated' class="structfield">
+                           <span id='item_activated.v' class='invisible'>
+                           <code>item_activated: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkRecentChooser.html" title="struct gtk_sys::GtkRecentChooser">GtkRecentChooser</a>)&gt;</code>
+                           </span></span><span id='structfield.selection_changed' class="structfield">
+                           <span id='selection_changed.v' class='invisible'>
+                           <code>selection_changed: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkRecentChooser.html" title="struct gtk_sys::GtkRecentChooser">GtkRecentChooser</a>)&gt;</code>
+                           </span></span></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "gtk_sys";
+    </script>
+    <script src="../main.js"></script>
+    <script defer src="../search-index.js"></script>
+</body>
+</html>

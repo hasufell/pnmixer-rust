@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `GLContextExt` trait in crate `gdk`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, GLContextExt">
+
+    <title>gdk::prelude::GLContextExt - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc trait">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'>Trait GLContextExt</p><div class="block items"><ul><li><a href="#required-methods">Required Methods</a></li><li><a href="#implementors">Implementors</a></li></ul></div><p class='location'><a href='../index.html'>gdk</a>::<wbr><a href='index.html'>prelude</a></p><script>window.sidebarCurrent = {name: 'GLContextExt', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>gdk</a>::<wbr><a href='index.html'>prelude</a>::<wbr><a class="trait" href=''>GLContextExt</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../../src/gdk/auto/g_l_context.rs.html#45-90' title='goto source code'>[src]</a></span></h1>
+<pre class='rust trait'>pub trait GLContextExt {
+    fn <a href='#tymethod.get_debug_enabled' class='fnname'>get_debug_enabled</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>;
+    fn <a href='#tymethod.get_display' class='fnname'>get_display</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../../gdk/struct.Display.html" title="struct gdk::Display">Display</a>&gt;;
+    fn <a href='#tymethod.get_forward_compatible' class='fnname'>get_forward_compatible</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>;
+    fn <a href='#tymethod.get_required_version' class='fnname'>get_required_version</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">(</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>, <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">)</a>;
+    fn <a href='#tymethod.get_shared_context' class='fnname'>get_shared_context</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../../gdk/struct.GLContext.html" title="struct gdk::GLContext">GLContext</a>&gt;;
+    fn <a href='#tymethod.get_use_es' class='fnname'>get_use_es</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>;
+    fn <a href='#tymethod.get_version' class='fnname'>get_version</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">(</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>, <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">)</a>;
+    fn <a href='#tymethod.get_window' class='fnname'>get_window</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../../gdk/struct.Window.html" title="struct gdk::Window">Window</a>&gt;;
+    fn <a href='#tymethod.is_legacy' class='fnname'>is_legacy</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>;
+    fn <a href='#tymethod.make_current' class='fnname'>make_current</a>(&amp;self);
+    fn <a href='#tymethod.realize' class='fnname'>realize</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>, <a class="struct" href="../../gdk/struct.Error.html" title="struct gdk::Error">Error</a>&gt;;
+    fn <a href='#tymethod.set_debug_enabled' class='fnname'>set_debug_enabled</a>(&amp;self, enabled: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>);
+    fn <a href='#tymethod.set_forward_compatible' class='fnname'>set_forward_compatible</a>(&amp;self, compatible: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>);
+    fn <a href='#tymethod.set_required_version' class='fnname'>set_required_version</a>(&amp;self, major: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>, minor: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>);
+    fn <a href='#tymethod.set_use_es' class='fnname'>set_use_es</a>(&amp;self, use_es: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>);
+}</pre>
+            <h2 id='required-methods'>Required Methods</h2>
+            <div class='methods'>
+        <h3 id='tymethod.get_debug_enabled' class='method'><span id='get_debug_enabled.v' class='invisible'><code>fn <a href='#tymethod.get_debug_enabled' class='fnname'>get_debug_enabled</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h3><h3 id='tymethod.get_display' class='method'><span id='get_display.v' class='invisible'><code>fn <a href='#tymethod.get_display' class='fnname'>get_display</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../../gdk/struct.Display.html" title="struct gdk::Display">Display</a>&gt;</code></span></h3><h3 id='tymethod.get_forward_compatible' class='method'><span id='get_forward_compatible.v' class='invisible'><code>fn <a href='#tymethod.get_forward_compatible' class='fnname'>get_forward_compatible</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h3><h3 id='tymethod.get_required_version' class='method'><span id='get_required_version.v' class='invisible'><code>fn <a href='#tymethod.get_required_version' class='fnname'>get_required_version</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">(</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>, <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">)</a></code></span></h3><h3 id='tymethod.get_shared_context' class='method'><span id='get_shared_context.v' class='invisible'><code>fn <a href='#tymethod.get_shared_context' class='fnname'>get_shared_context</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../../gdk/struct.GLContext.html" title="struct gdk::GLContext">GLContext</a>&gt;</code></span></h3><h3 id='tymethod.get_use_es' class='method'><span id='get_use_es.v' class='invisible'><code>fn <a href='#tymethod.get_use_es' class='fnname'>get_use_es</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h3><h3 id='tymethod.get_version' class='method'><span id='get_version.v' class='invisible'><code>fn <a href='#tymethod.get_version' class='fnname'>get_version</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">(</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>, <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">)</a></code></span></h3><h3 id='tymethod.get_window' class='method'><span id='get_window.v' class='invisible'><code>fn <a href='#tymethod.get_window' class='fnname'>get_window</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../../gdk/struct.Window.html" title="struct gdk::Window">Window</a>&gt;</code></span></h3><h3 id='tymethod.is_legacy' class='method'><span id='is_legacy.v' class='invisible'><code>fn <a href='#tymethod.is_legacy' class='fnname'>is_legacy</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h3><h3 id='tymethod.make_current' class='method'><span id='make_current.v' class='invisible'><code>fn <a href='#tymethod.make_current' class='fnname'>make_current</a>(&amp;self)</code></span></h3><h3 id='tymethod.realize' class='method'><span id='realize.v' class='invisible'><code>fn <a href='#tymethod.realize' class='fnname'>realize</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>, <a class="struct" href="../../gdk/struct.Error.html" title="struct gdk::Error">Error</a>&gt;</code></span></h3><h3 id='tymethod.set_debug_enabled' class='method'><span id='set_debug_enabled.v' class='invisible'><code>fn <a href='#tymethod.set_debug_enabled' class='fnname'>set_debug_enabled</a>(&amp;self, enabled: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>)</code></span></h3><h3 id='tymethod.set_forward_compatible' class='method'><span id='set_forward_compatible.v' class='invisible'><code>fn <a href='#tymethod.set_forward_compatible' class='fnname'>set_forward_compatible</a>(&amp;self, compatible: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>)</code></span></h3><h3 id='tymethod.set_required_version' class='method'><span id='set_required_version.v' class='invisible'><code>fn <a href='#tymethod.set_required_version' class='fnname'>set_required_version</a>(&amp;self, major: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>, minor: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>)</code></span></h3><h3 id='tymethod.set_use_es' class='method'><span id='set_use_es.v' class='invisible'><code>fn <a href='#tymethod.set_use_es' class='fnname'>set_use_es</a>(&amp;self, use_es: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>)</code></span></h3></div>
+        <h2 id='implementors'>Implementors</h2>
+        <ul class='item-list' id='implementors-list'>
+    <li><code>impl&lt;O:&nbsp;<a class="trait" href="../../glib/object/trait.IsA.html" title="trait glib::object::IsA">IsA</a>&lt;<a class="struct" href="../../gdk/struct.GLContext.html" title="struct gdk::GLContext">GLContext</a>&gt;&gt; GLContextExt for O</code></li>
+</ul><script type="text/javascript" async
+                         src="../../implementors/gdk/prelude/trait.GLContextExt.js">
+                 </script></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "gdk";
+    </script>
+    <script src="../../main.js"></script>
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>

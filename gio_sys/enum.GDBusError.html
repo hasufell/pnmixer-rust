@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `GDBusError` enum in crate `gio_sys`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, GDBusError">
+
+    <title>gio_sys::GDBusError - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc enum">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'>Enum GDBusError</p><div class="block items"><ul><li><a href="#variants">Variants</a></li><li><a href="#implementations">Trait Implementations</a></li></ul></div><p class='location'><a href='index.html'>gio_sys</a></p><script>window.sidebarCurrent = {name: 'GDBusError', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Enum <a href='index.html'>gio_sys</a>::<wbr><a class="enum" href=''>GDBusError</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../src/gio_sys/lib.rs.html#65-111' title='goto source code'>[src]</a></span></h1>
+<pre class='rust enum'><div class="docblock attributes">#[repr(C)]
+</div>pub enum GDBusError {
+    Failed,
+    NoMemory,
+    ServiceUnknown,
+    NameHasNoOwner,
+    NoReply,
+    IoError,
+    BadAddress,
+    NotSupported,
+    LimitsExceeded,
+    AccessDenied,
+    AuthFailed,
+    NoServer,
+    Timeout,
+    NoNetwork,
+    AddressInUse,
+    Disconnected,
+    InvalidArgs,
+    FileNotFound,
+    FileExists,
+    UnknownMethod,
+    TimedOut,
+    MatchRuleNotFound,
+    MatchRuleInvalid,
+    SpawnExecFailed,
+    SpawnForkFailed,
+    SpawnChildExited,
+    SpawnChildSignaled,
+    SpawnFailed,
+    SpawnSetupFailed,
+    SpawnConfigInvalid,
+    SpawnServiceInvalid,
+    SpawnServiceNotFound,
+    SpawnPermissionsInvalid,
+    SpawnFileInvalid,
+    SpawnNoMemory,
+    UnixProcessIdUnknown,
+    InvalidSignature,
+    InvalidFileContent,
+    SelinuxSecurityContextUnknown,
+    AdtAuditDataUnknown,
+    ObjectPathInUse,
+    UnknownObject,
+    UnknownInterface,
+    UnknownProperty,
+    PropertyReadOnly,
+}</pre><h2 id='variants' class='variants'>Variants</h2>
+<span id='variant.Failed' class='variant'><span id='Failed.v' class='invisible'><code>Failed</code></span></span><span id='variant.NoMemory' class='variant'><span id='NoMemory.v' class='invisible'><code>NoMemory</code></span></span><span id='variant.ServiceUnknown' class='variant'><span id='ServiceUnknown.v' class='invisible'><code>ServiceUnknown</code></span></span><span id='variant.NameHasNoOwner' class='variant'><span id='NameHasNoOwner.v' class='invisible'><code>NameHasNoOwner</code></span></span><span id='variant.NoReply' class='variant'><span id='NoReply.v' class='invisible'><code>NoReply</code></span></span><span id='variant.IoError' class='variant'><span id='IoError.v' class='invisible'><code>IoError</code></span></span><span id='variant.BadAddress' class='variant'><span id='BadAddress.v' class='invisible'><code>BadAddress</code></span></span><span id='variant.NotSupported' class='variant'><span id='NotSupported.v' class='invisible'><code>NotSupported</code></span></span><span id='variant.LimitsExceeded' class='variant'><span id='LimitsExceeded.v' class='invisible'><code>LimitsExceeded</code></span></span><span id='variant.AccessDenied' class='variant'><span id='AccessDenied.v' class='invisible'><code>AccessDenied</code></span></span><span id='variant.AuthFailed' class='variant'><span id='AuthFailed.v' class='invisible'><code>AuthFailed</code></span></span><span id='variant.NoServer' class='variant'><span id='NoServer.v' class='invisible'><code>NoServer</code></span></span><span id='variant.Timeout' class='variant'><span id='Timeout.v' class='invisible'><code>Timeout</code></span></span><span id='variant.NoNetwork' class='variant'><span id='NoNetwork.v' class='invisible'><code>NoNetwork</code></span></span><span id='variant.AddressInUse' class='variant'><span id='AddressInUse.v' class='invisible'><code>AddressInUse</code></span></span><span id='variant.Disconnected' class='variant'><span id='Disconnected.v' class='invisible'><code>Disconnected</code></span></span><span id='variant.InvalidArgs' class='variant'><span id='InvalidArgs.v' class='invisible'><code>InvalidArgs</code></span></span><span id='variant.FileNotFound' class='variant'><span id='FileNotFound.v' class='invisible'><code>FileNotFound</code></span></span><span id='variant.FileExists' class='variant'><span id='FileExists.v' class='invisible'><code>FileExists</code></span></span><span id='variant.UnknownMethod' class='variant'><span id='UnknownMethod.v' class='invisible'><code>UnknownMethod</code></span></span><span id='variant.TimedOut' class='variant'><span id='TimedOut.v' class='invisible'><code>TimedOut</code></span></span><span id='variant.MatchRuleNotFound' class='variant'><span id='MatchRuleNotFound.v' class='invisible'><code>MatchRuleNotFound</code></span></span><span id='variant.MatchRuleInvalid' class='variant'><span id='MatchRuleInvalid.v' class='invisible'><code>MatchRuleInvalid</code></span></span><span id='variant.SpawnExecFailed' class='variant'><span id='SpawnExecFailed.v' class='invisible'><code>SpawnExecFailed</code></span></span><span id='variant.SpawnForkFailed' class='variant'><span id='SpawnForkFailed.v' class='invisible'><code>SpawnForkFailed</code></span></span><span id='variant.SpawnChildExited' class='variant'><span id='SpawnChildExited.v' class='invisible'><code>SpawnChildExited</code></span></span><span id='variant.SpawnChildSignaled' class='variant'><span id='SpawnChildSignaled.v' class='invisible'><code>SpawnChildSignaled</code></span></span><span id='variant.SpawnFailed' class='variant'><span id='SpawnFailed.v' class='invisible'><code>SpawnFailed</code></span></span><span id='variant.SpawnSetupFailed' class='variant'><span id='SpawnSetupFailed.v' class='invisible'><code>SpawnSetupFailed</code></span></span><span id='variant.SpawnConfigInvalid' class='variant'><span id='SpawnConfigInvalid.v' class='invisible'><code>SpawnConfigInvalid</code></span></span><span id='variant.SpawnServiceInvalid' class='variant'><span id='SpawnServiceInvalid.v' class='invisible'><code>SpawnServiceInvalid</code></span></span><span id='variant.SpawnServiceNotFound' class='variant'><span id='SpawnServiceNotFound.v' class='invisible'><code>SpawnServiceNotFound</code></span></span><span id='variant.SpawnPermissionsInvalid' class='variant'><span id='SpawnPermissionsInvalid.v' class='invisible'><code>SpawnPermissionsInvalid</code></span></span><span id='variant.SpawnFileInvalid' class='variant'><span id='SpawnFileInvalid.v' class='invisible'><code>SpawnFileInvalid</code></span></span><span id='variant.SpawnNoMemory' class='variant'><span id='SpawnNoMemory.v' class='invisible'><code>SpawnNoMemory</code></span></span><span id='variant.UnixProcessIdUnknown' class='variant'><span id='UnixProcessIdUnknown.v' class='invisible'><code>UnixProcessIdUnknown</code></span></span><span id='variant.InvalidSignature' class='variant'><span id='InvalidSignature.v' class='invisible'><code>InvalidSignature</code></span></span><span id='variant.InvalidFileContent' class='variant'><span id='InvalidFileContent.v' class='invisible'><code>InvalidFileContent</code></span></span><span id='variant.SelinuxSecurityContextUnknown' class='variant'><span id='SelinuxSecurityContextUnknown.v' class='invisible'><code>SelinuxSecurityContextUnknown</code></span></span><span id='variant.AdtAuditDataUnknown' class='variant'><span id='AdtAuditDataUnknown.v' class='invisible'><code>AdtAuditDataUnknown</code></span></span><span id='variant.ObjectPathInUse' class='variant'><span id='ObjectPathInUse.v' class='invisible'><code>ObjectPathInUse</code></span></span><span id='variant.UnknownObject' class='variant'><span id='UnknownObject.v' class='invisible'><code>UnknownObject</code></span></span><span id='variant.UnknownInterface' class='variant'><span id='UnknownInterface.v' class='invisible'><code>UnknownInterface</code></span></span><span id='variant.UnknownProperty' class='variant'><span id='UnknownProperty.v' class='invisible'><code>UnknownProperty</code></span></span><span id='variant.PropertyReadOnly' class='variant'><span id='PropertyReadOnly.v' class='invisible'><code>PropertyReadOnly</code></span></span><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html" title="trait core::clone::Clone">Clone</a> for <a class="enum" href="../gio_sys/enum.GDBusError.html" title="enum gio_sys::GDBusError">GDBusError</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/gio_sys/lib.rs.html#63' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.clone' class="method"><span id='clone.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class="enum" href="../gio_sys/enum.GDBusError.html" title="enum gio_sys::GDBusError">GDBusError</a></code></span></h4>
+<div class='docblock'><p>Returns a copy of the value. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">Read more</a></p>
+</div><h4 id='method.clone_from' class="method"><span id='clone_from.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div></span></h4>
+<div class='docblock'><p>Performs copy-assignment from <code>source</code>. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from">Read more</a></p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html" title="trait core::marker::Copy">Copy</a> for <a class="enum" href="../gio_sys/enum.GDBusError.html" title="enum gio_sys::GDBusError">GDBusError</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/gio_sys/lib.rs.html#63' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'></div><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> for <a class="enum" href="../gio_sys/enum.GDBusError.html" title="enum gio_sys::GDBusError">GDBusError</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/gio_sys/lib.rs.html#63' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.fmt' class="method"><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html" title="type core::fmt::Result">Result</a></code></span></h4>
+<div class='docblock'><p>Formats the value using the given formatter.</p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/cmp/trait.Eq.html" title="trait core::cmp::Eq">Eq</a> for <a class="enum" href="../gio_sys/enum.GDBusError.html" title="enum gio_sys::GDBusError">GDBusError</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/gio_sys/lib.rs.html#63' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'></div><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html" title="trait core::cmp::PartialEq">PartialEq</a> for <a class="enum" href="../gio_sys/enum.GDBusError.html" title="enum gio_sys::GDBusError">GDBusError</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/gio_sys/lib.rs.html#63' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.eq' class="method"><span id='eq.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#tymethod.eq' class='fnname'>eq</a>(&amp;self, __arg_0: &amp;<a class="enum" href="../gio_sys/enum.GDBusError.html" title="enum gio_sys::GDBusError">GDBusError</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h4>
+<div class='docblock'><p>This method tests for <code>self</code> and <code>other</code> values to be equal, and is used by <code>==</code>. <a href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#tymethod.eq">Read more</a></p>
+</div><h4 id='method.ne' class="method"><span id='ne.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#method.ne' class='fnname'>ne</a>(&amp;self, other: &amp;Rhs) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div></span></h4>
+<div class='docblock'><p>This method tests for <code>!=</code>.</p>
+</div></div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "gio_sys";
+    </script>
+    <script src="../main.js"></script>
+    <script defer src="../search-index.js"></script>
+</body>
+</html>

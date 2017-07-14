@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `RecentInfo` struct in crate `gtk`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, RecentInfo">
+
+    <title>gtk::RecentInfo - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc struct">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'>Struct RecentInfo</p><div class="block items"><ul><li><a href="#methods">Methods</a></li><li><a href="#implementations">Trait Implementations</a></li></ul></div><p class='location'><a href='index.html'>gtk</a></p><script>window.sidebarCurrent = {name: 'RecentInfo', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Struct <a href='index.html'>gtk</a>::<wbr><a class="struct" href=''>RecentInfo</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span></span></h1>
+<pre class='rust struct'>pub struct RecentInfo(_);</pre><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class="struct" href="../gtk/struct.RecentInfo.html" title="struct gtk::RecentInfo">RecentInfo</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/gtk/auto/recent_info.rs.html#22-172' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.create_app_info' class="method"><span id='create_app_info.v' class='invisible'><code>fn <a href='#method.create_app_info' class='fnname'>create_app_info</a>&lt;'a, P:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html" title="trait core::convert::Into">Into</a>&lt;<a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;&amp;'a <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>&gt;&gt;&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;app_name: P<br>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../gio/auto/app_info/struct.AppInfo.html" title="struct gio::auto::app_info::AppInfo">AppInfo</a>&gt;, <a class="struct" href="../gtk/struct.Error.html" title="struct gtk::Error">Error</a>&gt;</code></span></h4>
+<h4 id='method.exists' class="method"><span id='exists.v' class='invisible'><code>fn <a href='#method.exists' class='fnname'>exists</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h4>
+<h4 id='method.get_added' class="method"><span id='get_added.v' class='invisible'><code>fn <a href='#method.get_added' class='fnname'>get_added</a>(&amp;self) -&gt; <a class="type" href="../libc/unix/notbsd/linux/other/b64/type.c_long.html" title="type libc::unix::notbsd::linux::other::b64::c_long">c_long</a></code></span></h4>
+<h4 id='method.get_age' class="method"><span id='get_age.v' class='invisible'><code>fn <a href='#method.get_age' class='fnname'>get_age</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a></code></span></h4>
+<h4 id='method.get_application_info' class="method"><span id='get_application_info.v' class='invisible'><code>fn <a href='#method.get_application_info' class='fnname'>get_application_info</a>(&amp;self, app_name: &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">(</a><a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>, <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, <a class="type" href="../libc/unix/notbsd/linux/other/b64/type.c_long.html" title="type libc::unix::notbsd::linux::other::b64::c_long">c_long</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">)</a>&gt;</code></span></h4>
+<h4 id='method.get_applications' class="method"><span id='get_applications.v' class='invisible'><code>fn <a href='#method.get_applications' class='fnname'>get_applications</a>(&amp;self) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;</code></span></h4>
+<h4 id='method.get_description' class="method"><span id='get_description.v' class='invisible'><code>fn <a href='#method.get_description' class='fnname'>get_description</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;</code></span></h4>
+<h4 id='method.get_display_name' class="method"><span id='get_display_name.v' class='invisible'><code>fn <a href='#method.get_display_name' class='fnname'>get_display_name</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;</code></span></h4>
+<h4 id='method.get_gicon' class="method"><span id='get_gicon.v' class='invisible'><code>fn <a href='#method.get_gicon' class='fnname'>get_gicon</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../gio/auto/icon/struct.Icon.html" title="struct gio::auto::icon::Icon">Icon</a>&gt;</code></span></h4>
+<h4 id='method.get_groups' class="method"><span id='get_groups.v' class='invisible'><code>fn <a href='#method.get_groups' class='fnname'>get_groups</a>(&amp;self) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;</code></span></h4>
+<h4 id='method.get_icon' class="method"><span id='get_icon.v' class='invisible'><code>fn <a href='#method.get_icon' class='fnname'>get_icon</a>(&amp;self, size: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../gdk_pixbuf/pixbuf/struct.Pixbuf.html" title="struct gdk_pixbuf::pixbuf::Pixbuf">Pixbuf</a>&gt;</code></span></h4>
+<h4 id='method.get_mime_type' class="method"><span id='get_mime_type.v' class='invisible'><code>fn <a href='#method.get_mime_type' class='fnname'>get_mime_type</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;</code></span></h4>
+<h4 id='method.get_modified' class="method"><span id='get_modified.v' class='invisible'><code>fn <a href='#method.get_modified' class='fnname'>get_modified</a>(&amp;self) -&gt; <a class="type" href="../libc/unix/notbsd/linux/other/b64/type.c_long.html" title="type libc::unix::notbsd::linux::other::b64::c_long">c_long</a></code></span></h4>
+<h4 id='method.get_private_hint' class="method"><span id='get_private_hint.v' class='invisible'><code>fn <a href='#method.get_private_hint' class='fnname'>get_private_hint</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h4>
+<h4 id='method.get_short_name' class="method"><span id='get_short_name.v' class='invisible'><code>fn <a href='#method.get_short_name' class='fnname'>get_short_name</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;</code></span></h4>
+<h4 id='method.get_uri' class="method"><span id='get_uri.v' class='invisible'><code>fn <a href='#method.get_uri' class='fnname'>get_uri</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;</code></span></h4>
+<h4 id='method.get_uri_display' class="method"><span id='get_uri_display.v' class='invisible'><code>fn <a href='#method.get_uri_display' class='fnname'>get_uri_display</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;</code></span></h4>
+<h4 id='method.get_visited' class="method"><span id='get_visited.v' class='invisible'><code>fn <a href='#method.get_visited' class='fnname'>get_visited</a>(&amp;self) -&gt; <a class="type" href="../libc/unix/notbsd/linux/other/b64/type.c_long.html" title="type libc::unix::notbsd::linux::other::b64::c_long">c_long</a></code></span></h4>
+<h4 id='method.has_application' class="method"><span id='has_application.v' class='invisible'><code>fn <a href='#method.has_application' class='fnname'>has_application</a>(&amp;self, app_name: &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h4>
+<h4 id='method.has_group' class="method"><span id='has_group.v' class='invisible'><code>fn <a href='#method.has_group' class='fnname'>has_group</a>(&amp;self, group_name: &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h4>
+<h4 id='method.is_local' class="method"><span id='is_local.v' class='invisible'><code>fn <a href='#method.is_local' class='fnname'>is_local</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h4>
+<h4 id='method.last_application' class="method"><span id='last_application.v' class='invisible'><code>fn <a href='#method.last_application' class='fnname'>last_application</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;</code></span></h4>
+<h4 id='method.match_' class="method"><span id='match_.v' class='invisible'><code>fn <a href='#method.match_' class='fnname'>match_</a>(&amp;self, info_b: &amp;<a class="struct" href="../gtk/struct.RecentInfo.html" title="struct gtk::RecentInfo">RecentInfo</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h4>
+</div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html" title="trait core::clone::Clone">Clone</a> for <a class="struct" href="../gtk/struct.RecentInfo.html" title="struct gtk::RecentInfo">RecentInfo</a></code></span><span class='out-of-band'></span></h3>
+<div class='impl-items'><h4 id='method.clone' class="method"><span id='clone.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class="struct" href="../gtk/struct.RecentInfo.html" title="struct gtk::RecentInfo">RecentInfo</a></code></span></h4>
+<div class='docblock'><p>Returns a copy of the value. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">Read more</a></p>
+</div><h4 id='method.clone_from' class="method"><span id='clone_from.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div></span></h4>
+<div class='docblock'><p>Performs copy-assignment from <code>source</code>. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from">Read more</a></p>
+</div></div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "gtk";
+    </script>
+    <script src="../main.js"></script>
+    <script defer src="../search-index.js"></script>
+</body>
+</html>

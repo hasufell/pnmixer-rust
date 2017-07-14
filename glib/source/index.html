@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `source` mod in crate `glib`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, source">
+
+    <title>glib::source - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc mod">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'>Module source</p><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#constants">Constants</a></li><li><a href="#functions">Functions</a></li></ul></div><p class='location'><a href='../index.html'>glib</a></p><script>window.sidebarCurrent = {name: 'source', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Module <a href='../index.html'>glib</a>::<wbr><a class="mod" href=''>source</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../../src/glib/source.rs.html#5-331' title='goto source code'>[src]</a></span></h1>
+<h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.CallbackGuard.html"
+                                  title='struct glib::source::CallbackGuard'>CallbackGuard</a></td>
+                           <td class='docblock-short'>
+                                <p>Unwinding propagation guard. Aborts the process if destroyed while
+panicking.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.Continue.html"
+                                  title='struct glib::source::Continue'>Continue</a></td>
+                           <td class='docblock-short'>
+                                <p>Continue calling the closure in the future iterations or drop it.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.Priority.html"
+                                  title='struct glib::source::Priority'>Priority</a></td>
+                           <td class='docblock-short'>
+                                <p>The priority of sources</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.SourceId.html"
+                                  title='struct glib::source::SourceId'>SourceId</a></td>
+                           <td class='docblock-short'>
+                                <p>The id of a source that is returned by <code>idle_add</code> and <code>timeout_add</code>.</p>
+                           </td>
+                       </tr></table><h2 id='constants' class='section-header'><a href="#constants">Constants</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.PRIORITY_DEFAULT.html"
+                                  title='constant glib::source::PRIORITY_DEFAULT'>PRIORITY_DEFAULT</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.PRIORITY_DEFAULT_IDLE.html"
+                                  title='constant glib::source::PRIORITY_DEFAULT_IDLE'>PRIORITY_DEFAULT_IDLE</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.PRIORITY_HIGH.html"
+                                  title='constant glib::source::PRIORITY_HIGH'>PRIORITY_HIGH</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.PRIORITY_HIGH_IDLE.html"
+                                  title='constant glib::source::PRIORITY_HIGH_IDLE'>PRIORITY_HIGH_IDLE</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.PRIORITY_LOW.html"
+                                  title='constant glib::source::PRIORITY_LOW'>PRIORITY_LOW</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.child_watch_add.html"
+                                  title='fn glib::source::child_watch_add'>child_watch_add</a></td>
+                           <td class='docblock-short'>
+                                <p>Adds a closure to be called by the main loop the returned <code>Source</code> is attached to when a child
+process exits.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.child_watch_source_new.html"
+                                  title='fn glib::source::child_watch_source_new'>child_watch_source_new</a></td>
+                           <td class='docblock-short'>
+                                <p>Adds a closure to be called by the main loop the returned <code>Source</code> is attached to when a child
+process exits.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.idle_add.html"
+                                  title='fn glib::source::idle_add'>idle_add</a></td>
+                           <td class='docblock-short'>
+                                <p>Adds a closure to be called by the default main loop when it&#39;s idle.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.idle_source_new.html"
+                                  title='fn glib::source::idle_source_new'>idle_source_new</a></td>
+                           <td class='docblock-short'>
+                                <p>Adds a closure to be called by the main loop the return <code>Source</code> is attached to when it&#39;s idle.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.source_remove.html"
+                                  title='fn glib::source::source_remove'>source_remove</a></td>
+                           <td class='docblock-short'>
+                                <p>Removes the source with the given id <code>source_id</code> from the default main context.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.timeout_add.html"
+                                  title='fn glib::source::timeout_add'>timeout_add</a></td>
+                           <td class='docblock-short'>
+                                <p>Adds a closure to be called by the default main loop at regular intervals
+with millisecond granularity.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.timeout_add_seconds.html"
+                                  title='fn glib::source::timeout_add_seconds'>timeout_add_seconds</a></td>
+                           <td class='docblock-short'>
+                                <p>Adds a closure to be called by the default main loop at regular intervals
+with second granularity.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.timeout_source_new.html"
+                                  title='fn glib::source::timeout_source_new'>timeout_source_new</a></td>
+                           <td class='docblock-short'>
+                                <p>Adds a closure to be called by the main loop the returned <code>Source</code> is attached to at regular
+intervals with millisecond granularity.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.timeout_source_new_seconds.html"
+                                  title='fn glib::source::timeout_source_new_seconds'>timeout_source_new_seconds</a></td>
+                           <td class='docblock-short'>
+                                <p>Adds a closure to be called by the main loop the returned <code>Source</code> is attached to at regular
+intervals with second granularity.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.unix_signal_add.html"
+                                  title='fn glib::source::unix_signal_add'>unix_signal_add</a></td>
+                           <td class='docblock-short'>
+                                <p>Adds a closure to be called by the default main loop whenever a UNIX signal is raised.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.unix_signal_source_new.html"
+                                  title='fn glib::source::unix_signal_source_new'>unix_signal_source_new</a></td>
+                           <td class='docblock-short'>
+                                <p>Adds a closure to be called by the main loop the returned <code>Source</code> is attached to whenever a
+UNIX signal is raised.</p>
+                           </td>
+                       </tr></table></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "glib";
+    </script>
+    <script src="../../main.js"></script>
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>

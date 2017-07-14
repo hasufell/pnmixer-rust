@@ -1,0 +1,1344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="Source to the Rust file `/home/jule/.cargo/git/checkouts/cairo-e6055a6d391c3fc9/ef0c331/cairo-sys-rs/src/lib.rs`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang">
+
+    <title>lib.rs.html -- source</title>
+
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc source">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
+<span id="2">  2</span>
+<span id="3">  3</span>
+<span id="4">  4</span>
+<span id="5">  5</span>
+<span id="6">  6</span>
+<span id="7">  7</span>
+<span id="8">  8</span>
+<span id="9">  9</span>
+<span id="10"> 10</span>
+<span id="11"> 11</span>
+<span id="12"> 12</span>
+<span id="13"> 13</span>
+<span id="14"> 14</span>
+<span id="15"> 15</span>
+<span id="16"> 16</span>
+<span id="17"> 17</span>
+<span id="18"> 18</span>
+<span id="19"> 19</span>
+<span id="20"> 20</span>
+<span id="21"> 21</span>
+<span id="22"> 22</span>
+<span id="23"> 23</span>
+<span id="24"> 24</span>
+<span id="25"> 25</span>
+<span id="26"> 26</span>
+<span id="27"> 27</span>
+<span id="28"> 28</span>
+<span id="29"> 29</span>
+<span id="30"> 30</span>
+<span id="31"> 31</span>
+<span id="32"> 32</span>
+<span id="33"> 33</span>
+<span id="34"> 34</span>
+<span id="35"> 35</span>
+<span id="36"> 36</span>
+<span id="37"> 37</span>
+<span id="38"> 38</span>
+<span id="39"> 39</span>
+<span id="40"> 40</span>
+<span id="41"> 41</span>
+<span id="42"> 42</span>
+<span id="43"> 43</span>
+<span id="44"> 44</span>
+<span id="45"> 45</span>
+<span id="46"> 46</span>
+<span id="47"> 47</span>
+<span id="48"> 48</span>
+<span id="49"> 49</span>
+<span id="50"> 50</span>
+<span id="51"> 51</span>
+<span id="52"> 52</span>
+<span id="53"> 53</span>
+<span id="54"> 54</span>
+<span id="55"> 55</span>
+<span id="56"> 56</span>
+<span id="57"> 57</span>
+<span id="58"> 58</span>
+<span id="59"> 59</span>
+<span id="60"> 60</span>
+<span id="61"> 61</span>
+<span id="62"> 62</span>
+<span id="63"> 63</span>
+<span id="64"> 64</span>
+<span id="65"> 65</span>
+<span id="66"> 66</span>
+<span id="67"> 67</span>
+<span id="68"> 68</span>
+<span id="69"> 69</span>
+<span id="70"> 70</span>
+<span id="71"> 71</span>
+<span id="72"> 72</span>
+<span id="73"> 73</span>
+<span id="74"> 74</span>
+<span id="75"> 75</span>
+<span id="76"> 76</span>
+<span id="77"> 77</span>
+<span id="78"> 78</span>
+<span id="79"> 79</span>
+<span id="80"> 80</span>
+<span id="81"> 81</span>
+<span id="82"> 82</span>
+<span id="83"> 83</span>
+<span id="84"> 84</span>
+<span id="85"> 85</span>
+<span id="86"> 86</span>
+<span id="87"> 87</span>
+<span id="88"> 88</span>
+<span id="89"> 89</span>
+<span id="90"> 90</span>
+<span id="91"> 91</span>
+<span id="92"> 92</span>
+<span id="93"> 93</span>
+<span id="94"> 94</span>
+<span id="95"> 95</span>
+<span id="96"> 96</span>
+<span id="97"> 97</span>
+<span id="98"> 98</span>
+<span id="99"> 99</span>
+<span id="100">100</span>
+<span id="101">101</span>
+<span id="102">102</span>
+<span id="103">103</span>
+<span id="104">104</span>
+<span id="105">105</span>
+<span id="106">106</span>
+<span id="107">107</span>
+<span id="108">108</span>
+<span id="109">109</span>
+<span id="110">110</span>
+<span id="111">111</span>
+<span id="112">112</span>
+<span id="113">113</span>
+<span id="114">114</span>
+<span id="115">115</span>
+<span id="116">116</span>
+<span id="117">117</span>
+<span id="118">118</span>
+<span id="119">119</span>
+<span id="120">120</span>
+<span id="121">121</span>
+<span id="122">122</span>
+<span id="123">123</span>
+<span id="124">124</span>
+<span id="125">125</span>
+<span id="126">126</span>
+<span id="127">127</span>
+<span id="128">128</span>
+<span id="129">129</span>
+<span id="130">130</span>
+<span id="131">131</span>
+<span id="132">132</span>
+<span id="133">133</span>
+<span id="134">134</span>
+<span id="135">135</span>
+<span id="136">136</span>
+<span id="137">137</span>
+<span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
+<span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
+<span id="150">150</span>
+<span id="151">151</span>
+<span id="152">152</span>
+<span id="153">153</span>
+<span id="154">154</span>
+<span id="155">155</span>
+<span id="156">156</span>
+<span id="157">157</span>
+<span id="158">158</span>
+<span id="159">159</span>
+<span id="160">160</span>
+<span id="161">161</span>
+<span id="162">162</span>
+<span id="163">163</span>
+<span id="164">164</span>
+<span id="165">165</span>
+<span id="166">166</span>
+<span id="167">167</span>
+<span id="168">168</span>
+<span id="169">169</span>
+<span id="170">170</span>
+<span id="171">171</span>
+<span id="172">172</span>
+<span id="173">173</span>
+<span id="174">174</span>
+<span id="175">175</span>
+<span id="176">176</span>
+<span id="177">177</span>
+<span id="178">178</span>
+<span id="179">179</span>
+<span id="180">180</span>
+<span id="181">181</span>
+<span id="182">182</span>
+<span id="183">183</span>
+<span id="184">184</span>
+<span id="185">185</span>
+<span id="186">186</span>
+<span id="187">187</span>
+<span id="188">188</span>
+<span id="189">189</span>
+<span id="190">190</span>
+<span id="191">191</span>
+<span id="192">192</span>
+<span id="193">193</span>
+<span id="194">194</span>
+<span id="195">195</span>
+<span id="196">196</span>
+<span id="197">197</span>
+<span id="198">198</span>
+<span id="199">199</span>
+<span id="200">200</span>
+<span id="201">201</span>
+<span id="202">202</span>
+<span id="203">203</span>
+<span id="204">204</span>
+<span id="205">205</span>
+<span id="206">206</span>
+<span id="207">207</span>
+<span id="208">208</span>
+<span id="209">209</span>
+<span id="210">210</span>
+<span id="211">211</span>
+<span id="212">212</span>
+<span id="213">213</span>
+<span id="214">214</span>
+<span id="215">215</span>
+<span id="216">216</span>
+<span id="217">217</span>
+<span id="218">218</span>
+<span id="219">219</span>
+<span id="220">220</span>
+<span id="221">221</span>
+<span id="222">222</span>
+<span id="223">223</span>
+<span id="224">224</span>
+<span id="225">225</span>
+<span id="226">226</span>
+<span id="227">227</span>
+<span id="228">228</span>
+<span id="229">229</span>
+<span id="230">230</span>
+<span id="231">231</span>
+<span id="232">232</span>
+<span id="233">233</span>
+<span id="234">234</span>
+<span id="235">235</span>
+<span id="236">236</span>
+<span id="237">237</span>
+<span id="238">238</span>
+<span id="239">239</span>
+<span id="240">240</span>
+<span id="241">241</span>
+<span id="242">242</span>
+<span id="243">243</span>
+<span id="244">244</span>
+<span id="245">245</span>
+<span id="246">246</span>
+<span id="247">247</span>
+<span id="248">248</span>
+<span id="249">249</span>
+<span id="250">250</span>
+<span id="251">251</span>
+<span id="252">252</span>
+<span id="253">253</span>
+<span id="254">254</span>
+<span id="255">255</span>
+<span id="256">256</span>
+<span id="257">257</span>
+<span id="258">258</span>
+<span id="259">259</span>
+<span id="260">260</span>
+<span id="261">261</span>
+<span id="262">262</span>
+<span id="263">263</span>
+<span id="264">264</span>
+<span id="265">265</span>
+<span id="266">266</span>
+<span id="267">267</span>
+<span id="268">268</span>
+<span id="269">269</span>
+<span id="270">270</span>
+<span id="271">271</span>
+<span id="272">272</span>
+<span id="273">273</span>
+<span id="274">274</span>
+<span id="275">275</span>
+<span id="276">276</span>
+<span id="277">277</span>
+<span id="278">278</span>
+<span id="279">279</span>
+<span id="280">280</span>
+<span id="281">281</span>
+<span id="282">282</span>
+<span id="283">283</span>
+<span id="284">284</span>
+<span id="285">285</span>
+<span id="286">286</span>
+<span id="287">287</span>
+<span id="288">288</span>
+<span id="289">289</span>
+<span id="290">290</span>
+<span id="291">291</span>
+<span id="292">292</span>
+<span id="293">293</span>
+<span id="294">294</span>
+<span id="295">295</span>
+<span id="296">296</span>
+<span id="297">297</span>
+<span id="298">298</span>
+<span id="299">299</span>
+<span id="300">300</span>
+<span id="301">301</span>
+<span id="302">302</span>
+<span id="303">303</span>
+<span id="304">304</span>
+<span id="305">305</span>
+<span id="306">306</span>
+<span id="307">307</span>
+<span id="308">308</span>
+<span id="309">309</span>
+<span id="310">310</span>
+<span id="311">311</span>
+<span id="312">312</span>
+<span id="313">313</span>
+<span id="314">314</span>
+<span id="315">315</span>
+<span id="316">316</span>
+<span id="317">317</span>
+<span id="318">318</span>
+<span id="319">319</span>
+<span id="320">320</span>
+<span id="321">321</span>
+<span id="322">322</span>
+<span id="323">323</span>
+<span id="324">324</span>
+<span id="325">325</span>
+<span id="326">326</span>
+<span id="327">327</span>
+<span id="328">328</span>
+<span id="329">329</span>
+<span id="330">330</span>
+<span id="331">331</span>
+<span id="332">332</span>
+<span id="333">333</span>
+<span id="334">334</span>
+<span id="335">335</span>
+<span id="336">336</span>
+<span id="337">337</span>
+<span id="338">338</span>
+<span id="339">339</span>
+<span id="340">340</span>
+<span id="341">341</span>
+<span id="342">342</span>
+<span id="343">343</span>
+<span id="344">344</span>
+<span id="345">345</span>
+<span id="346">346</span>
+<span id="347">347</span>
+<span id="348">348</span>
+<span id="349">349</span>
+<span id="350">350</span>
+<span id="351">351</span>
+<span id="352">352</span>
+<span id="353">353</span>
+<span id="354">354</span>
+<span id="355">355</span>
+<span id="356">356</span>
+<span id="357">357</span>
+<span id="358">358</span>
+<span id="359">359</span>
+<span id="360">360</span>
+<span id="361">361</span>
+<span id="362">362</span>
+<span id="363">363</span>
+<span id="364">364</span>
+<span id="365">365</span>
+<span id="366">366</span>
+<span id="367">367</span>
+<span id="368">368</span>
+<span id="369">369</span>
+<span id="370">370</span>
+<span id="371">371</span>
+<span id="372">372</span>
+<span id="373">373</span>
+<span id="374">374</span>
+<span id="375">375</span>
+<span id="376">376</span>
+<span id="377">377</span>
+<span id="378">378</span>
+<span id="379">379</span>
+<span id="380">380</span>
+<span id="381">381</span>
+<span id="382">382</span>
+<span id="383">383</span>
+<span id="384">384</span>
+<span id="385">385</span>
+<span id="386">386</span>
+<span id="387">387</span>
+<span id="388">388</span>
+<span id="389">389</span>
+<span id="390">390</span>
+<span id="391">391</span>
+<span id="392">392</span>
+<span id="393">393</span>
+<span id="394">394</span>
+<span id="395">395</span>
+<span id="396">396</span>
+<span id="397">397</span>
+<span id="398">398</span>
+<span id="399">399</span>
+<span id="400">400</span>
+<span id="401">401</span>
+<span id="402">402</span>
+<span id="403">403</span>
+<span id="404">404</span>
+<span id="405">405</span>
+<span id="406">406</span>
+<span id="407">407</span>
+<span id="408">408</span>
+<span id="409">409</span>
+<span id="410">410</span>
+<span id="411">411</span>
+<span id="412">412</span>
+<span id="413">413</span>
+<span id="414">414</span>
+<span id="415">415</span>
+<span id="416">416</span>
+<span id="417">417</span>
+<span id="418">418</span>
+<span id="419">419</span>
+<span id="420">420</span>
+<span id="421">421</span>
+<span id="422">422</span>
+<span id="423">423</span>
+<span id="424">424</span>
+<span id="425">425</span>
+<span id="426">426</span>
+<span id="427">427</span>
+<span id="428">428</span>
+<span id="429">429</span>
+<span id="430">430</span>
+<span id="431">431</span>
+<span id="432">432</span>
+<span id="433">433</span>
+<span id="434">434</span>
+<span id="435">435</span>
+<span id="436">436</span>
+<span id="437">437</span>
+<span id="438">438</span>
+<span id="439">439</span>
+<span id="440">440</span>
+<span id="441">441</span>
+<span id="442">442</span>
+<span id="443">443</span>
+<span id="444">444</span>
+<span id="445">445</span>
+<span id="446">446</span>
+<span id="447">447</span>
+<span id="448">448</span>
+<span id="449">449</span>
+<span id="450">450</span>
+<span id="451">451</span>
+<span id="452">452</span>
+<span id="453">453</span>
+<span id="454">454</span>
+<span id="455">455</span>
+<span id="456">456</span>
+<span id="457">457</span>
+<span id="458">458</span>
+<span id="459">459</span>
+<span id="460">460</span>
+<span id="461">461</span>
+<span id="462">462</span>
+<span id="463">463</span>
+<span id="464">464</span>
+<span id="465">465</span>
+<span id="466">466</span>
+<span id="467">467</span>
+<span id="468">468</span>
+<span id="469">469</span>
+<span id="470">470</span>
+<span id="471">471</span>
+<span id="472">472</span>
+<span id="473">473</span>
+<span id="474">474</span>
+<span id="475">475</span>
+<span id="476">476</span>
+<span id="477">477</span>
+<span id="478">478</span>
+<span id="479">479</span>
+<span id="480">480</span>
+<span id="481">481</span>
+<span id="482">482</span>
+<span id="483">483</span>
+<span id="484">484</span>
+<span id="485">485</span>
+<span id="486">486</span>
+<span id="487">487</span>
+<span id="488">488</span>
+<span id="489">489</span>
+<span id="490">490</span>
+<span id="491">491</span>
+<span id="492">492</span>
+<span id="493">493</span>
+<span id="494">494</span>
+<span id="495">495</span>
+<span id="496">496</span>
+<span id="497">497</span>
+<span id="498">498</span>
+<span id="499">499</span>
+<span id="500">500</span>
+<span id="501">501</span>
+<span id="502">502</span>
+<span id="503">503</span>
+<span id="504">504</span>
+<span id="505">505</span>
+<span id="506">506</span>
+<span id="507">507</span>
+<span id="508">508</span>
+<span id="509">509</span>
+<span id="510">510</span>
+<span id="511">511</span>
+<span id="512">512</span>
+<span id="513">513</span>
+<span id="514">514</span>
+<span id="515">515</span>
+<span id="516">516</span>
+<span id="517">517</span>
+<span id="518">518</span>
+<span id="519">519</span>
+<span id="520">520</span>
+<span id="521">521</span>
+<span id="522">522</span>
+<span id="523">523</span>
+<span id="524">524</span>
+<span id="525">525</span>
+<span id="526">526</span>
+<span id="527">527</span>
+<span id="528">528</span>
+<span id="529">529</span>
+<span id="530">530</span>
+<span id="531">531</span>
+<span id="532">532</span>
+<span id="533">533</span>
+<span id="534">534</span>
+<span id="535">535</span>
+<span id="536">536</span>
+<span id="537">537</span>
+<span id="538">538</span>
+<span id="539">539</span>
+<span id="540">540</span>
+<span id="541">541</span>
+<span id="542">542</span>
+<span id="543">543</span>
+<span id="544">544</span>
+<span id="545">545</span>
+<span id="546">546</span>
+<span id="547">547</span>
+<span id="548">548</span>
+<span id="549">549</span>
+<span id="550">550</span>
+<span id="551">551</span>
+<span id="552">552</span>
+<span id="553">553</span>
+<span id="554">554</span>
+<span id="555">555</span>
+<span id="556">556</span>
+<span id="557">557</span>
+<span id="558">558</span>
+<span id="559">559</span>
+<span id="560">560</span>
+<span id="561">561</span>
+<span id="562">562</span>
+<span id="563">563</span>
+<span id="564">564</span>
+<span id="565">565</span>
+<span id="566">566</span>
+<span id="567">567</span>
+<span id="568">568</span>
+<span id="569">569</span>
+<span id="570">570</span>
+<span id="571">571</span>
+<span id="572">572</span>
+<span id="573">573</span>
+<span id="574">574</span>
+<span id="575">575</span>
+<span id="576">576</span>
+<span id="577">577</span>
+<span id="578">578</span>
+<span id="579">579</span>
+<span id="580">580</span>
+<span id="581">581</span>
+<span id="582">582</span>
+<span id="583">583</span>
+<span id="584">584</span>
+<span id="585">585</span>
+<span id="586">586</span>
+<span id="587">587</span>
+<span id="588">588</span>
+<span id="589">589</span>
+<span id="590">590</span>
+<span id="591">591</span>
+<span id="592">592</span>
+<span id="593">593</span>
+<span id="594">594</span>
+<span id="595">595</span>
+<span id="596">596</span>
+<span id="597">597</span>
+<span id="598">598</span>
+<span id="599">599</span>
+<span id="600">600</span>
+<span id="601">601</span>
+<span id="602">602</span>
+<span id="603">603</span>
+<span id="604">604</span>
+<span id="605">605</span>
+<span id="606">606</span>
+<span id="607">607</span>
+<span id="608">608</span>
+<span id="609">609</span>
+<span id="610">610</span>
+<span id="611">611</span>
+<span id="612">612</span>
+<span id="613">613</span>
+<span id="614">614</span>
+<span id="615">615</span>
+<span id="616">616</span>
+<span id="617">617</span>
+<span id="618">618</span>
+</pre><pre class="rust ">
+<span class="comment">// Copyright 2013-2016, The Gtk-rs Project Developers.</span>
+<span class="comment">// See the COPYRIGHT file at the top-level directory of this distribution.</span>
+<span class="comment">// Licensed under the MIT license, see the LICENSE file or &lt;http://opensource.org/licenses/MIT&gt;</span>
+
+<span class="attribute">#<span class="op">!</span>[<span class="ident">allow</span>(<span class="ident">non_camel_case_types</span>)]</span>
+
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">libc</span>;
+
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;xlib&quot;</span>)]</span>
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">x11</span>;
+
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">windows</span>)]</span>
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">winapi</span>;
+
+<span class="kw">use</span> <span class="ident">libc</span>::{<span class="ident">c_void</span>, <span class="ident">c_int</span>, <span class="ident">c_uint</span>, <span class="ident">c_char</span>, <span class="ident">c_uchar</span>, <span class="ident">c_double</span>, <span class="ident">c_ulong</span>};
+
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;xlib&quot;</span>)]</span>
+<span class="kw">use</span> <span class="ident">x11</span>::<span class="ident">xlib</span>;
+
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">enums</span>;
+
+<span class="kw">use</span> <span class="ident">enums</span>::{
+    <span class="ident">Status</span>,
+    <span class="ident">Content</span>,
+    <span class="ident">Antialias</span>,
+    <span class="ident">LineCap</span>,
+    <span class="ident">LineJoin</span>,
+    <span class="ident">FillRule</span>,
+    <span class="ident">FontSlant</span>,
+    <span class="ident">FontWeight</span>,
+    <span class="ident">TextClusterFlags</span>,
+    <span class="ident">FontType</span>,
+    <span class="ident">SubpixelOrder</span>,
+    <span class="ident">HintStyle</span>,
+    <span class="ident">HintMetrics</span>,
+    <span class="ident">Extend</span>,
+    <span class="ident">Filter</span>,
+    <span class="ident">RegionOverlap</span>,
+    <span class="ident">PathDataType</span>,
+    <span class="ident">PatternType</span>,
+    <span class="ident">Format</span>,
+    <span class="ident">SurfaceType</span>,
+    <span class="ident">Operator</span>,
+};
+
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">cairo_t</span>(<span class="ident">c_void</span>);
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">cairo_surface_t</span>(<span class="ident">c_void</span>);
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">cairo_pattern_t</span>(<span class="ident">c_void</span>);
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">cairo_fill_rule_t</span>(<span class="ident">c_void</span>);
+
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">cairo_antialias_t</span> <span class="op">=</span> <span class="ident">Antialias</span>;
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">cairo_line_join_t</span> <span class="op">=</span> <span class="ident">LineJoin</span>;
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">cairo_line_cap_t</span> <span class="op">=</span> <span class="ident">LineCap</span>;
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">cairo_content_t</span> <span class="op">=</span> <span class="ident">Content</span>;
+
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;xcb&quot;</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">cairo_device_t</span>(<span class="ident">c_void</span>);
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;xcb&quot;</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">xcb_connection_t</span>(<span class="ident">c_void</span>);
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;xcb&quot;</span>)]</span>
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">xcb_drawable_t</span> <span class="op">=</span> <span class="ident">u32</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;xcb&quot;</span>)]</span>
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">xcb_pixmap_t</span> <span class="op">=</span> <span class="ident">u32</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;xcb&quot;</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">xcb_visualtype_t</span>(<span class="ident">c_void</span>);
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;xcb&quot;</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">xcb_screen_t</span>(<span class="ident">c_void</span>);
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;xcb&quot;</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">xcb_render_pictforminfo_t</span>(<span class="ident">c_void</span>);
+
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">cairo_rectangle_t</span> {
+    <span class="kw">pub</span> <span class="ident">x</span>: <span class="ident">f64</span>,
+    <span class="kw">pub</span> <span class="ident">y</span>: <span class="ident">f64</span>,
+    <span class="kw">pub</span> <span class="ident">width</span>: <span class="ident">f64</span>,
+    <span class="kw">pub</span> <span class="ident">height</span>: <span class="ident">f64</span>,
+}
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Debug</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">cairo_rectangle_int_t</span> {
+    <span class="kw">pub</span> <span class="ident">x</span>: <span class="ident">i32</span>,
+    <span class="kw">pub</span> <span class="ident">y</span>: <span class="ident">i32</span>,
+    <span class="kw">pub</span> <span class="ident">width</span>: <span class="ident">i32</span>,
+    <span class="kw">pub</span> <span class="ident">height</span>: <span class="ident">i32</span>,
+}
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">cairo_rectangle_list_t</span> {
+    <span class="kw">pub</span> <span class="ident">status</span>: <span class="ident">Status</span>,
+    <span class="kw">pub</span> <span class="ident">rectangles</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_rectangle_t</span>,
+    <span class="kw">pub</span> <span class="ident">num_rectangles</span>: <span class="ident">c_int</span>
+}
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">cairo_path_t</span> {
+    <span class="kw">pub</span> <span class="ident">status</span>: <span class="ident">Status</span>,
+    <span class="kw">pub</span> <span class="ident">data</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> [<span class="ident">c_double</span>; <span class="number">2</span>],
+    <span class="kw">pub</span> <span class="ident">num_data</span>: <span class="ident">c_int</span>
+}
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">cairo_path_data_header</span>{
+    <span class="kw">pub</span> <span class="ident">data_type</span>: <span class="ident">PathDataType</span>,
+    <span class="kw">pub</span> <span class="ident">length</span>:    <span class="ident">c_int</span>
+}
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">cairo_glyph_t</span>(<span class="ident">c_void</span>);
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">cairo_region_t</span>(<span class="ident">c_void</span>);
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">cairo_font_face_t</span>(<span class="ident">c_void</span>);
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">cairo_scaled_font_t</span>(<span class="ident">c_void</span>);
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">cairo_font_options_t</span>(<span class="ident">c_void</span>);
+
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">cairo_extend_t</span> <span class="op">=</span> <span class="ident">Extend</span>;
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">cairo_filter_t</span> <span class="op">=</span> <span class="ident">Filter</span>;
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">cairo_region_overlap_t</span> <span class="op">=</span> <span class="ident">RegionOverlap</span>;
+
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">FontExtents</span> {
+    <span class="kw">pub</span> <span class="ident">ascent</span>: <span class="ident">c_double</span>,
+    <span class="kw">pub</span> <span class="ident">descent</span>: <span class="ident">c_double</span>,
+    <span class="kw">pub</span> <span class="ident">height</span>: <span class="ident">c_double</span>,
+    <span class="kw">pub</span> <span class="ident">max_x_advance</span>: <span class="ident">c_double</span>,
+    <span class="kw">pub</span> <span class="ident">max_y_advance</span>: <span class="ident">c_double</span>,
+}
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Glyph</span> {
+    <span class="kw">pub</span> <span class="ident">index</span>: <span class="ident">c_ulong</span>,
+    <span class="kw">pub</span> <span class="ident">x</span>: <span class="ident">c_double</span>,
+    <span class="kw">pub</span> <span class="ident">y</span>: <span class="ident">c_double</span>,
+}
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TextCluster</span> {
+    <span class="kw">pub</span> <span class="ident">num_bytes</span>: <span class="ident">c_int</span>,
+    <span class="kw">pub</span> <span class="ident">num_glyphs</span>: <span class="ident">c_int</span>,
+}
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TextExtents</span> {
+    <span class="kw">pub</span> <span class="ident">x_bearing</span>: <span class="ident">c_double</span>,
+    <span class="kw">pub</span> <span class="ident">y_bearing</span>: <span class="ident">c_double</span>,
+    <span class="kw">pub</span> <span class="ident">width</span>: <span class="ident">c_double</span>,
+    <span class="kw">pub</span> <span class="ident">height</span>: <span class="ident">c_double</span>,
+    <span class="kw">pub</span> <span class="ident">x_advance</span>: <span class="ident">c_double</span>,
+    <span class="kw">pub</span> <span class="ident">y_advance</span>: <span class="ident">c_double</span>,
+}
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">PartialEq</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Matrix</span> {
+    <span class="kw">pub</span> <span class="ident">xx</span>: <span class="ident">c_double</span>,
+    <span class="kw">pub</span> <span class="ident">yx</span>: <span class="ident">c_double</span>,
+
+    <span class="kw">pub</span> <span class="ident">xy</span>: <span class="ident">c_double</span>,
+    <span class="kw">pub</span> <span class="ident">yy</span>: <span class="ident">c_double</span>,
+
+    <span class="kw">pub</span> <span class="ident">x0</span>: <span class="ident">c_double</span>,
+    <span class="kw">pub</span> <span class="ident">y0</span>: <span class="ident">c_double</span>,
+}
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Default</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">cairo_user_data_key_t</span> {
+    <span class="kw">pub</span> <span class="ident">unused</span>: <span class="ident">c_int</span>,
+}
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">cairo_bool_t</span>{
+    <span class="ident">value</span>: <span class="ident">c_int</span>
+}
+
+<span class="kw">impl</span> <span class="ident">cairo_bool_t</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_bool</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span>{
+        <span class="self">self</span>.<span class="ident">value</span> <span class="op">!=</span> <span class="number">0</span>
+    }
+}
+
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">CGContextRef</span> <span class="op">=</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>;
+
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">cairo_destroy_func_t</span> <span class="op">=</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw">unsafe</span> <span class="kw">extern</span> <span class="kw">fn</span> (<span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>)<span class="op">&gt;</span>;
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">cairo_read_func_t</span> <span class="op">=</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw">unsafe</span> <span class="kw">extern</span> <span class="kw">fn</span> (<span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>, <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_uchar</span>, <span class="ident">c_uint</span>) <span class="op">-&gt;</span> <span class="ident">Status</span><span class="op">&gt;</span>;
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">cairo_write_func_t</span> <span class="op">=</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw">unsafe</span> <span class="kw">extern</span> <span class="kw">fn</span> (<span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>, <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_uchar</span>, <span class="ident">c_uint</span>) <span class="op">-&gt;</span> <span class="ident">Status</span><span class="op">&gt;</span>;
+
+<span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
+    <span class="comment">//CAIRO CONTEXT</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_create</span> (<span class="ident">target</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_surface_t</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_reference</span> (<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_destroy</span> (<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_status</span> (<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>) <span class="op">-&gt;</span> <span class="ident">Status</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_save</span> (<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_restore</span> (<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_get_target</span> (<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_surface_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_push_group</span> (<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_push_group_with_content</span> (<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">content</span>: <span class="ident">Content</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_pop_group</span> (<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_pattern_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_pop_group_to_source</span> (<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_get_group_target</span> (<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_surface_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_set_source_rgb</span> (<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">red</span>: <span class="ident">c_double</span>, <span class="ident">green</span>: <span class="ident">c_double</span>, <span class="ident">blue</span>: <span class="ident">c_double</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_set_source_rgba</span> (<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">red</span>: <span class="ident">c_double</span>, <span class="ident">green</span>: <span class="ident">c_double</span>, <span class="ident">blue</span>: <span class="ident">c_double</span>, <span class="ident">alpha</span>: <span class="ident">c_double</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_set_source</span> (<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">source</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_pattern_t</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_set_source_surface</span> (<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">surface</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_surface_t</span>, <span class="ident">x</span>: <span class="ident">c_double</span>, <span class="ident">y</span>: <span class="ident">c_double</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_get_source</span> (<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_pattern_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_set_antialias</span> (<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">antialias</span>: <span class="ident">Antialias</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_get_antialias</span> (<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>) <span class="op">-&gt;</span> <span class="ident">Antialias</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_set_dash</span> (<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">dashes</span> : <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_double</span>, <span class="ident">num_dashes</span>: <span class="ident">c_int</span>, <span class="ident">offset</span>: <span class="ident">c_double</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_get_dash_count</span> (<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_get_dash</span> (<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">dashes</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_double</span>, <span class="ident">offset</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_double</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_set_fill_rule</span> (<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">fill_rule</span>: <span class="ident">FillRule</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_get_fill_rule</span> (<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>) <span class="op">-&gt;</span> <span class="ident">FillRule</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_set_line_cap</span> (<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">line_cap</span>: <span class="ident">LineCap</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_get_line_cap</span> (<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>) <span class="op">-&gt;</span> <span class="ident">LineCap</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_set_line_join</span> (<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">line_join</span>: <span class="ident">LineJoin</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_get_line_join</span> (<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>) <span class="op">-&gt;</span> <span class="ident">LineJoin</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_set_line_width</span> (<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">width</span>: <span class="ident">c_double</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_get_line_width</span> (<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>) <span class="op">-&gt;</span> <span class="ident">c_double</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_set_miter_limit</span> (<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">limit</span>: <span class="ident">c_double</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_get_miter_limit</span> (<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>) <span class="op">-&gt;</span> <span class="ident">c_double</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_set_operator</span> (<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">op</span>: <span class="ident">Operator</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_get_operator</span> (<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>) <span class="op">-&gt;</span> <span class="ident">Operator</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_set_tolerance</span> (<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">tolerance</span>: <span class="ident">c_double</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_get_tolerance</span> (<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>) <span class="op">-&gt;</span> <span class="ident">c_double</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_clip</span> (<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_clip_preserve</span> (<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_clip_extents</span> (<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">x1</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_double</span>, <span class="ident">y1</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_double</span>, <span class="ident">x2</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_double</span>, <span class="ident">y2</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_double</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_in_clip</span> (<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">x</span>: <span class="ident">c_double</span>, <span class="ident">y</span>: <span class="ident">c_double</span>) <span class="op">-&gt;</span> <span class="ident">cairo_bool_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_reset_clip</span> (<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_rectangle_list_destroy</span> (<span class="ident">rectangle_list</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_rectangle_list_t</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_copy_clip_rectangle_list</span> (<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_rectangle_list_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_fill</span> (<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_fill_preserve</span> (<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_fill_extents</span> (<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">x1</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_double</span>, <span class="ident">y1</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_double</span>, <span class="ident">x2</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_double</span>, <span class="ident">y2</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_double</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_in_fill</span> (<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">x</span>: <span class="ident">c_double</span>, <span class="ident">y</span>: <span class="ident">c_double</span>) <span class="op">-&gt;</span> <span class="ident">cairo_bool_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_mask</span> (<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">pattern</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_pattern_t</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_mask_surface</span> (<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">surface</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_surface_t</span>, <span class="ident">surface_x</span>: <span class="ident">c_double</span>, <span class="ident">surface_y</span>: <span class="ident">c_double</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_paint</span> (<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_paint_with_alpha</span> (<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">alpha</span>: <span class="ident">c_double</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_stroke</span> (<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_stroke_preserve</span> (<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_stroke_extents</span> (<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">x1</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_double</span>, <span class="ident">y1</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_double</span>, <span class="ident">x2</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_double</span>, <span class="ident">y2</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_double</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_in_stroke</span> (<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">x</span>: <span class="ident">c_double</span>, <span class="ident">y</span>: <span class="ident">c_double</span>) <span class="op">-&gt;</span> <span class="ident">cairo_bool_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_copy_page</span> (<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_show_page</span> (<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_get_reference_count</span> (<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>) <span class="op">-&gt;</span> <span class="ident">c_uint</span>;
+
+    <span class="comment">//CAIRO UTILS: Error handling</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_status_to_string</span> (<span class="ident">status</span> : <span class="ident">Status</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>;
+
+
+    <span class="comment">//CAIRO PATHS</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_copy_path</span>(<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_path_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_copy_path_flat</span>(<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_path_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_path_destroy</span>(<span class="ident">path</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_path_t</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_append_path</span>(<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">path</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_path_t</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_has_current_point</span>(<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>) <span class="op">-&gt;</span> <span class="ident">cairo_bool_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_get_current_point</span>(<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">x</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_double</span>, <span class="ident">y</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_double</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_new_path</span>(<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_new_sub_path</span>(<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_close_path</span>(<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_arc</span>(<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">xc</span>: <span class="ident">c_double</span>, <span class="ident">yc</span>: <span class="ident">c_double</span>, <span class="ident">radius</span>: <span class="ident">c_double</span>, <span class="ident">angle1</span>: <span class="ident">c_double</span>, <span class="ident">angle2</span>: <span class="ident">c_double</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_arc_negative</span>(<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">xc</span>: <span class="ident">c_double</span>, <span class="ident">yc</span>: <span class="ident">c_double</span>, <span class="ident">radius</span>: <span class="ident">c_double</span>, <span class="ident">angle1</span>: <span class="ident">c_double</span>, <span class="ident">angle2</span>: <span class="ident">c_double</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_curve_to</span>(<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">x1</span>: <span class="ident">c_double</span>, <span class="ident">y1</span>: <span class="ident">c_double</span>, <span class="ident">x2</span>: <span class="ident">c_double</span>, <span class="ident">y2</span>: <span class="ident">c_double</span>, <span class="ident">x3</span>: <span class="ident">c_double</span>, <span class="ident">y3</span>: <span class="ident">c_double</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_line_to</span>(<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">x</span>: <span class="ident">c_double</span>, <span class="ident">y</span>: <span class="ident">c_double</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_move_to</span>(<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">x</span>: <span class="ident">c_double</span>, <span class="ident">y</span>: <span class="ident">c_double</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_rectangle</span>(<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">x</span>: <span class="ident">c_double</span>, <span class="ident">y</span>: <span class="ident">c_double</span>, <span class="ident">width</span>: <span class="ident">c_double</span>, <span class="ident">height</span>: <span class="ident">c_double</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_glyph_path</span>(<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">glyphs</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">Glyph</span>, <span class="ident">num_glyphs</span>: <span class="ident">c_int</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_text_path</span>(<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">utf8</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_rel_curve_to</span>(<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">dx1</span>: <span class="ident">c_double</span>, <span class="ident">dy1</span>: <span class="ident">c_double</span>, <span class="ident">dx2</span>: <span class="ident">c_double</span>, <span class="ident">dy2</span>: <span class="ident">c_double</span>, <span class="ident">dx3</span>: <span class="ident">c_double</span>, <span class="ident">dy3</span>: <span class="ident">c_double</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_rel_line_to</span>(<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">dx</span>: <span class="ident">c_double</span>, <span class="ident">dy</span>: <span class="ident">c_double</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_rel_move_to</span>(<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">dx</span>: <span class="ident">c_double</span>, <span class="ident">dy</span>: <span class="ident">c_double</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_path_extents</span>(<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">x1</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_double</span>, <span class="ident">y1</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_double</span>, <span class="ident">x2</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_double</span>, <span class="ident">y2</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_double</span>);
+
+    <span class="comment">//CAIRO TRANSFORMATIONS</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_translate</span>(<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">tx</span>: <span class="ident">c_double</span>, <span class="ident">ty</span>: <span class="ident">c_double</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_scale</span>(<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">sx</span>: <span class="ident">c_double</span>, <span class="ident">sy</span>: <span class="ident">c_double</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_rotate</span>(<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">angle</span>: <span class="ident">c_double</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_transform</span>(<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">matrix</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">Matrix</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_set_matrix</span>(<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">matrix</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">Matrix</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_get_matrix</span>(<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">matrix</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">Matrix</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_identity_matrix</span>(<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_user_to_device</span>(<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">x</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_double</span>, <span class="ident">y</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_double</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_user_to_device_distance</span>(<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">dx</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_double</span>, <span class="ident">dy</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_double</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_device_to_user</span>(<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">x</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_double</span>, <span class="ident">y</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_double</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_device_to_user_distance</span>(<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">dx</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_double</span>, <span class="ident">dy</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_double</span>);
+
+    <span class="comment">//CAIRO PATTERNS</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_pattern_add_color_stop_rgb</span>(<span class="ident">pattern</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_pattern_t</span>, <span class="ident">offset</span>: <span class="ident">c_double</span>, <span class="ident">red</span>: <span class="ident">c_double</span>, <span class="ident">green</span>: <span class="ident">c_double</span>, <span class="ident">blue</span>: <span class="ident">c_double</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_pattern_add_color_stop_rgba</span>(<span class="ident">pattern</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_pattern_t</span>, <span class="ident">offset</span>: <span class="ident">c_double</span>, <span class="ident">red</span>: <span class="ident">c_double</span>, <span class="ident">green</span>: <span class="ident">c_double</span>, <span class="ident">blue</span>: <span class="ident">c_double</span>, <span class="ident">alpha</span>: <span class="ident">c_double</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_pattern_get_color_stop_count</span>(<span class="ident">pattern</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_pattern_t</span>, <span class="ident">count</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">Status</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_pattern_get_color_stop_rgba</span>(<span class="ident">pattern</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_pattern_t</span>, <span class="ident">index</span>: <span class="ident">c_int</span>, <span class="ident">offset</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_double</span>, <span class="ident">red</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_double</span>, <span class="ident">green</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_double</span>, <span class="ident">blue</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_double</span>, <span class="ident">alpha</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_double</span>) <span class="op">-&gt;</span> <span class="ident">Status</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_pattern_create_rgb</span>(<span class="ident">red</span>: <span class="ident">c_double</span>, <span class="ident">green</span>: <span class="ident">c_double</span>, <span class="ident">blue</span>: <span class="ident">c_double</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_pattern_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_pattern_create_rgba</span>(<span class="ident">red</span>: <span class="ident">c_double</span>, <span class="ident">green</span>: <span class="ident">c_double</span>, <span class="ident">blue</span>: <span class="ident">c_double</span>, <span class="ident">alpha</span>: <span class="ident">c_double</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_pattern_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_pattern_get_rgba</span>(<span class="ident">pattern</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_pattern_t</span>, <span class="ident">red</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_double</span>, <span class="ident">green</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_double</span>, <span class="ident">blue</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_double</span>, <span class="ident">alpha</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_double</span>) <span class="op">-&gt;</span> <span class="ident">Status</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_pattern_create_for_surface</span>(<span class="ident">surface</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_surface_t</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_pattern_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_pattern_get_surface</span>(<span class="ident">pattern</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_pattern_t</span>, <span class="ident">surface</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_surface_t</span>) <span class="op">-&gt;</span> <span class="ident">Status</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_pattern_create_linear</span>(<span class="ident">x0</span>: <span class="ident">c_double</span>, <span class="ident">y0</span>: <span class="ident">c_double</span>, <span class="ident">x1</span>: <span class="ident">c_double</span>, <span class="ident">y1</span>: <span class="ident">c_double</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_pattern_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_pattern_get_linear_points</span>(<span class="ident">pattern</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_pattern_t</span>, <span class="ident">x0</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_double</span>, <span class="ident">y0</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_double</span>, <span class="ident">x1</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_double</span>, <span class="ident">y1</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_double</span>) <span class="op">-&gt;</span> <span class="ident">Status</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_pattern_create_radial</span>(<span class="ident">cx0</span>: <span class="ident">c_double</span>, <span class="ident">cy0</span>: <span class="ident">c_double</span>, <span class="ident">radius0</span>: <span class="ident">c_double</span>, <span class="ident">cx1</span>: <span class="ident">c_double</span>, <span class="ident">cy1</span>: <span class="ident">c_double</span>, <span class="ident">radius1</span>: <span class="ident">c_double</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_pattern_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_pattern_get_radial_circles</span>(<span class="ident">pattern</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_pattern_t</span>, <span class="ident">x0</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_double</span>, <span class="ident">y0</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_double</span>, <span class="ident">r0</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_double</span>, <span class="ident">x1</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_double</span>, <span class="ident">y1</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_double</span>, <span class="ident">r1</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_double</span>) <span class="op">-&gt;</span> <span class="ident">Status</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_pattern_create_mesh</span>() <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_pattern_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_mesh_pattern_begin_patch</span>(<span class="ident">pattern</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_pattern_t</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_mesh_pattern_end_patch</span>(<span class="ident">pattern</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_pattern_t</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_mesh_pattern_move_to</span>(<span class="ident">pattern</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_pattern_t</span>, <span class="ident">x</span>: <span class="ident">c_double</span>, <span class="ident">y</span>: <span class="ident">c_double</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_mesh_pattern_line_to</span>(<span class="ident">pattern</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_pattern_t</span>, <span class="ident">x</span>: <span class="ident">c_double</span>, <span class="ident">y</span>: <span class="ident">c_double</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_mesh_pattern_curve_to</span>(<span class="ident">pattern</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_pattern_t</span>, <span class="ident">x1</span>: <span class="ident">c_double</span>, <span class="ident">y1</span>: <span class="ident">c_double</span>, <span class="ident">x2</span>: <span class="ident">c_double</span>, <span class="ident">y2</span>: <span class="ident">c_double</span>, <span class="ident">x3</span>: <span class="ident">c_double</span>, <span class="ident">y3</span>: <span class="ident">c_double</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_mesh_pattern_set_control_point</span>(<span class="ident">pattern</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_pattern_t</span>, <span class="ident">point_num</span>: <span class="ident">c_uint</span>, <span class="ident">x</span>: <span class="ident">c_double</span>, <span class="ident">y</span>: <span class="ident">c_double</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_mesh_pattern_set_corner_color_rgb</span>(<span class="ident">pattern</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_pattern_t</span>, <span class="ident">corner_num</span>: <span class="ident">c_uint</span>, <span class="ident">red</span>: <span class="ident">c_double</span>, <span class="ident">green</span>: <span class="ident">c_double</span>, <span class="ident">blue</span>: <span class="ident">c_double</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_mesh_pattern_set_corner_color_rgba</span>(<span class="ident">pattern</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_pattern_t</span>, <span class="ident">corner_num</span>: <span class="ident">c_uint</span>, <span class="ident">red</span>: <span class="ident">c_double</span>, <span class="ident">green</span>: <span class="ident">c_double</span>, <span class="ident">blue</span>: <span class="ident">c_double</span>, <span class="ident">alpha</span>: <span class="ident">c_double</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_mesh_pattern_get_patch_count</span>(<span class="ident">pattern</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_pattern_t</span>, <span class="ident">count</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_uint</span>) <span class="op">-&gt;</span> <span class="ident">Status</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_mesh_pattern_get_path</span>(<span class="ident">pattern</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_pattern_t</span>, <span class="ident">patch_num</span>: <span class="ident">c_uint</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_path_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_mesh_pattern_get_control_point</span>(<span class="ident">pattern</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_pattern_t</span>, <span class="ident">patch_num</span>: <span class="ident">c_uint</span>, <span class="ident">point_num</span>: <span class="ident">c_uint</span>, <span class="ident">x</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_double</span>, <span class="ident">y</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_double</span>) <span class="op">-&gt;</span> <span class="ident">Status</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_mesh_pattern_get_corner_color_rgba</span>(<span class="ident">pattern</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_pattern_t</span>, <span class="ident">patch_num</span>: <span class="ident">c_uint</span>, <span class="ident">corner_num</span>: <span class="ident">c_uint</span>, <span class="ident">red</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_double</span>, <span class="ident">green</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_double</span>, <span class="ident">blue</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_double</span>, <span class="ident">alpha</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_double</span>) <span class="op">-&gt;</span> <span class="ident">Status</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_pattern_reference</span>(<span class="ident">pattern</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_pattern_t</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_pattern_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_pattern_destroy</span>(<span class="ident">pattern</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_pattern_t</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_pattern_status</span>(<span class="ident">pattern</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_pattern_t</span>) <span class="op">-&gt;</span> <span class="ident">Status</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_pattern_set_extend</span>(<span class="ident">pattern</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_pattern_t</span>, <span class="ident">extend</span>: <span class="ident">Extend</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_pattern_get_extend</span>(<span class="ident">pattern</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_pattern_t</span>) <span class="op">-&gt;</span> <span class="ident">Extend</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_pattern_set_filter</span>(<span class="ident">pattern</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_pattern_t</span>, <span class="ident">filter</span>: <span class="ident">Filter</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_pattern_get_filter</span>(<span class="ident">pattern</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_pattern_t</span>) <span class="op">-&gt;</span> <span class="ident">Filter</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_pattern_set_matrix</span>(<span class="ident">pattern</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_pattern_t</span>, <span class="ident">matrix</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">Matrix</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_pattern_get_matrix</span>(<span class="ident">pattern</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_pattern_t</span>, <span class="ident">matrix</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">Matrix</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_pattern_get_type</span>(<span class="ident">pattern</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_pattern_t</span>) <span class="op">-&gt;</span> <span class="ident">PatternType</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_pattern_get_reference_count</span>(<span class="ident">pattern</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_pattern_t</span>) <span class="op">-&gt;</span> <span class="ident">c_uint</span>;
+    <span class="comment">//pub fn cairo_pattern_set_user_data(pattern: *mut cairo_pattern_t, key: *mut cairo_user_data_key_t, user_data: *mut void, destroy: cairo_destroy_func_t) -&gt; Status;</span>
+    <span class="comment">//pub fn cairo_pattern_get_user_data(pattern: *mut cairo_pattern_t, key: *mut cairo_user_data_key_t) -&gt; *mut void;</span>
+
+    <span class="comment">//CAIRO REGIONS</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_region_create</span>() <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_region_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_region_create_rectangle</span>(<span class="ident">rectangle</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_rectangle_int_t</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_region_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_region_create_rectangles</span>(<span class="ident">rects</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_rectangle_int_t</span>, <span class="ident">count</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_region_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_region_copy</span>(<span class="ident">original</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_region_t</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_region_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_region_reference</span>(<span class="ident">region</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_region_t</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_region_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_region_destroy</span>(<span class="ident">region</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_region_t</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_region_status</span>(<span class="ident">region</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_region_t</span>) <span class="op">-&gt;</span> <span class="ident">Status</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_region_get_extents</span>(<span class="ident">region</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_region_t</span>, <span class="ident">extents</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_rectangle_int_t</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_region_num_rectangles</span>(<span class="ident">region</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_region_t</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_region_get_rectangle</span>(<span class="ident">region</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_region_t</span>, <span class="ident">nth</span>: <span class="ident">c_int</span>, <span class="ident">rectangle</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_rectangle_int_t</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_region_is_empty</span>(<span class="ident">region</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_region_t</span>) <span class="op">-&gt;</span> <span class="ident">cairo_bool_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_region_contains_point</span>(<span class="ident">region</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_region_t</span>, <span class="ident">x</span>: <span class="ident">c_int</span>, <span class="ident">y</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">cairo_bool_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_region_contains_rectangle</span>(<span class="ident">region</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_region_t</span>, <span class="ident">rectangle</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_rectangle_int_t</span>) <span class="op">-&gt;</span> <span class="ident">RegionOverlap</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_region_equal</span>(<span class="ident">a</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_region_t</span>, <span class="ident">b</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_region_t</span>) <span class="op">-&gt;</span> <span class="ident">cairo_bool_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_region_translate</span>(<span class="ident">region</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_region_t</span>, <span class="ident">dx</span>: <span class="ident">c_int</span>, <span class="ident">dy</span>: <span class="ident">c_int</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_region_intersect</span>(<span class="ident">dst</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_region_t</span>, <span class="ident">other</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_region_t</span>) <span class="op">-&gt;</span> <span class="ident">Status</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_region_intersect_rectangle</span>(<span class="ident">dst</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_region_t</span>, <span class="ident">rectangle</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_rectangle_int_t</span>) <span class="op">-&gt;</span> <span class="ident">Status</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_region_subtract</span>(<span class="ident">dst</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_region_t</span>, <span class="ident">other</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_region_t</span>) <span class="op">-&gt;</span> <span class="ident">Status</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_region_subtract_rectangle</span>(<span class="ident">dst</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_region_t</span>, <span class="ident">rectangle</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_rectangle_int_t</span>) <span class="op">-&gt;</span> <span class="ident">Status</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_region_union</span>(<span class="ident">dst</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_region_t</span>, <span class="ident">other</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_region_t</span>) <span class="op">-&gt;</span> <span class="ident">Status</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_region_union_rectangle</span>(<span class="ident">dst</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_region_t</span>, <span class="ident">rectangle</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_rectangle_int_t</span>) <span class="op">-&gt;</span> <span class="ident">Status</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_region_xor</span>(<span class="ident">dst</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_region_t</span>, <span class="ident">other</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_region_t</span>) <span class="op">-&gt;</span> <span class="ident">Status</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_region_xor_rectangle</span>(<span class="ident">dst</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_region_t</span>, <span class="ident">rectangle</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_rectangle_int_t</span>) <span class="op">-&gt;</span> <span class="ident">Status</span>;
+
+    <span class="comment">//text</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_select_font_face</span>(<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">family</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>, <span class="ident">slant</span>: <span class="ident">FontSlant</span>, <span class="ident">weight</span>: <span class="ident">FontWeight</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_set_font_size</span>(<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">size</span>: <span class="ident">c_double</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_set_font_matrix</span>(<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">matrix</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">Matrix</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_get_font_matrix</span>(<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">matrix</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">Matrix</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_set_font_options</span>(<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">options</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">cairo_font_options_t</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_get_font_options</span>(<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">options</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_font_options_t</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_set_font_face</span>(<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">font_face</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_font_face_t</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_get_font_face</span>(<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_font_face_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_set_scaled_font</span>(<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">scaled_font</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_scaled_font_t</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_get_scaled_font</span>(<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_scaled_font_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_show_text</span>(<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">utf8</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_show_glyphs</span>(<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">glyphs</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">Glyph</span>, <span class="ident">num_glyphs</span>: <span class="ident">c_int</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_show_text_glyphs</span>(<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">utf8</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>, <span class="ident">utf8_len</span>: <span class="ident">c_int</span>, <span class="ident">glyphs</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">Glyph</span>, <span class="ident">num_glyphs</span>: <span class="ident">c_int</span>, <span class="ident">clusters</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">TextCluster</span>, <span class="ident">num_clusters</span>: <span class="ident">c_int</span>, <span class="ident">cluster_flags</span>: <span class="ident">TextClusterFlags</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_font_extents</span>(<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">extents</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">FontExtents</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_text_extents</span>(<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">utf8</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>, <span class="ident">extents</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">TextExtents</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_glyph_extents</span>(<span class="ident">cr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_t</span>, <span class="ident">glyphs</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">Glyph</span>, <span class="ident">num_glyphs</span>: <span class="ident">c_int</span>, <span class="ident">extents</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">TextExtents</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_toy_font_face_create</span>(<span class="ident">family</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>, <span class="ident">slant</span>: <span class="ident">FontSlant</span>, <span class="ident">weight</span>: <span class="ident">FontWeight</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_font_face_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_toy_font_face_get_family</span>(<span class="ident">font_face</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_font_face_t</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_toy_font_face_get_slant</span>(<span class="ident">font_face</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_font_face_t</span>) <span class="op">-&gt;</span> <span class="ident">FontSlant</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_toy_font_face_get_weight</span>(<span class="ident">font_face</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_font_face_t</span>) <span class="op">-&gt;</span> <span class="ident">FontWeight</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_glyph_allocate</span>(<span class="ident">num_glyphs</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">Glyph</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_glyph_free</span>(<span class="ident">glyphs</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">Glyph</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_text_cluster_allocate</span>(<span class="ident">num_clusters</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">TextCluster</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_text_cluster_free</span>(<span class="ident">clusters</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">TextCluster</span>);
+
+    <span class="comment">//CAIRO RASTER</span>
+    <span class="comment">//pub fn cairo_pattern_create_raster_source(user_data: *mut void, content: Content, width: c_int, height: c_int) -&gt; *mut cairo_pattern_t;</span>
+    <span class="comment">//pub fn cairo_raster_source_pattern_set_callback_data(pattern: *mut cairo_pattern_t, data: *mut void);</span>
+    <span class="comment">//pub fn cairo_raster_source_pattern_get_callback_data(pattern: *mut cairo_pattern_t) -&gt; *mut void;</span>
+    <span class="comment">/* FIXME how do we do these _func_t types?
+    pub fn cairo_raster_source_pattern_set_acquire(pattern: *mut cairo_pattern_t, acquire: cairo_raster_source_acquire_func_t, release: cairo_raster_source_release_func_t);
+    pub fn cairo_raster_source_pattern_get_acquire(pattern: *mut cairo_pattern_t, acquire: *mut cairo_raster_source_acquire_func_t, release: *mut cairo_raster_source_release_func_t);
+    pub fn cairo_raster_source_pattern_set_snapshot(pattern: *mut cairo_pattern_t, snapshot: cairo_raster_source_snapshot_func_t);
+    pub fn cairo_raster_source_pattern_get_snapshot(pattern: *mut cairo_pattern_t) -&gt; cairo_raster_source_snapshot_func_t;
+    pub fn cairo_raster_source_pattern_set_copy(pattern: *mut cairo_pattern_t, copy: cairo_raster_source_copy_func_t);
+    pub fn cairo_raster_source_pattern_get_copy(pattern: *mut cairo_pattern_t) -&gt; cairo_raster_source_copy_func_t;
+    pub fn cairo_raster_source_pattern_set_finish(pattern: *mut cairo_pattern_t, finish: cairo_raster_source_finish_func_t);
+    pub fn cairo_raster_source_pattern_get_finish(pattern: *mut cairo_pattern_t) -&gt; cairo_raster_source_finish_func_t;
+    */</span>
+
+    <span class="comment">//cairo_surface_t     (*mut cairo_raster_source_acquire_func_t)</span>
+    <span class="comment">//                                                        (pattern: *mut cairo_pattern_t, callback_data: *mut void, target: *mut cairo_surface_t, extents: *mut cairo_rectangle_int_t);</span>
+    <span class="comment">//void                (*mut cairo_raster_source_release_func_t)</span>
+    <span class="comment">//                                                        (pattern: *mut cairo_pattern_t, callback_data: *mut void, surface: *mut cairo_surface_t);</span>
+    <span class="comment">//Status      (*mut cairo_raster_source_snapshot_func_t)</span>
+    <span class="comment">//                                                        (pattern: *mut cairo_pattern_t, callback_data: *mut void);</span>
+    <span class="comment">//Status      (*mut cairo_raster_source_copy_func_t)  (pattern: *mut cairo_pattern_t, callback_data: *mut void, other: *mut cairo_pattern_t);</span>
+    <span class="comment">//void                (*mut cairo_raster_source_finish_func_t)</span>
+    <span class="comment">//                                                        (pattern: *mut cairo_pattern_t, callback_data: *mut void);</span>
+
+    <span class="comment">//CAIRO FONT</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_font_face_reference</span>(<span class="ident">font_face</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_font_face_t</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_font_face_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_font_face_destroy</span>(<span class="ident">font_face</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_font_face_t</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_font_face_status</span>(<span class="ident">font_face</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_font_face_t</span>) <span class="op">-&gt;</span> <span class="ident">Status</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_font_face_get_type</span>(<span class="ident">font_face</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_font_face_t</span>) <span class="op">-&gt;</span> <span class="ident">FontType</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_font_face_get_reference_count</span>(<span class="ident">font_face</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_font_face_t</span>) <span class="op">-&gt;</span> <span class="ident">c_uint</span>;
+    <span class="comment">//pub fn cairo_font_face_set_user_data(font_face: *mut cairo_font_face_t, key: *mut cairo_user_data_key_t, user_data: *mut void, destroy: cairo_destroy_func_t) -&gt; Status;</span>
+    <span class="comment">//pub fn cairo_font_face_get_user_data(font_face: *mut cairo_font_face_t, key: *mut cairo_user_data_key_t) -&gt; *mut void;</span>
+
+    <span class="comment">//CAIRO SCALED FONT</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_scaled_font_create</span>(<span class="ident">font_face</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_font_face_t</span>, <span class="ident">font_matrix</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">Matrix</span>, <span class="ident">ctm</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">Matrix</span>, <span class="ident">options</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">cairo_font_options_t</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_scaled_font_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_scaled_font_reference</span>(<span class="ident">scaled_font</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_scaled_font_t</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_scaled_font_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_scaled_font_destroy</span>(<span class="ident">scaled_font</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_scaled_font_t</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_scaled_font_status</span>(<span class="ident">scaled_font</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_scaled_font_t</span>) <span class="op">-&gt;</span> <span class="ident">Status</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_scaled_font_extents</span>(<span class="ident">scaled_font</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_scaled_font_t</span>, <span class="ident">extents</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">FontExtents</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_scaled_font_text_extents</span>(<span class="ident">scaled_font</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_scaled_font_t</span>, <span class="ident">utf8</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>, <span class="ident">extents</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">TextExtents</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_scaled_font_glyph_extents</span>(<span class="ident">scaled_font</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_scaled_font_t</span>, <span class="ident">glyphs</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">Glyph</span>, <span class="ident">num_glyphs</span>: <span class="ident">c_int</span>, <span class="ident">extents</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">TextExtents</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_scaled_font_text_to_glyphs</span>(<span class="ident">scaled_font</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_scaled_font_t</span>, <span class="ident">x</span>: <span class="ident">c_double</span>, <span class="ident">y</span>: <span class="ident">c_double</span>, <span class="ident">utf8</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>, <span class="ident">utf8_len</span>: <span class="ident">c_int</span>, <span class="ident">glyphs</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">Glyph</span>, <span class="ident">num_glyphs</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_int</span>, <span class="ident">clusters</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">TextCluster</span>, <span class="ident">num_clusters</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_int</span>, <span class="ident">cluster_flags</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">TextClusterFlags</span>) <span class="op">-&gt;</span> <span class="ident">Status</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_scaled_font_get_font_face</span>(<span class="ident">scaled_font</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_scaled_font_t</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_font_face_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_scaled_font_get_font_options</span>(<span class="ident">scaled_font</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_scaled_font_t</span>, <span class="ident">options</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_font_options_t</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_scaled_font_get_font_matrix</span>(<span class="ident">scaled_font</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_scaled_font_t</span>, <span class="ident">font_matrix</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">Matrix</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_scaled_font_get_ctm</span>(<span class="ident">scaled_font</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_scaled_font_t</span>, <span class="ident">ctm</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">Matrix</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_scaled_font_get_scale_matrix</span>(<span class="ident">scaled_font</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_scaled_font_t</span>, <span class="ident">scale_matrix</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">Matrix</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_scaled_font_get_type</span>(<span class="ident">scaled_font</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_scaled_font_t</span>) <span class="op">-&gt;</span> <span class="ident">FontType</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_scaled_font_get_reference_count</span>(<span class="ident">font_face</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_scaled_font_t</span>) <span class="op">-&gt;</span> <span class="ident">c_uint</span>;
+    <span class="comment">//pub fn cairo_scaled_font_set_user_data(scaled_font: *mut cairo_scaled_font_t, key: *mut cairo_user_data_key_t, user_data: *mut void, destroy: cairo_destroy_func_t) -&gt; Status;</span>
+    <span class="comment">//pub fn cairo_scaled_font_get_user_data(scaled_font: *mut cairo_scaled_font_t, key: *mut cairo_user_data_key_t) -&gt; *mut void;</span>
+
+    <span class="comment">//CAIRO FONT OPTIONS</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_font_options_create</span>() <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_font_options_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_font_options_copy</span>(<span class="ident">original</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">cairo_font_options_t</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_font_options_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_font_options_destroy</span>(<span class="ident">options</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_font_options_t</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_font_options_status</span>(<span class="ident">options</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_font_options_t</span>) <span class="op">-&gt;</span> <span class="ident">Status</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_font_options_merge</span>(<span class="ident">options</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_font_options_t</span>, <span class="ident">other</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">cairo_font_options_t</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_font_options_hash</span>(<span class="ident">options</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">cairo_font_options_t</span>) <span class="op">-&gt;</span> <span class="ident">c_ulong</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_font_options_equal</span>(<span class="ident">options</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">cairo_font_options_t</span>, <span class="ident">other</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">cairo_font_options_t</span>) <span class="op">-&gt;</span> <span class="ident">cairo_bool_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_font_options_set_antialias</span>(<span class="ident">options</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_font_options_t</span>, <span class="ident">antialias</span>: <span class="ident">Antialias</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_font_options_get_antialias</span>(<span class="ident">options</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">cairo_font_options_t</span>) <span class="op">-&gt;</span> <span class="ident">Antialias</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_font_options_set_subpixel_order</span>(<span class="ident">options</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_font_options_t</span>, <span class="ident">subpixel_order</span>: <span class="ident">SubpixelOrder</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_font_options_get_subpixel_order</span>(<span class="ident">options</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">cairo_font_options_t</span>) <span class="op">-&gt;</span> <span class="ident">SubpixelOrder</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_font_options_set_hint_style</span>(<span class="ident">options</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_font_options_t</span>, <span class="ident">hint_style</span>: <span class="ident">HintStyle</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_font_options_get_hint_style</span>(<span class="ident">options</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">cairo_font_options_t</span>) <span class="op">-&gt;</span> <span class="ident">HintStyle</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_font_options_set_hint_metrics</span>(<span class="ident">options</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_font_options_t</span>, <span class="ident">hint_metrics</span>: <span class="ident">HintMetrics</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_font_options_get_hint_metrics</span>(<span class="ident">options</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">cairo_font_options_t</span>) <span class="op">-&gt;</span> <span class="ident">HintMetrics</span>;
+
+    <span class="comment">// CAIRO MATRIX</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_matrix_multiply</span>(<span class="ident">matrix</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">Matrix</span>, <span class="ident">left</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">Matrix</span>, <span class="ident">right</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">Matrix</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_matrix_init</span>(<span class="ident">matrix</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">Matrix</span>, <span class="ident">xx</span>: <span class="ident">f64</span>, <span class="ident">yx</span>: <span class="ident">f64</span>, <span class="ident">xy</span>: <span class="ident">f64</span>, <span class="ident">yy</span>: <span class="ident">f64</span>, <span class="ident">x0</span>: <span class="ident">f64</span>, <span class="ident">y0</span>: <span class="ident">f64</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_matrix_init_identity</span>(<span class="ident">matrix</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">Matrix</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_matrix_translate</span>(<span class="ident">matrix</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">Matrix</span>, <span class="ident">tx</span>: <span class="ident">f64</span>, <span class="ident">ty</span>: <span class="ident">f64</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_matrix_scale</span>(<span class="ident">matrix</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">Matrix</span>, <span class="ident">sx</span>: <span class="ident">f64</span>, <span class="ident">sy</span>: <span class="ident">f64</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_matrix_rotate</span>(<span class="ident">matrix</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">Matrix</span>, <span class="ident">angle</span>: <span class="ident">f64</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_matrix_invert</span>(<span class="ident">matrix</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">Matrix</span>) <span class="op">-&gt;</span> <span class="ident">Status</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_matrix_transform_distance</span>(<span class="ident">matrix</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">Matrix</span>, <span class="ident">dx</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">f64</span>, <span class="ident">dy</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">f64</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_matrix_transform_point</span>(<span class="ident">matrix</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">Matrix</span>, <span class="ident">x</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">f64</span>, <span class="ident">y</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">f64</span>);
+
+    <span class="comment">// CAIRO SURFACE</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_surface_destroy</span>(<span class="ident">surface</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_surface_t</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_surface_flush</span>(<span class="ident">surface</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_surface_t</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_surface_finish</span>(<span class="ident">surface</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_surface_t</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_surface_status</span>(<span class="ident">surface</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_surface_t</span>) <span class="op">-&gt;</span> <span class="ident">Status</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_surface_get_type</span>(<span class="ident">surface</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_surface_t</span>) <span class="op">-&gt;</span> <span class="ident">SurfaceType</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_surface_reference</span>(<span class="ident">surface</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_surface_t</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_surface_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_surface_get_user_data</span>(<span class="ident">surface</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_surface_t</span>, <span class="ident">key</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_user_data_key_t</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_surface_set_user_data</span>(<span class="ident">surface</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_surface_t</span>, <span class="ident">key</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_user_data_key_t</span>, <span class="ident">user_data</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>, <span class="ident">destroy</span>: <span class="ident">cairo_destroy_func_t</span>) <span class="op">-&gt;</span> <span class="ident">Status</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_surface_get_reference_count</span>(<span class="ident">surface</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_surface_t</span>) <span class="op">-&gt;</span> <span class="ident">c_uint</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_surface_mark_dirty</span>(<span class="ident">surface</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_surface_t</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_surface_create_similar</span>(<span class="ident">surface</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_surface_t</span>, <span class="ident">content</span>: <span class="ident">Content</span>, <span class="ident">width</span>: <span class="ident">c_int</span>, <span class="ident">height</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_surface_t</span>;
+
+    <span class="comment">// CAIRO IMAGE SURFACE</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_image_surface_create</span>(<span class="ident">format</span>: <span class="ident">Format</span>, <span class="ident">width</span>: <span class="ident">c_int</span>, <span class="ident">height</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_surface_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_image_surface_create_for_data</span>(<span class="ident">data</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">u8</span>, <span class="ident">format</span>: <span class="ident">Format</span>, <span class="ident">width</span>: <span class="ident">c_int</span>, <span class="ident">height</span>: <span class="ident">c_int</span>, <span class="ident">stride</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_surface_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_image_surface_get_data</span>(<span class="ident">surface</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_surface_t</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">u8</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_image_surface_get_format</span>(<span class="ident">surface</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_surface_t</span>) <span class="op">-&gt;</span> <span class="ident">Format</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_image_surface_get_height</span>(<span class="ident">surface</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_surface_t</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_image_surface_get_stride</span>(<span class="ident">surface</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_surface_t</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_image_surface_get_width</span>(<span class="ident">surface</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_surface_t</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;png&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_image_surface_create_from_png_stream</span>(<span class="ident">read_func</span>: <span class="ident">cairo_read_func_t</span>, <span class="ident">closure</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_surface_t</span>;
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;png&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_surface_write_to_png_stream</span>(<span class="ident">surface</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_surface_t</span>, <span class="ident">write_func</span>: <span class="ident">cairo_write_func_t</span>, <span class="ident">closure</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>) <span class="op">-&gt;</span> <span class="ident">Status</span>;
+
+    <span class="comment">// CAIRO XCB</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;xcb&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_xcb_surface_create</span>(<span class="ident">connection</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">xcb_connection_t</span>,
+                                    <span class="ident">drawable</span>: <span class="ident">xcb_drawable_t</span>,
+                                    <span class="ident">visual</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">xcb_visualtype_t</span>,
+                                    <span class="ident">width</span>: <span class="ident">c_int</span>,
+                                    <span class="ident">height</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_surface_t</span>;
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;xcb&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_xcb_surface_create_for_bitmap</span>(<span class="ident">connection</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">xcb_connection_t</span>,
+                                               <span class="ident">screen</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">xcb_screen_t</span>,
+                                               <span class="ident">bitmap</span>: <span class="ident">xcb_pixmap_t</span>,
+                                               <span class="ident">width</span>: <span class="ident">c_int</span>,
+                                               <span class="ident">height</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_surface_t</span>;
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;xcb&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_xcb_surface_create_with_xrender_format</span>(<span class="ident">connection</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">xcb_connection_t</span>,
+                                                        <span class="ident">screen</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">xcb_screen_t</span>,
+                                                        <span class="ident">drawable</span>: <span class="ident">xcb_drawable_t</span>,
+                                                        <span class="ident">format</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">xcb_render_pictforminfo_t</span>,
+                                                        <span class="ident">width</span>: <span class="ident">c_int</span>,
+                                                        <span class="ident">height</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_surface_t</span>;
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;xcb&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_xcb_surface_set_size</span>(<span class="ident">surface</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_surface_t</span>,
+                                      <span class="ident">width</span>: <span class="ident">c_int</span>,
+                                      <span class="ident">height</span>: <span class="ident">c_int</span>);
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;xcb&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_xcb_surface_set_drawable</span>(<span class="ident">surface</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_surface_t</span>,
+                                          <span class="ident">drawable</span>: <span class="ident">xcb_drawable_t</span>,
+                                          <span class="ident">width</span>: <span class="ident">c_int</span>,
+                                          <span class="ident">height</span>: <span class="ident">c_int</span>);
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;xcb&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_xcb_device_get_connection</span>(<span class="ident">device</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_device_t</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">xcb_connection_t</span>;
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;xcb&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_xcb_device_debug_cap_xrender_version</span>(<span class="ident">device</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_device_t</span>,
+                                                      <span class="ident">major_version</span>: <span class="ident">c_int</span>,
+                                                      <span class="ident">minor_version</span>: <span class="ident">c_int</span>);
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;xcb&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_xcb_device_debug_cap_xshm_version</span>(<span class="ident">device</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_device_t</span>,
+                                                   <span class="ident">major_version</span>: <span class="ident">c_int</span>,
+                                                   <span class="ident">minor_version</span>: <span class="ident">c_int</span>);
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;xcb&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_xcb_device_debug_get_precision</span>(<span class="ident">device</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_device_t</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;xcb&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_xcb_device_debug_set_precision</span>(<span class="ident">device</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_device_t</span>,
+                                                <span class="ident">precision</span>: <span class="ident">c_int</span>);
+
+    <span class="comment">// CAIRO XLIB SURFACE</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;xlib&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_xlib_surface_create</span>(<span class="ident">dpy</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">xlib</span>::<span class="ident">Display</span>,
+                                     <span class="ident">drawable</span>: <span class="ident">xlib</span>::<span class="ident">Drawable</span>,
+                                     <span class="ident">visual</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">xlib</span>::<span class="ident">Visual</span>,
+                                     <span class="ident">width</span>: <span class="ident">c_int</span>,
+                                     <span class="ident">height</span>: <span class="ident">c_int</span>)
+                                     <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_surface_t</span>;
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;xlib&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_xlib_surface_create_for_bitmap</span>(<span class="ident">dpy</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">xlib</span>::<span class="ident">Display</span>,
+                                                <span class="ident">bitmap</span>: <span class="ident">xlib</span>::<span class="ident">Pixmap</span>,
+                                                <span class="ident">screen</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">xlib</span>::<span class="ident">Screen</span>,
+                                                <span class="ident">width</span>: <span class="ident">c_int</span>,
+                                                <span class="ident">height</span>: <span class="ident">c_int</span>)
+                                                <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_surface_t</span>;
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;xlib&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_xlib_surface_set_size</span>(<span class="ident">surface</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_surface_t</span>,
+                                       <span class="ident">width</span>: <span class="ident">c_int</span>,
+                                       <span class="ident">height</span>: <span class="ident">c_int</span>);
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;xlib&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_xlib_surface_set_drawable</span>(<span class="ident">surface</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_surface_t</span>,
+                                           <span class="ident">drawable</span>: <span class="ident">xlib</span>::<span class="ident">Drawable</span>,
+                                           <span class="ident">width</span>: <span class="ident">c_int</span>,
+                                           <span class="ident">height</span>: <span class="ident">c_int</span>);
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;xlib&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_xlib_surface_get_display</span>(<span class="ident">surface</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_surface_t</span>)
+                                          <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">xlib</span>::<span class="ident">Display</span>;
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;xlib&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_xlib_surface_get_drawable</span>(<span class="ident">surface</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_surface_t</span>)
+                                           <span class="op">-&gt;</span> <span class="ident">xlib</span>::<span class="ident">Drawable</span>;
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;xlib&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_xlib_surface_get_screen</span>(<span class="ident">surface</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_surface_t</span>)
+                                         <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">xlib</span>::<span class="ident">Screen</span>;
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;xlib&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_xlib_surface_get_visual</span>(<span class="ident">surface</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_surface_t</span>)
+                                         <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">xlib</span>::<span class="ident">Visual</span>;
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;xlib&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_xlib_surface_get_depth</span>(<span class="ident">surface</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_surface_t</span>)
+                                        <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;xlib&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_xlib_surface_get_width</span>(<span class="ident">surface</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_surface_t</span>)
+                                        <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;xlib&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_xlib_surface_get_height</span>(<span class="ident">surface</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_surface_t</span>)
+                                         <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+
+    <span class="comment">// CAIRO WINDOWS SURFACE</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">windows</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_win32_surface_create</span>(<span class="ident">hdc</span>: <span class="ident">winapi</span>::<span class="ident">HDC</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_surface_t</span>;
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">windows</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_win32_surface_create_with_dib</span>(<span class="ident">format</span>: <span class="ident">Format</span>,
+                                               <span class="ident">width</span>: <span class="ident">c_int</span>,
+                                               <span class="ident">height</span>: <span class="ident">c_int</span>)
+                                               <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_surface_t</span>;
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">windows</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_win32_surface_create_with_ddb</span>(<span class="ident">hdc</span>: <span class="ident">winapi</span>::<span class="ident">HDC</span>,
+                                               <span class="ident">format</span>: <span class="ident">Format</span>,
+                                               <span class="ident">width</span>: <span class="ident">c_int</span>,
+                                               <span class="ident">height</span>: <span class="ident">c_int</span>)
+                                               <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_surface_t</span>;
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">windows</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_win32_printing_surface_create</span>(<span class="ident">hdc</span>: <span class="ident">winapi</span>::<span class="ident">HDC</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_surface_t</span>;
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">windows</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_win32_surface_get_dc</span>(<span class="ident">surface</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_surface_t</span>) <span class="op">-&gt;</span> <span class="ident">winapi</span>::<span class="ident">HDC</span>;
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">windows</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_win32_surface_get_image</span>(<span class="ident">surface</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_surface_t</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_surface_t</span>;
+
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;macos&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;ios&quot;</span>))]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_quartz_surface_create</span>(<span class="ident">format</span>: <span class="ident">Format</span>,
+                                       <span class="ident">width</span>: <span class="ident">c_uint</span>,
+                                       <span class="ident">height</span>: <span class="ident">c_uint</span>)
+                                       <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_surface_t</span>;
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;macos&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;ios&quot;</span>))]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_quartz_surface_create_for_cg_context</span>(<span class="ident">cg_context</span>: <span class="ident">CGContextRef</span>,
+                                                      <span class="ident">width</span>: <span class="ident">c_uint</span>,
+                                                      <span class="ident">height</span>: <span class="ident">c_uint</span>)
+                                                      <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_surface_t</span>;
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;macos&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;ios&quot;</span>))]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cairo_quartz_surface_get_cg_context</span>(<span class="ident">surface</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">cairo_surface_t</span>) <span class="op">-&gt;</span> <span class="ident">CGContextRef</span>;
+}
+</pre>
+</section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "cairo_sys";
+    </script>
+    <script src="../../main.js"></script>
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>

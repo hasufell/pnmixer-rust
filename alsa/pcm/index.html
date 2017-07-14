@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `pcm` mod in crate `alsa`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, pcm">
+
+    <title>alsa::pcm - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc mod">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'>Module pcm</p><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#types">Type Definitions</a></li></ul></div><p class='location'><a href='../index.html'>alsa</a></p><script>window.sidebarCurrent = {name: 'pcm', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Module <a href='../index.html'>alsa</a>::<wbr><a class="mod" href=''>pcm</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../../src/alsa/pcm.rs.html#1-767' title='goto source code'>[src]</a></span></h1>
+<div class='docblock'><p>Audio playback and capture</p>
+
+<h1 id='example' class='section-header'><a href='#example'>Example</a></h1>
+<p>Playback a sine wave through the &quot;default&quot; device.</p>
+
+<pre class="rust rust-example-rendered">
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ffi</span>::<span class="ident">CString</span>;
+<span class="kw">use</span> <span class="ident">alsa</span>::{<span class="ident">Direction</span>, <span class="ident">ValueOr</span>};
+<span class="kw">use</span> <span class="ident">alsa</span>::<span class="ident">pcm</span>::{<span class="ident">PCM</span>, <span class="ident">HwParams</span>, <span class="ident">Format</span>, <span class="ident">Access</span>, <span class="ident">State</span>};
+
+<span class="comment">// Open default playback device</span>
+<span class="kw">let</span> <span class="ident">pcm</span> <span class="op">=</span> <span class="ident">PCM</span>::<span class="ident">open</span>(<span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">CString</span>::<span class="ident">new</span>(<span class="string">&quot;default&quot;</span>).<span class="ident">unwrap</span>(), <span class="ident">Direction</span>::<span class="ident">Playback</span>, <span class="bool-val">false</span>).<span class="ident">unwrap</span>();
+
+<span class="comment">// Set hardware parameters: 44100 Hz / Mono / 16 bit</span>
+<span class="kw">let</span> <span class="ident">hwp</span> <span class="op">=</span> <span class="ident">HwParams</span>::<span class="ident">any</span>(<span class="kw-2">&amp;</span><span class="ident">pcm</span>).<span class="ident">unwrap</span>();
+<span class="ident">hwp</span>.<span class="ident">set_channels</span>(<span class="number">1</span>).<span class="ident">unwrap</span>();
+<span class="ident">hwp</span>.<span class="ident">set_rate</span>(<span class="number">44100</span>, <span class="ident">ValueOr</span>::<span class="ident">Nearest</span>).<span class="ident">unwrap</span>();
+<span class="ident">hwp</span>.<span class="ident">set_format</span>(<span class="ident">Format</span>::<span class="ident">s16</span>()).<span class="ident">unwrap</span>();
+<span class="ident">hwp</span>.<span class="ident">set_access</span>(<span class="ident">Access</span>::<span class="ident">RWInterleaved</span>).<span class="ident">unwrap</span>();
+<span class="ident">pcm</span>.<span class="ident">hw_params</span>(<span class="kw-2">&amp;</span><span class="ident">hwp</span>).<span class="ident">unwrap</span>();
+<span class="kw">let</span> <span class="ident">io</span> <span class="op">=</span> <span class="ident">pcm</span>.<span class="ident">io_i16</span>().<span class="ident">unwrap</span>();
+
+<span class="comment">// Make a sine wave</span>
+<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> [<span class="number">0i16</span>; <span class="number">1024</span>];
+<span class="kw">for</span> (<span class="ident">i</span>, <span class="ident">a</span>) <span class="kw">in</span> <span class="ident">buf</span>.<span class="ident">iter_mut</span>().<span class="ident">enumerate</span>() {
+    <span class="kw-2">*</span><span class="ident">a</span> <span class="op">=</span> ((<span class="ident">i</span> <span class="kw">as</span> <span class="ident">f32</span> <span class="op">*</span> <span class="number">2.0</span> <span class="op">*</span> ::<span class="ident">std</span>::<span class="ident">f32</span>::<span class="ident">consts</span>::<span class="ident">PI</span> <span class="op">/</span> <span class="number">128.0</span>).<span class="ident">sin</span>() <span class="op">*</span> <span class="number">8192.0</span>) <span class="kw">as</span> <span class="ident">i16</span>
+}
+
+<span class="comment">// Play it back for 2 seconds.</span>
+<span class="kw">for</span> _ <span class="kw">in</span> <span class="number">0</span>..<span class="number">2</span><span class="kw-2">*</span><span class="number">44100</span><span class="op">/</span><span class="number">1024</span> {
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">io</span>.<span class="ident">writei</span>(<span class="kw-2">&amp;</span><span class="ident">buf</span>[..]).<span class="ident">unwrap</span>(), <span class="number">1024</span>);
+}
+
+<span class="comment">// In case the buffer was larger than 2 seconds, start the stream manually.</span>
+<span class="kw">if</span> <span class="ident">pcm</span>.<span class="ident">state</span>() <span class="op">!=</span> <span class="ident">State</span>::<span class="ident">Running</span> { <span class="ident">pcm</span>.<span class="ident">start</span>().<span class="ident">unwrap</span>() };
+<span class="comment">// Wait for the stream to finish playback.</span>
+<span class="ident">pcm</span>.<span class="ident">drain</span>().<span class="ident">unwrap</span>();</pre>
+</div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.Chmap.html"
+                                  title='struct alsa::pcm::Chmap'>Chmap</a></td>
+                           <td class='docblock-short'>
+                                <p><a href="http://www.alsa-project.org/alsa-doc/alsa-lib/group___p_c_m.html">snd_pcm_chmap_t</a> wrapper</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.ChmapsQuery.html"
+                                  title='struct alsa::pcm::ChmapsQuery'>ChmapsQuery</a></td>
+                           <td class='docblock-short'>
+                                <p>Iterator over available channel maps - see <a href="http://www.alsa-project.org/alsa-doc/alsa-lib/group___p_c_m.html">snd_pcm_chmap_query_t</a></p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.HwParams.html"
+                                  title='struct alsa::pcm::HwParams'>HwParams</a></td>
+                           <td class='docblock-short'>
+                                <p><a href="http://www.alsa-project.org/alsa-doc/alsa-lib/group___p_c_m___h_w___params.html">snd_pcm_hw_params_t</a> wrapper</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.IO.html"
+                                  title='struct alsa::pcm::IO'>IO</a></td>
+                           <td class='docblock-short'>
+                                <p>Sample format dependent struct for reading from and writing data to a <code>PCM</code>.
+Also implements <code>std::io::Read</code> and <code>std::io::Write</code>.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.Info.html"
+                                  title='struct alsa::pcm::Info'>Info</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.PCM.html"
+                                  title='struct alsa::pcm::PCM'>PCM</a></td>
+                           <td class='docblock-short'>
+                                <p><a href="http://www.alsa-project.org/alsa-doc/alsa-lib/group___p_c_m.html">snd_pcm_t</a> wrapper - start here for audio playback and recording</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.Status.html"
+                                  title='struct alsa::pcm::Status'>Status</a></td>
+                           <td class='docblock-short'>
+                                <p><a href="http://www.alsa-project.org/alsa-doc/alsa-lib/group___p_c_m___status.html">snd_pcm_status_t</a> wrapper</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.SwParams.html"
+                                  title='struct alsa::pcm::SwParams'>SwParams</a></td>
+                           <td class='docblock-short'>
+                                <p><a href="http://www.alsa-project.org/alsa-doc/alsa-lib/group___p_c_m___s_w___params.html">snd_pcm_sw_params_t</a> wrapper</p>
+                           </td>
+                       </tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.Access.html"
+                                  title='enum alsa::pcm::Access'>Access</a></td>
+                           <td class='docblock-short'>
+                                <p><a href="http://www.alsa-project.org/alsa-doc/alsa-lib/group___p_c_m.html">SND_PCM_ACCESS_xxx</a> constants</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.ChmapPosition.html"
+                                  title='enum alsa::pcm::ChmapPosition'>ChmapPosition</a></td>
+                           <td class='docblock-short'>
+                                <p><a href="http://www.alsa-project.org/alsa-doc/alsa-lib/group___p_c_m.html">SND_CHMAP_xxx</a> constants</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.ChmapType.html"
+                                  title='enum alsa::pcm::ChmapType'>ChmapType</a></td>
+                           <td class='docblock-short'>
+                                <p><a href="http://www.alsa-project.org/alsa-doc/alsa-lib/group___p_c_m.html">SND_CHMAP_TYPE_xxx</a> constants</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.Format.html"
+                                  title='enum alsa::pcm::Format'>Format</a></td>
+                           <td class='docblock-short'>
+                                <p><a href="http://www.alsa-project.org/alsa-doc/alsa-lib/group___p_c_m.html">SND_PCM_FORMAT_xxx</a> constants</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.State.html"
+                                  title='enum alsa::pcm::State'>State</a></td>
+                           <td class='docblock-short'>
+                                <p><a href="http://www.alsa-project.org/alsa-doc/alsa-lib/group___p_c_m.html">SND_PCM_STATE_xxx</a> constants</p>
+                           </td>
+                       </tr></table><h2 id='types' class='section-header'><a href="#types">Type Definitions</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="type" href="type.Frames.html"
+                                  title='type alsa::pcm::Frames'>Frames</a></td>
+                           <td class='docblock-short'>
+                                <p><a href="http://www.alsa-project.org/alsa-doc/alsa-lib/group___p_c_m.html">snd_pcm_sframes_t</a></p>
+                           </td>
+                       </tr></table></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "alsa";
+    </script>
+    <script src="../../main.js"></script>
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>

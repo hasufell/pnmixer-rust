@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `Event` struct in crate `alsa`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, Event">
+
+    <title>alsa::seq::Event - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc struct">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'>Struct Event</p><div class="block items"><ul><li><a href="#methods">Methods</a></li><li><a href="#implementations">Trait Implementations</a></li></ul></div><p class='location'><a href='../index.html'>alsa</a>::<wbr><a href='index.html'>seq</a></p><script>window.sidebarCurrent = {name: 'Event', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>alsa</a>::<wbr><a href='index.html'>seq</a>::<wbr><a class="struct" href=''>Event</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../../src/alsa/seq.rs.html#531' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct Event&lt;'a&gt;(_, _, _);</pre><div class='docblock'><p><a href="http://www.alsa-project.org/alsa-doc/alsa-lib/structsnd__seq__event__t.html">snd_seq_event_t</a> wrapper</p>
+
+<p>Fields of the event is not directly exposed. Instead call <code>Event::new</code> to set data (which can be, e g, an EvNote).
+Use <code>get_type</code> and <code>get_data</code> to retreive data.</p>
+
+<p>The lifetime parameter refers to the lifetime of an associated external buffer that might be used for
+variable-length messages (e.g. SysEx).</p>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class="struct" href="../../alsa/seq/struct.Event.html" title="struct alsa::seq::Event">Event</a>&lt;'a&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/alsa/seq.rs.html#535-690' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>&lt;D:&nbsp;<a class="trait" href="../../alsa/seq/trait.EventData.html" title="trait alsa::seq::EventData">EventData</a>&gt;(t: <a class="enum" href="../../alsa/seq/enum.EventType.html" title="enum alsa::seq::EventType">EventType</a>, data: &amp;D) -&gt; <a class="struct" href="../../alsa/seq/struct.Event.html" title="struct alsa::seq::Event">Event</a>&lt;'static&gt;</code></span></h4>
+<div class='docblock'><p>Creates a new event. For events that carry variable-length data (e.g. Sysex), <code>new_ext</code> has to be used instead.</p>
+</div><h4 id='method.new_ext' class="method"><span id='new_ext.v' class='invisible'><code>fn <a href='#method.new_ext' class='fnname'>new_ext</a>&lt;D:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html" title="trait core::convert::Into">Into</a>&lt;<a class="enum" href="https://doc.rust-lang.org/nightly/alloc/borrow/enum.Cow.html" title="enum alloc::borrow::Cow">Cow</a>&lt;'a, <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">[</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>&gt;&gt;&gt;(t: <a class="enum" href="../../alsa/seq/enum.EventType.html" title="enum alsa::seq::EventType">EventType</a>, data: D) -&gt; <a class="struct" href="../../alsa/seq/struct.Event.html" title="struct alsa::seq::Event">Event</a>&lt;'a&gt;</code></span></h4>
+<div class='docblock'><p>Creates a new event carrying variable-length data. This is required for event types <code>Sysex</code>, <code>Bounce</code>, and the <code>UsrVar</code> types.</p>
+</div><h4 id='method.into_owned' class="method"><span id='into_owned.v' class='invisible'><code>fn <a href='#method.into_owned' class='fnname'>into_owned</a>(self) -&gt; <a class="struct" href="../../alsa/seq/struct.Event.html" title="struct alsa::seq::Event">Event</a>&lt;'static&gt;</code></span></h4>
+<div class='docblock'><p>Consumes this event and returns an (otherwise unchanged) event where the externally referenced
+buffer for variable length messages (e.g. SysEx) has been copied into the event.
+The returned event has a static lifetime, i e, it&#39;s decoupled from the original buffer.</p>
+</div><h4 id='method.get_type' class="method"><span id='get_type.v' class='invisible'><code>fn <a href='#method.get_type' class='fnname'>get_type</a>(&amp;self) -&gt; <a class="enum" href="../../alsa/seq/enum.EventType.html" title="enum alsa::seq::EventType">EventType</a></code></span></h4>
+<h4 id='method.get_data' class="method"><span id='get_data.v' class='invisible'><code>fn <a href='#method.get_data' class='fnname'>get_data</a>&lt;D:&nbsp;<a class="trait" href="../../alsa/seq/trait.EventData.html" title="trait alsa::seq::EventData">EventData</a>&gt;(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;D&gt;</code></span></h4>
+<div class='docblock'><p>Extract the event data from an event.
+Use <code>get_ext</code> instead for events carrying variable-length data.</p>
+</div><h4 id='method.get_ext' class="method"><span id='get_ext.v' class='invisible'><code>fn <a href='#method.get_ext' class='fnname'>get_ext</a>&lt;'b&gt;(&amp;'b self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;'b [</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>&gt;</code></span></h4>
+<div class='docblock'><p>Extract the variable-length data carried by events of type <code>Sysex</code>, <code>Bounce</code>, or the <code>UsrVar</code> types.</p>
+</div><h4 id='method.set_subs' class="method"><span id='set_subs.v' class='invisible'><code>fn <a href='#method.set_subs' class='fnname'>set_subs</a>(&amp;mut self)</code></span></h4>
+<h4 id='method.set_source' class="method"><span id='set_source.v' class='invisible'><code>fn <a href='#method.set_source' class='fnname'>set_source</a>(&amp;mut self, p: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>)</code></span></h4>
+<h4 id='method.set_dest' class="method"><span id='set_dest.v' class='invisible'><code>fn <a href='#method.set_dest' class='fnname'>set_dest</a>(&amp;mut self, d: <a class="struct" href="../../alsa/seq/struct.Addr.html" title="struct alsa::seq::Addr">Addr</a>)</code></span></h4>
+<h4 id='method.set_tag' class="method"><span id='set_tag.v' class='invisible'><code>fn <a href='#method.set_tag' class='fnname'>set_tag</a>(&amp;mut self, t: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>)</code></span></h4>
+<h4 id='method.set_queue' class="method"><span id='set_queue.v' class='invisible'><code>fn <a href='#method.set_queue' class='fnname'>set_queue</a>(&amp;mut self, q: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>)</code></span></h4>
+<h4 id='method.get_source' class="method"><span id='get_source.v' class='invisible'><code>fn <a href='#method.get_source' class='fnname'>get_source</a>(&amp;self) -&gt; <a class="struct" href="../../alsa/seq/struct.Addr.html" title="struct alsa::seq::Addr">Addr</a></code></span></h4>
+<h4 id='method.get_dest' class="method"><span id='get_dest.v' class='invisible'><code>fn <a href='#method.get_dest' class='fnname'>get_dest</a>(&amp;self) -&gt; <a class="struct" href="../../alsa/seq/struct.Addr.html" title="struct alsa::seq::Addr">Addr</a></code></span></h4>
+<h4 id='method.get_tag' class="method"><span id='get_tag.v' class='invisible'><code>fn <a href='#method.get_tag' class='fnname'>get_tag</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a></code></span></h4>
+<h4 id='method.get_queue' class="method"><span id='get_queue.v' class='invisible'><code>fn <a href='#method.get_queue' class='fnname'>get_queue</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a></code></span></h4>
+<h4 id='method.schedule_real' class="method"><span id='schedule_real.v' class='invisible'><code>fn <a href='#method.schedule_real' class='fnname'>schedule_real</a>(&amp;mut self, queue: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>, relative: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>, rtime: <a class="struct" href="https://doc.rust-lang.org/nightly/std/time/duration/struct.Duration.html" title="struct std::time::duration::Duration">Duration</a>)</code></span></h4>
+<h4 id='method.schedule_tick' class="method"><span id='schedule_tick.v' class='invisible'><code>fn <a href='#method.schedule_tick' class='fnname'>schedule_tick</a>(&amp;mut self, queue: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>, relative: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>, ttime: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>)</code></span></h4>
+<h4 id='method.set_direct' class="method"><span id='set_direct.v' class='invisible'><code>fn <a href='#method.set_direct' class='fnname'>set_direct</a>(&amp;mut self)</code></span></h4>
+<h4 id='method.get_relative' class="method"><span id='get_relative.v' class='invisible'><code>fn <a href='#method.get_relative' class='fnname'>get_relative</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h4>
+<h4 id='method.get_time' class="method"><span id='get_time.v' class='invisible'><code>fn <a href='#method.get_time' class='fnname'>get_time</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/std/time/duration/struct.Duration.html" title="struct std::time::duration::Duration">Duration</a>&gt;</code></span></h4>
+<h4 id='method.get_tick' class="method"><span id='get_tick.v' class='invisible'><code>fn <a href='#method.get_tick' class='fnname'>get_tick</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>&gt;</code></span></h4>
+<h4 id='method.get_priority' class="method"><span id='get_priority.v' class='invisible'><code>fn <a href='#method.get_priority' class='fnname'>get_priority</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h4>
+<div class='docblock'><p>Returns true if the message is high priority.</p>
+</div><h4 id='method.set_priority' class="method"><span id='set_priority.v' class='invisible'><code>fn <a href='#method.set_priority' class='fnname'>set_priority</a>(&amp;mut self, is_high_prio: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>)</code></span></h4>
+</div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a> for <a class="struct" href="../../alsa/seq/struct.Event.html" title="struct alsa::seq::Event">Event</a>&lt;'a&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/alsa/seq.rs.html#533' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'></div><h3 class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html" title="trait core::clone::Clone">Clone</a> for <a class="struct" href="../../alsa/seq/struct.Event.html" title="struct alsa::seq::Event">Event</a>&lt;'a&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/alsa/seq.rs.html#692-694' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.clone' class="method"><span id='clone.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone' class='fnname'>clone</a>(&amp;self) -&gt; Self</code></span></h4>
+<div class='docblock'><p>Returns a copy of the value. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">Read more</a></p>
+</div><h4 id='method.clone_from' class="method"><span id='clone_from.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div></span></h4>
+<div class='docblock'><p>Performs copy-assignment from <code>source</code>. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from">Read more</a></p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> for <a class="struct" href="../../alsa/seq/struct.Event.html" title="struct alsa::seq::Event">Event</a>&lt;'a&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/alsa/seq.rs.html#696-713' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.fmt' class="method"><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, f: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html" title="type core::fmt::Result">Result</a></code></span></h4>
+<div class='docblock'><p>Formats the value using the given formatter.</p>
+</div></div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "alsa";
+    </script>
+    <script src="../../main.js"></script>
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `MenuButtonExt` trait in crate `gtk`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, MenuButtonExt">
+
+    <title>gtk::prelude::MenuButtonExt - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc trait">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'>Trait MenuButtonExt</p><div class="block items"><ul><li><a href="#required-methods">Required Methods</a></li><li><a href="#implementors">Implementors</a></li></ul></div><p class='location'><a href='../index.html'>gtk</a>::<wbr><a href='index.html'>prelude</a></p><script>window.sidebarCurrent = {name: 'MenuButtonExt', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>gtk</a>::<wbr><a href='index.html'>prelude</a>::<wbr><a class="trait" href=''>MenuButtonExt</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../../src/gtk/auto/menu_button.rs.html#42-78' title='goto source code'>[src]</a></span></h1>
+<pre class='rust trait'>pub trait MenuButtonExt {
+    fn <a href='#tymethod.get_align_widget' class='fnname'>get_align_widget</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../../gtk/struct.Widget.html" title="struct gtk::Widget">Widget</a>&gt;;
+    fn <a href='#tymethod.get_direction' class='fnname'>get_direction</a>(&amp;self) -&gt; <a class="enum" href="../../gtk/enum.ArrowType.html" title="enum gtk::ArrowType">ArrowType</a>;
+    fn <a href='#tymethod.get_menu_model' class='fnname'>get_menu_model</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../../gio/auto/menu_model/struct.MenuModel.html" title="struct gio::auto::menu_model::MenuModel">MenuModel</a>&gt;;
+    fn <a href='#tymethod.get_popover' class='fnname'>get_popover</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../../gtk/struct.Popover.html" title="struct gtk::Popover">Popover</a>&gt;;
+    fn <a href='#tymethod.get_popup' class='fnname'>get_popup</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../../gtk/struct.Menu.html" title="struct gtk::Menu">Menu</a>&gt;;
+    fn <a href='#tymethod.get_use_popover' class='fnname'>get_use_popover</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>;
+    fn <a href='#tymethod.set_align_widget' class='fnname'>set_align_widget</a>&lt;'a, P:&nbsp;<a class="trait" href="../../gtk/trait.IsA.html" title="trait gtk::IsA">IsA</a>&lt;<a class="struct" href="../../gtk/struct.Widget.html" title="struct gtk::Widget">Widget</a>&gt; + 'a, Q:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html" title="trait core::convert::Into">Into</a>&lt;<a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;&amp;'a P&gt;&gt;&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;align_widget: Q<br>&nbsp;&nbsp;&nbsp;&nbsp;);
+    fn <a href='#tymethod.set_direction' class='fnname'>set_direction</a>(&amp;self, direction: <a class="enum" href="../../gtk/enum.ArrowType.html" title="enum gtk::ArrowType">ArrowType</a>);
+    fn <a href='#tymethod.set_menu_model' class='fnname'>set_menu_model</a>&lt;'a, P:&nbsp;<a class="trait" href="../../gtk/trait.IsA.html" title="trait gtk::IsA">IsA</a>&lt;<a class="struct" href="../../gio/auto/menu_model/struct.MenuModel.html" title="struct gio::auto::menu_model::MenuModel">MenuModel</a>&gt; + 'a, Q:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html" title="trait core::convert::Into">Into</a>&lt;<a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;&amp;'a P&gt;&gt;&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;menu_model: Q<br>&nbsp;&nbsp;&nbsp;&nbsp;);
+    fn <a href='#tymethod.set_popover' class='fnname'>set_popover</a>&lt;'a, P:&nbsp;<a class="trait" href="../../gtk/trait.IsA.html" title="trait gtk::IsA">IsA</a>&lt;<a class="struct" href="../../gtk/struct.Widget.html" title="struct gtk::Widget">Widget</a>&gt; + 'a, Q:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html" title="trait core::convert::Into">Into</a>&lt;<a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;&amp;'a P&gt;&gt;&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popover: Q<br>&nbsp;&nbsp;&nbsp;&nbsp;);
+    fn <a href='#tymethod.set_popup' class='fnname'>set_popup</a>&lt;'a, P:&nbsp;<a class="trait" href="../../gtk/trait.IsA.html" title="trait gtk::IsA">IsA</a>&lt;<a class="struct" href="../../gtk/struct.Widget.html" title="struct gtk::Widget">Widget</a>&gt; + 'a, Q:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html" title="trait core::convert::Into">Into</a>&lt;<a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;&amp;'a P&gt;&gt;&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;menu: Q<br>&nbsp;&nbsp;&nbsp;&nbsp;);
+    fn <a href='#tymethod.set_use_popover' class='fnname'>set_use_popover</a>(&amp;self, use_popover: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>);
+}</pre>
+            <h2 id='required-methods'>Required Methods</h2>
+            <div class='methods'>
+        <h3 id='tymethod.get_align_widget' class='method'><span id='get_align_widget.v' class='invisible'><code>fn <a href='#tymethod.get_align_widget' class='fnname'>get_align_widget</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../../gtk/struct.Widget.html" title="struct gtk::Widget">Widget</a>&gt;</code></span></h3><h3 id='tymethod.get_direction' class='method'><span id='get_direction.v' class='invisible'><code>fn <a href='#tymethod.get_direction' class='fnname'>get_direction</a>(&amp;self) -&gt; <a class="enum" href="../../gtk/enum.ArrowType.html" title="enum gtk::ArrowType">ArrowType</a></code></span></h3><h3 id='tymethod.get_menu_model' class='method'><span id='get_menu_model.v' class='invisible'><code>fn <a href='#tymethod.get_menu_model' class='fnname'>get_menu_model</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../../gio/auto/menu_model/struct.MenuModel.html" title="struct gio::auto::menu_model::MenuModel">MenuModel</a>&gt;</code></span></h3><h3 id='tymethod.get_popover' class='method'><span id='get_popover.v' class='invisible'><code>fn <a href='#tymethod.get_popover' class='fnname'>get_popover</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../../gtk/struct.Popover.html" title="struct gtk::Popover">Popover</a>&gt;</code></span></h3><h3 id='tymethod.get_popup' class='method'><span id='get_popup.v' class='invisible'><code>fn <a href='#tymethod.get_popup' class='fnname'>get_popup</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../../gtk/struct.Menu.html" title="struct gtk::Menu">Menu</a>&gt;</code></span></h3><h3 id='tymethod.get_use_popover' class='method'><span id='get_use_popover.v' class='invisible'><code>fn <a href='#tymethod.get_use_popover' class='fnname'>get_use_popover</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h3><h3 id='tymethod.set_align_widget' class='method'><span id='set_align_widget.v' class='invisible'><code>fn <a href='#tymethod.set_align_widget' class='fnname'>set_align_widget</a>&lt;'a, P:&nbsp;<a class="trait" href="../../gtk/trait.IsA.html" title="trait gtk::IsA">IsA</a>&lt;<a class="struct" href="../../gtk/struct.Widget.html" title="struct gtk::Widget">Widget</a>&gt; + 'a, Q:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html" title="trait core::convert::Into">Into</a>&lt;<a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;&amp;'a P&gt;&gt;&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;align_widget: Q<br>)</code></span></h3><h3 id='tymethod.set_direction' class='method'><span id='set_direction.v' class='invisible'><code>fn <a href='#tymethod.set_direction' class='fnname'>set_direction</a>(&amp;self, direction: <a class="enum" href="../../gtk/enum.ArrowType.html" title="enum gtk::ArrowType">ArrowType</a>)</code></span></h3><h3 id='tymethod.set_menu_model' class='method'><span id='set_menu_model.v' class='invisible'><code>fn <a href='#tymethod.set_menu_model' class='fnname'>set_menu_model</a>&lt;'a, P:&nbsp;<a class="trait" href="../../gtk/trait.IsA.html" title="trait gtk::IsA">IsA</a>&lt;<a class="struct" href="../../gio/auto/menu_model/struct.MenuModel.html" title="struct gio::auto::menu_model::MenuModel">MenuModel</a>&gt; + 'a, Q:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html" title="trait core::convert::Into">Into</a>&lt;<a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;&amp;'a P&gt;&gt;&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;menu_model: Q<br>)</code></span></h3><h3 id='tymethod.set_popover' class='method'><span id='set_popover.v' class='invisible'><code>fn <a href='#tymethod.set_popover' class='fnname'>set_popover</a>&lt;'a, P:&nbsp;<a class="trait" href="../../gtk/trait.IsA.html" title="trait gtk::IsA">IsA</a>&lt;<a class="struct" href="../../gtk/struct.Widget.html" title="struct gtk::Widget">Widget</a>&gt; + 'a, Q:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html" title="trait core::convert::Into">Into</a>&lt;<a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;&amp;'a P&gt;&gt;&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;popover: Q<br>)</code></span></h3><h3 id='tymethod.set_popup' class='method'><span id='set_popup.v' class='invisible'><code>fn <a href='#tymethod.set_popup' class='fnname'>set_popup</a>&lt;'a, P:&nbsp;<a class="trait" href="../../gtk/trait.IsA.html" title="trait gtk::IsA">IsA</a>&lt;<a class="struct" href="../../gtk/struct.Widget.html" title="struct gtk::Widget">Widget</a>&gt; + 'a, Q:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html" title="trait core::convert::Into">Into</a>&lt;<a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;&amp;'a P&gt;&gt;&gt;(&amp;self, menu: Q)</code></span></h3><h3 id='tymethod.set_use_popover' class='method'><span id='set_use_popover.v' class='invisible'><code>fn <a href='#tymethod.set_use_popover' class='fnname'>set_use_popover</a>(&amp;self, use_popover: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>)</code></span></h3></div>
+        <h2 id='implementors'>Implementors</h2>
+        <ul class='item-list' id='implementors-list'>
+    <li><code>impl&lt;O:&nbsp;<a class="trait" href="../../gtk/trait.IsA.html" title="trait gtk::IsA">IsA</a>&lt;<a class="struct" href="../../gtk/struct.MenuButton.html" title="struct gtk::MenuButton">MenuButton</a>&gt;&gt; MenuButtonExt for O</code></li>
+</ul><script type="text/javascript" async
+                         src="../../implementors/gtk/prelude/trait.MenuButtonExt.js">
+                 </script></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "gtk";
+    </script>
+    <script src="../../main.js"></script>
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>

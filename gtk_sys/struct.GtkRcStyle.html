@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `GtkRcStyle` struct in crate `gtk_sys`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, GtkRcStyle">
+
+    <title>gtk_sys::GtkRcStyle - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc struct">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'>Struct GtkRcStyle</p><div class="block items"><ul><li><a href="#fields">Fields</a></li></ul></div><p class='location'><a href='index.html'>gtk_sys</a></p><script>window.sidebarCurrent = {name: 'GtkRcStyle', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Struct <a href='index.html'>gtk_sys</a>::<wbr><a class="struct" href=''>GtkRcStyle</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../src/gtk_sys/lib.rs.html#6723-6740' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'><div class="docblock attributes">#[repr(C)]
+</div>pub struct GtkRcStyle {
+    pub parent_instance: <a class="struct" href="../gobject_sys/struct.GObject.html" title="struct gobject_sys::GObject">GObject</a>,
+    pub name: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="type" href="../libc/unix/notbsd/linux/other/b64/x86_64/type.c_char.html" title="type libc::unix::notbsd::linux::other::b64::x86_64::c_char">c_char</a>,
+    pub bg_pixmap_name: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.array.html">[</a><a class="type" href="../libc/unix/notbsd/linux/other/b64/x86_64/type.c_char.html" title="type libc::unix::notbsd::linux::other::b64::x86_64::c_char">c_char</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.array.html">; 5]</a>,
+    pub font_desc: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../pango_sys/struct.PangoFontDescription.html" title="struct pango_sys::PangoFontDescription">PangoFontDescription</a>,
+    pub color_flags: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.array.html">[</a><a class="struct" href="../gtk_sys/struct.GtkRcFlags.html" title="struct gtk_sys::GtkRcFlags">GtkRcFlags</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.array.html">; 5]</a>,
+    pub fg: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.array.html">[</a><a class="struct" href="../gdk_sys/struct.GdkColor.html" title="struct gdk_sys::GdkColor">GdkColor</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.array.html">; 5]</a>,
+    pub bg: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.array.html">[</a><a class="struct" href="../gdk_sys/struct.GdkColor.html" title="struct gdk_sys::GdkColor">GdkColor</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.array.html">; 5]</a>,
+    pub text: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.array.html">[</a><a class="struct" href="../gdk_sys/struct.GdkColor.html" title="struct gdk_sys::GdkColor">GdkColor</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.array.html">; 5]</a>,
+    pub base: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.array.html">[</a><a class="struct" href="../gdk_sys/struct.GdkColor.html" title="struct gdk_sys::GdkColor">GdkColor</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.array.html">; 5]</a>,
+    pub xthickness: <a class="type" href="../libc/type.c_int.html" title="type libc::c_int">c_int</a>,
+    pub ythickness: <a class="type" href="../libc/type.c_int.html" title="type libc::c_int">c_int</a>,
+    pub rc_properties: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../glib_sys/struct.GArray.html" title="struct glib_sys::GArray">GArray</a>,
+    pub rc_style_lists: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../glib_sys/struct.GSList.html" title="struct glib_sys::GSList">GSList</a>,
+    pub icon_factories: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../glib_sys/struct.GSList.html" title="struct glib_sys::GSList">GSList</a>,
+    // some fields omitted
+}</pre><h2 id='fields' class='fields'>Fields</h2><span id='structfield.parent_instance' class="structfield">
+                           <span id='parent_instance.v' class='invisible'>
+                           <code>parent_instance: <a class="struct" href="../gobject_sys/struct.GObject.html" title="struct gobject_sys::GObject">GObject</a></code>
+                           </span></span><span id='structfield.name' class="structfield">
+                           <span id='name.v' class='invisible'>
+                           <code>name: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="type" href="../libc/unix/notbsd/linux/other/b64/x86_64/type.c_char.html" title="type libc::unix::notbsd::linux::other::b64::x86_64::c_char">c_char</a></code>
+                           </span></span><span id='structfield.bg_pixmap_name' class="structfield">
+                           <span id='bg_pixmap_name.v' class='invisible'>
+                           <code>bg_pixmap_name: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.array.html">[</a><a class="type" href="../libc/unix/notbsd/linux/other/b64/x86_64/type.c_char.html" title="type libc::unix::notbsd::linux::other::b64::x86_64::c_char">c_char</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.array.html">; 5]</a></code>
+                           </span></span><span id='structfield.font_desc' class="structfield">
+                           <span id='font_desc.v' class='invisible'>
+                           <code>font_desc: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../pango_sys/struct.PangoFontDescription.html" title="struct pango_sys::PangoFontDescription">PangoFontDescription</a></code>
+                           </span></span><span id='structfield.color_flags' class="structfield">
+                           <span id='color_flags.v' class='invisible'>
+                           <code>color_flags: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.array.html">[</a><a class="struct" href="../gtk_sys/struct.GtkRcFlags.html" title="struct gtk_sys::GtkRcFlags">GtkRcFlags</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.array.html">; 5]</a></code>
+                           </span></span><span id='structfield.fg' class="structfield">
+                           <span id='fg.v' class='invisible'>
+                           <code>fg: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.array.html">[</a><a class="struct" href="../gdk_sys/struct.GdkColor.html" title="struct gdk_sys::GdkColor">GdkColor</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.array.html">; 5]</a></code>
+                           </span></span><span id='structfield.bg' class="structfield">
+                           <span id='bg.v' class='invisible'>
+                           <code>bg: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.array.html">[</a><a class="struct" href="../gdk_sys/struct.GdkColor.html" title="struct gdk_sys::GdkColor">GdkColor</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.array.html">; 5]</a></code>
+                           </span></span><span id='structfield.text' class="structfield">
+                           <span id='text.v' class='invisible'>
+                           <code>text: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.array.html">[</a><a class="struct" href="../gdk_sys/struct.GdkColor.html" title="struct gdk_sys::GdkColor">GdkColor</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.array.html">; 5]</a></code>
+                           </span></span><span id='structfield.base' class="structfield">
+                           <span id='base.v' class='invisible'>
+                           <code>base: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.array.html">[</a><a class="struct" href="../gdk_sys/struct.GdkColor.html" title="struct gdk_sys::GdkColor">GdkColor</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.array.html">; 5]</a></code>
+                           </span></span><span id='structfield.xthickness' class="structfield">
+                           <span id='xthickness.v' class='invisible'>
+                           <code>xthickness: <a class="type" href="../libc/type.c_int.html" title="type libc::c_int">c_int</a></code>
+                           </span></span><span id='structfield.ythickness' class="structfield">
+                           <span id='ythickness.v' class='invisible'>
+                           <code>ythickness: <a class="type" href="../libc/type.c_int.html" title="type libc::c_int">c_int</a></code>
+                           </span></span><span id='structfield.rc_properties' class="structfield">
+                           <span id='rc_properties.v' class='invisible'>
+                           <code>rc_properties: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../glib_sys/struct.GArray.html" title="struct glib_sys::GArray">GArray</a></code>
+                           </span></span><span id='structfield.rc_style_lists' class="structfield">
+                           <span id='rc_style_lists.v' class='invisible'>
+                           <code>rc_style_lists: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../glib_sys/struct.GSList.html" title="struct glib_sys::GSList">GSList</a></code>
+                           </span></span><span id='structfield.icon_factories' class="structfield">
+                           <span id='icon_factories.v' class='invisible'>
+                           <code>icon_factories: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../glib_sys/struct.GSList.html" title="struct glib_sys::GSList">GSList</a></code>
+                           </span></span></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "gtk_sys";
+    </script>
+    <script src="../main.js"></script>
+    <script defer src="../search-index.js"></script>
+</body>
+</html>

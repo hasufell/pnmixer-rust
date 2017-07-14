@@ -1,0 +1,2262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `gdk` crate.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, gdk">
+
+    <title>gdk - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc mod">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'>Crate gdk</p><div class="block items"><ul><li><a href="#reexports">Reexports</a></li><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#constants">Constants</a></li><li><a href="#traits">Traits</a></li><li><a href="#functions">Functions</a></li><li><a href="#types">Type Definitions</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'gdk', ty: 'mod', relpath: '../'};</script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Crate <a class="mod" href=''>gdk</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../src/gdk/lib.rs.html#5-123' title='goto source code'>[src]</a></span></h1>
+<h2 id='reexports' class='section-header'><a href="#reexports">Reexports</a></h2>
+<table><tr><td><code>pub use <a class="mod" href="../gdk/prelude/index.html" title="mod gdk::prelude">prelude</a>::*;</code></td></tr></table><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="mod" href="enums/index.html"
+                                  title='mod gdk::enums'>enums</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="mod" href="functions/index.html"
+                                  title='mod gdk::functions'>functions</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="mod" href="prelude/index.html"
+                                  title='mod gdk::prelude'>prelude</a></td>
+                           <td class='docblock-short'>
+                                <p>Traits intended for blanket imports.</p>
+                           </td>
+                       </tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.AnchorHints.html"
+                                  title='struct gdk::AnchorHints'>AnchorHints</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.AppLaunchContext.html"
+                                  title='struct gdk::AppLaunchContext'>AppLaunchContext</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.Atom.html"
+                                  title='struct gdk::Atom'>Atom</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.AxisFlags.html"
+                                  title='struct gdk::AxisFlags'>AxisFlags</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.Color.html"
+                                  title='struct gdk::Color'>Color</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.Cursor.html"
+                                  title='struct gdk::Cursor'>Cursor</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.Device.html"
+                                  title='struct gdk::Device'>Device</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.DeviceManager.html"
+                                  title='struct gdk::DeviceManager'>DeviceManager</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.DeviceTool.html"
+                                  title='struct gdk::DeviceTool'>DeviceTool</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.Display.html"
+                                  title='struct gdk::Display'>Display</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.DisplayManager.html"
+                                  title='struct gdk::DisplayManager'>DisplayManager</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.DragAction.html"
+                                  title='struct gdk::DragAction'>DragAction</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.DragContext.html"
+                                  title='struct gdk::DragContext'>DragContext</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.DrawingContext.html"
+                                  title='struct gdk::DrawingContext'>DrawingContext</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.Error.html"
+                                  title='struct gdk::Error'>Error</a></td>
+                           <td class='docblock-short'>
+                                <p>A generic error capable of representing various error domains (types).</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.Event.html"
+                                  title='struct gdk::Event'>Event</a></td>
+                           <td class='docblock-short'>
+                                <p>A generic GDK event.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.EventButton.html"
+                                  title='struct gdk::EventButton'>EventButton</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.EventConfigure.html"
+                                  title='struct gdk::EventConfigure'>EventConfigure</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.EventCrossing.html"
+                                  title='struct gdk::EventCrossing'>EventCrossing</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.EventDND.html"
+                                  title='struct gdk::EventDND'>EventDND</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.EventExpose.html"
+                                  title='struct gdk::EventExpose'>EventExpose</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.EventFocus.html"
+                                  title='struct gdk::EventFocus'>EventFocus</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.EventGrabBroken.html"
+                                  title='struct gdk::EventGrabBroken'>EventGrabBroken</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.EventKey.html"
+                                  title='struct gdk::EventKey'>EventKey</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.EventMask.html"
+                                  title='struct gdk::EventMask'>EventMask</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.EventMotion.html"
+                                  title='struct gdk::EventMotion'>EventMotion</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.EventOwnerChange.html"
+                                  title='struct gdk::EventOwnerChange'>EventOwnerChange</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.EventProperty.html"
+                                  title='struct gdk::EventProperty'>EventProperty</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.EventProximity.html"
+                                  title='struct gdk::EventProximity'>EventProximity</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.EventScroll.html"
+                                  title='struct gdk::EventScroll'>EventScroll</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.EventSelection.html"
+                                  title='struct gdk::EventSelection'>EventSelection</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.EventSetting.html"
+                                  title='struct gdk::EventSetting'>EventSetting</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.EventTouch.html"
+                                  title='struct gdk::EventTouch'>EventTouch</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.EventVisibility.html"
+                                  title='struct gdk::EventVisibility'>EventVisibility</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.EventWindowState.html"
+                                  title='struct gdk::EventWindowState'>EventWindowState</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.FrameClock.html"
+                                  title='struct gdk::FrameClock'>FrameClock</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.FrameClockPhase.html"
+                                  title='struct gdk::FrameClockPhase'>FrameClockPhase</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.FrameTimings.html"
+                                  title='struct gdk::FrameTimings'>FrameTimings</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.GLContext.html"
+                                  title='struct gdk::GLContext'>GLContext</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.Geometry.html"
+                                  title='struct gdk::Geometry'>Geometry</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.ModifierType.html"
+                                  title='struct gdk::ModifierType'>ModifierType</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.Monitor.html"
+                                  title='struct gdk::Monitor'>Monitor</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.RGBA.html"
+                                  title='struct gdk::RGBA'>RGBA</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.Rectangle.html"
+                                  title='struct gdk::Rectangle'>Rectangle</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.RgbaParseError.html"
+                                  title='struct gdk::RgbaParseError'>RgbaParseError</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.Screen.html"
+                                  title='struct gdk::Screen'>Screen</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.Seat.html"
+                                  title='struct gdk::Seat'>Seat</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.SeatCapabilities.html"
+                                  title='struct gdk::SeatCapabilities'>SeatCapabilities</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.Visual.html"
+                                  title='struct gdk::Visual'>Visual</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.WMDecoration.html"
+                                  title='struct gdk::WMDecoration'>WMDecoration</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.WMFunction.html"
+                                  title='struct gdk::WMFunction'>WMFunction</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.Window.html"
+                                  title='struct gdk::Window'>Window</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.WindowAttr.html"
+                                  title='struct gdk::WindowAttr'>WindowAttr</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.WindowHints.html"
+                                  title='struct gdk::WindowHints'>WindowHints</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.WindowState.html"
+                                  title='struct gdk::WindowState'>WindowState</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.AxisUse.html"
+                                  title='enum gdk::AxisUse'>AxisUse</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.ByteOrder.html"
+                                  title='enum gdk::ByteOrder'>ByteOrder</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.CrossingMode.html"
+                                  title='enum gdk::CrossingMode'>CrossingMode</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.CursorType.html"
+                                  title='enum gdk::CursorType'>CursorType</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.DeviceToolType.html"
+                                  title='enum gdk::DeviceToolType'>DeviceToolType</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.DeviceType.html"
+                                  title='enum gdk::DeviceType'>DeviceType</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.DragCancelReason.html"
+                                  title='enum gdk::DragCancelReason'>DragCancelReason</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.DragProtocol.html"
+                                  title='enum gdk::DragProtocol'>DragProtocol</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.EventType.html"
+                                  title='enum gdk::EventType'>EventType</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.FullscreenMode.html"
+                                  title='enum gdk::FullscreenMode'>FullscreenMode</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.GLError.html"
+                                  title='enum gdk::GLError'>GLError</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.GrabOwnership.html"
+                                  title='enum gdk::GrabOwnership'>GrabOwnership</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.GrabStatus.html"
+                                  title='enum gdk::GrabStatus'>GrabStatus</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.Gravity.html"
+                                  title='enum gdk::Gravity'>Gravity</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.InputMode.html"
+                                  title='enum gdk::InputMode'>InputMode</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.InputSource.html"
+                                  title='enum gdk::InputSource'>InputSource</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.ModifierIntent.html"
+                                  title='enum gdk::ModifierIntent'>ModifierIntent</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.NotifyType.html"
+                                  title='enum gdk::NotifyType'>NotifyType</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.OwnerChange.html"
+                                  title='enum gdk::OwnerChange'>OwnerChange</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.PropertyState.html"
+                                  title='enum gdk::PropertyState'>PropertyState</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.ScrollDirection.html"
+                                  title='enum gdk::ScrollDirection'>ScrollDirection</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.SettingAction.html"
+                                  title='enum gdk::SettingAction'>SettingAction</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.SubpixelLayout.html"
+                                  title='enum gdk::SubpixelLayout'>SubpixelLayout</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.VisibilityState.html"
+                                  title='enum gdk::VisibilityState'>VisibilityState</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.VisualType.html"
+                                  title='enum gdk::VisualType'>VisualType</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.WindowEdge.html"
+                                  title='enum gdk::WindowEdge'>WindowEdge</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.WindowType.html"
+                                  title='enum gdk::WindowType'>WindowType</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.WindowTypeHint.html"
+                                  title='enum gdk::WindowTypeHint'>WindowTypeHint</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.WindowWindowClass.html"
+                                  title='enum gdk::WindowWindowClass'>WindowWindowClass</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr></table><h2 id='constants' class='section-header'><a href="#constants">Constants</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.ACTION_ASK.html"
+                                  title='constant gdk::ACTION_ASK'>ACTION_ASK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.ACTION_COPY.html"
+                                  title='constant gdk::ACTION_COPY'>ACTION_COPY</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.ACTION_DEFAULT.html"
+                                  title='constant gdk::ACTION_DEFAULT'>ACTION_DEFAULT</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.ACTION_LINK.html"
+                                  title='constant gdk::ACTION_LINK'>ACTION_LINK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.ACTION_MOVE.html"
+                                  title='constant gdk::ACTION_MOVE'>ACTION_MOVE</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.ACTION_PRIVATE.html"
+                                  title='constant gdk::ACTION_PRIVATE'>ACTION_PRIVATE</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.ALL_EVENTS_MASK.html"
+                                  title='constant gdk::ALL_EVENTS_MASK'>ALL_EVENTS_MASK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.ANCHOR_FLIP.html"
+                                  title='constant gdk::ANCHOR_FLIP'>ANCHOR_FLIP</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.ANCHOR_FLIP_X.html"
+                                  title='constant gdk::ANCHOR_FLIP_X'>ANCHOR_FLIP_X</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.ANCHOR_FLIP_Y.html"
+                                  title='constant gdk::ANCHOR_FLIP_Y'>ANCHOR_FLIP_Y</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.ANCHOR_RESIZE.html"
+                                  title='constant gdk::ANCHOR_RESIZE'>ANCHOR_RESIZE</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.ANCHOR_RESIZE_X.html"
+                                  title='constant gdk::ANCHOR_RESIZE_X'>ANCHOR_RESIZE_X</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.ANCHOR_RESIZE_Y.html"
+                                  title='constant gdk::ANCHOR_RESIZE_Y'>ANCHOR_RESIZE_Y</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.ANCHOR_SLIDE.html"
+                                  title='constant gdk::ANCHOR_SLIDE'>ANCHOR_SLIDE</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.ANCHOR_SLIDE_X.html"
+                                  title='constant gdk::ANCHOR_SLIDE_X'>ANCHOR_SLIDE_X</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.ANCHOR_SLIDE_Y.html"
+                                  title='constant gdk::ANCHOR_SLIDE_Y'>ANCHOR_SLIDE_Y</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.ATOM_NONE.html"
+                                  title='constant gdk::ATOM_NONE'>ATOM_NONE</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.AXIS_FLAG_DISTANCE.html"
+                                  title='constant gdk::AXIS_FLAG_DISTANCE'>AXIS_FLAG_DISTANCE</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.AXIS_FLAG_PRESSURE.html"
+                                  title='constant gdk::AXIS_FLAG_PRESSURE'>AXIS_FLAG_PRESSURE</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.AXIS_FLAG_ROTATION.html"
+                                  title='constant gdk::AXIS_FLAG_ROTATION'>AXIS_FLAG_ROTATION</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.AXIS_FLAG_SLIDER.html"
+                                  title='constant gdk::AXIS_FLAG_SLIDER'>AXIS_FLAG_SLIDER</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.AXIS_FLAG_WHEEL.html"
+                                  title='constant gdk::AXIS_FLAG_WHEEL'>AXIS_FLAG_WHEEL</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.AXIS_FLAG_X.html"
+                                  title='constant gdk::AXIS_FLAG_X'>AXIS_FLAG_X</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.AXIS_FLAG_XTILT.html"
+                                  title='constant gdk::AXIS_FLAG_XTILT'>AXIS_FLAG_XTILT</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.AXIS_FLAG_Y.html"
+                                  title='constant gdk::AXIS_FLAG_Y'>AXIS_FLAG_Y</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.AXIS_FLAG_YTILT.html"
+                                  title='constant gdk::AXIS_FLAG_YTILT'>AXIS_FLAG_YTILT</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.BUTTON1_MASK.html"
+                                  title='constant gdk::BUTTON1_MASK'>BUTTON1_MASK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.BUTTON1_MOTION_MASK.html"
+                                  title='constant gdk::BUTTON1_MOTION_MASK'>BUTTON1_MOTION_MASK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.BUTTON2_MASK.html"
+                                  title='constant gdk::BUTTON2_MASK'>BUTTON2_MASK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.BUTTON2_MOTION_MASK.html"
+                                  title='constant gdk::BUTTON2_MOTION_MASK'>BUTTON2_MOTION_MASK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.BUTTON3_MASK.html"
+                                  title='constant gdk::BUTTON3_MASK'>BUTTON3_MASK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.BUTTON3_MOTION_MASK.html"
+                                  title='constant gdk::BUTTON3_MOTION_MASK'>BUTTON3_MOTION_MASK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.BUTTON4_MASK.html"
+                                  title='constant gdk::BUTTON4_MASK'>BUTTON4_MASK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.BUTTON5_MASK.html"
+                                  title='constant gdk::BUTTON5_MASK'>BUTTON5_MASK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.BUTTON_MOTION_MASK.html"
+                                  title='constant gdk::BUTTON_MOTION_MASK'>BUTTON_MOTION_MASK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.BUTTON_PRESS_MASK.html"
+                                  title='constant gdk::BUTTON_PRESS_MASK'>BUTTON_PRESS_MASK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.BUTTON_RELEASE_MASK.html"
+                                  title='constant gdk::BUTTON_RELEASE_MASK'>BUTTON_RELEASE_MASK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.CONTROL_MASK.html"
+                                  title='constant gdk::CONTROL_MASK'>CONTROL_MASK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.DECOR_ALL.html"
+                                  title='constant gdk::DECOR_ALL'>DECOR_ALL</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.DECOR_BORDER.html"
+                                  title='constant gdk::DECOR_BORDER'>DECOR_BORDER</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.DECOR_MAXIMIZE.html"
+                                  title='constant gdk::DECOR_MAXIMIZE'>DECOR_MAXIMIZE</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.DECOR_MENU.html"
+                                  title='constant gdk::DECOR_MENU'>DECOR_MENU</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.DECOR_MINIMIZE.html"
+                                  title='constant gdk::DECOR_MINIMIZE'>DECOR_MINIMIZE</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.DECOR_RESIZEH.html"
+                                  title='constant gdk::DECOR_RESIZEH'>DECOR_RESIZEH</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.DECOR_TITLE.html"
+                                  title='constant gdk::DECOR_TITLE'>DECOR_TITLE</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.ENTER_NOTIFY_MASK.html"
+                                  title='constant gdk::ENTER_NOTIFY_MASK'>ENTER_NOTIFY_MASK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.EXPOSURE_MASK.html"
+                                  title='constant gdk::EXPOSURE_MASK'>EXPOSURE_MASK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.FOCUS_CHANGE_MASK.html"
+                                  title='constant gdk::FOCUS_CHANGE_MASK'>FOCUS_CHANGE_MASK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.FRAME_CLOCK_PHASE_AFTER_PAINT.html"
+                                  title='constant gdk::FRAME_CLOCK_PHASE_AFTER_PAINT'>FRAME_CLOCK_PHASE_AFTER_PAINT</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.FRAME_CLOCK_PHASE_BEFORE_PAINT.html"
+                                  title='constant gdk::FRAME_CLOCK_PHASE_BEFORE_PAINT'>FRAME_CLOCK_PHASE_BEFORE_PAINT</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.FRAME_CLOCK_PHASE_FLUSH_EVENTS.html"
+                                  title='constant gdk::FRAME_CLOCK_PHASE_FLUSH_EVENTS'>FRAME_CLOCK_PHASE_FLUSH_EVENTS</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.FRAME_CLOCK_PHASE_LAYOUT.html"
+                                  title='constant gdk::FRAME_CLOCK_PHASE_LAYOUT'>FRAME_CLOCK_PHASE_LAYOUT</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.FRAME_CLOCK_PHASE_NONE.html"
+                                  title='constant gdk::FRAME_CLOCK_PHASE_NONE'>FRAME_CLOCK_PHASE_NONE</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.FRAME_CLOCK_PHASE_PAINT.html"
+                                  title='constant gdk::FRAME_CLOCK_PHASE_PAINT'>FRAME_CLOCK_PHASE_PAINT</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.FRAME_CLOCK_PHASE_RESUME_EVENTS.html"
+                                  title='constant gdk::FRAME_CLOCK_PHASE_RESUME_EVENTS'>FRAME_CLOCK_PHASE_RESUME_EVENTS</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.FRAME_CLOCK_PHASE_UPDATE.html"
+                                  title='constant gdk::FRAME_CLOCK_PHASE_UPDATE'>FRAME_CLOCK_PHASE_UPDATE</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.FUNC_ALL.html"
+                                  title='constant gdk::FUNC_ALL'>FUNC_ALL</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.FUNC_CLOSE.html"
+                                  title='constant gdk::FUNC_CLOSE'>FUNC_CLOSE</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.FUNC_MAXIMIZE.html"
+                                  title='constant gdk::FUNC_MAXIMIZE'>FUNC_MAXIMIZE</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.FUNC_MINIMIZE.html"
+                                  title='constant gdk::FUNC_MINIMIZE'>FUNC_MINIMIZE</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.FUNC_MOVE.html"
+                                  title='constant gdk::FUNC_MOVE'>FUNC_MOVE</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.FUNC_RESIZE.html"
+                                  title='constant gdk::FUNC_RESIZE'>FUNC_RESIZE</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.HINT_ASPECT.html"
+                                  title='constant gdk::HINT_ASPECT'>HINT_ASPECT</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.HINT_BASE_SIZE.html"
+                                  title='constant gdk::HINT_BASE_SIZE'>HINT_BASE_SIZE</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.HINT_MAX_SIZE.html"
+                                  title='constant gdk::HINT_MAX_SIZE'>HINT_MAX_SIZE</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.HINT_MIN_SIZE.html"
+                                  title='constant gdk::HINT_MIN_SIZE'>HINT_MIN_SIZE</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.HINT_POS.html"
+                                  title='constant gdk::HINT_POS'>HINT_POS</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.HINT_RESIZE_INC.html"
+                                  title='constant gdk::HINT_RESIZE_INC'>HINT_RESIZE_INC</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.HINT_USER_POS.html"
+                                  title='constant gdk::HINT_USER_POS'>HINT_USER_POS</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.HINT_USER_SIZE.html"
+                                  title='constant gdk::HINT_USER_SIZE'>HINT_USER_SIZE</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.HINT_WIN_GRAVITY.html"
+                                  title='constant gdk::HINT_WIN_GRAVITY'>HINT_WIN_GRAVITY</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.HYPER_MASK.html"
+                                  title='constant gdk::HYPER_MASK'>HYPER_MASK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.KEY_PRESS_MASK.html"
+                                  title='constant gdk::KEY_PRESS_MASK'>KEY_PRESS_MASK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.KEY_RELEASE_MASK.html"
+                                  title='constant gdk::KEY_RELEASE_MASK'>KEY_RELEASE_MASK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.LEAVE_NOTIFY_MASK.html"
+                                  title='constant gdk::LEAVE_NOTIFY_MASK'>LEAVE_NOTIFY_MASK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.LOCK_MASK.html"
+                                  title='constant gdk::LOCK_MASK'>LOCK_MASK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.META_MASK.html"
+                                  title='constant gdk::META_MASK'>META_MASK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.MOD1_MASK.html"
+                                  title='constant gdk::MOD1_MASK'>MOD1_MASK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.MOD2_MASK.html"
+                                  title='constant gdk::MOD2_MASK'>MOD2_MASK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.MOD3_MASK.html"
+                                  title='constant gdk::MOD3_MASK'>MOD3_MASK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.MOD4_MASK.html"
+                                  title='constant gdk::MOD4_MASK'>MOD4_MASK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.MOD5_MASK.html"
+                                  title='constant gdk::MOD5_MASK'>MOD5_MASK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.MODIFIER_MASK.html"
+                                  title='constant gdk::MODIFIER_MASK'>MODIFIER_MASK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.MODIFIER_RESERVED_13_MASK.html"
+                                  title='constant gdk::MODIFIER_RESERVED_13_MASK'>MODIFIER_RESERVED_13_MASK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.MODIFIER_RESERVED_14_MASK.html"
+                                  title='constant gdk::MODIFIER_RESERVED_14_MASK'>MODIFIER_RESERVED_14_MASK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.MODIFIER_RESERVED_15_MASK.html"
+                                  title='constant gdk::MODIFIER_RESERVED_15_MASK'>MODIFIER_RESERVED_15_MASK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.MODIFIER_RESERVED_16_MASK.html"
+                                  title='constant gdk::MODIFIER_RESERVED_16_MASK'>MODIFIER_RESERVED_16_MASK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.MODIFIER_RESERVED_17_MASK.html"
+                                  title='constant gdk::MODIFIER_RESERVED_17_MASK'>MODIFIER_RESERVED_17_MASK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.MODIFIER_RESERVED_18_MASK.html"
+                                  title='constant gdk::MODIFIER_RESERVED_18_MASK'>MODIFIER_RESERVED_18_MASK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.MODIFIER_RESERVED_19_MASK.html"
+                                  title='constant gdk::MODIFIER_RESERVED_19_MASK'>MODIFIER_RESERVED_19_MASK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.MODIFIER_RESERVED_20_MASK.html"
+                                  title='constant gdk::MODIFIER_RESERVED_20_MASK'>MODIFIER_RESERVED_20_MASK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.MODIFIER_RESERVED_21_MASK.html"
+                                  title='constant gdk::MODIFIER_RESERVED_21_MASK'>MODIFIER_RESERVED_21_MASK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.MODIFIER_RESERVED_22_MASK.html"
+                                  title='constant gdk::MODIFIER_RESERVED_22_MASK'>MODIFIER_RESERVED_22_MASK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.MODIFIER_RESERVED_23_MASK.html"
+                                  title='constant gdk::MODIFIER_RESERVED_23_MASK'>MODIFIER_RESERVED_23_MASK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.MODIFIER_RESERVED_24_MASK.html"
+                                  title='constant gdk::MODIFIER_RESERVED_24_MASK'>MODIFIER_RESERVED_24_MASK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.MODIFIER_RESERVED_25_MASK.html"
+                                  title='constant gdk::MODIFIER_RESERVED_25_MASK'>MODIFIER_RESERVED_25_MASK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.MODIFIER_RESERVED_29_MASK.html"
+                                  title='constant gdk::MODIFIER_RESERVED_29_MASK'>MODIFIER_RESERVED_29_MASK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.POINTER_MOTION_HINT_MASK.html"
+                                  title='constant gdk::POINTER_MOTION_HINT_MASK'>POINTER_MOTION_HINT_MASK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.POINTER_MOTION_MASK.html"
+                                  title='constant gdk::POINTER_MOTION_MASK'>POINTER_MOTION_MASK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.PROPERTY_CHANGE_MASK.html"
+                                  title='constant gdk::PROPERTY_CHANGE_MASK'>PROPERTY_CHANGE_MASK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.PROXIMITY_IN_MASK.html"
+                                  title='constant gdk::PROXIMITY_IN_MASK'>PROXIMITY_IN_MASK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.PROXIMITY_OUT_MASK.html"
+                                  title='constant gdk::PROXIMITY_OUT_MASK'>PROXIMITY_OUT_MASK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.RELEASE_MASK.html"
+                                  title='constant gdk::RELEASE_MASK'>RELEASE_MASK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.SCROLL_MASK.html"
+                                  title='constant gdk::SCROLL_MASK'>SCROLL_MASK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.SEAT_CAPABILITY_ALL.html"
+                                  title='constant gdk::SEAT_CAPABILITY_ALL'>SEAT_CAPABILITY_ALL</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.SEAT_CAPABILITY_ALL_POINTING.html"
+                                  title='constant gdk::SEAT_CAPABILITY_ALL_POINTING'>SEAT_CAPABILITY_ALL_POINTING</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.SEAT_CAPABILITY_KEYBOARD.html"
+                                  title='constant gdk::SEAT_CAPABILITY_KEYBOARD'>SEAT_CAPABILITY_KEYBOARD</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.SEAT_CAPABILITY_NONE.html"
+                                  title='constant gdk::SEAT_CAPABILITY_NONE'>SEAT_CAPABILITY_NONE</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.SEAT_CAPABILITY_POINTER.html"
+                                  title='constant gdk::SEAT_CAPABILITY_POINTER'>SEAT_CAPABILITY_POINTER</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.SEAT_CAPABILITY_TABLET_STYLUS.html"
+                                  title='constant gdk::SEAT_CAPABILITY_TABLET_STYLUS'>SEAT_CAPABILITY_TABLET_STYLUS</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.SEAT_CAPABILITY_TOUCH.html"
+                                  title='constant gdk::SEAT_CAPABILITY_TOUCH'>SEAT_CAPABILITY_TOUCH</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.SELECTION_CLIPBOARD.html"
+                                  title='constant gdk::SELECTION_CLIPBOARD'>SELECTION_CLIPBOARD</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.SELECTION_PRIMARY.html"
+                                  title='constant gdk::SELECTION_PRIMARY'>SELECTION_PRIMARY</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.SELECTION_SECONDARY.html"
+                                  title='constant gdk::SELECTION_SECONDARY'>SELECTION_SECONDARY</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.SELECTION_TYPE_ATOM.html"
+                                  title='constant gdk::SELECTION_TYPE_ATOM'>SELECTION_TYPE_ATOM</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.SELECTION_TYPE_BITMAP.html"
+                                  title='constant gdk::SELECTION_TYPE_BITMAP'>SELECTION_TYPE_BITMAP</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.SELECTION_TYPE_COLORMAP.html"
+                                  title='constant gdk::SELECTION_TYPE_COLORMAP'>SELECTION_TYPE_COLORMAP</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.SELECTION_TYPE_DRAWABLE.html"
+                                  title='constant gdk::SELECTION_TYPE_DRAWABLE'>SELECTION_TYPE_DRAWABLE</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.SELECTION_TYPE_INTEGER.html"
+                                  title='constant gdk::SELECTION_TYPE_INTEGER'>SELECTION_TYPE_INTEGER</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.SELECTION_TYPE_PIXMAP.html"
+                                  title='constant gdk::SELECTION_TYPE_PIXMAP'>SELECTION_TYPE_PIXMAP</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.SELECTION_TYPE_STRING.html"
+                                  title='constant gdk::SELECTION_TYPE_STRING'>SELECTION_TYPE_STRING</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.SELECTION_TYPE_WINDOW.html"
+                                  title='constant gdk::SELECTION_TYPE_WINDOW'>SELECTION_TYPE_WINDOW</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.SHIFT_MASK.html"
+                                  title='constant gdk::SHIFT_MASK'>SHIFT_MASK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.SMOOTH_SCROLL_MASK.html"
+                                  title='constant gdk::SMOOTH_SCROLL_MASK'>SMOOTH_SCROLL_MASK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.STRUCTURE_MASK.html"
+                                  title='constant gdk::STRUCTURE_MASK'>STRUCTURE_MASK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.SUBSTRUCTURE_MASK.html"
+                                  title='constant gdk::SUBSTRUCTURE_MASK'>SUBSTRUCTURE_MASK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.SUPER_MASK.html"
+                                  title='constant gdk::SUPER_MASK'>SUPER_MASK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.TABLET_PAD_MASK.html"
+                                  title='constant gdk::TABLET_PAD_MASK'>TABLET_PAD_MASK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.TARGET_BITMAP.html"
+                                  title='constant gdk::TARGET_BITMAP'>TARGET_BITMAP</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.TARGET_COLORMAP.html"
+                                  title='constant gdk::TARGET_COLORMAP'>TARGET_COLORMAP</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.TARGET_DRAWABLE.html"
+                                  title='constant gdk::TARGET_DRAWABLE'>TARGET_DRAWABLE</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.TARGET_PIXMAP.html"
+                                  title='constant gdk::TARGET_PIXMAP'>TARGET_PIXMAP</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.TARGET_STRING.html"
+                                  title='constant gdk::TARGET_STRING'>TARGET_STRING</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.TOUCHPAD_GESTURE_MASK.html"
+                                  title='constant gdk::TOUCHPAD_GESTURE_MASK'>TOUCHPAD_GESTURE_MASK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.TOUCH_MASK.html"
+                                  title='constant gdk::TOUCH_MASK'>TOUCH_MASK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.VISIBILITY_NOTIFY_MASK.html"
+                                  title='constant gdk::VISIBILITY_NOTIFY_MASK'>VISIBILITY_NOTIFY_MASK</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.WINDOW_STATE_ABOVE.html"
+                                  title='constant gdk::WINDOW_STATE_ABOVE'>WINDOW_STATE_ABOVE</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.WINDOW_STATE_BELOW.html"
+                                  title='constant gdk::WINDOW_STATE_BELOW'>WINDOW_STATE_BELOW</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.WINDOW_STATE_FOCUSED.html"
+                                  title='constant gdk::WINDOW_STATE_FOCUSED'>WINDOW_STATE_FOCUSED</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.WINDOW_STATE_FULLSCREEN.html"
+                                  title='constant gdk::WINDOW_STATE_FULLSCREEN'>WINDOW_STATE_FULLSCREEN</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.WINDOW_STATE_ICONIFIED.html"
+                                  title='constant gdk::WINDOW_STATE_ICONIFIED'>WINDOW_STATE_ICONIFIED</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.WINDOW_STATE_MAXIMIZED.html"
+                                  title='constant gdk::WINDOW_STATE_MAXIMIZED'>WINDOW_STATE_MAXIMIZED</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.WINDOW_STATE_STICKY.html"
+                                  title='constant gdk::WINDOW_STATE_STICKY'>WINDOW_STATE_STICKY</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.WINDOW_STATE_TILED.html"
+                                  title='constant gdk::WINDOW_STATE_TILED'>WINDOW_STATE_TILED</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.WINDOW_STATE_WITHDRAWN.html"
+                                  title='constant gdk::WINDOW_STATE_WITHDRAWN'>WINDOW_STATE_WITHDRAWN</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="trait" href="trait.AppLaunchContextExt.html"
+                                  title='trait gdk::AppLaunchContextExt'>AppLaunchContextExt</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="trait" href="trait.CursorExt.html"
+                                  title='trait gdk::CursorExt'>CursorExt</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="trait" href="trait.DeviceExt.html"
+                                  title='trait gdk::DeviceExt'>DeviceExt</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="trait" href="trait.DeviceManagerExt.html"
+                                  title='trait gdk::DeviceManagerExt'>DeviceManagerExt</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="trait" href="trait.DeviceToolExt.html"
+                                  title='trait gdk::DeviceToolExt'>DeviceToolExt</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="trait" href="trait.DisplayExt.html"
+                                  title='trait gdk::DisplayExt'>DisplayExt</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="trait" href="trait.DisplayManagerExt.html"
+                                  title='trait gdk::DisplayManagerExt'>DisplayManagerExt</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="trait" href="trait.DragContextExt.html"
+                                  title='trait gdk::DragContextExt'>DragContextExt</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="trait" href="trait.DrawingContextExt.html"
+                                  title='trait gdk::DrawingContextExt'>DrawingContextExt</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="trait" href="trait.FrameClockExt.html"
+                                  title='trait gdk::FrameClockExt'>FrameClockExt</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="trait" href="trait.GLContextExt.html"
+                                  title='trait gdk::GLContextExt'>GLContextExt</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="trait" href="trait.MonitorExt.html"
+                                  title='trait gdk::MonitorExt'>MonitorExt</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="trait" href="trait.ScreenExt.html"
+                                  title='trait gdk::ScreenExt'>ScreenExt</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="trait" href="trait.SeatExt.html"
+                                  title='trait gdk::SeatExt'>SeatExt</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="trait" href="trait.VisualExt.html"
+                                  title='trait gdk::VisualExt'>VisualExt</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="trait" href="trait.WindowExt.html"
+                                  title='trait gdk::WindowExt'>WindowExt</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.beep.html"
+                                  title='fn gdk::beep'>beep</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.error_trap_pop.html"
+                                  title='fn gdk::error_trap_pop'>error_trap_pop</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.error_trap_pop_ignored.html"
+                                  title='fn gdk::error_trap_pop_ignored'>error_trap_pop_ignored</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.error_trap_push.html"
+                                  title='fn gdk::error_trap_push'>error_trap_push</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.events_get_angle.html"
+                                  title='fn gdk::events_get_angle'>events_get_angle</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.events_get_center.html"
+                                  title='fn gdk::events_get_center'>events_get_center</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.events_get_distance.html"
+                                  title='fn gdk::events_get_distance'>events_get_distance</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.events_pending.html"
+                                  title='fn gdk::events_pending'>events_pending</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.flush.html"
+                                  title='fn gdk::flush'>flush</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.get_display.html"
+                                  title='fn gdk::get_display'>get_display</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.get_display_arg_name.html"
+                                  title='fn gdk::get_display_arg_name'>get_display_arg_name</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.get_program_class.html"
+                                  title='fn gdk::get_program_class'>get_program_class</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.get_show_events.html"
+                                  title='fn gdk::get_show_events'>get_show_events</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.init.html"
+                                  title='fn gdk::init'>init</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.keyboard_grab.html"
+                                  title='fn gdk::keyboard_grab'>keyboard_grab</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.keyboard_ungrab.html"
+                                  title='fn gdk::keyboard_ungrab'>keyboard_ungrab</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.keyval_convert_case.html"
+                                  title='fn gdk::keyval_convert_case'>keyval_convert_case</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.keyval_from_name.html"
+                                  title='fn gdk::keyval_from_name'>keyval_from_name</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.keyval_is_lower.html"
+                                  title='fn gdk::keyval_is_lower'>keyval_is_lower</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.keyval_is_upper.html"
+                                  title='fn gdk::keyval_is_upper'>keyval_is_upper</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.keyval_name.html"
+                                  title='fn gdk::keyval_name'>keyval_name</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.keyval_to_lower.html"
+                                  title='fn gdk::keyval_to_lower'>keyval_to_lower</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.keyval_to_unicode.html"
+                                  title='fn gdk::keyval_to_unicode'>keyval_to_unicode</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.keyval_to_upper.html"
+                                  title='fn gdk::keyval_to_upper'>keyval_to_upper</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.list_visuals.html"
+                                  title='fn gdk::list_visuals'>list_visuals</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.notify_startup_complete.html"
+                                  title='fn gdk::notify_startup_complete'>notify_startup_complete</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.notify_startup_complete_with_id.html"
+                                  title='fn gdk::notify_startup_complete_with_id'>notify_startup_complete_with_id</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.pango_context_get.html"
+                                  title='fn gdk::pango_context_get'>pango_context_get</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.pango_context_get_for_display.html"
+                                  title='fn gdk::pango_context_get_for_display'>pango_context_get_for_display</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.pango_context_get_for_screen.html"
+                                  title='fn gdk::pango_context_get_for_screen'>pango_context_get_for_screen</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.pixbuf_get_from_surface.html"
+                                  title='fn gdk::pixbuf_get_from_surface'>pixbuf_get_from_surface</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.pointer_grab.html"
+                                  title='fn gdk::pointer_grab'>pointer_grab</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.pointer_is_grabbed.html"
+                                  title='fn gdk::pointer_is_grabbed'>pointer_is_grabbed</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.pointer_ungrab.html"
+                                  title='fn gdk::pointer_ungrab'>pointer_ungrab</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.pre_parse_libgtk_only.html"
+                                  title='fn gdk::pre_parse_libgtk_only'>pre_parse_libgtk_only</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.property_delete.html"
+                                  title='fn gdk::property_delete'>property_delete</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.selection_convert.html"
+                                  title='fn gdk::selection_convert'>selection_convert</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.selection_owner_get.html"
+                                  title='fn gdk::selection_owner_get'>selection_owner_get</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.selection_owner_get_for_display.html"
+                                  title='fn gdk::selection_owner_get_for_display'>selection_owner_get_for_display</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.selection_owner_set.html"
+                                  title='fn gdk::selection_owner_set'>selection_owner_set</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.selection_owner_set_for_display.html"
+                                  title='fn gdk::selection_owner_set_for_display'>selection_owner_set_for_display</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.selection_send_notify.html"
+                                  title='fn gdk::selection_send_notify'>selection_send_notify</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.selection_send_notify_for_display.html"
+                                  title='fn gdk::selection_send_notify_for_display'>selection_send_notify_for_display</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.set_allowed_backends.html"
+                                  title='fn gdk::set_allowed_backends'>set_allowed_backends</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.set_double_click_time.html"
+                                  title='fn gdk::set_double_click_time'>set_double_click_time</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.set_initialized.html"
+                                  title='fn gdk::set_initialized'>set_initialized</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                <p>Informs this crate that GDK has been initialized and the current thread is the main one.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.set_program_class.html"
+                                  title='fn gdk::set_program_class'>set_program_class</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.set_show_events.html"
+                                  title='fn gdk::set_show_events'>set_show_events</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.synthesize_window_state.html"
+                                  title='fn gdk::synthesize_window_state'>synthesize_window_state</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.test_render_sync.html"
+                                  title='fn gdk::test_render_sync'>test_render_sync</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.test_simulate_button.html"
+                                  title='fn gdk::test_simulate_button'>test_simulate_button</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.test_simulate_key.html"
+                                  title='fn gdk::test_simulate_key'>test_simulate_key</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.threads_enter.html"
+                                  title='fn gdk::threads_enter'>threads_enter</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.threads_init.html"
+                                  title='fn gdk::threads_init'>threads_init</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.threads_leave.html"
+                                  title='fn gdk::threads_leave'>threads_leave</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.unicode_to_keyval.html"
+                                  title='fn gdk::unicode_to_keyval'>unicode_to_keyval</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.utf8_to_string_target.html"
+                                  title='fn gdk::utf8_to_string_target'>utf8_to_string_target</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr></table><h2 id='types' class='section-header'><a href="#types">Type Definitions</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="type" href="type.key.html"
+                                  title='type gdk::key'>key</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr></table></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "gdk";
+    </script>
+    <script src="../main.js"></script>
+    <script defer src="../search-index.js"></script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `PangoFontsetClass` struct in crate `pango_sys`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, PangoFontsetClass">
+
+    <title>pango_sys::PangoFontsetClass - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc struct">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'>Struct PangoFontsetClass</p><div class="block items"><ul><li><a href="#fields">Fields</a></li></ul></div><p class='location'><a href='index.html'>pango_sys</a></p><script>window.sidebarCurrent = {name: 'PangoFontsetClass', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Struct <a href='index.html'>pango_sys</a>::<wbr><a class="struct" href=''>PangoFontsetClass</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../src/pango_sys/lib.rs.html#804-814' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'><div class="docblock attributes">#[repr(C)]
+</div>pub struct PangoFontsetClass {
+    pub parent_class: <a class="struct" href="../gobject_sys/struct.GObjectClass.html" title="struct gobject_sys::GObjectClass">GObjectClass</a>,
+    pub get_font: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../pango_sys/struct.PangoFontset.html" title="struct pango_sys::PangoFontset">PangoFontset</a>, _: <a class="type" href="../libc/type.c_uint.html" title="type libc::c_uint">c_uint</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../pango_sys/struct.PangoFont.html" title="struct pango_sys::PangoFont">PangoFont</a>&gt;,
+    pub get_metrics: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../pango_sys/struct.PangoFontset.html" title="struct pango_sys::PangoFontset">PangoFontset</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../pango_sys/struct.PangoFontMetrics.html" title="struct pango_sys::PangoFontMetrics">PangoFontMetrics</a>&gt;,
+    pub get_language: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../pango_sys/struct.PangoFontset.html" title="struct pango_sys::PangoFontset">PangoFontset</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../pango_sys/struct.PangoLanguage.html" title="struct pango_sys::PangoLanguage">PangoLanguage</a>&gt;,
+    pub foreach: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../pango_sys/struct.PangoFontset.html" title="struct pango_sys::PangoFontset">PangoFontset</a>, _: <a class="type" href="../pango_sys/type.PangoFontsetForeachFunc.html" title="type pango_sys::PangoFontsetForeachFunc">PangoFontsetForeachFunc</a>, _: <a class="type" href="../glib_sys/type.gpointer.html" title="type glib_sys::gpointer">gpointer</a>)&gt;,
+    pub _pango_reserved1: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn()&gt;,
+    pub _pango_reserved2: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn()&gt;,
+    pub _pango_reserved3: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn()&gt;,
+    pub _pango_reserved4: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn()&gt;,
+}</pre><h2 id='fields' class='fields'>Fields</h2><span id='structfield.parent_class' class="structfield">
+                           <span id='parent_class.v' class='invisible'>
+                           <code>parent_class: <a class="struct" href="../gobject_sys/struct.GObjectClass.html" title="struct gobject_sys::GObjectClass">GObjectClass</a></code>
+                           </span></span><span id='structfield.get_font' class="structfield">
+                           <span id='get_font.v' class='invisible'>
+                           <code>get_font: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../pango_sys/struct.PangoFontset.html" title="struct pango_sys::PangoFontset">PangoFontset</a>, _: <a class="type" href="../libc/type.c_uint.html" title="type libc::c_uint">c_uint</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../pango_sys/struct.PangoFont.html" title="struct pango_sys::PangoFont">PangoFont</a>&gt;</code>
+                           </span></span><span id='structfield.get_metrics' class="structfield">
+                           <span id='get_metrics.v' class='invisible'>
+                           <code>get_metrics: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../pango_sys/struct.PangoFontset.html" title="struct pango_sys::PangoFontset">PangoFontset</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../pango_sys/struct.PangoFontMetrics.html" title="struct pango_sys::PangoFontMetrics">PangoFontMetrics</a>&gt;</code>
+                           </span></span><span id='structfield.get_language' class="structfield">
+                           <span id='get_language.v' class='invisible'>
+                           <code>get_language: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../pango_sys/struct.PangoFontset.html" title="struct pango_sys::PangoFontset">PangoFontset</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../pango_sys/struct.PangoLanguage.html" title="struct pango_sys::PangoLanguage">PangoLanguage</a>&gt;</code>
+                           </span></span><span id='structfield.foreach' class="structfield">
+                           <span id='foreach.v' class='invisible'>
+                           <code>foreach: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../pango_sys/struct.PangoFontset.html" title="struct pango_sys::PangoFontset">PangoFontset</a>, _: <a class="type" href="../pango_sys/type.PangoFontsetForeachFunc.html" title="type pango_sys::PangoFontsetForeachFunc">PangoFontsetForeachFunc</a>, _: <a class="type" href="../glib_sys/type.gpointer.html" title="type glib_sys::gpointer">gpointer</a>)&gt;</code>
+                           </span></span><span id='structfield._pango_reserved1' class="structfield">
+                           <span id='_pango_reserved1.v' class='invisible'>
+                           <code>_pango_reserved1: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn()&gt;</code>
+                           </span></span><span id='structfield._pango_reserved2' class="structfield">
+                           <span id='_pango_reserved2.v' class='invisible'>
+                           <code>_pango_reserved2: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn()&gt;</code>
+                           </span></span><span id='structfield._pango_reserved3' class="structfield">
+                           <span id='_pango_reserved3.v' class='invisible'>
+                           <code>_pango_reserved3: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn()&gt;</code>
+                           </span></span><span id='structfield._pango_reserved4' class="structfield">
+                           <span id='_pango_reserved4.v' class='invisible'>
+                           <code>_pango_reserved4: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn()&gt;</code>
+                           </span></span></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "pango_sys";
+    </script>
+    <script src="../main.js"></script>
+    <script defer src="../search-index.js"></script>
+</body>
+</html>

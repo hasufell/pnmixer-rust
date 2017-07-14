@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `LogConfig` struct in crate `flexi_logger`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, LogConfig">
+
+    <title>flexi_logger::LogConfig - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    
+
+    <link rel="shortcut icon" href="http://www.rust-lang.org/favicon.ico">
+    
+</head>
+<body class="rustdoc struct">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        <a href='../flexi_logger/index.html'><img src='http://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png' alt='logo' width='100'></a>
+        <p class='location'>Struct LogConfig</p><div class="block items"><ul><li><a href="#fields">Fields</a></li><li><a href="#methods">Methods</a></li></ul></div><p class='location'><a href='index.html'>flexi_logger</a></p><script>window.sidebarCurrent = {name: 'LogConfig', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Struct <a href='index.html'>flexi_logger</a>::<wbr><a class="struct" href=''>LogConfig</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../src/flexi_logger/log_options.rs.html#11-58' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct LogConfig {
+    pub format: fn(_: &amp;<a class="struct" href="../flexi_logger/struct.LogRecord.html" title="struct flexi_logger::LogRecord">LogRecord</a>) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>,
+    pub log_to_file: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>,
+    pub print_message: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>,
+    pub duplicate_error: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>,
+    pub duplicate_info: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>,
+    pub directory: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;,
+    pub suffix: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;,
+    pub timestamp: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>,
+    pub rotate_over_size: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>&gt;,
+    pub discriminant: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;,
+    pub create_symlink: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;,
+}</pre><div class='docblock'><p>Internal struct for influencing the behavior of flexi_logger.</p>
+
+<p>This structure is only needed if you want to instantiate multiple loggers in a your process.</p>
+</div><h2 id='fields' class='fields'>Fields</h2><span id='structfield.format' class="structfield">
+                           <span id='format.v' class='invisible'>
+                           <code>format: fn(_: &amp;<a class="struct" href="../flexi_logger/struct.LogRecord.html" title="struct flexi_logger::LogRecord">LogRecord</a>) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a></code>
+                           </span></span><div class='docblock'><p>Allows providing a custom logline format; by default <code>flexi_logger::default_format</code> is used.
+You can either choose between three predefined variants,
+<code>default_format</code>, <code>opt_format</code> and <code>detailed_format</code>,
+or you create and use your own format function with the signature <code>fn(&amp;LogRecord) -&gt; String</code>.</p>
+</div><span id='structfield.log_to_file' class="structfield">
+                           <span id='log_to_file.v' class='invisible'>
+                           <code>log_to_file: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code>
+                           </span></span><div class='docblock'><ul>
+<li>If <code>false</code> (default), the log is written to stderr.</li>
+<li>If <code>true</code>, a new file is created and the log is written to it.
+The default pattern for the filename is &#39;&lt;program_name&gt;_&lt;date&gt;_&lt;time&gt;.&lt;suffix&gt;&#39;,
+e.g. <code>myprog_2015-07-08_10-44-11.log</code>.</li>
+</ul>
+
+<p><p>Note that all following members are only relevant if this one is set to <code>true</code>.</p>
+</div><span id='structfield.print_message' class="structfield">
+                           <span id='print_message.v' class='invisible'>
+                           <code>print_message: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code>
+                           </span></span><div class='docblock'><p>If <code>true</code> (default), the name of the logfile is documented in a message to stdout.</p>
+</div><span id='structfield.duplicate_error' class="structfield">
+                           <span id='duplicate_error.v' class='invisible'>
+                           <code>duplicate_error: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code>
+                           </span></span><div class='docblock'><p>If <code>true</code> (default), all logged error messages are duplicated to stdout.</p>
+</div><span id='structfield.duplicate_info' class="structfield">
+                           <span id='duplicate_info.v' class='invisible'>
+                           <code>duplicate_info: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code>
+                           </span></span><div class='docblock'><p>If <code>true</code> (default), all logged warning and info messages are also duplicated to stdout.</p>
+</div><span id='structfield.directory' class="structfield">
+                           <span id='directory.v' class='invisible'>
+                           <code>directory: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;</code>
+                           </span></span><div class='docblock'><p>Allows specifying a directory in which the log files are created. Default is <code>None</code>.</p>
+</div><span id='structfield.suffix' class="structfield">
+                           <span id='suffix.v' class='invisible'>
+                           <code>suffix: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;</code>
+                           </span></span><div class='docblock'><p>Allows specifying the filesystem suffix of the log files (without the dot).  Default is <code>log</code>.</p>
+</div><span id='structfield.timestamp' class="structfield">
+                           <span id='timestamp.v' class='invisible'>
+                           <code>timestamp: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code>
+                           </span></span><div class='docblock'><p>Allows specifying whether or not the filename should include a timestamp. Default is <code>true</code>.</p>
+</div><span id='structfield.rotate_over_size' class="structfield">
+                           <span id='rotate_over_size.v' class='invisible'>
+                           <code>rotate_over_size: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>&gt;</code>
+                           </span></span><div class='docblock'><p>Allows specifying a maximum size for log files in bytes; when
+the specified file size is reached or exceeded, the file will be closed and a new one will be opened.
+The filename pattern changes - instead of the timestamp the serial number is included into the filename.</p>
+</div><span id='structfield.discriminant' class="structfield">
+                           <span id='discriminant.v' class='invisible'>
+                           <code>discriminant: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;</code>
+                           </span></span><div class='docblock'><p>Allows specifying an additional part of the log file name that is inserted after the program name.
+Default is <code>None</code>.</p>
+</div><span id='structfield.create_symlink' class="structfield">
+                           <span id='create_symlink.v' class='invisible'>
+                           <code>create_symlink: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;</code>
+                           </span></span><div class='docblock'><p>Allows specifying an option to create a symlink to the most recent log file created
+using the given name. Default is <code>None</code>.</p>
+
+<p>Note that this option is only effective on linux systems.</p>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class="struct" href="../flexi_logger/struct.LogConfig.html" title="struct flexi_logger::LogConfig">LogConfig</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/flexi_logger/log_options.rs.html#59-90' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>() -&gt; <a class="struct" href="../flexi_logger/struct.LogConfig.html" title="struct flexi_logger::LogConfig">LogConfig</a></code></span></h4>
+<div class='docblock'><p>The defaults for the logger initialization are</p>
+
+<ul>
+<li> log_to_file = false</li>
+<li> print_message = true</li>
+<li> duplicate_error = true</li>
+<li> duplicate_info = false</li>
+<li> format = flexi_logger::default_format</li>
+<li> no directory: log files (if they were used) are created where the program was started</li>
+<li> no rotate_over: log file (if it were used) grows indefinitely</li>
+<li> the name of the log file (if it were used) consists of progname, timestamp, and suffix <code>log</code></li>
+<li> no symlink being created.</li>
+</ul>
+
+<p>We recommend using this constructor as described in the examples of function <a href="fn.init.html">init</a>
+to avoid compilation issues with your code, if future versions of flexi_logger
+come with extensions to LogConfig.</p>
+</div></div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "flexi_logger";
+    </script>
+    <script src="../main.js"></script>
+    <script defer src="../search-index.js"></script>
+</body>
+</html>

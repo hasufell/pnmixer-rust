@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `flexi_logger` crate.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, flexi_logger">
+
+    <title>flexi_logger - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    
+
+    <link rel="shortcut icon" href="http://www.rust-lang.org/favicon.ico">
+    
+</head>
+<body class="rustdoc mod">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        <a href='../flexi_logger/index.html'><img src='http://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png' alt='logo' width='100'></a>
+        <p class='location'>Crate flexi_logger</p><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#functions">Functions</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'flexi_logger', ty: 'mod', relpath: '../'};</script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Crate <a class="mod" href=''>flexi_logger</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../src/flexi_logger/lib.rs.html#1-85' title='goto source code'>[src]</a></span></h1>
+<div class='docblock'><p>A logger that can write the log to standard error or to a fresh file in a configurable folder
+and allows custom logline formats.
+It had started as an extended copy of <a href="http://rust-lang.github.io/log/env_logger/">env_logger</a>.</p>
+
+<h1 id='usage' class='section-header'><a href='#usage'>Usage</a></h1>
+<p>This crate is on <a href="https://crates.io/crates/flexi_logger">crates.io</a> and
+can be used by adding <code>flexi_logger</code> to the dependencies in your
+project&#39;s <code>Cargo.toml</code>.</p>
+
+<pre><code class="language-toml">[dependencies]
+flexi_logger = &quot;^0.5.1&quot;
+log = &quot;*&quot;
+</code></pre>
+
+<p>and this to your crate root:</p>
+
+<pre><code class="language-text">extern crate flexi_logger;
+#[macro_use]
+extern crate log;
+</code></pre>
+
+<p>The latter is needed because flexi_logger plugs into the standard Rust logging facade given by the
+<a href="http://rust-lang.github.io/log/log/">log crate</a>,
+and you use the <code>log</code> macros to write log lines from your code.</p>
+
+<p>Early in the start-up of your program, call something like</p>
+
+<pre><code class="language-text">   flexi_logger::LogOptions::new()
+       .log_to_file(true)
+       // ... your configuration options go here ...
+       .init(Some(&quot;info&quot;.to_string()))
+       .unwrap_or_else(|e| panic!(&quot;Logger initialization failed with {}&quot;, e));
+</code></pre>
+
+<p>The configuration options allow e.g. to</p>
+
+<ul>
+<li> decide whether you want to write your logs to stderr (like with env_logger), or to a file,</li>
+<li> configure the folder in which the log files are created,</li>
+<li> specify the line format for the log lines</li>
+</ul>
+
+<p>See <a href="struct.LogOptions.html">LogOptions</a> for a full description of all configuration options.</p>
+</div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.FlexiLogger.html"
+                                  title='struct flexi_logger::FlexiLogger'>FlexiLogger</a></td>
+                           <td class='docblock-short'>
+                                <p>Does the logging in the background, is normally not used directly.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.LogConfig.html"
+                                  title='struct flexi_logger::LogConfig'>LogConfig</a></td>
+                           <td class='docblock-short'>
+                                <p>Internal struct for influencing the behavior of flexi_logger.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.LogOptions.html"
+                                  title='struct flexi_logger::LogOptions'>LogOptions</a></td>
+                           <td class='docblock-short'>
+                                <p>Allows initializing flexi_logger to your needs.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.LogRecord.html"
+                                  title='struct flexi_logger::LogRecord'>LogRecord</a></td>
+                           <td class='docblock-short'>
+                                <p>The &quot;payload&quot; of a log message. This structure is primarily used as a
+parameter in the <a href="trait.Log.html"><code>log</code></a> method of the <a href="trait.Log.html"><code>Log</code></a> trait.</p>
+                           </td>
+                       </tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.FlexiLoggerError.html"
+                                  title='enum flexi_logger::FlexiLoggerError'>FlexiLoggerError</a></td>
+                           <td class='docblock-short'>
+                                <p>Describes errors in the initialization of flexi_logger.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.LogLevel.html"
+                                  title='enum flexi_logger::LogLevel'>LogLevel</a></td>
+                           <td class='docblock-short'>
+                                <p>An enum representing the available verbosity levels of the logging framework.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.LogLevelFilter.html"
+                                  title='enum flexi_logger::LogLevelFilter'>LogLevelFilter</a></td>
+                           <td class='docblock-short'>
+                                <p>An enum representing the available verbosity level filters of the logging
+framework.</p>
+                           </td>
+                       </tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.default_format.html"
+                                  title='fn flexi_logger::default_format'>default_format</a></td>
+                           <td class='docblock-short'>
+                                <p>A logline-formatter that produces log lines like <br>
+<code>INFO [my_prog::some_submodule] Task successfully read from conf.json</code></p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.detailed_format.html"
+                                  title='fn flexi_logger::detailed_format'>detailed_format</a></td>
+                           <td class='docblock-short'>
+                                <p>A logline-formatter that produces log lines like
+<br>
+<code>[2016-01-13 15:25:01.640870 +01:00] INFO [foo::bar] src/foo/bar.rs:26: Task successfully read from conf.json</code>
+<br>
+i.e. with timestamp, module path and file location.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.init.html"
+                                  title='fn flexi_logger::init'>init</a></td>
+                           <td class='docblock-short'>
+                                <p>Initializes the flexi_logger to your needs, and the global logger with flexi_logger.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.opt_format.html"
+                                  title='fn flexi_logger::opt_format'>opt_format</a></td>
+                           <td class='docblock-short'>
+                                <p>A logline-formatter that produces log lines like
+<br>
+<code>[2016-01-13 15:25:01.640870 +01:00] INFO [src/foo/bar:26] Task successfully read from conf.json</code>
+<br>
+i.e. with timestamp and file location.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.with_thread.html"
+                                  title='fn flexi_logger::with_thread'>with_thread</a></td>
+                           <td class='docblock-short'>
+                                <p>A logline-formatter that produces log lines like
+<br>
+<code>[2016-01-13 15:25:01.640870 +01:00] T[taskreader] INFO [src/foo/bar:26] Task successfully read from conf.json</code>
+<br>
+i.e. with timestamp, thread name and file location.</p>
+                           </td>
+                       </tr></table></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "flexi_logger";
+    </script>
+    <script src="../main.js"></script>
+    <script defer src="../search-index.js"></script>
+</body>
+</html>

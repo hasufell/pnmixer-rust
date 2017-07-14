@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `GVolumeIface` struct in crate `gio_sys`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, GVolumeIface">
+
+    <title>gio_sys::GVolumeIface - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc struct">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'>Struct GVolumeIface</p><div class="block items"><ul><li><a href="#fields">Fields</a></li></ul></div><p class='location'><a href='index.html'>gio_sys</a></p><script>window.sidebarCurrent = {name: 'GVolumeIface', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Struct <a href='index.html'>gio_sys</a>::<wbr><a class="struct" href=''>GVolumeIface</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../src/gio_sys/lib.rs.html#2876-2899' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'><div class="docblock attributes">#[repr(C)]
+</div>pub struct GVolumeIface {
+    pub g_iface: <a class="struct" href="../gobject_sys/struct.GTypeInterface.html" title="struct gobject_sys::GTypeInterface">GTypeInterface</a>,
+    pub changed: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GVolume.html" title="struct gio_sys::GVolume">GVolume</a>)&gt;,
+    pub removed: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GVolume.html" title="struct gio_sys::GVolume">GVolume</a>)&gt;,
+    pub get_name: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GVolume.html" title="struct gio_sys::GVolume">GVolume</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="type" href="../libc/unix/notbsd/linux/other/b64/x86_64/type.c_char.html" title="type libc::unix::notbsd::linux::other::b64::x86_64::c_char">c_char</a>&gt;,
+    pub get_icon: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GVolume.html" title="struct gio_sys::GVolume">GVolume</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GIcon.html" title="struct gio_sys::GIcon">GIcon</a>&gt;,
+    pub get_uuid: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GVolume.html" title="struct gio_sys::GVolume">GVolume</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="type" href="../libc/unix/notbsd/linux/other/b64/x86_64/type.c_char.html" title="type libc::unix::notbsd::linux::other::b64::x86_64::c_char">c_char</a>&gt;,
+    pub get_drive: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GVolume.html" title="struct gio_sys::GVolume">GVolume</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GDrive.html" title="struct gio_sys::GDrive">GDrive</a>&gt;,
+    pub get_mount: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GVolume.html" title="struct gio_sys::GVolume">GVolume</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GMount.html" title="struct gio_sys::GMount">GMount</a>&gt;,
+    pub can_mount: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GVolume.html" title="struct gio_sys::GVolume">GVolume</a>) -&gt; <a class="type" href="../glib_sys/type.gboolean.html" title="type glib_sys::gboolean">gboolean</a>&gt;,
+    pub can_eject: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GVolume.html" title="struct gio_sys::GVolume">GVolume</a>) -&gt; <a class="type" href="../glib_sys/type.gboolean.html" title="type glib_sys::gboolean">gboolean</a>&gt;,
+    pub mount_fn: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GVolume.html" title="struct gio_sys::GVolume">GVolume</a>, _: <a class="struct" href="../gio_sys/struct.GMountMountFlags.html" title="struct gio_sys::GMountMountFlags">GMountMountFlags</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GMountOperation.html" title="struct gio_sys::GMountOperation">GMountOperation</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GCancellable.html" title="struct gio_sys::GCancellable">GCancellable</a>, _: <a class="type" href="../gio_sys/type.GAsyncReadyCallback.html" title="type gio_sys::GAsyncReadyCallback">GAsyncReadyCallback</a>, _: <a class="type" href="../glib_sys/type.gpointer.html" title="type glib_sys::gpointer">gpointer</a>)&gt;,
+    pub mount_finish: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GVolume.html" title="struct gio_sys::GVolume">GVolume</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GAsyncResult.html" title="struct gio_sys::GAsyncResult">GAsyncResult</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../glib_sys/struct.GError.html" title="struct glib_sys::GError">GError</a>) -&gt; <a class="type" href="../glib_sys/type.gboolean.html" title="type glib_sys::gboolean">gboolean</a>&gt;,
+    pub eject: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GVolume.html" title="struct gio_sys::GVolume">GVolume</a>, _: <a class="struct" href="../gio_sys/struct.GMountUnmountFlags.html" title="struct gio_sys::GMountUnmountFlags">GMountUnmountFlags</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GCancellable.html" title="struct gio_sys::GCancellable">GCancellable</a>, _: <a class="type" href="../gio_sys/type.GAsyncReadyCallback.html" title="type gio_sys::GAsyncReadyCallback">GAsyncReadyCallback</a>, _: <a class="type" href="../glib_sys/type.gpointer.html" title="type glib_sys::gpointer">gpointer</a>)&gt;,
+    pub eject_finish: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GVolume.html" title="struct gio_sys::GVolume">GVolume</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GAsyncResult.html" title="struct gio_sys::GAsyncResult">GAsyncResult</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../glib_sys/struct.GError.html" title="struct glib_sys::GError">GError</a>) -&gt; <a class="type" href="../glib_sys/type.gboolean.html" title="type glib_sys::gboolean">gboolean</a>&gt;,
+    pub get_identifier: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GVolume.html" title="struct gio_sys::GVolume">GVolume</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="type" href="../libc/unix/notbsd/linux/other/b64/x86_64/type.c_char.html" title="type libc::unix::notbsd::linux::other::b64::x86_64::c_char">c_char</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="type" href="../libc/unix/notbsd/linux/other/b64/x86_64/type.c_char.html" title="type libc::unix::notbsd::linux::other::b64::x86_64::c_char">c_char</a>&gt;,
+    pub enumerate_identifiers: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GVolume.html" title="struct gio_sys::GVolume">GVolume</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="type" href="../libc/unix/notbsd/linux/other/b64/x86_64/type.c_char.html" title="type libc::unix::notbsd::linux::other::b64::x86_64::c_char">c_char</a>&gt;,
+    pub should_automount: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GVolume.html" title="struct gio_sys::GVolume">GVolume</a>) -&gt; <a class="type" href="../glib_sys/type.gboolean.html" title="type glib_sys::gboolean">gboolean</a>&gt;,
+    pub get_activation_root: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GVolume.html" title="struct gio_sys::GVolume">GVolume</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GFile.html" title="struct gio_sys::GFile">GFile</a>&gt;,
+    pub eject_with_operation: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GVolume.html" title="struct gio_sys::GVolume">GVolume</a>, _: <a class="struct" href="../gio_sys/struct.GMountUnmountFlags.html" title="struct gio_sys::GMountUnmountFlags">GMountUnmountFlags</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GMountOperation.html" title="struct gio_sys::GMountOperation">GMountOperation</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GCancellable.html" title="struct gio_sys::GCancellable">GCancellable</a>, _: <a class="type" href="../gio_sys/type.GAsyncReadyCallback.html" title="type gio_sys::GAsyncReadyCallback">GAsyncReadyCallback</a>, _: <a class="type" href="../glib_sys/type.gpointer.html" title="type glib_sys::gpointer">gpointer</a>)&gt;,
+    pub eject_with_operation_finish: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GVolume.html" title="struct gio_sys::GVolume">GVolume</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GAsyncResult.html" title="struct gio_sys::GAsyncResult">GAsyncResult</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../glib_sys/struct.GError.html" title="struct glib_sys::GError">GError</a>) -&gt; <a class="type" href="../glib_sys/type.gboolean.html" title="type glib_sys::gboolean">gboolean</a>&gt;,
+    pub get_sort_key: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GVolume.html" title="struct gio_sys::GVolume">GVolume</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="type" href="../libc/unix/notbsd/linux/other/b64/x86_64/type.c_char.html" title="type libc::unix::notbsd::linux::other::b64::x86_64::c_char">c_char</a>&gt;,
+    pub get_symbolic_icon: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GVolume.html" title="struct gio_sys::GVolume">GVolume</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GIcon.html" title="struct gio_sys::GIcon">GIcon</a>&gt;,
+}</pre><h2 id='fields' class='fields'>Fields</h2><span id='structfield.g_iface' class="structfield">
+                           <span id='g_iface.v' class='invisible'>
+                           <code>g_iface: <a class="struct" href="../gobject_sys/struct.GTypeInterface.html" title="struct gobject_sys::GTypeInterface">GTypeInterface</a></code>
+                           </span></span><span id='structfield.changed' class="structfield">
+                           <span id='changed.v' class='invisible'>
+                           <code>changed: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GVolume.html" title="struct gio_sys::GVolume">GVolume</a>)&gt;</code>
+                           </span></span><span id='structfield.removed' class="structfield">
+                           <span id='removed.v' class='invisible'>
+                           <code>removed: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GVolume.html" title="struct gio_sys::GVolume">GVolume</a>)&gt;</code>
+                           </span></span><span id='structfield.get_name' class="structfield">
+                           <span id='get_name.v' class='invisible'>
+                           <code>get_name: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GVolume.html" title="struct gio_sys::GVolume">GVolume</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="type" href="../libc/unix/notbsd/linux/other/b64/x86_64/type.c_char.html" title="type libc::unix::notbsd::linux::other::b64::x86_64::c_char">c_char</a>&gt;</code>
+                           </span></span><span id='structfield.get_icon' class="structfield">
+                           <span id='get_icon.v' class='invisible'>
+                           <code>get_icon: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GVolume.html" title="struct gio_sys::GVolume">GVolume</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GIcon.html" title="struct gio_sys::GIcon">GIcon</a>&gt;</code>
+                           </span></span><span id='structfield.get_uuid' class="structfield">
+                           <span id='get_uuid.v' class='invisible'>
+                           <code>get_uuid: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GVolume.html" title="struct gio_sys::GVolume">GVolume</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="type" href="../libc/unix/notbsd/linux/other/b64/x86_64/type.c_char.html" title="type libc::unix::notbsd::linux::other::b64::x86_64::c_char">c_char</a>&gt;</code>
+                           </span></span><span id='structfield.get_drive' class="structfield">
+                           <span id='get_drive.v' class='invisible'>
+                           <code>get_drive: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GVolume.html" title="struct gio_sys::GVolume">GVolume</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GDrive.html" title="struct gio_sys::GDrive">GDrive</a>&gt;</code>
+                           </span></span><span id='structfield.get_mount' class="structfield">
+                           <span id='get_mount.v' class='invisible'>
+                           <code>get_mount: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GVolume.html" title="struct gio_sys::GVolume">GVolume</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GMount.html" title="struct gio_sys::GMount">GMount</a>&gt;</code>
+                           </span></span><span id='structfield.can_mount' class="structfield">
+                           <span id='can_mount.v' class='invisible'>
+                           <code>can_mount: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GVolume.html" title="struct gio_sys::GVolume">GVolume</a>) -&gt; <a class="type" href="../glib_sys/type.gboolean.html" title="type glib_sys::gboolean">gboolean</a>&gt;</code>
+                           </span></span><span id='structfield.can_eject' class="structfield">
+                           <span id='can_eject.v' class='invisible'>
+                           <code>can_eject: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GVolume.html" title="struct gio_sys::GVolume">GVolume</a>) -&gt; <a class="type" href="../glib_sys/type.gboolean.html" title="type glib_sys::gboolean">gboolean</a>&gt;</code>
+                           </span></span><span id='structfield.mount_fn' class="structfield">
+                           <span id='mount_fn.v' class='invisible'>
+                           <code>mount_fn: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GVolume.html" title="struct gio_sys::GVolume">GVolume</a>, _: <a class="struct" href="../gio_sys/struct.GMountMountFlags.html" title="struct gio_sys::GMountMountFlags">GMountMountFlags</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GMountOperation.html" title="struct gio_sys::GMountOperation">GMountOperation</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GCancellable.html" title="struct gio_sys::GCancellable">GCancellable</a>, _: <a class="type" href="../gio_sys/type.GAsyncReadyCallback.html" title="type gio_sys::GAsyncReadyCallback">GAsyncReadyCallback</a>, _: <a class="type" href="../glib_sys/type.gpointer.html" title="type glib_sys::gpointer">gpointer</a>)&gt;</code>
+                           </span></span><span id='structfield.mount_finish' class="structfield">
+                           <span id='mount_finish.v' class='invisible'>
+                           <code>mount_finish: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GVolume.html" title="struct gio_sys::GVolume">GVolume</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GAsyncResult.html" title="struct gio_sys::GAsyncResult">GAsyncResult</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../glib_sys/struct.GError.html" title="struct glib_sys::GError">GError</a>) -&gt; <a class="type" href="../glib_sys/type.gboolean.html" title="type glib_sys::gboolean">gboolean</a>&gt;</code>
+                           </span></span><span id='structfield.eject' class="structfield">
+                           <span id='eject.v' class='invisible'>
+                           <code>eject: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GVolume.html" title="struct gio_sys::GVolume">GVolume</a>, _: <a class="struct" href="../gio_sys/struct.GMountUnmountFlags.html" title="struct gio_sys::GMountUnmountFlags">GMountUnmountFlags</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GCancellable.html" title="struct gio_sys::GCancellable">GCancellable</a>, _: <a class="type" href="../gio_sys/type.GAsyncReadyCallback.html" title="type gio_sys::GAsyncReadyCallback">GAsyncReadyCallback</a>, _: <a class="type" href="../glib_sys/type.gpointer.html" title="type glib_sys::gpointer">gpointer</a>)&gt;</code>
+                           </span></span><span id='structfield.eject_finish' class="structfield">
+                           <span id='eject_finish.v' class='invisible'>
+                           <code>eject_finish: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GVolume.html" title="struct gio_sys::GVolume">GVolume</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GAsyncResult.html" title="struct gio_sys::GAsyncResult">GAsyncResult</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../glib_sys/struct.GError.html" title="struct glib_sys::GError">GError</a>) -&gt; <a class="type" href="../glib_sys/type.gboolean.html" title="type glib_sys::gboolean">gboolean</a>&gt;</code>
+                           </span></span><span id='structfield.get_identifier' class="structfield">
+                           <span id='get_identifier.v' class='invisible'>
+                           <code>get_identifier: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GVolume.html" title="struct gio_sys::GVolume">GVolume</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="type" href="../libc/unix/notbsd/linux/other/b64/x86_64/type.c_char.html" title="type libc::unix::notbsd::linux::other::b64::x86_64::c_char">c_char</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="type" href="../libc/unix/notbsd/linux/other/b64/x86_64/type.c_char.html" title="type libc::unix::notbsd::linux::other::b64::x86_64::c_char">c_char</a>&gt;</code>
+                           </span></span><span id='structfield.enumerate_identifiers' class="structfield">
+                           <span id='enumerate_identifiers.v' class='invisible'>
+                           <code>enumerate_identifiers: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GVolume.html" title="struct gio_sys::GVolume">GVolume</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="type" href="../libc/unix/notbsd/linux/other/b64/x86_64/type.c_char.html" title="type libc::unix::notbsd::linux::other::b64::x86_64::c_char">c_char</a>&gt;</code>
+                           </span></span><span id='structfield.should_automount' class="structfield">
+                           <span id='should_automount.v' class='invisible'>
+                           <code>should_automount: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GVolume.html" title="struct gio_sys::GVolume">GVolume</a>) -&gt; <a class="type" href="../glib_sys/type.gboolean.html" title="type glib_sys::gboolean">gboolean</a>&gt;</code>
+                           </span></span><span id='structfield.get_activation_root' class="structfield">
+                           <span id='get_activation_root.v' class='invisible'>
+                           <code>get_activation_root: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GVolume.html" title="struct gio_sys::GVolume">GVolume</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GFile.html" title="struct gio_sys::GFile">GFile</a>&gt;</code>
+                           </span></span><span id='structfield.eject_with_operation' class="structfield">
+                           <span id='eject_with_operation.v' class='invisible'>
+                           <code>eject_with_operation: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GVolume.html" title="struct gio_sys::GVolume">GVolume</a>, _: <a class="struct" href="../gio_sys/struct.GMountUnmountFlags.html" title="struct gio_sys::GMountUnmountFlags">GMountUnmountFlags</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GMountOperation.html" title="struct gio_sys::GMountOperation">GMountOperation</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GCancellable.html" title="struct gio_sys::GCancellable">GCancellable</a>, _: <a class="type" href="../gio_sys/type.GAsyncReadyCallback.html" title="type gio_sys::GAsyncReadyCallback">GAsyncReadyCallback</a>, _: <a class="type" href="../glib_sys/type.gpointer.html" title="type glib_sys::gpointer">gpointer</a>)&gt;</code>
+                           </span></span><span id='structfield.eject_with_operation_finish' class="structfield">
+                           <span id='eject_with_operation_finish.v' class='invisible'>
+                           <code>eject_with_operation_finish: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GVolume.html" title="struct gio_sys::GVolume">GVolume</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GAsyncResult.html" title="struct gio_sys::GAsyncResult">GAsyncResult</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../glib_sys/struct.GError.html" title="struct glib_sys::GError">GError</a>) -&gt; <a class="type" href="../glib_sys/type.gboolean.html" title="type glib_sys::gboolean">gboolean</a>&gt;</code>
+                           </span></span><span id='structfield.get_sort_key' class="structfield">
+                           <span id='get_sort_key.v' class='invisible'>
+                           <code>get_sort_key: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GVolume.html" title="struct gio_sys::GVolume">GVolume</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="type" href="../libc/unix/notbsd/linux/other/b64/x86_64/type.c_char.html" title="type libc::unix::notbsd::linux::other::b64::x86_64::c_char">c_char</a>&gt;</code>
+                           </span></span><span id='structfield.get_symbolic_icon' class="structfield">
+                           <span id='get_symbolic_icon.v' class='invisible'>
+                           <code>get_symbolic_icon: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GVolume.html" title="struct gio_sys::GVolume">GVolume</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gio_sys/struct.GIcon.html" title="struct gio_sys::GIcon">GIcon</a>&gt;</code>
+                           </span></span></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "gio_sys";
+    </script>
+    <script src="../main.js"></script>
+    <script defer src="../search-index.js"></script>
+</body>
+</html>

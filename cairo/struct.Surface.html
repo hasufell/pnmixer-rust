@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `Surface` struct in crate `cairo`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, Surface">
+
+    <title>cairo::Surface - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc struct">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'>Struct Surface</p><div class="block items"><ul><li><a href="#methods">Methods</a></li><li><a href="#implementations">Trait Implementations</a></li></ul></div><p class='location'><a href='index.html'>cairo</a></p><script>window.sidebarCurrent = {name: 'Surface', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Struct <a href='index.html'>cairo</a>::<wbr><a class="struct" href=''>Surface</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../src/cairo/surface.rs.html#23' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct Surface(_);</pre><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class="struct" href="../cairo/struct.Surface.html" title="struct cairo::Surface">Surface</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/cairo/surface.rs.html#25-66' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.status' class="method"><span id='status.v' class='invisible'><code>fn <a href='#method.status' class='fnname'>status</a>(&amp;self) -&gt; <a class="enum" href="../cairo/enum.Status.html" title="enum cairo::Status">Status</a></code></span></h4>
+<h4 id='method.create_similar' class="method"><span id='create_similar.v' class='invisible'><code>fn <a href='#method.create_similar' class='fnname'>create_similar</a>(&amp;self, content: <a class="enum" href="../cairo/enum.Content.html" title="enum cairo::Content">Content</a>, width: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>, height: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>) -&gt; <a class="struct" href="../cairo/struct.Surface.html" title="struct cairo::Surface">Surface</a></code></span></h4>
+</div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> for <a class="struct" href="../cairo/struct.Surface.html" title="struct cairo::Surface">Surface</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/cairo/surface.rs.html#22' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.fmt' class="method"><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html" title="type core::fmt::Result">Result</a></code></span></h4>
+<div class='docblock'><p>Formats the value using the given formatter.</p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class="trait" href="../glib/translate/trait.ToGlibPtr.html" title="trait glib::translate::ToGlibPtr">ToGlibPtr</a>&lt;'a, <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../cairo_sys/struct.cairo_surface_t.html" title="struct cairo_sys::cairo_surface_t">cairo_surface_t</a>&gt; for <a class="struct" href="../cairo/struct.Surface.html" title="struct cairo::Surface">Surface</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/cairo/surface.rs.html#69-76' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='associatedtype.Storage' class="type"><span id='Storage.t' class='invisible'><code>type <a href='../glib/translate/trait.ToGlibPtr.html#associatedtype.Storage' class="type">Storage</a> = &amp;'a <a class="struct" href="../cairo/struct.Surface.html" title="struct cairo::Surface">Surface</a></code></span></h4>
+<h4 id='method.to_glib_none' class="method"><span id='to_glib_none.v' class='invisible'><code>fn <a href='../glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none' class='fnname'>to_glib_none</a>(&amp;'a self) -&gt; <a class="struct" href="../glib/translate/struct.Stash.html" title="struct glib::translate::Stash">Stash</a>&lt;'a, <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../cairo_sys/struct.cairo_surface_t.html" title="struct cairo_sys::cairo_surface_t">cairo_surface_t</a>, Self&gt;</code></span></h4>
+<div class='docblock'><p>Transfer: none. <a href="../glib/translate/trait.ToGlibPtr.html#tymethod.to_glib_none">Read more</a></p>
+</div><h4 id='method.to_glib_container' class="method"><span id='to_glib_container.v' class='invisible'><code>fn <a href='../glib/translate/trait.ToGlibPtr.html#method.to_glib_container' class='fnname'>to_glib_container</a>(&amp;'a self) -&gt; <a class="struct" href="../glib/translate/struct.Stash.html" title="struct glib::translate::Stash">Stash</a>&lt;'a, P, Self&gt;</code></span></h4>
+<div class='docblock'><p>Transfer: container. <a href="../glib/translate/trait.ToGlibPtr.html#method.to_glib_container">Read more</a></p>
+</div><h4 id='method.to_glib_full' class="method"><span id='to_glib_full.v' class='invisible'><code>fn <a href='../glib/translate/trait.ToGlibPtr.html#method.to_glib_full' class='fnname'>to_glib_full</a>(&amp;self) -&gt; P</code></span></h4>
+<div class='docblock'><p>Transfer: full. <a href="../glib/translate/trait.ToGlibPtr.html#method.to_glib_full">Read more</a></p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="../glib/translate/trait.FromGlibPtrNone.html" title="trait glib::translate::FromGlibPtrNone">FromGlibPtrNone</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../cairo_sys/struct.cairo_surface_t.html" title="struct cairo_sys::cairo_surface_t">cairo_surface_t</a>&gt; for <a class="struct" href="../cairo/struct.Surface.html" title="struct cairo::Surface">Surface</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/cairo/surface.rs.html#79-84' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.from_glib_none' class="method"><span id='from_glib_none.v' class='invisible'><code>unsafe fn <a href='../glib/translate/trait.FromGlibPtrNone.html#tymethod.from_glib_none' class='fnname'>from_glib_none</a>(ptr: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../cairo_sys/struct.cairo_surface_t.html" title="struct cairo_sys::cairo_surface_t">cairo_surface_t</a>) -&gt; <a class="struct" href="../cairo/struct.Surface.html" title="struct cairo::Surface">Surface</a></code></span></h4>
+</div><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="../glib/translate/trait.FromGlibPtrFull.html" title="trait glib::translate::FromGlibPtrFull">FromGlibPtrFull</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../cairo_sys/struct.cairo_surface_t.html" title="struct cairo_sys::cairo_surface_t">cairo_surface_t</a>&gt; for <a class="struct" href="../cairo/struct.Surface.html" title="struct cairo::Surface">Surface</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/cairo/surface.rs.html#87-92' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.from_glib_full' class="method"><span id='from_glib_full.v' class='invisible'><code>unsafe fn <a href='../glib/translate/trait.FromGlibPtrFull.html#tymethod.from_glib_full' class='fnname'>from_glib_full</a>(ptr: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../cairo_sys/struct.cairo_surface_t.html" title="struct cairo_sys::cairo_surface_t">cairo_surface_t</a>) -&gt; <a class="struct" href="../cairo/struct.Surface.html" title="struct cairo::Surface">Surface</a></code></span></h4>
+</div><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html" title="trait core::convert::AsRef">AsRef</a>&lt;<a class="struct" href="../cairo/struct.Surface.html" title="struct cairo::Surface">Surface</a>&gt; for <a class="struct" href="../cairo/struct.Surface.html" title="struct cairo::Surface">Surface</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/cairo/surface.rs.html#94-98' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.as_ref' class="method"><span id='as_ref.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html#tymethod.as_ref' class='fnname'>as_ref</a>(&amp;self) -&gt; &amp;<a class="struct" href="../cairo/struct.Surface.html" title="struct cairo::Surface">Surface</a></code></span></h4>
+<div class='docblock'><p>Performs the conversion.</p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html" title="trait core::clone::Clone">Clone</a> for <a class="struct" href="../cairo/struct.Surface.html" title="struct cairo::Surface">Surface</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/cairo/surface.rs.html#100-104' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.clone' class="method"><span id='clone.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class="struct" href="../cairo/struct.Surface.html" title="struct cairo::Surface">Surface</a></code></span></h4>
+<div class='docblock'><p>Returns a copy of the value. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">Read more</a></p>
+</div><h4 id='method.clone_from' class="method"><span id='clone_from.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div></span></h4>
+<div class='docblock'><p>Performs copy-assignment from <code>source</code>. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from">Read more</a></p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/drop/trait.Drop.html" title="trait core::ops::drop::Drop">Drop</a> for <a class="struct" href="../cairo/struct.Surface.html" title="struct cairo::Surface">Surface</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/cairo/surface.rs.html#106-110' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.drop' class="method"><span id='drop.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/ops/drop/trait.Drop.html#tymethod.drop' class='fnname'>drop</a>(&amp;mut self)</code></span></h4>
+<div class='docblock'><p>A method called when the value goes out of scope. <a href="https://doc.rust-lang.org/nightly/core/ops/drop/trait.Drop.html#tymethod.drop">Read more</a></p>
+</div></div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "cairo";
+    </script>
+    <script src="../main.js"></script>
+    <script defer src="../search-index.js"></script>
+</body>
+</html>

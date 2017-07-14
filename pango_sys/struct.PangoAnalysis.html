@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `PangoAnalysis` struct in crate `pango_sys`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, PangoAnalysis">
+
+    <title>pango_sys::PangoAnalysis - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc struct">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'>Struct PangoAnalysis</p><div class="block items"><ul><li><a href="#fields">Fields</a></li></ul></div><p class='location'><a href='index.html'>pango_sys</a></p><script>window.sidebarCurrent = {name: 'PangoAnalysis', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Struct <a href='index.html'>pango_sys</a>::<wbr><a class="struct" href=''>PangoAnalysis</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../src/pango_sys/lib.rs.html#599-609' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'><div class="docblock attributes">#[repr(C)]
+</div>pub struct PangoAnalysis {
+    pub shape_engine: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../pango_sys/struct.PangoEngineShape.html" title="struct pango_sys::PangoEngineShape">PangoEngineShape</a>,
+    pub lang_engine: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../pango_sys/struct.PangoEngineLang.html" title="struct pango_sys::PangoEngineLang">PangoEngineLang</a>,
+    pub font: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../pango_sys/struct.PangoFont.html" title="struct pango_sys::PangoFont">PangoFont</a>,
+    pub level: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>,
+    pub gravity: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>,
+    pub flags: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>,
+    pub script: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>,
+    pub language: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../pango_sys/struct.PangoLanguage.html" title="struct pango_sys::PangoLanguage">PangoLanguage</a>,
+    pub extra_attrs: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../glib_sys/struct.GSList.html" title="struct glib_sys::GSList">GSList</a>,
+}</pre><h2 id='fields' class='fields'>Fields</h2><span id='structfield.shape_engine' class="structfield">
+                           <span id='shape_engine.v' class='invisible'>
+                           <code>shape_engine: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../pango_sys/struct.PangoEngineShape.html" title="struct pango_sys::PangoEngineShape">PangoEngineShape</a></code>
+                           </span></span><span id='structfield.lang_engine' class="structfield">
+                           <span id='lang_engine.v' class='invisible'>
+                           <code>lang_engine: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../pango_sys/struct.PangoEngineLang.html" title="struct pango_sys::PangoEngineLang">PangoEngineLang</a></code>
+                           </span></span><span id='structfield.font' class="structfield">
+                           <span id='font.v' class='invisible'>
+                           <code>font: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../pango_sys/struct.PangoFont.html" title="struct pango_sys::PangoFont">PangoFont</a></code>
+                           </span></span><span id='structfield.level' class="structfield">
+                           <span id='level.v' class='invisible'>
+                           <code>level: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a></code>
+                           </span></span><span id='structfield.gravity' class="structfield">
+                           <span id='gravity.v' class='invisible'>
+                           <code>gravity: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a></code>
+                           </span></span><span id='structfield.flags' class="structfield">
+                           <span id='flags.v' class='invisible'>
+                           <code>flags: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a></code>
+                           </span></span><span id='structfield.script' class="structfield">
+                           <span id='script.v' class='invisible'>
+                           <code>script: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a></code>
+                           </span></span><span id='structfield.language' class="structfield">
+                           <span id='language.v' class='invisible'>
+                           <code>language: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../pango_sys/struct.PangoLanguage.html" title="struct pango_sys::PangoLanguage">PangoLanguage</a></code>
+                           </span></span><span id='structfield.extra_attrs' class="structfield">
+                           <span id='extra_attrs.v' class='invisible'>
+                           <code>extra_attrs: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../glib_sys/struct.GSList.html" title="struct glib_sys::GSList">GSList</a></code>
+                           </span></span></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "pango_sys";
+    </script>
+    <script src="../main.js"></script>
+    <script defer src="../search-index.js"></script>
+</body>
+</html>

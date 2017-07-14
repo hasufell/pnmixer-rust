@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `GtkTextAttributes` struct in crate `gtk_sys`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, GtkTextAttributes">
+
+    <title>gtk_sys::GtkTextAttributes - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc struct">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'>Struct GtkTextAttributes</p><div class="block items"><ul><li><a href="#fields">Fields</a></li></ul></div><p class='location'><a href='index.html'>gtk_sys</a></p><script>window.sidebarCurrent = {name: 'GtkTextAttributes', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Struct <a href='index.html'>gtk_sys</a>::<wbr><a class="struct" href=''>GtkTextAttributes</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../src/gtk_sys/lib.rs.html#5031-5056' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'><div class="docblock attributes">#[repr(C)]
+</div>pub struct GtkTextAttributes {
+    pub refcount: <a class="type" href="../libc/type.c_uint.html" title="type libc::c_uint">c_uint</a>,
+    pub appearance: <a class="struct" href="../gtk_sys/struct.GtkTextAppearance.html" title="struct gtk_sys::GtkTextAppearance">GtkTextAppearance</a>,
+    pub justification: <a class="enum" href="../gtk_sys/enum.GtkJustification.html" title="enum gtk_sys::GtkJustification">GtkJustification</a>,
+    pub direction: <a class="enum" href="../gtk_sys/enum.GtkTextDirection.html" title="enum gtk_sys::GtkTextDirection">GtkTextDirection</a>,
+    pub font: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../pango_sys/struct.PangoFontDescription.html" title="struct pango_sys::PangoFontDescription">PangoFontDescription</a>,
+    pub font_scale: <a class="type" href="../libc/type.c_double.html" title="type libc::c_double">c_double</a>,
+    pub left_margin: <a class="type" href="../libc/type.c_int.html" title="type libc::c_int">c_int</a>,
+    pub right_margin: <a class="type" href="../libc/type.c_int.html" title="type libc::c_int">c_int</a>,
+    pub indent: <a class="type" href="../libc/type.c_int.html" title="type libc::c_int">c_int</a>,
+    pub pixels_above_lines: <a class="type" href="../libc/type.c_int.html" title="type libc::c_int">c_int</a>,
+    pub pixels_below_lines: <a class="type" href="../libc/type.c_int.html" title="type libc::c_int">c_int</a>,
+    pub pixels_inside_wrap: <a class="type" href="../libc/type.c_int.html" title="type libc::c_int">c_int</a>,
+    pub tabs: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../pango_sys/struct.PangoTabArray.html" title="struct pango_sys::PangoTabArray">PangoTabArray</a>,
+    pub wrap_mode: <a class="enum" href="../gtk_sys/enum.GtkWrapMode.html" title="enum gtk_sys::GtkWrapMode">GtkWrapMode</a>,
+    pub language: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../pango_sys/struct.PangoLanguage.html" title="struct pango_sys::PangoLanguage">PangoLanguage</a>,
+    pub pg_bg_color: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gdk_sys/struct.GdkColor.html" title="struct gdk_sys::GdkColor">GdkColor</a>,
+    // some fields omitted
+}</pre><h2 id='fields' class='fields'>Fields</h2><span id='structfield.refcount' class="structfield">
+                           <span id='refcount.v' class='invisible'>
+                           <code>refcount: <a class="type" href="../libc/type.c_uint.html" title="type libc::c_uint">c_uint</a></code>
+                           </span></span><span id='structfield.appearance' class="structfield">
+                           <span id='appearance.v' class='invisible'>
+                           <code>appearance: <a class="struct" href="../gtk_sys/struct.GtkTextAppearance.html" title="struct gtk_sys::GtkTextAppearance">GtkTextAppearance</a></code>
+                           </span></span><span id='structfield.justification' class="structfield">
+                           <span id='justification.v' class='invisible'>
+                           <code>justification: <a class="enum" href="../gtk_sys/enum.GtkJustification.html" title="enum gtk_sys::GtkJustification">GtkJustification</a></code>
+                           </span></span><span id='structfield.direction' class="structfield">
+                           <span id='direction.v' class='invisible'>
+                           <code>direction: <a class="enum" href="../gtk_sys/enum.GtkTextDirection.html" title="enum gtk_sys::GtkTextDirection">GtkTextDirection</a></code>
+                           </span></span><span id='structfield.font' class="structfield">
+                           <span id='font.v' class='invisible'>
+                           <code>font: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../pango_sys/struct.PangoFontDescription.html" title="struct pango_sys::PangoFontDescription">PangoFontDescription</a></code>
+                           </span></span><span id='structfield.font_scale' class="structfield">
+                           <span id='font_scale.v' class='invisible'>
+                           <code>font_scale: <a class="type" href="../libc/type.c_double.html" title="type libc::c_double">c_double</a></code>
+                           </span></span><span id='structfield.left_margin' class="structfield">
+                           <span id='left_margin.v' class='invisible'>
+                           <code>left_margin: <a class="type" href="../libc/type.c_int.html" title="type libc::c_int">c_int</a></code>
+                           </span></span><span id='structfield.right_margin' class="structfield">
+                           <span id='right_margin.v' class='invisible'>
+                           <code>right_margin: <a class="type" href="../libc/type.c_int.html" title="type libc::c_int">c_int</a></code>
+                           </span></span><span id='structfield.indent' class="structfield">
+                           <span id='indent.v' class='invisible'>
+                           <code>indent: <a class="type" href="../libc/type.c_int.html" title="type libc::c_int">c_int</a></code>
+                           </span></span><span id='structfield.pixels_above_lines' class="structfield">
+                           <span id='pixels_above_lines.v' class='invisible'>
+                           <code>pixels_above_lines: <a class="type" href="../libc/type.c_int.html" title="type libc::c_int">c_int</a></code>
+                           </span></span><span id='structfield.pixels_below_lines' class="structfield">
+                           <span id='pixels_below_lines.v' class='invisible'>
+                           <code>pixels_below_lines: <a class="type" href="../libc/type.c_int.html" title="type libc::c_int">c_int</a></code>
+                           </span></span><span id='structfield.pixels_inside_wrap' class="structfield">
+                           <span id='pixels_inside_wrap.v' class='invisible'>
+                           <code>pixels_inside_wrap: <a class="type" href="../libc/type.c_int.html" title="type libc::c_int">c_int</a></code>
+                           </span></span><span id='structfield.tabs' class="structfield">
+                           <span id='tabs.v' class='invisible'>
+                           <code>tabs: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../pango_sys/struct.PangoTabArray.html" title="struct pango_sys::PangoTabArray">PangoTabArray</a></code>
+                           </span></span><span id='structfield.wrap_mode' class="structfield">
+                           <span id='wrap_mode.v' class='invisible'>
+                           <code>wrap_mode: <a class="enum" href="../gtk_sys/enum.GtkWrapMode.html" title="enum gtk_sys::GtkWrapMode">GtkWrapMode</a></code>
+                           </span></span><span id='structfield.language' class="structfield">
+                           <span id='language.v' class='invisible'>
+                           <code>language: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../pango_sys/struct.PangoLanguage.html" title="struct pango_sys::PangoLanguage">PangoLanguage</a></code>
+                           </span></span><span id='structfield.pg_bg_color' class="structfield">
+                           <span id='pg_bg_color.v' class='invisible'>
+                           <code>pg_bg_color: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gdk_sys/struct.GdkColor.html" title="struct gdk_sys::GdkColor">GdkColor</a></code>
+                           </span></span></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "gtk_sys";
+    </script>
+    <script src="../main.js"></script>
+    <script defer src="../search-index.js"></script>
+</body>
+</html>

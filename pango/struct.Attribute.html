@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `Attribute` struct in crate `pango`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, Attribute">
+
+    <title>pango::Attribute - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc struct">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'>Struct Attribute</p><div class="block items"><ul><li><a href="#methods">Methods</a></li><li><a href="#implementations">Trait Implementations</a></li></ul></div><p class='location'><a href='index.html'>pango</a></p><script>window.sidebarCurrent = {name: 'Attribute', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Struct <a href='index.html'>pango</a>::<wbr><a class="struct" href=''>Attribute</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span></span></h1>
+<pre class='rust struct'>pub struct Attribute(_);</pre><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class="struct" href="../pango/struct.Attribute.html" title="struct pango::Attribute">Attribute</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/pango/auto/attribute.rs.html#17-29' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.init' class="method"><span id='init.v' class='invisible'><code>fn <a href='#method.init' class='fnname'>init</a>(&amp;mut self, klass: &amp;<a class="struct" href="../pango/attr_class/struct.AttrClass.html" title="struct pango::attr_class::AttrClass">AttrClass</a>)</code></span></h4>
+</div><h3 class='impl'><span class='in-band'><code>impl <a class="struct" href="../pango/struct.Attribute.html" title="struct pango::Attribute">Attribute</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/pango/attribute.rs.html#17-167' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.new_background' class="method"><span id='new_background.v' class='invisible'><code>fn <a href='#method.new_background' class='fnname'>new_background</a>(red: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>, green: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>, blue: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../pango/struct.Attribute.html" title="struct pango::Attribute">Attribute</a>&gt;</code></span></h4>
+<h4 id='method.new_fallback' class="method"><span id='new_fallback.v' class='invisible'><code>fn <a href='#method.new_fallback' class='fnname'>new_fallback</a>(enable_fallback: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../pango/struct.Attribute.html" title="struct pango::Attribute">Attribute</a>&gt;</code></span></h4>
+<h4 id='method.new_family' class="method"><span id='new_family.v' class='invisible'><code>fn <a href='#method.new_family' class='fnname'>new_family</a>(family: &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../pango/struct.Attribute.html" title="struct pango::Attribute">Attribute</a>&gt;</code></span></h4>
+<h4 id='method.new_foreground' class="method"><span id='new_foreground.v' class='invisible'><code>fn <a href='#method.new_foreground' class='fnname'>new_foreground</a>(red: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>, green: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>, blue: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../pango/struct.Attribute.html" title="struct pango::Attribute">Attribute</a>&gt;</code></span></h4>
+<h4 id='method.new_gravity_hint' class="method"><span id='new_gravity_hint.v' class='invisible'><code>fn <a href='#method.new_gravity_hint' class='fnname'>new_gravity_hint</a>(hint: <a class="enum" href="../pango/enum.GravityHint.html" title="enum pango::GravityHint">GravityHint</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../pango/struct.Attribute.html" title="struct pango::Attribute">Attribute</a>&gt;</code></span></h4>
+<h4 id='method.new_gravity' class="method"><span id='new_gravity.v' class='invisible'><code>fn <a href='#method.new_gravity' class='fnname'>new_gravity</a>(gravity: <a class="enum" href="../pango/enum.Gravity.html" title="enum pango::Gravity">Gravity</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../pango/struct.Attribute.html" title="struct pango::Attribute">Attribute</a>&gt;</code></span></h4>
+<h4 id='method.new_letter_spacing' class="method"><span id='new_letter_spacing.v' class='invisible'><code>fn <a href='#method.new_letter_spacing' class='fnname'>new_letter_spacing</a>(letter_spacing: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../pango/struct.Attribute.html" title="struct pango::Attribute">Attribute</a>&gt;</code></span></h4>
+<h4 id='method.new_rise' class="method"><span id='new_rise.v' class='invisible'><code>fn <a href='#method.new_rise' class='fnname'>new_rise</a>(rise: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../pango/struct.Attribute.html" title="struct pango::Attribute">Attribute</a>&gt;</code></span></h4>
+<h4 id='method.new_scale' class="method"><span id='new_scale.v' class='invisible'><code>fn <a href='#method.new_scale' class='fnname'>new_scale</a>(scale_factor: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../pango/struct.Attribute.html" title="struct pango::Attribute">Attribute</a>&gt;</code></span></h4>
+<h4 id='method.new_stretch' class="method"><span id='new_stretch.v' class='invisible'><code>fn <a href='#method.new_stretch' class='fnname'>new_stretch</a>(stretch: <a class="enum" href="../pango/enum.Stretch.html" title="enum pango::Stretch">Stretch</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../pango/struct.Attribute.html" title="struct pango::Attribute">Attribute</a>&gt;</code></span></h4>
+<h4 id='method.new_strikethrough_color' class="method"><span id='new_strikethrough_color.v' class='invisible'><code>fn <a href='#method.new_strikethrough_color' class='fnname'>new_strikethrough_color</a>(red: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>, green: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>, blue: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../pango/struct.Attribute.html" title="struct pango::Attribute">Attribute</a>&gt;</code></span></h4>
+<h4 id='method.new_strikethrough' class="method"><span id='new_strikethrough.v' class='invisible'><code>fn <a href='#method.new_strikethrough' class='fnname'>new_strikethrough</a>(strikethrough: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../pango/struct.Attribute.html" title="struct pango::Attribute">Attribute</a>&gt;</code></span></h4>
+<h4 id='method.new_style' class="method"><span id='new_style.v' class='invisible'><code>fn <a href='#method.new_style' class='fnname'>new_style</a>(style: <a class="enum" href="../pango/enum.Style.html" title="enum pango::Style">Style</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../pango/struct.Attribute.html" title="struct pango::Attribute">Attribute</a>&gt;</code></span></h4>
+<h4 id='method.new_underline_color' class="method"><span id='new_underline_color.v' class='invisible'><code>fn <a href='#method.new_underline_color' class='fnname'>new_underline_color</a>(red: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>, green: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>, blue: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../pango/struct.Attribute.html" title="struct pango::Attribute">Attribute</a>&gt;</code></span></h4>
+<h4 id='method.new_underline' class="method"><span id='new_underline.v' class='invisible'><code>fn <a href='#method.new_underline' class='fnname'>new_underline</a>(underline: <a class="enum" href="../pango/enum.Underline.html" title="enum pango::Underline">Underline</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../pango/struct.Attribute.html" title="struct pango::Attribute">Attribute</a>&gt;</code></span></h4>
+<h4 id='method.new_variant' class="method"><span id='new_variant.v' class='invisible'><code>fn <a href='#method.new_variant' class='fnname'>new_variant</a>(variant: <a class="enum" href="../pango/enum.Variant.html" title="enum pango::Variant">Variant</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../pango/struct.Attribute.html" title="struct pango::Attribute">Attribute</a>&gt;</code></span></h4>
+<h4 id='method.new_weight' class="method"><span id='new_weight.v' class='invisible'><code>fn <a href='#method.new_weight' class='fnname'>new_weight</a>(weight: <a class="enum" href="../pango/enum.Weight.html" title="enum pango::Weight">Weight</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../pango/struct.Attribute.html" title="struct pango::Attribute">Attribute</a>&gt;</code></span></h4>
+<h4 id='method.get_attr_class' class="method"><span id='get_attr_class.v' class='invisible'><code>fn <a href='#method.get_attr_class' class='fnname'>get_attr_class</a>(&amp;self) -&gt; <a class="struct" href="../pango/attr_class/struct.AttrClass.html" title="struct pango::attr_class::AttrClass">AttrClass</a></code></span></h4>
+<h4 id='method.get_start_index' class="method"><span id='get_start_index.v' class='invisible'><code>fn <a href='#method.get_start_index' class='fnname'>get_start_index</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a></code></span></h4>
+<h4 id='method.get_end_index' class="method"><span id='get_end_index.v' class='invisible'><code>fn <a href='#method.get_end_index' class='fnname'>get_end_index</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a></code></span></h4>
+<h4 id='method.set_start_index' class="method"><span id='set_start_index.v' class='invisible'><code>fn <a href='#method.set_start_index' class='fnname'>set_start_index</a>(&amp;mut self, index: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>)</code></span></h4>
+<h4 id='method.set_end_index' class="method"><span id='set_end_index.v' class='invisible'><code>fn <a href='#method.set_end_index' class='fnname'>set_end_index</a>(&amp;mut self, index: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>)</code></span></h4>
+</div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html" title="trait core::clone::Clone">Clone</a> for <a class="struct" href="../pango/struct.Attribute.html" title="struct pango::Attribute">Attribute</a></code></span><span class='out-of-band'></span></h3>
+<div class='impl-items'><h4 id='method.clone' class="method"><span id='clone.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class="struct" href="../pango/struct.Attribute.html" title="struct pango::Attribute">Attribute</a></code></span></h4>
+<div class='docblock'><p>Returns a copy of the value. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">Read more</a></p>
+</div><h4 id='method.clone_from' class="method"><span id='clone_from.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div></span></h4>
+<div class='docblock'><p>Performs copy-assignment from <code>source</code>. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from">Read more</a></p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> for <a class="struct" href="../pango/struct.Attribute.html" title="struct pango::Attribute">Attribute</a></code></span><span class='out-of-band'></span></h3>
+<div class='impl-items'><h4 id='method.fmt' class="method"><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html" title="type core::fmt::Result">Result</a></code></span></h4>
+<div class='docblock'><p>Formats the value using the given formatter.</p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html" title="trait core::cmp::PartialEq">PartialEq</a> for <a class="struct" href="../pango/struct.Attribute.html" title="struct pango::Attribute">Attribute</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/pango/auto/attribute.rs.html#31-36' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.eq' class="method"><span id='eq.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#tymethod.eq' class='fnname'>eq</a>(&amp;self, other: &amp;Self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h4>
+<div class='docblock'><p>This method tests for <code>self</code> and <code>other</code> values to be equal, and is used by <code>==</code>. <a href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#tymethod.eq">Read more</a></p>
+</div><h4 id='method.ne' class="method"><span id='ne.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#method.ne' class='fnname'>ne</a>(&amp;self, other: &amp;Rhs) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div></span></h4>
+<div class='docblock'><p>This method tests for <code>!=</code>.</p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/cmp/trait.Eq.html" title="trait core::cmp::Eq">Eq</a> for <a class="struct" href="../pango/struct.Attribute.html" title="struct pango::Attribute">Attribute</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/pango/auto/attribute.rs.html#38' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'></div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "pango";
+    </script>
+    <script src="../main.js"></script>
+    <script defer src="../search-index.js"></script>
+</body>
+</html>

@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `gio` crate.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, gio">
+
+    <title>gio - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc mod">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'>Crate gio</p><div class="block items"><ul><li><a href="#reexports">Reexports</a></li><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#constants">Constants</a></li><li><a href="#traits">Traits</a></li><li><a href="#functions">Functions</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'gio', ty: 'mod', relpath: '../'};</script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Crate <a class="mod" href=''>gio</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../src/gio/lib.rs.html#5-42' title='goto source code'>[src]</a></span></h1>
+<h2 id='reexports' class='section-header'><a href="#reexports">Reexports</a></h2>
+<table><tr><td><code>pub use <a class="mod" href="../gio/prelude/index.html" title="mod gio::prelude">prelude</a>::*;</code></td></tr></table><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="mod" href="functions/index.html"
+                                  title='mod gio::functions'>functions</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="mod" href="prelude/index.html"
+                                  title='mod gio::prelude'>prelude</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="mod" href="signal/index.html"
+                                  title='mod gio::signal'>signal</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.Action.html"
+                                  title='struct gio::Action'>Action</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.ActionGroup.html"
+                                  title='struct gio::ActionGroup'>ActionGroup</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.ActionMap.html"
+                                  title='struct gio::ActionMap'>ActionMap</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.AppInfo.html"
+                                  title='struct gio::AppInfo'>AppInfo</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.AppInfoCreateFlags.html"
+                                  title='struct gio::AppInfoCreateFlags'>AppInfoCreateFlags</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.AppLaunchContext.html"
+                                  title='struct gio::AppLaunchContext'>AppLaunchContext</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.Application.html"
+                                  title='struct gio::Application'>Application</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.ApplicationFlags.html"
+                                  title='struct gio::ApplicationFlags'>ApplicationFlags</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.Cancellable.html"
+                                  title='struct gio::Cancellable'>Cancellable</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.Error.html"
+                                  title='struct gio::Error'>Error</a></td>
+                           <td class='docblock-short'>
+                                <p>A generic error capable of representing various error domains (types).</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.File.html"
+                                  title='struct gio::File'>File</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.FileCreateFlags.html"
+                                  title='struct gio::FileCreateFlags'>FileCreateFlags</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.FileInfo.html"
+                                  title='struct gio::FileInfo'>FileInfo</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.FileQueryInfoFlags.html"
+                                  title='struct gio::FileQueryInfoFlags'>FileQueryInfoFlags</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.Icon.html"
+                                  title='struct gio::Icon'>Icon</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.Menu.html"
+                                  title='struct gio::Menu'>Menu</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.MenuAttributeIter.html"
+                                  title='struct gio::MenuAttributeIter'>MenuAttributeIter</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.MenuItem.html"
+                                  title='struct gio::MenuItem'>MenuItem</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.MenuLinkIter.html"
+                                  title='struct gio::MenuLinkIter'>MenuLinkIter</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.MenuModel.html"
+                                  title='struct gio::MenuModel'>MenuModel</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.Notification.html"
+                                  title='struct gio::Notification'>Notification</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.Object.html"
+                                  title='struct gio::Object'>Object</a></td>
+                           <td class='docblock-short'>
+                                <p>The base class in the object hierarchy.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.Permission.html"
+                                  title='struct gio::Permission'>Permission</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.Resource.html"
+                                  title='struct gio::Resource'>Resource</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.ResourceLookupFlags.html"
+                                  title='struct gio::ResourceLookupFlags'>ResourceLookupFlags</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.Settings.html"
+                                  title='struct gio::Settings'>Settings</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.SettingsBindFlags.html"
+                                  title='struct gio::SettingsBindFlags'>SettingsBindFlags</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.SimpleAction.html"
+                                  title='struct gio::SimpleAction'>SimpleAction</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.SimpleActionGroup.html"
+                                  title='struct gio::SimpleActionGroup'>SimpleActionGroup</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.SimplePermission.html"
+                                  title='struct gio::SimplePermission'>SimplePermission</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.ThemedIcon.html"
+                                  title='struct gio::ThemedIcon'>ThemedIcon</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.TlsCertificate.html"
+                                  title='struct gio::TlsCertificate'>TlsCertificate</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.TlsCertificateFlags.html"
+                                  title='struct gio::TlsCertificateFlags'>TlsCertificateFlags</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.FileType.html"
+                                  title='enum gio::FileType'>FileType</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.NotificationPriority.html"
+                                  title='enum gio::NotificationPriority'>NotificationPriority</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.ResourceError.html"
+                                  title='enum gio::ResourceError'>ResourceError</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr></table><h2 id='constants' class='section-header'><a href="#constants">Constants</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.APPLICATION_CAN_OVERRIDE_APP_ID.html"
+                                  title='constant gio::APPLICATION_CAN_OVERRIDE_APP_ID'>APPLICATION_CAN_OVERRIDE_APP_ID</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.APPLICATION_FLAGS_NONE.html"
+                                  title='constant gio::APPLICATION_FLAGS_NONE'>APPLICATION_FLAGS_NONE</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.APPLICATION_HANDLES_COMMAND_LINE.html"
+                                  title='constant gio::APPLICATION_HANDLES_COMMAND_LINE'>APPLICATION_HANDLES_COMMAND_LINE</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.APPLICATION_HANDLES_OPEN.html"
+                                  title='constant gio::APPLICATION_HANDLES_OPEN'>APPLICATION_HANDLES_OPEN</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.APPLICATION_IS_LAUNCHER.html"
+                                  title='constant gio::APPLICATION_IS_LAUNCHER'>APPLICATION_IS_LAUNCHER</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.APPLICATION_IS_SERVICE.html"
+                                  title='constant gio::APPLICATION_IS_SERVICE'>APPLICATION_IS_SERVICE</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.APPLICATION_NON_UNIQUE.html"
+                                  title='constant gio::APPLICATION_NON_UNIQUE'>APPLICATION_NON_UNIQUE</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.APPLICATION_SEND_ENVIRONMENT.html"
+                                  title='constant gio::APPLICATION_SEND_ENVIRONMENT'>APPLICATION_SEND_ENVIRONMENT</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.APP_INFO_CREATE_NEEDS_TERMINAL.html"
+                                  title='constant gio::APP_INFO_CREATE_NEEDS_TERMINAL'>APP_INFO_CREATE_NEEDS_TERMINAL</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.APP_INFO_CREATE_NONE.html"
+                                  title='constant gio::APP_INFO_CREATE_NONE'>APP_INFO_CREATE_NONE</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.APP_INFO_CREATE_SUPPORTS_STARTUP_NOTIFICATION.html"
+                                  title='constant gio::APP_INFO_CREATE_SUPPORTS_STARTUP_NOTIFICATION'>APP_INFO_CREATE_SUPPORTS_STARTUP_NOTIFICATION</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.APP_INFO_CREATE_SUPPORTS_URIS.html"
+                                  title='constant gio::APP_INFO_CREATE_SUPPORTS_URIS'>APP_INFO_CREATE_SUPPORTS_URIS</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.FILE_CREATE_NONE.html"
+                                  title='constant gio::FILE_CREATE_NONE'>FILE_CREATE_NONE</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.FILE_CREATE_PRIVATE.html"
+                                  title='constant gio::FILE_CREATE_PRIVATE'>FILE_CREATE_PRIVATE</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.FILE_CREATE_REPLACE_DESTINATION.html"
+                                  title='constant gio::FILE_CREATE_REPLACE_DESTINATION'>FILE_CREATE_REPLACE_DESTINATION</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.FILE_QUERY_INFO_NOFOLLOW_SYMLINKS.html"
+                                  title='constant gio::FILE_QUERY_INFO_NOFOLLOW_SYMLINKS'>FILE_QUERY_INFO_NOFOLLOW_SYMLINKS</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.FILE_QUERY_INFO_NONE.html"
+                                  title='constant gio::FILE_QUERY_INFO_NONE'>FILE_QUERY_INFO_NONE</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.RESOURCE_LOOKUP_FLAGS_NONE.html"
+                                  title='constant gio::RESOURCE_LOOKUP_FLAGS_NONE'>RESOURCE_LOOKUP_FLAGS_NONE</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.SETTINGS_BIND_DEFAULT.html"
+                                  title='constant gio::SETTINGS_BIND_DEFAULT'>SETTINGS_BIND_DEFAULT</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.SETTINGS_BIND_GET.html"
+                                  title='constant gio::SETTINGS_BIND_GET'>SETTINGS_BIND_GET</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.SETTINGS_BIND_GET_NO_CHANGES.html"
+                                  title='constant gio::SETTINGS_BIND_GET_NO_CHANGES'>SETTINGS_BIND_GET_NO_CHANGES</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.SETTINGS_BIND_INVERT_BOOLEAN.html"
+                                  title='constant gio::SETTINGS_BIND_INVERT_BOOLEAN'>SETTINGS_BIND_INVERT_BOOLEAN</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.SETTINGS_BIND_NO_SENSITIVITY.html"
+                                  title='constant gio::SETTINGS_BIND_NO_SENSITIVITY'>SETTINGS_BIND_NO_SENSITIVITY</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.SETTINGS_BIND_SET.html"
+                                  title='constant gio::SETTINGS_BIND_SET'>SETTINGS_BIND_SET</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.TLS_CERTIFICATE_BAD_IDENTITY.html"
+                                  title='constant gio::TLS_CERTIFICATE_BAD_IDENTITY'>TLS_CERTIFICATE_BAD_IDENTITY</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.TLS_CERTIFICATE_EXPIRED.html"
+                                  title='constant gio::TLS_CERTIFICATE_EXPIRED'>TLS_CERTIFICATE_EXPIRED</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.TLS_CERTIFICATE_GENERIC_ERROR.html"
+                                  title='constant gio::TLS_CERTIFICATE_GENERIC_ERROR'>TLS_CERTIFICATE_GENERIC_ERROR</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.TLS_CERTIFICATE_INSECURE.html"
+                                  title='constant gio::TLS_CERTIFICATE_INSECURE'>TLS_CERTIFICATE_INSECURE</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.TLS_CERTIFICATE_NOT_ACTIVATED.html"
+                                  title='constant gio::TLS_CERTIFICATE_NOT_ACTIVATED'>TLS_CERTIFICATE_NOT_ACTIVATED</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.TLS_CERTIFICATE_REVOKED.html"
+                                  title='constant gio::TLS_CERTIFICATE_REVOKED'>TLS_CERTIFICATE_REVOKED</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.TLS_CERTIFICATE_UNKNOWN_CA.html"
+                                  title='constant gio::TLS_CERTIFICATE_UNKNOWN_CA'>TLS_CERTIFICATE_UNKNOWN_CA</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.TLS_CERTIFICATE_VALIDATE_ALL.html"
+                                  title='constant gio::TLS_CERTIFICATE_VALIDATE_ALL'>TLS_CERTIFICATE_VALIDATE_ALL</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="trait" href="trait.ActionExt.html"
+                                  title='trait gio::ActionExt'>ActionExt</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="trait" href="trait.ActionGroupExt.html"
+                                  title='trait gio::ActionGroupExt'>ActionGroupExt</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="trait" href="trait.ActionMapExt.html"
+                                  title='trait gio::ActionMapExt'>ActionMapExt</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="trait" href="trait.AppInfoExt.html"
+                                  title='trait gio::AppInfoExt'>AppInfoExt</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="trait" href="trait.AppLaunchContextExt.html"
+                                  title='trait gio::AppLaunchContextExt'>AppLaunchContextExt</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="trait" href="trait.ApplicationExt.html"
+                                  title='trait gio::ApplicationExt'>ApplicationExt</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="trait" href="trait.CancellableExt.html"
+                                  title='trait gio::CancellableExt'>CancellableExt</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="trait" href="trait.FileExt.html"
+                                  title='trait gio::FileExt'>FileExt</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="trait" href="trait.FileInfoExt.html"
+                                  title='trait gio::FileInfoExt'>FileInfoExt</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="trait" href="trait.IconExt.html"
+                                  title='trait gio::IconExt'>IconExt</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="trait" href="trait.MenuAttributeIterExt.html"
+                                  title='trait gio::MenuAttributeIterExt'>MenuAttributeIterExt</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="trait" href="trait.MenuExt.html"
+                                  title='trait gio::MenuExt'>MenuExt</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="trait" href="trait.MenuItemExt.html"
+                                  title='trait gio::MenuItemExt'>MenuItemExt</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="trait" href="trait.MenuLinkIterExt.html"
+                                  title='trait gio::MenuLinkIterExt'>MenuLinkIterExt</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="trait" href="trait.MenuModelExt.html"
+                                  title='trait gio::MenuModelExt'>MenuModelExt</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="trait" href="trait.NotificationExt.html"
+                                  title='trait gio::NotificationExt'>NotificationExt</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="trait" href="trait.PermissionExt.html"
+                                  title='trait gio::PermissionExt'>PermissionExt</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="trait" href="trait.SettingsExt.html"
+                                  title='trait gio::SettingsExt'>SettingsExt</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="trait" href="trait.SimpleActionExt.html"
+                                  title='trait gio::SimpleActionExt'>SimpleActionExt</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="trait" href="trait.SimpleActionGroupExt.html"
+                                  title='trait gio::SimpleActionGroupExt'>SimpleActionGroupExt</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="trait" href="trait.ThemedIconExt.html"
+                                  title='trait gio::ThemedIconExt'>ThemedIconExt</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="trait" href="trait.TlsCertificateExt.html"
+                                  title='trait gio::TlsCertificateExt'>TlsCertificateExt</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.bus_unown_name.html"
+                                  title='fn gio::bus_unown_name'>bus_unown_name</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.bus_unwatch_name.html"
+                                  title='fn gio::bus_unwatch_name'>bus_unwatch_name</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.content_type_can_be_executable.html"
+                                  title='fn gio::content_type_can_be_executable'>content_type_can_be_executable</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.content_type_equals.html"
+                                  title='fn gio::content_type_equals'>content_type_equals</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.content_type_from_mime_type.html"
+                                  title='fn gio::content_type_from_mime_type'>content_type_from_mime_type</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.content_type_get_description.html"
+                                  title='fn gio::content_type_get_description'>content_type_get_description</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.content_type_get_generic_icon_name.html"
+                                  title='fn gio::content_type_get_generic_icon_name'>content_type_get_generic_icon_name</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.content_type_get_icon.html"
+                                  title='fn gio::content_type_get_icon'>content_type_get_icon</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.content_type_get_mime_type.html"
+                                  title='fn gio::content_type_get_mime_type'>content_type_get_mime_type</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.content_type_get_symbolic_icon.html"
+                                  title='fn gio::content_type_get_symbolic_icon'>content_type_get_symbolic_icon</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.content_type_guess_for_tree.html"
+                                  title='fn gio::content_type_guess_for_tree'>content_type_guess_for_tree</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.content_type_is_a.html"
+                                  title='fn gio::content_type_is_a'>content_type_is_a</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.content_type_is_unknown.html"
+                                  title='fn gio::content_type_is_unknown'>content_type_is_unknown</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.content_types_get_registered.html"
+                                  title='fn gio::content_types_get_registered'>content_types_get_registered</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.dbus_address_escape_value.html"
+                                  title='fn gio::dbus_address_escape_value'>dbus_address_escape_value</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.dbus_generate_guid.html"
+                                  title='fn gio::dbus_generate_guid'>dbus_generate_guid</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.dbus_is_address.html"
+                                  title='fn gio::dbus_is_address'>dbus_is_address</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.dbus_is_guid.html"
+                                  title='fn gio::dbus_is_guid'>dbus_is_guid</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.dbus_is_interface_name.html"
+                                  title='fn gio::dbus_is_interface_name'>dbus_is_interface_name</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.dbus_is_member_name.html"
+                                  title='fn gio::dbus_is_member_name'>dbus_is_member_name</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.dbus_is_name.html"
+                                  title='fn gio::dbus_is_name'>dbus_is_name</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.dbus_is_supported_address.html"
+                                  title='fn gio::dbus_is_supported_address'>dbus_is_supported_address</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.dbus_is_unique_name.html"
+                                  title='fn gio::dbus_is_unique_name'>dbus_is_unique_name</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.io_modules_scan_all_in_directory.html"
+                                  title='fn gio::io_modules_scan_all_in_directory'>io_modules_scan_all_in_directory</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.io_scheduler_cancel_all_jobs.html"
+                                  title='fn gio::io_scheduler_cancel_all_jobs'>io_scheduler_cancel_all_jobs</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.networking_init.html"
+                                  title='fn gio::networking_init'>networking_init</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.resources_enumerate_children.html"
+                                  title='fn gio::resources_enumerate_children'>resources_enumerate_children</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.resources_get_info.html"
+                                  title='fn gio::resources_get_info'>resources_get_info</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.resources_lookup_data.html"
+                                  title='fn gio::resources_lookup_data'>resources_lookup_data</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.resources_register.html"
+                                  title='fn gio::resources_register'>resources_register</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.resources_unregister.html"
+                                  title='fn gio::resources_unregister'>resources_unregister</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.unix_is_mount_path_system_internal.html"
+                                  title='fn gio::unix_is_mount_path_system_internal'>unix_is_mount_path_system_internal</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.unix_mount_points_changed_since.html"
+                                  title='fn gio::unix_mount_points_changed_since'>unix_mount_points_changed_since</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.unix_mounts_changed_since.html"
+                                  title='fn gio::unix_mounts_changed_since'>unix_mounts_changed_since</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr></table></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "gio";
+    </script>
+    <script src="../main.js"></script>
+    <script defer src="../search-index.js"></script>
+</body>
+</html>

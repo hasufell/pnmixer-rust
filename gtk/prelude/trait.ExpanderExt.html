@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `ExpanderExt` trait in crate `gtk`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, ExpanderExt">
+
+    <title>gtk::prelude::ExpanderExt - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc trait">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'>Trait ExpanderExt</p><div class="block items"><ul><li><a href="#required-methods">Required Methods</a></li><li><a href="#implementors">Implementors</a></li></ul></div><p class='location'><a href='../index.html'>gtk</a>::<wbr><a href='index.html'>prelude</a></p><script>window.sidebarCurrent = {name: 'ExpanderExt', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>gtk</a>::<wbr><a href='index.html'>prelude</a>::<wbr><a class="trait" href=''>ExpanderExt</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../../src/gtk/auto/expander.rs.html#44-78' title='goto source code'>[src]</a></span></h1>
+<pre class='rust trait'>pub trait ExpanderExt {
+    fn <a href='#tymethod.get_expanded' class='fnname'>get_expanded</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>;
+    fn <a href='#tymethod.get_label' class='fnname'>get_label</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;;
+    fn <a href='#tymethod.get_label_fill' class='fnname'>get_label_fill</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>;
+    fn <a href='#tymethod.get_label_widget' class='fnname'>get_label_widget</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../../gtk/struct.Widget.html" title="struct gtk::Widget">Widget</a>&gt;;
+    fn <a href='#tymethod.get_resize_toplevel' class='fnname'>get_resize_toplevel</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>;
+    fn <a href='#tymethod.get_spacing' class='fnname'>get_spacing</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>;
+    fn <a href='#tymethod.get_use_markup' class='fnname'>get_use_markup</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>;
+    fn <a href='#tymethod.get_use_underline' class='fnname'>get_use_underline</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>;
+    fn <a href='#tymethod.set_expanded' class='fnname'>set_expanded</a>(&amp;self, expanded: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>);
+    fn <a href='#tymethod.set_label' class='fnname'>set_label</a>&lt;'a, P:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html" title="trait core::convert::Into">Into</a>&lt;<a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;&amp;'a <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>&gt;&gt;&gt;(&amp;self, label: P);
+    fn <a href='#tymethod.set_label_fill' class='fnname'>set_label_fill</a>(&amp;self, label_fill: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>);
+    fn <a href='#tymethod.set_label_widget' class='fnname'>set_label_widget</a>&lt;'a, P:&nbsp;<a class="trait" href="../../gtk/trait.IsA.html" title="trait gtk::IsA">IsA</a>&lt;<a class="struct" href="../../gtk/struct.Widget.html" title="struct gtk::Widget">Widget</a>&gt; + 'a, Q:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html" title="trait core::convert::Into">Into</a>&lt;<a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;&amp;'a P&gt;&gt;&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;label_widget: Q<br>&nbsp;&nbsp;&nbsp;&nbsp;);
+    fn <a href='#tymethod.set_resize_toplevel' class='fnname'>set_resize_toplevel</a>(&amp;self, resize_toplevel: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>);
+    fn <a href='#tymethod.set_spacing' class='fnname'>set_spacing</a>(&amp;self, spacing: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>);
+    fn <a href='#tymethod.set_use_markup' class='fnname'>set_use_markup</a>(&amp;self, use_markup: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>);
+    fn <a href='#tymethod.set_use_underline' class='fnname'>set_use_underline</a>(&amp;self, use_underline: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>);
+    fn <a href='#tymethod.connect_activate' class='fnname'>connect_activate</a>&lt;F:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/function/trait.Fn.html" title="trait core::ops::function::Fn">Fn</a>(&amp;Self) + 'static&gt;(&amp;self, f: F) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>;
+}</pre>
+            <h2 id='required-methods'>Required Methods</h2>
+            <div class='methods'>
+        <h3 id='tymethod.get_expanded' class='method'><span id='get_expanded.v' class='invisible'><code>fn <a href='#tymethod.get_expanded' class='fnname'>get_expanded</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h3><h3 id='tymethod.get_label' class='method'><span id='get_label.v' class='invisible'><code>fn <a href='#tymethod.get_label' class='fnname'>get_label</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;</code></span></h3><h3 id='tymethod.get_label_fill' class='method'><span id='get_label_fill.v' class='invisible'><code>fn <a href='#tymethod.get_label_fill' class='fnname'>get_label_fill</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h3><h3 id='tymethod.get_label_widget' class='method'><span id='get_label_widget.v' class='invisible'><code>fn <a href='#tymethod.get_label_widget' class='fnname'>get_label_widget</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../../gtk/struct.Widget.html" title="struct gtk::Widget">Widget</a>&gt;</code></span></h3><h3 id='tymethod.get_resize_toplevel' class='method'><span id='get_resize_toplevel.v' class='invisible'><code>fn <a href='#tymethod.get_resize_toplevel' class='fnname'>get_resize_toplevel</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h3><h3 id='tymethod.get_spacing' class='method'><span id='get_spacing.v' class='invisible'><code>fn <a href='#tymethod.get_spacing' class='fnname'>get_spacing</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a></code></span></h3><h3 id='tymethod.get_use_markup' class='method'><span id='get_use_markup.v' class='invisible'><code>fn <a href='#tymethod.get_use_markup' class='fnname'>get_use_markup</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h3><h3 id='tymethod.get_use_underline' class='method'><span id='get_use_underline.v' class='invisible'><code>fn <a href='#tymethod.get_use_underline' class='fnname'>get_use_underline</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h3><h3 id='tymethod.set_expanded' class='method'><span id='set_expanded.v' class='invisible'><code>fn <a href='#tymethod.set_expanded' class='fnname'>set_expanded</a>(&amp;self, expanded: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>)</code></span></h3><h3 id='tymethod.set_label' class='method'><span id='set_label.v' class='invisible'><code>fn <a href='#tymethod.set_label' class='fnname'>set_label</a>&lt;'a, P:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html" title="trait core::convert::Into">Into</a>&lt;<a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;&amp;'a <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>&gt;&gt;&gt;(&amp;self, label: P)</code></span></h3><h3 id='tymethod.set_label_fill' class='method'><span id='set_label_fill.v' class='invisible'><code>fn <a href='#tymethod.set_label_fill' class='fnname'>set_label_fill</a>(&amp;self, label_fill: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>)</code></span></h3><h3 id='tymethod.set_label_widget' class='method'><span id='set_label_widget.v' class='invisible'><code>fn <a href='#tymethod.set_label_widget' class='fnname'>set_label_widget</a>&lt;'a, P:&nbsp;<a class="trait" href="../../gtk/trait.IsA.html" title="trait gtk::IsA">IsA</a>&lt;<a class="struct" href="../../gtk/struct.Widget.html" title="struct gtk::Widget">Widget</a>&gt; + 'a, Q:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html" title="trait core::convert::Into">Into</a>&lt;<a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;&amp;'a P&gt;&gt;&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;label_widget: Q<br>)</code></span></h3><h3 id='tymethod.set_resize_toplevel' class='method'><span id='set_resize_toplevel.v' class='invisible'><code>fn <a href='#tymethod.set_resize_toplevel' class='fnname'>set_resize_toplevel</a>(&amp;self, resize_toplevel: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>)</code></span></h3><h3 id='tymethod.set_spacing' class='method'><span id='set_spacing.v' class='invisible'><code>fn <a href='#tymethod.set_spacing' class='fnname'>set_spacing</a>(&amp;self, spacing: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>)</code></span></h3><h3 id='tymethod.set_use_markup' class='method'><span id='set_use_markup.v' class='invisible'><code>fn <a href='#tymethod.set_use_markup' class='fnname'>set_use_markup</a>(&amp;self, use_markup: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>)</code></span></h3><h3 id='tymethod.set_use_underline' class='method'><span id='set_use_underline.v' class='invisible'><code>fn <a href='#tymethod.set_use_underline' class='fnname'>set_use_underline</a>(&amp;self, use_underline: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>)</code></span></h3><h3 id='tymethod.connect_activate' class='method'><span id='connect_activate.v' class='invisible'><code>fn <a href='#tymethod.connect_activate' class='fnname'>connect_activate</a>&lt;F:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/function/trait.Fn.html" title="trait core::ops::function::Fn">Fn</a>(&amp;Self) + 'static&gt;(&amp;self, f: F) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a></code></span></h3></div>
+        <h2 id='implementors'>Implementors</h2>
+        <ul class='item-list' id='implementors-list'>
+    <li><code>impl&lt;O:&nbsp;<a class="trait" href="../../gtk/trait.IsA.html" title="trait gtk::IsA">IsA</a>&lt;<a class="struct" href="../../gtk/struct.Expander.html" title="struct gtk::Expander">Expander</a>&gt; + <a class="trait" href="../../gtk/trait.IsA.html" title="trait gtk::IsA">IsA</a>&lt;<a class="struct" href="../../gtk/struct.Object.html" title="struct gtk::Object">Object</a>&gt;&gt; ExpanderExt for O</code></li>
+</ul><script type="text/javascript" async
+                         src="../../implementors/gtk/prelude/trait.ExpanderExt.js">
+                 </script></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "gtk";
+    </script>
+    <script src="../../main.js"></script>
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>

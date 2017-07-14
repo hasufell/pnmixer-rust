@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["inflate_bytes","Decompress the given slice of DEFLATE compressed data."],["inflate_bytes_zlib","Decompress the given slice of DEFLATE compressed (with zlib headers and trailers) data."]],"struct":[["InflateStream",""],["InflateWriter","A DEFLATE decoder."]]});

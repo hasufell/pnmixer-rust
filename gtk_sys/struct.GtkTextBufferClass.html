@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `GtkTextBufferClass` struct in crate `gtk_sys`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, GtkTextBufferClass">
+
+    <title>gtk_sys::GtkTextBufferClass - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc struct">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'>Struct GtkTextBufferClass</p><div class="block items"><ul><li><a href="#fields">Fields</a></li></ul></div><p class='location'><a href='index.html'>gtk_sys</a></p><script>window.sidebarCurrent = {name: 'GtkTextBufferClass', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Struct <a href='index.html'>gtk_sys</a>::<wbr><a class="struct" href=''>GtkTextBufferClass</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../src/gtk_sys/lib.rs.html#5062-5081' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'><div class="docblock attributes">#[repr(C)]
+</div>pub struct GtkTextBufferClass {
+    pub parent_class: <a class="struct" href="../gobject_sys/struct.GObjectClass.html" title="struct gobject_sys::GObjectClass">GObjectClass</a>,
+    pub insert_text: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkTextBuffer.html" title="struct gtk_sys::GtkTextBuffer">GtkTextBuffer</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkTextIter.html" title="struct gtk_sys::GtkTextIter">GtkTextIter</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="type" href="../libc/unix/notbsd/linux/other/b64/x86_64/type.c_char.html" title="type libc::unix::notbsd::linux::other::b64::x86_64::c_char">c_char</a>, _: <a class="type" href="../libc/type.c_int.html" title="type libc::c_int">c_int</a>)&gt;,
+    pub insert_pixbuf: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkTextBuffer.html" title="struct gtk_sys::GtkTextBuffer">GtkTextBuffer</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkTextIter.html" title="struct gtk_sys::GtkTextIter">GtkTextIter</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gdk_pixbuf_sys/struct.GdkPixbuf.html" title="struct gdk_pixbuf_sys::GdkPixbuf">GdkPixbuf</a>)&gt;,
+    pub insert_child_anchor: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkTextBuffer.html" title="struct gtk_sys::GtkTextBuffer">GtkTextBuffer</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkTextIter.html" title="struct gtk_sys::GtkTextIter">GtkTextIter</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkTextChildAnchor.html" title="struct gtk_sys::GtkTextChildAnchor">GtkTextChildAnchor</a>)&gt;,
+    pub delete_range: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkTextBuffer.html" title="struct gtk_sys::GtkTextBuffer">GtkTextBuffer</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkTextIter.html" title="struct gtk_sys::GtkTextIter">GtkTextIter</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkTextIter.html" title="struct gtk_sys::GtkTextIter">GtkTextIter</a>)&gt;,
+    pub changed: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkTextBuffer.html" title="struct gtk_sys::GtkTextBuffer">GtkTextBuffer</a>)&gt;,
+    pub modified_changed: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkTextBuffer.html" title="struct gtk_sys::GtkTextBuffer">GtkTextBuffer</a>)&gt;,
+    pub mark_set: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkTextBuffer.html" title="struct gtk_sys::GtkTextBuffer">GtkTextBuffer</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="struct" href="../gtk_sys/struct.GtkTextIter.html" title="struct gtk_sys::GtkTextIter">GtkTextIter</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkTextMark.html" title="struct gtk_sys::GtkTextMark">GtkTextMark</a>)&gt;,
+    pub mark_deleted: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkTextBuffer.html" title="struct gtk_sys::GtkTextBuffer">GtkTextBuffer</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkTextMark.html" title="struct gtk_sys::GtkTextMark">GtkTextMark</a>)&gt;,
+    pub apply_tag: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkTextBuffer.html" title="struct gtk_sys::GtkTextBuffer">GtkTextBuffer</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkTextTag.html" title="struct gtk_sys::GtkTextTag">GtkTextTag</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="struct" href="../gtk_sys/struct.GtkTextIter.html" title="struct gtk_sys::GtkTextIter">GtkTextIter</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="struct" href="../gtk_sys/struct.GtkTextIter.html" title="struct gtk_sys::GtkTextIter">GtkTextIter</a>)&gt;,
+    pub remove_tag: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkTextBuffer.html" title="struct gtk_sys::GtkTextBuffer">GtkTextBuffer</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkTextTag.html" title="struct gtk_sys::GtkTextTag">GtkTextTag</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="struct" href="../gtk_sys/struct.GtkTextIter.html" title="struct gtk_sys::GtkTextIter">GtkTextIter</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="struct" href="../gtk_sys/struct.GtkTextIter.html" title="struct gtk_sys::GtkTextIter">GtkTextIter</a>)&gt;,
+    pub begin_user_action: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkTextBuffer.html" title="struct gtk_sys::GtkTextBuffer">GtkTextBuffer</a>)&gt;,
+    pub end_user_action: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkTextBuffer.html" title="struct gtk_sys::GtkTextBuffer">GtkTextBuffer</a>)&gt;,
+    pub paste_done: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkTextBuffer.html" title="struct gtk_sys::GtkTextBuffer">GtkTextBuffer</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkClipboard.html" title="struct gtk_sys::GtkClipboard">GtkClipboard</a>)&gt;,
+    pub _gtk_reserved1: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn()&gt;,
+    pub _gtk_reserved2: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn()&gt;,
+    pub _gtk_reserved3: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn()&gt;,
+    pub _gtk_reserved4: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn()&gt;,
+}</pre><h2 id='fields' class='fields'>Fields</h2><span id='structfield.parent_class' class="structfield">
+                           <span id='parent_class.v' class='invisible'>
+                           <code>parent_class: <a class="struct" href="../gobject_sys/struct.GObjectClass.html" title="struct gobject_sys::GObjectClass">GObjectClass</a></code>
+                           </span></span><span id='structfield.insert_text' class="structfield">
+                           <span id='insert_text.v' class='invisible'>
+                           <code>insert_text: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkTextBuffer.html" title="struct gtk_sys::GtkTextBuffer">GtkTextBuffer</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkTextIter.html" title="struct gtk_sys::GtkTextIter">GtkTextIter</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="type" href="../libc/unix/notbsd/linux/other/b64/x86_64/type.c_char.html" title="type libc::unix::notbsd::linux::other::b64::x86_64::c_char">c_char</a>, _: <a class="type" href="../libc/type.c_int.html" title="type libc::c_int">c_int</a>)&gt;</code>
+                           </span></span><span id='structfield.insert_pixbuf' class="structfield">
+                           <span id='insert_pixbuf.v' class='invisible'>
+                           <code>insert_pixbuf: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkTextBuffer.html" title="struct gtk_sys::GtkTextBuffer">GtkTextBuffer</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkTextIter.html" title="struct gtk_sys::GtkTextIter">GtkTextIter</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gdk_pixbuf_sys/struct.GdkPixbuf.html" title="struct gdk_pixbuf_sys::GdkPixbuf">GdkPixbuf</a>)&gt;</code>
+                           </span></span><span id='structfield.insert_child_anchor' class="structfield">
+                           <span id='insert_child_anchor.v' class='invisible'>
+                           <code>insert_child_anchor: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkTextBuffer.html" title="struct gtk_sys::GtkTextBuffer">GtkTextBuffer</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkTextIter.html" title="struct gtk_sys::GtkTextIter">GtkTextIter</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkTextChildAnchor.html" title="struct gtk_sys::GtkTextChildAnchor">GtkTextChildAnchor</a>)&gt;</code>
+                           </span></span><span id='structfield.delete_range' class="structfield">
+                           <span id='delete_range.v' class='invisible'>
+                           <code>delete_range: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkTextBuffer.html" title="struct gtk_sys::GtkTextBuffer">GtkTextBuffer</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkTextIter.html" title="struct gtk_sys::GtkTextIter">GtkTextIter</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkTextIter.html" title="struct gtk_sys::GtkTextIter">GtkTextIter</a>)&gt;</code>
+                           </span></span><span id='structfield.changed' class="structfield">
+                           <span id='changed.v' class='invisible'>
+                           <code>changed: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkTextBuffer.html" title="struct gtk_sys::GtkTextBuffer">GtkTextBuffer</a>)&gt;</code>
+                           </span></span><span id='structfield.modified_changed' class="structfield">
+                           <span id='modified_changed.v' class='invisible'>
+                           <code>modified_changed: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkTextBuffer.html" title="struct gtk_sys::GtkTextBuffer">GtkTextBuffer</a>)&gt;</code>
+                           </span></span><span id='structfield.mark_set' class="structfield">
+                           <span id='mark_set.v' class='invisible'>
+                           <code>mark_set: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkTextBuffer.html" title="struct gtk_sys::GtkTextBuffer">GtkTextBuffer</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="struct" href="../gtk_sys/struct.GtkTextIter.html" title="struct gtk_sys::GtkTextIter">GtkTextIter</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkTextMark.html" title="struct gtk_sys::GtkTextMark">GtkTextMark</a>)&gt;</code>
+                           </span></span><span id='structfield.mark_deleted' class="structfield">
+                           <span id='mark_deleted.v' class='invisible'>
+                           <code>mark_deleted: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkTextBuffer.html" title="struct gtk_sys::GtkTextBuffer">GtkTextBuffer</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkTextMark.html" title="struct gtk_sys::GtkTextMark">GtkTextMark</a>)&gt;</code>
+                           </span></span><span id='structfield.apply_tag' class="structfield">
+                           <span id='apply_tag.v' class='invisible'>
+                           <code>apply_tag: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkTextBuffer.html" title="struct gtk_sys::GtkTextBuffer">GtkTextBuffer</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkTextTag.html" title="struct gtk_sys::GtkTextTag">GtkTextTag</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="struct" href="../gtk_sys/struct.GtkTextIter.html" title="struct gtk_sys::GtkTextIter">GtkTextIter</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="struct" href="../gtk_sys/struct.GtkTextIter.html" title="struct gtk_sys::GtkTextIter">GtkTextIter</a>)&gt;</code>
+                           </span></span><span id='structfield.remove_tag' class="structfield">
+                           <span id='remove_tag.v' class='invisible'>
+                           <code>remove_tag: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkTextBuffer.html" title="struct gtk_sys::GtkTextBuffer">GtkTextBuffer</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkTextTag.html" title="struct gtk_sys::GtkTextTag">GtkTextTag</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="struct" href="../gtk_sys/struct.GtkTextIter.html" title="struct gtk_sys::GtkTextIter">GtkTextIter</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="struct" href="../gtk_sys/struct.GtkTextIter.html" title="struct gtk_sys::GtkTextIter">GtkTextIter</a>)&gt;</code>
+                           </span></span><span id='structfield.begin_user_action' class="structfield">
+                           <span id='begin_user_action.v' class='invisible'>
+                           <code>begin_user_action: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkTextBuffer.html" title="struct gtk_sys::GtkTextBuffer">GtkTextBuffer</a>)&gt;</code>
+                           </span></span><span id='structfield.end_user_action' class="structfield">
+                           <span id='end_user_action.v' class='invisible'>
+                           <code>end_user_action: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkTextBuffer.html" title="struct gtk_sys::GtkTextBuffer">GtkTextBuffer</a>)&gt;</code>
+                           </span></span><span id='structfield.paste_done' class="structfield">
+                           <span id='paste_done.v' class='invisible'>
+                           <code>paste_done: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkTextBuffer.html" title="struct gtk_sys::GtkTextBuffer">GtkTextBuffer</a>, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*mut </a><a class="struct" href="../gtk_sys/struct.GtkClipboard.html" title="struct gtk_sys::GtkClipboard">GtkClipboard</a>)&gt;</code>
+                           </span></span><span id='structfield._gtk_reserved1' class="structfield">
+                           <span id='_gtk_reserved1.v' class='invisible'>
+                           <code>_gtk_reserved1: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn()&gt;</code>
+                           </span></span><span id='structfield._gtk_reserved2' class="structfield">
+                           <span id='_gtk_reserved2.v' class='invisible'>
+                           <code>_gtk_reserved2: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn()&gt;</code>
+                           </span></span><span id='structfield._gtk_reserved3' class="structfield">
+                           <span id='_gtk_reserved3.v' class='invisible'>
+                           <code>_gtk_reserved3: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn()&gt;</code>
+                           </span></span><span id='structfield._gtk_reserved4' class="structfield">
+                           <span id='_gtk_reserved4.v' class='invisible'>
+                           <code>_gtk_reserved4: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;unsafe extern &quot;C&quot; fn()&gt;</code>
+                           </span></span></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "gtk_sys";
+    </script>
+    <script src="../main.js"></script>
+    <script defer src="../search-index.js"></script>
+</body>
+</html>

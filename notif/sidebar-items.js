@@ -1,1 +1,0 @@
-initSidebarItems({"fn":[["init_notify","Initialize the notification subsystem."]],"struct":[["Notif","An expression of our notification system. Holds all the relevant information needed by Gtk+ callbacks to interact with libnotify."]]});
