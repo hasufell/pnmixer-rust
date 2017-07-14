@@ -1,3 +1,10 @@
+//! Alsa audio helper functions.
+//!
+//! This mod wraps around a few low-level alsa functions and abstracts
+//! out the details we don't care about. Mainly used by the
+//! [alsa_card mod](./alsa_card.html).
+
+
 use alsa::card::Card;
 use alsa::mixer::{Mixer, Selem, SelemId, Elem};
 use alsa;

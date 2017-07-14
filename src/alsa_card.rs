@@ -1,3 +1,10 @@
+//! Alsa audio subsystem.
+//!
+//! This mod mainly defines the `AlsaCard` struct, which is the only data
+//! structure interacting directly with the alsa library.
+//! No other struct should directly interact with the alsa bindings.
+
+
 use alsa::card::Card;
 use alsa::mixer::SelemChannelId::*;
 use alsa::mixer::{Mixer, Selem, SelemId};
