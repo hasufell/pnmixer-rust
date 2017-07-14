@@ -21,6 +21,8 @@ error_chain! {
 
 
 #[macro_export]
+/// Try to unwrap a `Result<T, E>`. If there is a value `T`, yield it,
+/// otherwise print a warning and `return ()` from the function.
 macro_rules! try_w {
     ($expr:expr) => {
         try_wr!($expr, ())
@@ -35,6 +37,8 @@ macro_rules! try_w {
 
 
 #[macro_export]
+/// Try to unwrap a `Result<T, E>`. If there is a value `T`, yield it,
+/// otherwise print a warning and return from the function with the given value.
 macro_rules! try_wr {
     ($expr:expr, $ret:expr) => (match $expr {
         ::std::result::Result::Ok(val) => val,
@@ -63,6 +67,8 @@ macro_rules! try_wr {
 
 
 #[macro_export]
+/// Try to unwrap a `Result<T, E>`. If there is a value `T`, yield it,
+/// otherwise return from the function with the given value.
 macro_rules! try_r {
     ($expr:expr, $ret:expr) => (match $expr {
         ::std::result::Result::Ok(val) => val,
@@ -75,6 +81,8 @@ macro_rules! try_r {
 
 
 #[macro_export]
+/// Try to unwrap a `Result<T, E>`. If there is a value `T`, yield it,
+/// otherwise print an error and exit the program.
 macro_rules! try_e {
     ($expr:expr) => {
         try_er!($expr, ())
