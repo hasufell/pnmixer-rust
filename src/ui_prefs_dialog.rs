@@ -11,7 +11,7 @@ use gtk::prelude::*;
 use gtk;
 use prefs::*;
 use std::rc::Rc;
-use support_alsa::*;
+use support_audio::*;
 
 
 
@@ -374,12 +374,12 @@ fn fill_card_combo(appstate: &AppS) {
     let m_cc = appstate.gui.prefs_dialog.borrow();
     let card_combo = &m_cc.as_ref().unwrap().card_combo;
     card_combo.remove_all();
-    let acard = appstate.audio.acard.borrow();
+    let audio = &appstate.audio;
 
     /* set card combo */
-    let cur_card_name = try_w!(acard.card_name(),
+    let cur_card_name = try_w!(audio.card_name(),
                                "Can't get current card name!");
-    let available_card_names = get_playable_alsa_card_names();
+    let available_card_names = get_playable_card_names();
 
     /* set_active_id doesn't work, so save the index */
     let mut c_index: i32 = -1;
@@ -402,16 +402,14 @@ fn fill_chan_combo(appstate: &AppS, cardname: Option<String>) {
     let chan_combo = &m_cc.as_ref().unwrap().chan_combo;
     chan_combo.remove_all();
 
-    let cur_acard = appstate.audio.acard.borrow();
-    let card = match cardname {
-        Some(name) => try_w!(get_alsa_card_by_name(name).from_err()),
-        None => cur_acard.as_ref().card,
+    let audio = &appstate.audio;
+    let available_chan_names = match cardname {
+        Some(name) => get_playable_chan_names(name),
+        None => audio.playable_chan_names(),
     };
 
     /* set chan combo */
-    let cur_chan_name = try_w!(cur_acard.chan_name());
-    let mixer = try_w!(get_mixer(&card));
-    let available_chan_names = get_playable_selem_names(&mixer);
+    let cur_chan_name = try_w!(audio.chan_name());
 
     /* set_active_id doesn't work, so save the index */
     let mut c_index: i32 = -1;

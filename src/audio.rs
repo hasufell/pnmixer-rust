@@ -371,6 +371,24 @@ impl Audio {
     pub fn connect_handler(&self, cb: Box<Fn(AudioSignal, AudioUser)>) {
         self.handlers.add_handler(cb);
     }
+
+
+    /// Get the current card name.
+    pub fn card_name(&self) -> Result<String> {
+        return self.acard.borrow().card_name();
+    }
+
+
+    /// Get the currently playable channel names.
+    pub fn playable_chan_names(&self) -> Vec<String> {
+        return get_playable_selem_names(&self.acard.borrow().mixer);
+    }
+
+
+    /// Get the current active channel name.
+    pub fn chan_name(&self) -> Result<String> {
+        return self.acard.borrow().chan_name();
+    }
 }
 
 
