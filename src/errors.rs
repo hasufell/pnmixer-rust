@@ -79,33 +79,18 @@ macro_rules! try_r {
 }
 
 
-
 #[macro_export]
 /// Try to unwrap a `Result<T, E>`. If there is a value `T`, yield it,
 /// otherwise print an error and exit the program.
 macro_rules! try_e {
-    ($expr:expr) => {
-        try_er!($expr, ())
-    };
-    ($expr:expr, $fmt:expr, $($arg:tt)+) => {
-        try_er!($expr, (), $fmt, $(arg)+)
-    };
-    ($expr:expr, $fmt:expr) => {
-        try_er!($expr, (), $fmt)
-    }
-}
-
-
-#[macro_export]
-macro_rules! try_er {
-    ($expr:expr, $ret:expr) => (match $expr {
+    ($expr:expr) => (match $expr {
         ::std::result::Result::Ok(val) => val,
         ::std::result::Result::Err(err) => {
             error!("{:?}", err);
             ::std::process::exit(1);
         },
     });
-    ($expr:expr, $ret:expr, $fmt:expr) => (match $expr {
+    ($expr:expr, $fmt:expr) => (match $expr {
         ::std::result::Result::Ok(val) => val,
         ::std::result::Result::Err(err) => {
             error!("Original error: {:?}", err);
@@ -113,7 +98,7 @@ macro_rules! try_er {
             std::process::exit(1);
         },
     });
-    ($expr:expr, $ret:expr, $fmt:expr, $($arg:tt)+) => (match $expr {
+    ($expr:expr, $fmt:expr, $($arg:tt)+) => (match $expr {
         ::std::result::Result::Ok(val) => val,
         ::std::result::Result::Err(err) => {
             error!("Original error: {:?}", err);
