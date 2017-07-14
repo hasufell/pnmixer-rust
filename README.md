@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/hasufell/pnmixer-rust.svg)](https://travis-ci.org/hasufell/pnmixer-rust)
 [![Join the chat at https://gitter.im/hasufell/pnmixer-rust](https://badges.gitter.im/hasufell/pnmixer-rust.svg)](https://gitter.im/hasufell/pnmixer-rust?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Documentation (master)](https://img.shields.io/badge/documentation-master-yellow.svg)](https://hasufell.github.io/pnmixer-rust/pnmixerlib/)
 [![License](https://img.shields.io/github/license/hasufell/pnmixer-rust.svg)](https://github.com/hasufell/pnmixer-rust)
 
 PNMixer-rs
