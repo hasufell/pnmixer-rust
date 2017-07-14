@@ -53,4 +53,4 @@ TODO
 
 - [ ] [hotkey support](https://github.com/hasufell/pnmixer-rust/issues/5)
 - [ ] [translation](https://github.com/hasufell/pnmixer-rust/issues/4)
-- [ ] [documentation](https://github.com/hasufell/pnmixer-rust/issues/3)
+- [X] [documentation](https://github.com/hasufell/pnmixer-rust/issues/3)
