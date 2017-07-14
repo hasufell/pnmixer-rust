@@ -51,7 +51,7 @@ pub fn pixbuf_new_from_theme(icon_name: &str,
 #[macro_export]
 /// Create a pixbuf from the given PNG file. Includes the file as bytes
 /// in the binary and decodes it.
-macro_rules! pixbuf_new_from_file {
+macro_rules! pixbuf_new_from_png {
     ($name:expr) => {
         {
             use gdk_pixbuf;
