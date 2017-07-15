@@ -48,8 +48,36 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/pnmixerlib/lib.rs.html#1-61' title='goto source code'>[src]</a></span></h1>
-<h2 id='reexports' class='section-header'><a href="#reexports">Reexports</a></h2>
+               </span><a class='srclink' href='../src/pnmixerlib/lib.rs.html#1-90' title='goto source code'>[src]</a></span></h1>
+<div class='docblock'><p>PNMixer-rs is a mixer for the system tray.</p>
+
+<h1 id='design-overview' class='section-header'><a href='#design-overview'>Design Overview</a></h1>
+<p>The lowest level part of the code is the sound backend. Only Alsa is supported
+at the moment, but more backends may be added in the future.</p>
+
+<p>The backend is hidden behind a frontend, defined in <code>audio.rs</code>. Only <code>audio.rs</code>
+deals with audio backends. This means that the whole of the code is blissfully
+ignorant of the audio backend in use.</p>
+
+<p><code>audio.rs</code> is also in charge of emitting signals whenever a change happens.
+This means that PNMixer-rs design is quite signal-oriented, so to say.</p>
+
+<p>The ui code is nothing fancy. Each ui element...</p>
+
+<ul>
+<li>is defined in a single file</li>
+<li>strives to be standalone</li>
+<li>accesses the sound system with function calls</li>
+<li>listens to signals from the audio subsystem to update its appearance</li>
+</ul>
+
+<p>There&#39;s something you should keep in mind. Audio on a computer is a shared
+resource. PNMixer-rs isn&#39;t the only one that can change it. At any moment the
+audio volume may be modified by someone else, and we must update the ui
+accordingly. So listening to changes from the audio subsystem (and therefore
+having a signal-oriented design) is the most obvious solution to solve that
+problem.</p>
+</div><h2 id='reexports' class='section-header'><a href="#reexports">Reexports</a></h2>
 <table><tr><td><code>pub extern crate <a class="mod" href="../flexi_logger/index.html" title="mod flexi_logger">flexi_logger</a>;</code></td></tr><tr><td><code>pub extern crate <a class="mod" href="../log/index.html" title="mod log">log</a>;</code></td></tr><tr><td><code>pub extern crate <a class="mod" href="../error_chain/index.html" title="mod error_chain">error_chain</a>;</code></td></tr><tr><td><code>pub extern crate <a class="mod" href="../serde_derive/index.html" title="mod serde_derive">serde_derive</a>;</code></td></tr><tr><td><code>pub extern crate <a class="mod" href="../toml/index.html" title="mod toml">toml</a>;</code></td></tr><tr><td><code>pub extern crate <a class="mod" href="../serde/index.html" title="mod serde">serde</a>;</code></td></tr><tr><td><code>pub extern crate <a class="mod" href="../alsa/index.html" title="mod alsa">alsa</a>;</code></td></tr><tr><td><code>pub extern crate <a class="mod" href="../alsa_sys/index.html" title="mod alsa_sys">alsa_sys</a>;</code></td></tr><tr><td><code>pub extern crate <a class="mod" href="../ffi/index.html" title="mod ffi">ffi</a>;</code></td></tr><tr><td><code>pub extern crate <a class="mod" href="../gdk/index.html" title="mod gdk">gdk</a>;</code></td></tr><tr><td><code>pub extern crate <a class="mod" href="../gdk_pixbuf/index.html" title="mod gdk_pixbuf">gdk_pixbuf</a>;</code></td></tr><tr><td><code>pub extern crate <a class="mod" href="../gdk_pixbuf_sys/index.html" title="mod gdk_pixbuf_sys">gdk_pixbuf_sys</a>;</code></td></tr><tr><td><code>pub extern crate <a class="mod" href="../gdk_sys/index.html" title="mod gdk_sys">gdk_sys</a>;</code></td></tr><tr><td><code>pub extern crate <a class="mod" href="../gio/index.html" title="mod gio">gio</a>;</code></td></tr><tr><td><code>pub extern crate <a class="mod" href="../glib/index.html" title="mod glib">glib</a>;</code></td></tr><tr><td><code>pub extern crate <a class="mod" href="../glib_sys/index.html" title="mod glib_sys">glib_sys</a>;</code></td></tr><tr><td><code>pub extern crate <a class="mod" href="../gobject_sys/index.html" title="mod gobject_sys">gobject_sys</a>;</code></td></tr><tr><td><code>pub extern crate <a class="mod" href="../gtk/index.html" title="mod gtk">gtk</a>;</code></td></tr><tr><td><code>pub extern crate <a class="mod" href="../gtk_sys/index.html" title="mod gtk_sys">gtk_sys</a>;</code></td></tr><tr><td><code>pub extern crate <a class="mod" href="../libc/index.html" title="mod libc">libc</a>;</code></td></tr><tr><td><code>pub extern crate <a class="mod" href="../png/index.html" title="mod png">png</a>;</code></td></tr><tr><td><code>pub extern crate <a class="mod" href="../which/index.html" title="mod which">which</a>;</code></td></tr><tr><td><code>pub extern crate <a class="mod" href="../xdg/index.html" title="mod xdg">xdg</a>;</code></td></tr></table><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
 <table>
                        <tr class=' module-item'>
@@ -178,35 +206,32 @@ in the binary and decodes it.</p>
                            <td><a class="macro" href="macro.try_e.html"
                                   title='macro pnmixerlib::try_e'>try_e</a></td>
                            <td class='docblock-short'>
-                                
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="macro" href="macro.try_er.html"
-                                  title='macro pnmixerlib::try_er'>try_er</a></td>
-                           <td class='docblock-short'>
-                                
+                                <p>Try to unwrap a <code>Result&lt;T, E&gt;</code>. If there is a value <code>T</code>, yield it,
+otherwise print an error and exit the program.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="macro" href="macro.try_r.html"
                                   title='macro pnmixerlib::try_r'>try_r</a></td>
                            <td class='docblock-short'>
-                                
+                                <p>Try to unwrap a <code>Result&lt;T, E&gt;</code>. If there is a value <code>T</code>, yield it,
+otherwise return from the function with the given value.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="macro" href="macro.try_w.html"
                                   title='macro pnmixerlib::try_w'>try_w</a></td>
                            <td class='docblock-short'>
-                                
+                                <p>Try to unwrap a <code>Result&lt;T, E&gt;</code>. If there is a value <code>T</code>, yield it,
+otherwise print a warning and <code>return ()</code> from the function.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="macro" href="macro.try_wr.html"
                                   title='macro pnmixerlib::try_wr'>try_wr</a></td>
                            <td class='docblock-short'>
-                                
+                                <p>Try to unwrap a <code>Result&lt;T, E&gt;</code>. If there is a value <code>T</code>, yield it,
+otherwise print a warning and return from the function with the given value.</p>
                            </td>
                        </tr></table></section>
     <section id='search' class="content hidden"></section>

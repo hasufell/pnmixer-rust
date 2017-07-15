@@ -104,7 +104,65 @@
 <span id="59">59</span>
 <span id="60">60</span>
 <span id="61">61</span>
+<span id="62">62</span>
+<span id="63">63</span>
+<span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
+<span id="70">70</span>
+<span id="71">71</span>
+<span id="72">72</span>
+<span id="73">73</span>
+<span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
+<span id="79">79</span>
+<span id="80">80</span>
+<span id="81">81</span>
+<span id="82">82</span>
+<span id="83">83</span>
+<span id="84">84</span>
+<span id="85">85</span>
+<span id="86">86</span>
+<span id="87">87</span>
+<span id="88">88</span>
+<span id="89">89</span>
+<span id="90">90</span>
 </pre><pre class="rust ">
+<span class="doccomment">//! PNMixer-rs is a mixer for the system tray.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! # Design Overview</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! The lowest level part of the code is the sound backend. Only Alsa is supported</span>
+<span class="doccomment">//! at the moment, but more backends may be added in the future.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! The backend is hidden behind a frontend, defined in `audio.rs`. Only `audio.rs`</span>
+<span class="doccomment">//! deals with audio backends. This means that the whole of the code is blissfully</span>
+<span class="doccomment">//! ignorant of the audio backend in use.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! `audio.rs` is also in charge of emitting signals whenever a change happens.</span>
+<span class="doccomment">//! This means that PNMixer-rs design is quite signal-oriented, so to say.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! The ui code is nothing fancy. Each ui element...</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! * is defined in a single file</span>
+<span class="doccomment">//! * strives to be standalone</span>
+<span class="doccomment">//! * accesses the sound system with function calls</span>
+<span class="doccomment">//! * listens to signals from the audio subsystem to update its appearance</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! There&#39;s something you should keep in mind. Audio on a computer is a shared</span>
+<span class="doccomment">//! resource. PNMixer-rs isn&#39;t the only one that can change it. At any moment the</span>
+<span class="doccomment">//! audio volume may be modified by someone else, and we must update the ui</span>
+<span class="doccomment">//! accordingly. So listening to changes from the audio subsystem (and therefore</span>
+<span class="doccomment">//! having a signal-oriented design) is the most obvious solution to solve that</span>
+<span class="doccomment">//! problem.</span>
+
+
 <span class="attribute">#<span class="op">!</span>[<span class="ident">warn</span>(<span class="ident">missing_docs</span>)]</span>
 
 <span class="attribute">#<span class="op">!</span>[<span class="ident">feature</span>(<span class="ident">alloc_system</span>)]</span>

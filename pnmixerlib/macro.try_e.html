@@ -48,14 +48,16 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/pnmixerlib/errors.rs.html#78-88' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../src/pnmixerlib/errors.rs.html#85-109' title='goto source code'>[src]</a></span></h1>
 <pre class="rust macro">
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">try_e</span> {
     (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">expr</span>:<span class="ident">expr</span>) <span class="op">=&gt;</span> { ... };
-    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">expr</span>:<span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">fmt</span>:<span class="ident">expr</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">arg</span>:<span class="ident">tt</span>)<span class="op">+</span>) <span class="op">=&gt;</span> { ... };
     (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">expr</span>:<span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">fmt</span>:<span class="ident">expr</span>) <span class="op">=&gt;</span> { ... };
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">expr</span>:<span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">fmt</span>:<span class="ident">expr</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">arg</span>:<span class="ident">tt</span>)<span class="op">+</span>) <span class="op">=&gt;</span> { ... };
 }</pre>
-</section>
+<div class='docblock'><p>Try to unwrap a <code>Result&lt;T, E&gt;</code>. If there is a value <code>T</code>, yield it,
+otherwise print an error and exit the program.</p>
+</div></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
