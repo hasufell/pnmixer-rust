@@ -250,14 +250,21 @@ impl Prefs {
     /// Store the current preferences to the config file.
     pub fn store_config(&self) -> Result<()> {
         let config_path = get_xdg_dirs().place_config_file("pnmixer.toml")
-            .from_err()?;
+            .chain_err(|| {
+                           format!("Could not create config directory at {:?}",
+                                   get_xdg_dirs().get_config_home())
+                       })?;
 
         debug!("Storing config in {:?}", config_path);
 
-        let mut f = File::create(config_path)
-            .chain_err(|| "Could not open/create config file for writing")?;
+        let mut f = File::create(config_path.clone())
+            .chain_err(|| format!("Could not open/create config file {:?} for writing",
+                       config_path))?;
         f.write_all(self.to_str().as_bytes())
-            .chain_err(|| "Could not write to config file")?;
+            .chain_err(|| {
+                           format!("Could not write to config file {:?}",
+                                   config_path)
+                       })?;
 
         return Ok(());
     }

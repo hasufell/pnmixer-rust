@@ -174,8 +174,8 @@ macro_rules! result_warn {
         ::std::result::Result::Ok(v) => Ok(v),
         ::std::result::Result::Err(err) => {
             use std::error::Error;
-            let warn_string = format!("{}\n\nCause: {}", err.description(),
-                err.cause().map(|e| e.description()).unwrap_or(""));
+            let warn_string = format!("{}{}", err.description(),
+                err.cause().map(|e| format!("\n\nCause: {}", e.description())).unwrap_or(String::from("")));
             warn!("{}", warn_string);
             error_dialog!(warn_string.as_str(), $parent);
             Err(err)
@@ -192,8 +192,8 @@ macro_rules! wresult_warn {
         ::w_result::WResult::WOk(t, ws) => {
             use std::error::Error;
             for w in ws {
-                let warn_string = format!("{}\n\nCause: {}", w.description(),
-                    w.cause().map(|e| e.description()).unwrap_or(""));
+                let warn_string = format!("{}{}", w.description(),
+                    w.cause().map(|e| format!("\n\nCause: {}", e.description())).unwrap_or(String::from("")));
                 warn!("{}", warn_string);
                 error_dialog!(warn_string.as_str(), $parent);
             }
@@ -223,8 +223,8 @@ macro_rules! unwrap_error {
         ::std::result::Result::Ok(v) => v,
         ::std::result::Result::Err(err) => {
             use std::error::Error;
-            let err_string = format!("{}\n\nCause: {}", err.description(),
-                err.cause().map(|e| e.description()).unwrap_or(""));
+            let err_string = format!("{}{}", err.description(),
+                err.cause().map(|e| format!("\n\nCause: {}", e.description())).unwrap_or(String::from("")));
 
             error!("{}", err_string);
             error_dialog!(err_string.as_str(), $parent);
