@@ -27,7 +27,7 @@ the cloned repository:
 cargo install
 ```
 
-Features
+Features/Differences
 --------
 
 Additonal features compared to [nicklan/pnmixer](https://github.com/nicklan/pnmixer):
@@ -40,11 +40,9 @@ Removed features:
 * normalize volume
 * slider orientation of volume popup
 * settings for displaying text volume on volume popup
+* gtk+:2 support
 
-Behavior
---------
-
-Pretty much the same. Differences are:
+Differences:
 
 * volume slider is shown even when volume is muted
 
