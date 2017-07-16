@@ -143,8 +143,6 @@
 <span id="98"> 98</span>
 <span id="99"> 99</span>
 <span id="100">100</span>
-<span id="101">101</span>
-<span id="102">102</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! PNMixer-rs is a mixer for the system tray.</span>
 <span class="doccomment">//!</span>
@@ -219,35 +217,33 @@
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">lazy_static</span>;
 
 <span class="attribute">#[<span class="ident">macro_use</span>]</span>
-<span class="kw">mod</span> <span class="ident">errors</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">errors</span>;
 
 <span class="attribute">#[<span class="ident">macro_use</span>]</span>
-<span class="kw">mod</span> <span class="ident">glade_helpers</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">glade_helpers</span>;
 
-<span class="kw">mod</span> <span class="ident">alsa_card</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">alsa_card</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">app_state</span>;
-<span class="kw">mod</span> <span class="ident">audio</span>;
-<span class="kw">mod</span> <span class="ident">gdk_x11</span>;
-<span class="kw">mod</span> <span class="ident">hotkey</span>;
-<span class="kw">mod</span> <span class="ident">hotkeys</span>;
-<span class="kw">mod</span> <span class="ident">prefs</span>;
-<span class="kw">mod</span> <span class="ident">support_alsa</span>;
-<span class="kw">mod</span> <span class="ident">support_audio</span>;
-<span class="kw">mod</span> <span class="ident">support_cmd</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">audio</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">gdk_x11</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">hotkey</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">hotkeys</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">prefs</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">support_alsa</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">support_audio</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">support_cmd</span>;
 <span class="attribute">#[<span class="ident">macro_use</span>]</span>
-<span class="kw">mod</span> <span class="ident">support_ui</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">support_ui</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">ui_entry</span>;
-<span class="kw">mod</span> <span class="ident">ui_hotkey_dialog</span>;
-<span class="kw">mod</span> <span class="ident">ui_popup_menu</span>;
-<span class="kw">mod</span> <span class="ident">ui_popup_window</span>;
-<span class="kw">mod</span> <span class="ident">ui_prefs_dialog</span>;
-<span class="kw">mod</span> <span class="ident">ui_tray_icon</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">ui_hotkey_dialog</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">ui_popup_menu</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">ui_popup_window</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">ui_prefs_dialog</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">ui_tray_icon</span>;
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;notify&quot;</span>)]</span>
-<span class="kw">mod</span> <span class="ident">notif</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">notif</span>;
 
-
-<span class="comment">// TODO: run_error_dialog an more occasions</span>
 </pre>
 </section>
     <section id='search' class="content hidden"></section>

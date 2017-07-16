@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `gdk_x11_window_foreign_new_for_display` fn in crate `pnmixerlib`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, gdk_x11_window_foreign_new_for_display">
+
+    <title>pnmixerlib::gdk_x11::gdk_x11_window_foreign_new_for_display - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc fn">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='../index.html'>pnmixerlib</a>::<wbr><a href='index.html'>gdk_x11</a></p><script>window.sidebarCurrent = {name: 'gdk_x11_window_foreign_new_for_display', ty: 'fn', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Function <a href='../index.html'>pnmixerlib</a>::<wbr><a href='index.html'>gdk_x11</a>::<wbr><a class="fn" href=''>gdk_x11_window_foreign_new_for_display</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../../src/pnmixerlib/gdk_x11.rs.html#67-77' title='goto source code'>[src]</a></span></h1>
+<pre class='rust fn'>pub fn gdk_x11_window_foreign_new_for_display(<br>&nbsp;&nbsp;&nbsp;&nbsp;gdk_display: &amp;mut <a class="struct" href="../../gdk/auto/display/struct.Display.html" title="struct gdk::auto::display::Display">Display</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;xwindow: <a class="type" href="../../x11/xlib/type.Window.html" title="type x11::xlib::Window">Window</a><br>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../../gdk/auto/window/struct.Window.html" title="struct gdk::auto::window::Window">Window</a>&gt;</pre><div class='docblock'><p>Wraps a native window in a GdkWindow. The function will try to look up the
+window using <code>gdk_x11_window_lookup_for_display()</code> first. If it does not find
+it there, it will create a new window.</p>
+
+<p>This may fail if the window has been destroyed. If the window was already
+known to GDK, a new reference to the existing GdkWindow is returned.</p>
+
+<h2 id='display' class='section-header'><a href='#display'><code>display</code></a></h2>
+<p>the GdkDisplay where the window handle comes from.</p>
+
+<h2 id='window' class='section-header'><a href='#window'><code>window</code></a></h2>
+<p>an Xlib Window</p>
+
+<h1 id='returns' class='section-header'><a href='#returns'>Returns</a></h1>
+<p>a GdkWindow wrapper for the native window, or <code>None</code> if the window has been
+destroyed. The wrapper will be newly created, if one doesn’t exist already.</p>
+</div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "pnmixerlib";
+    </script>
+    <script src="../../main.js"></script>
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>

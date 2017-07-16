@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `Audio` struct in crate `pnmixerlib`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, Audio">
+
+    <title>pnmixerlib::audio::Audio - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc struct">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'>Struct Audio</p><div class="block items"><ul><li><a href="#fields">Fields</a></li><li><a href="#methods">Methods</a></li></ul></div><p class='location'><a href='../index.html'>pnmixerlib</a>::<wbr><a href='index.html'>audio</a></p><script>window.sidebarCurrent = {name: 'Audio', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>pnmixerlib</a>::<wbr><a href='index.html'>audio</a>::<wbr><a class="struct" href=''>Audio</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../../src/pnmixerlib/audio.rs.html#86-99' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct Audio {
+    pub acard: <a class="struct" href="https://doc.rust-lang.org/nightly/core/cell/struct.RefCell.html" title="struct core::cell::RefCell">RefCell</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html" title="struct alloc::boxed::Box">Box</a>&lt;<a class="struct" href="../../pnmixerlib/alsa_card/struct.AlsaCard.html" title="struct pnmixerlib::alsa_card::AlsaCard">AlsaCard</a>&gt;&gt;,
+    pub last_action_timestamp: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/rc/struct.Rc.html" title="struct alloc::rc::Rc">Rc</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/core/cell/struct.RefCell.html" title="struct core::cell::RefCell">RefCell</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i64.html">i64</a>&gt;&gt;,
+    pub handlers: <a class="struct" href="../../pnmixerlib/audio/struct.Handlers.html" title="struct pnmixerlib::audio::Handlers">Handlers</a>,
+    pub scroll_step: <a class="struct" href="https://doc.rust-lang.org/nightly/core/cell/struct.Cell.html" title="struct core::cell::Cell">Cell</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>&gt;,
+    // some fields omitted
+}</pre><div class='docblock'><p>High-level Audio struct, which could theoretically be backend
+agnostic.</p>
+</div><h2 id='fields' class='fields'>Fields</h2><span id='structfield.acard' class="structfield">
+                           <span id='acard.v' class='invisible'>
+                           <code>acard: <a class="struct" href="https://doc.rust-lang.org/nightly/core/cell/struct.RefCell.html" title="struct core::cell::RefCell">RefCell</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html" title="struct alloc::boxed::Box">Box</a>&lt;<a class="struct" href="../../pnmixerlib/alsa_card/struct.AlsaCard.html" title="struct pnmixerlib::alsa_card::AlsaCard">AlsaCard</a>&gt;&gt;</code>
+                           </span></span><div class='docblock'><p>The alsa card.</p>
+</div><span id='structfield.last_action_timestamp' class="structfield">
+                           <span id='last_action_timestamp.v' class='invisible'>
+                           <code>last_action_timestamp: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/rc/struct.Rc.html" title="struct alloc::rc::Rc">Rc</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/core/cell/struct.RefCell.html" title="struct core::cell::RefCell">RefCell</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i64.html">i64</a>&gt;&gt;</code>
+                           </span></span><div class='docblock'><p>Last timestamp of an internal action we triggered, e.g.
+by setting the volume or the mute state.</p>
+</div><span id='structfield.handlers' class="structfield">
+                           <span id='handlers.v' class='invisible'>
+                           <code>handlers: <a class="struct" href="../../pnmixerlib/audio/struct.Handlers.html" title="struct pnmixerlib::audio::Handlers">Handlers</a></code>
+                           </span></span><div class='docblock'><p>A set of handlers that react to audio signals. We can
+connect to these.</p>
+</div><span id='structfield.scroll_step' class="structfield">
+                           <span id='scroll_step.v' class='invisible'>
+                           <code>scroll_step: <a class="struct" href="https://doc.rust-lang.org/nightly/core/cell/struct.Cell.html" title="struct core::cell::Cell">Cell</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>&gt;</code>
+                           </span></span><div class='docblock'><p>The step at which to increase/decrease the volume.
+This value is basically from the preferences.</p>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class="struct" href="../../pnmixerlib/audio/struct.Audio.html" title="struct pnmixerlib::audio::Audio">Audio</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/pnmixerlib/audio.rs.html#102-390' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>(card_name: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;, elem_name: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;) -&gt; <a class="type" href="../../pnmixerlib/errors/type.Result.html" title="type pnmixerlib::errors::Result">Result</a>&lt;<a class="struct" href="../../pnmixerlib/audio/struct.Audio.html" title="struct pnmixerlib::audio::Audio">Audio</a>&gt;</code></span></h4>
+<div class='docblock'><p>Create a new Audio instance. This tries very hard to get
+a working configuration from the backend.</p>
+
+<h2 id='card_name' class='section-header'><a href='#card_name'><code>card_name</code></a></h2>
+<p>If a card name is provided, it will be tried. If <code>None</code> is provided
+or the given card name does not exist or is not playable, any other
+playable card is tried.</p>
+
+<h2 id='elem_name' class='section-header'><a href='#elem_name'><code>elem_name</code></a></h2>
+<p>If an elem name is provided, it will be tried. If <code>None</code> is provided
+or the given elem name does not exist or is not playable, any other
+playable elem is tried.</p>
+
+<h1 id='returns' class='section-header'><a href='#returns'>Returns</a></h1>
+<p><code>Ok(Audio)</code> on success, <code>Err(error)</code> otherwise.</p>
+</div><h4 id='method.switch_acard' class="method"><span id='switch_acard.v' class='invisible'><code>fn <a href='#method.switch_acard' class='fnname'>switch_acard</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;card_name: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;, <br>&nbsp;&nbsp;&nbsp;&nbsp;elem_name: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;, <br>&nbsp;&nbsp;&nbsp;&nbsp;user: <a class="enum" href="../../pnmixerlib/audio/enum.AudioUser.html" title="enum pnmixerlib::audio::AudioUser">AudioUser</a><br>) -&gt; <a class="type" href="../../pnmixerlib/errors/type.Result.html" title="type pnmixerlib::errors::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;</code></span></h4>
+<div class='docblock'><p>Switches the current alsa card. Behaves the same way in regards to
+<code>card_name</code> and <code>elem_name</code> as the <code>Audio::new()</code> method.</p>
+
+<h2 id='user' class='section-header'><a href='#user'><code>user</code></a></h2>
+<p>Where the card switch originates from.</p>
+</div><h4 id='method.vol' class="method"><span id='vol.v' class='invisible'><code>fn <a href='#method.vol' class='fnname'>vol</a>(&amp;self) -&gt; <a class="type" href="../../pnmixerlib/errors/type.Result.html" title="type pnmixerlib::errors::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>&gt;</code></span></h4>
+<div class='docblock'><p>Current volume.</p>
+</div><h4 id='method.vol_level' class="method"><span id='vol_level.v' class='invisible'><code>fn <a href='#method.vol_level' class='fnname'>vol_level</a>(&amp;self) -&gt; <a class="enum" href="../../pnmixerlib/audio/enum.VolLevel.html" title="enum pnmixerlib::audio::VolLevel">VolLevel</a></code></span></h4>
+<div class='docblock'><p>Current volume level, nicely usable for e.g. selecting from a set
+of images.</p>
+</div><h4 id='method.set_vol' class="method"><span id='set_vol.v' class='invisible'><code>fn <a href='#method.set_vol' class='fnname'>set_vol</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;new_vol: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;user: <a class="enum" href="../../pnmixerlib/audio/enum.AudioUser.html" title="enum pnmixerlib::audio::AudioUser">AudioUser</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;dir: <a class="enum" href="../../pnmixerlib/support_audio/enum.VolDir.html" title="enum pnmixerlib::support_audio::VolDir">VolDir</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;auto_unmute: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a><br>) -&gt; <a class="type" href="../../pnmixerlib/errors/type.Result.html" title="type pnmixerlib::errors::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;</code></span></h4>
+<div class='docblock'><p>Set the current volume.</p>
+
+<h2 id='new_vol' class='section-header'><a href='#new_vol'><code>new_vol</code></a></h2>
+<p>Set the volume to this value.</p>
+
+<h2 id='user-1' class='section-header'><a href='#user-1'><code>user</code></a></h2>
+<p>Where the card switch originates from.</p>
+
+<h2 id='dir' class='section-header'><a href='#dir'><code>dir</code></a></h2>
+<p>The &quot;direction&quot; of the volume change, e.g. is it a decrease
+or increase. This helps with rounding problems.</p>
+
+<h2 id='auto_unmute' class='section-header'><a href='#auto_unmute'><code>auto_unmute</code></a></h2>
+<p>Whether to automatically unmute if the volume changes.</p>
+</div><h4 id='method.increase_vol' class="method"><span id='increase_vol.v' class='invisible'><code>fn <a href='#method.increase_vol' class='fnname'>increase_vol</a>(&amp;self, user: <a class="enum" href="../../pnmixerlib/audio/enum.AudioUser.html" title="enum pnmixerlib::audio::AudioUser">AudioUser</a>, auto_unmute: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>) -&gt; <a class="type" href="../../pnmixerlib/errors/type.Result.html" title="type pnmixerlib::errors::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;</code></span></h4>
+<div class='docblock'><p>Increase the volume. The step to increasy by is taken from
+<code>self.scroll_step</code>.</p>
+
+<h2 id='user-2' class='section-header'><a href='#user-2'><code>user</code></a></h2>
+<p>Where the card switch originates from.</p>
+</div><h4 id='method.decrease_vol' class="method"><span id='decrease_vol.v' class='invisible'><code>fn <a href='#method.decrease_vol' class='fnname'>decrease_vol</a>(&amp;self, user: <a class="enum" href="../../pnmixerlib/audio/enum.AudioUser.html" title="enum pnmixerlib::audio::AudioUser">AudioUser</a>, auto_unmute: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>) -&gt; <a class="type" href="../../pnmixerlib/errors/type.Result.html" title="type pnmixerlib::errors::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;</code></span></h4>
+<div class='docblock'><p>Decrease the volume. The step to decrease by is taken from
+<code>self.scroll_step</code>.</p>
+
+<h2 id='user-3' class='section-header'><a href='#user-3'><code>user</code></a></h2>
+<p>Where the card switch originates from.</p>
+</div><h4 id='method.has_mute' class="method"><span id='has_mute.v' class='invisible'><code>fn <a href='#method.has_mute' class='fnname'>has_mute</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h4>
+<div class='docblock'><p>Whether the current audio configuration can be muted.</p>
+</div><h4 id='method.get_mute' class="method"><span id='get_mute.v' class='invisible'><code>fn <a href='#method.get_mute' class='fnname'>get_mute</a>(&amp;self) -&gt; <a class="type" href="../../pnmixerlib/errors/type.Result.html" title="type pnmixerlib::errors::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>&gt;</code></span></h4>
+<div class='docblock'><p>Get the mute state of the current audio configuration.</p>
+</div><h4 id='method.set_mute' class="method"><span id='set_mute.v' class='invisible'><code>fn <a href='#method.set_mute' class='fnname'>set_mute</a>(&amp;self, mute: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>, user: <a class="enum" href="../../pnmixerlib/audio/enum.AudioUser.html" title="enum pnmixerlib::audio::AudioUser">AudioUser</a>) -&gt; <a class="type" href="../../pnmixerlib/errors/type.Result.html" title="type pnmixerlib::errors::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;</code></span></h4>
+<div class='docblock'><p>Set the mute state of the current audio configuration.</p>
+</div><h4 id='method.toggle_mute' class="method"><span id='toggle_mute.v' class='invisible'><code>fn <a href='#method.toggle_mute' class='fnname'>toggle_mute</a>(&amp;self, user: <a class="enum" href="../../pnmixerlib/audio/enum.AudioUser.html" title="enum pnmixerlib::audio::AudioUser">AudioUser</a>) -&gt; <a class="type" href="../../pnmixerlib/errors/type.Result.html" title="type pnmixerlib::errors::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;</code></span></h4>
+<div class='docblock'><p>Toggle the mute state of the current audio configuration.</p>
+</div><h4 id='method.connect_handler' class="method"><span id='connect_handler.v' class='invisible'><code>fn <a href='#method.connect_handler' class='fnname'>connect_handler</a>(&amp;self, cb: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html" title="struct alloc::boxed::Box">Box</a>&lt;<a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/function/trait.Fn.html" title="trait core::ops::function::Fn">Fn</a>(<a class="enum" href="../../pnmixerlib/audio/enum.AudioSignal.html" title="enum pnmixerlib::audio::AudioSignal">AudioSignal</a>, <a class="enum" href="../../pnmixerlib/audio/enum.AudioUser.html" title="enum pnmixerlib::audio::AudioUser">AudioUser</a>)&gt;)</code></span></h4>
+<div class='docblock'><p>Connect a signal handler to the audio subsystem. This can
+be done from anywhere, e.g. in the UI code to react to
+certain signals. Multiple handlers for the same signals are fine,
+they will be executed in order.</p>
+</div><h4 id='method.card_name' class="method"><span id='card_name.v' class='invisible'><code>fn <a href='#method.card_name' class='fnname'>card_name</a>(&amp;self) -&gt; <a class="type" href="../../pnmixerlib/errors/type.Result.html" title="type pnmixerlib::errors::Result">Result</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;</code></span></h4>
+<div class='docblock'><p>Get the current card name.</p>
+</div><h4 id='method.playable_chan_names' class="method"><span id='playable_chan_names.v' class='invisible'><code>fn <a href='#method.playable_chan_names' class='fnname'>playable_chan_names</a>(&amp;self) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;</code></span></h4>
+<div class='docblock'><p>Get the currently playable channel names.</p>
+</div><h4 id='method.chan_name' class="method"><span id='chan_name.v' class='invisible'><code>fn <a href='#method.chan_name' class='fnname'>chan_name</a>(&amp;self) -&gt; <a class="type" href="../../pnmixerlib/errors/type.Result.html" title="type pnmixerlib::errors::Result">Result</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;</code></span></h4>
+<div class='docblock'><p>Get the current active channel name.</p>
+</div></div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "pnmixerlib";
+    </script>
+    <script src="../../main.js"></script>
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>

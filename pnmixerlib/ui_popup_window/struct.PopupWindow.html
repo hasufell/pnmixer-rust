@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `PopupWindow` struct in crate `pnmixerlib`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, PopupWindow">
+
+    <title>pnmixerlib::ui_popup_window::PopupWindow - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc struct">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'>Struct PopupWindow</p><div class="block items"><ul><li><a href="#fields">Fields</a></li><li><a href="#methods">Methods</a></li></ul></div><p class='location'><a href='../index.html'>pnmixerlib</a>::<wbr><a href='index.html'>ui_popup_window</a></p><script>window.sidebarCurrent = {name: 'PopupWindow', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>pnmixerlib</a>::<wbr><a href='index.html'>ui_popup_window</a>::<wbr><a class="struct" href=''>PopupWindow</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../../src/pnmixerlib/ui_popup_window.rs.html#28-46' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct PopupWindow {
+    pub popup_window: <a class="struct" href="../../gtk/auto/window/struct.Window.html" title="struct gtk::auto::window::Window">Window</a>,
+    pub vol_scale_adj: <a class="struct" href="../../gtk/auto/adjustment/struct.Adjustment.html" title="struct gtk::auto::adjustment::Adjustment">Adjustment</a>,
+    pub vol_scale: <a class="struct" href="../../gtk/auto/scale/struct.Scale.html" title="struct gtk::auto::scale::Scale">Scale</a>,
+    pub mute_check: <a class="struct" href="../../gtk/auto/check_button/struct.CheckButton.html" title="struct gtk::auto::check_button::CheckButton">CheckButton</a>,
+    pub mixer_button: <a class="struct" href="../../gtk/auto/button/struct.Button.html" title="struct gtk::auto::button::Button">Button</a>,
+    // some fields omitted
+}</pre><div class='docblock'><p>The main struct for the popup window, holding all relevant sub-widgets
+and some mutable state.</p>
+</div><h2 id='fields' class='fields'>Fields</h2><span id='structfield.popup_window' class="structfield">
+                           <span id='popup_window.v' class='invisible'>
+                           <code>popup_window: <a class="struct" href="../../gtk/auto/window/struct.Window.html" title="struct gtk::auto::window::Window">Window</a></code>
+                           </span></span><div class='docblock'><p>The main window for the popup window widget.</p>
+</div><span id='structfield.vol_scale_adj' class="structfield">
+                           <span id='vol_scale_adj.v' class='invisible'>
+                           <code>vol_scale_adj: <a class="struct" href="../../gtk/auto/adjustment/struct.Adjustment.html" title="struct gtk::auto::adjustment::Adjustment">Adjustment</a></code>
+                           </span></span><div class='docblock'><p>The volume scale adjustment.</p>
+</div><span id='structfield.vol_scale' class="structfield">
+                           <span id='vol_scale.v' class='invisible'>
+                           <code>vol_scale: <a class="struct" href="../../gtk/auto/scale/struct.Scale.html" title="struct gtk::auto::scale::Scale">Scale</a></code>
+                           </span></span><div class='docblock'><p>The volume scale.</p>
+</div><span id='structfield.mute_check' class="structfield">
+                           <span id='mute_check.v' class='invisible'>
+                           <code>mute_check: <a class="struct" href="../../gtk/auto/check_button/struct.CheckButton.html" title="struct gtk::auto::check_button::CheckButton">CheckButton</a></code>
+                           </span></span><div class='docblock'><p>The mute check button.</p>
+</div><span id='structfield.mixer_button' class="structfield">
+                           <span id='mixer_button.v' class='invisible'>
+                           <code>mixer_button: <a class="struct" href="../../gtk/auto/button/struct.Button.html" title="struct gtk::auto::button::Button">Button</a></code>
+                           </span></span><div class='docblock'><p>The button to start the external mixer.</p>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class="struct" href="../../pnmixerlib/ui_popup_window/struct.PopupWindow.html" title="struct pnmixerlib::ui_popup_window::PopupWindow">PopupWindow</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/pnmixerlib/ui_popup_window.rs.html#48-108' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>(builder: <a class="struct" href="../../gtk/builder/struct.Builder.html" title="struct gtk::builder::Builder">Builder</a>) -&gt; <a class="struct" href="../../pnmixerlib/ui_popup_window/struct.PopupWindow.html" title="struct pnmixerlib::ui_popup_window::PopupWindow">PopupWindow</a></code></span></h4>
+<div class='docblock'><p>Constructor.</p>
+</div><h4 id='method.update' class="method"><span id='update.v' class='invisible'><code>fn <a href='#method.update' class='fnname'>update</a>(&amp;self, audio: &amp;<a class="struct" href="../../pnmixerlib/audio/struct.Audio.html" title="struct pnmixerlib::audio::Audio">Audio</a>) -&gt; <a class="type" href="../../pnmixerlib/errors/type.Result.html" title="type pnmixerlib::errors::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;</code></span></h4>
+<div class='docblock'><p>Update the popup window state, including the slider
+and the mute checkbutton.</p>
+</div><h4 id='method.update_mute_check' class="method"><span id='update_mute_check.v' class='invisible'><code>fn <a href='#method.update_mute_check' class='fnname'>update_mute_check</a>(&amp;self, audio: &amp;<a class="struct" href="../../pnmixerlib/audio/struct.Audio.html" title="struct pnmixerlib::audio::Audio">Audio</a>)</code></span></h4>
+<div class='docblock'><p>Update the mute checkbutton.</p>
+</div></div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "pnmixerlib";
+    </script>
+    <script src="../../main.js"></script>
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>

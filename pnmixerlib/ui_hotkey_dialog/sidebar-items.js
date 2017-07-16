@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["HotkeyDialog","Hotkey dialog struct holding the relevant gtk widgets."]]});

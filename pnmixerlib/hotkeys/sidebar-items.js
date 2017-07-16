@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Hotkeys","The possible Hotkeys for manipulating the volume."]]});

@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["hotkey_accel_to_code","Translate a Gtk Accelerator string to a key code and mods."]],"struct":[["Hotkey","A hotkey, described by the underlying gdk/X11 representation."]]});
