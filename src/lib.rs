@@ -71,32 +71,30 @@ pub extern crate libnotify;
 extern crate lazy_static;
 
 #[macro_use]
-mod errors;
+pub mod errors;
 
 #[macro_use]
-mod glade_helpers;
+pub mod glade_helpers;
 
-mod alsa_card;
+pub mod alsa_card;
 pub mod app_state;
-mod audio;
-mod gdk_x11;
-mod hotkey;
-mod hotkeys;
-mod prefs;
-mod support_alsa;
-mod support_audio;
-mod support_cmd;
+pub mod audio;
+pub mod gdk_x11;
+pub mod hotkey;
+pub mod hotkeys;
+pub mod prefs;
+pub mod support_alsa;
+pub mod support_audio;
+pub mod support_cmd;
 #[macro_use]
-mod support_ui;
+pub mod support_ui;
 pub mod ui_entry;
-mod ui_hotkey_dialog;
-mod ui_popup_menu;
-mod ui_popup_window;
-mod ui_prefs_dialog;
-mod ui_tray_icon;
+pub mod ui_hotkey_dialog;
+pub mod ui_popup_menu;
+pub mod ui_popup_window;
+pub mod ui_prefs_dialog;
+pub mod ui_tray_icon;
 
 #[cfg(feature = "notify")]
-mod notif;
+pub mod notif;
 
-
-// TODO: run_error_dialog an more occasions
