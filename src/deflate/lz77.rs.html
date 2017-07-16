@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/hasufell/.cargo/registry/src/github.com-1ecc6299db9ec823/deflate-0.7.13/src/lz77.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/jule/.cargo/registry/src/github.com-1ecc6299db9ec823/deflate-0.7.14/src/lz77.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>lz77.rs.html -- source</title>
@@ -1342,6 +1342,12 @@
 <span id="1297">1297</span>
 <span id="1298">1298</span>
 <span id="1299">1299</span>
+<span id="1300">1300</span>
+<span id="1301">1301</span>
+<span id="1302">1302</span>
+<span id="1303">1303</span>
+<span id="1304">1304</span>
+<span id="1305">1305</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! This module contains functionality for doing lz77 compression of data.</span>
 <span class="attribute">#<span class="op">!</span>[<span class="ident">macro_use</span>]</span>
@@ -1359,7 +1365,7 @@
 <span class="kw">use</span> <span class="ident">chained_hash_table</span>::<span class="ident">ChainedHashTable</span>;
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">use</span> <span class="ident">compression_options</span>::{<span class="ident">HIGH_MAX_HASH_CHECKS</span>, <span class="ident">HIGH_LAZY_IF_LESS_THAN</span>};
-<span class="kw">use</span> <span class="ident">output_writer</span>::{<span class="ident">OutputWriter</span>, <span class="ident">BufferStatus</span>, <span class="ident">DynamicWriter</span>};
+<span class="kw">use</span> <span class="ident">output_writer</span>::{<span class="ident">BufferStatus</span>, <span class="ident">DynamicWriter</span>};
 <span class="kw">use</span> <span class="ident">compress</span>::<span class="ident">Flush</span>;
 <span class="kw">use</span> <span class="ident">rle</span>::<span class="ident">process_chunk_greedy_rle</span>;
 
@@ -1480,7 +1486,11 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">pending_byte_as_num</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
         <span class="comment">// This could be implemented by using `as usize` as the documentation states this would give</span>
         <span class="comment">// the same result, but not sure if that should be relied upon.</span>
-        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">match_state</span>.<span class="ident">add</span> { <span class="number">1</span> } <span class="kw">else</span> { <span class="number">0</span> }
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">match_state</span>.<span class="ident">add</span> {
+            <span class="number">1</span>
+        } <span class="kw">else</span> {
+            <span class="number">0</span>
+        }
     }
 }
 
@@ -1619,7 +1629,11 @@
 <span class="kw">fn</span> <span class="ident">create_iterators</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(
     <span class="ident">data</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>],
     <span class="ident">iterated_data</span>: <span class="kw-2">&amp;</span><span class="ident">Range</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>,
-) <span class="op">-&gt;</span> (<span class="ident">usize</span>, <span class="ident">iter</span>::<span class="ident">Zip</span><span class="op">&lt;</span><span class="ident">RangeFrom</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>, <span class="ident">Iter</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">u8</span><span class="op">&gt;&gt;</span>, <span class="ident">Iter</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">u8</span><span class="op">&gt;</span>) {
+) <span class="op">-&gt;</span> (
+    <span class="ident">usize</span>,
+    <span class="ident">iter</span>::<span class="ident">Zip</span><span class="op">&lt;</span><span class="ident">RangeFrom</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>, <span class="ident">Iter</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">u8</span><span class="op">&gt;&gt;</span>,
+    <span class="ident">Iter</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">u8</span><span class="op">&gt;</span>,
+) {
     <span class="kw">let</span> <span class="ident">end</span> <span class="op">=</span> <span class="ident">cmp</span>::<span class="ident">min</span>(<span class="ident">data</span>.<span class="ident">len</span>(), <span class="ident">iterated_data</span>.<span class="ident">end</span>);
     <span class="kw">let</span> <span class="ident">start</span> <span class="op">=</span> <span class="ident">iterated_data</span>.<span class="ident">start</span>;
     <span class="kw">let</span> <span class="ident">current_chunk</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">data</span>[<span class="ident">start</span>..<span class="ident">end</span>];
@@ -1636,12 +1650,12 @@
     (<span class="ident">end</span>, <span class="ident">insert_it</span>, <span class="ident">hash_it</span>)
 }
 
-<span class="kw">fn</span> <span class="ident">process_chunk_lazy</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">OutputWriter</span><span class="op">&gt;</span>(
+<span class="kw">fn</span> <span class="ident">process_chunk_lazy</span>(
     <span class="ident">data</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
     <span class="ident">iterated_data</span>: <span class="kw-2">&amp;</span><span class="ident">Range</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>,
     <span class="ident">state</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ChunkState</span>,
     <span class="kw-2">mut</span> <span class="ident">hash_table</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ChainedHashTable</span>,
-    <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">W</span>,
+    <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">DynamicWriter</span>,
     <span class="ident">max_hash_checks</span>: <span class="ident">u16</span>,
     <span class="ident">lazy_if_less_than</span>: <span class="ident">usize</span>,
 ) <span class="op">-&gt;</span> (<span class="ident">usize</span>, <span class="ident">ProcessStatus</span>) {
@@ -1819,11 +1833,11 @@
     (<span class="ident">overlap</span>, <span class="ident">ProcessStatus</span>::<span class="prelude-val">Ok</span>)
 }
 
-<span class="kw">fn</span> <span class="ident">process_chunk_greedy</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">OutputWriter</span><span class="op">&gt;</span>(
+<span class="kw">fn</span> <span class="ident">process_chunk_greedy</span>(
     <span class="ident">data</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
     <span class="ident">iterated_data</span>: <span class="kw-2">&amp;</span><span class="ident">Range</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>,
     <span class="kw-2">mut</span> <span class="ident">hash_table</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ChainedHashTable</span>,
-    <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">W</span>,
+    <span class="ident">writer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">DynamicWriter</span>,
     <span class="ident">max_hash_checks</span>: <span class="ident">u16</span>,
 ) <span class="op">-&gt;</span> (<span class="ident">usize</span>, <span class="ident">ProcessStatus</span>) {
 
@@ -1841,9 +1855,8 @@
             <span class="ident">hash_table</span>.<span class="ident">add_hash_value</span>(<span class="ident">position</span>, <span class="ident">hash_byte</span>);
 
             <span class="comment">// TODO: This should be cleaned up a bit.</span>
-            <span class="kw">let</span> (<span class="ident">match_len</span>, <span class="ident">match_dist</span>) <span class="op">=</span> {
-                <span class="ident">longest_match</span>(<span class="ident">data</span>, <span class="ident">hash_table</span>, <span class="ident">position</span>, <span class="ident">NO_LENGTH</span>, <span class="ident">max_hash_checks</span>)
-            };
+            <span class="kw">let</span> (<span class="ident">match_len</span>, <span class="ident">match_dist</span>) <span class="op">=</span>
+                { <span class="ident">longest_match</span>(<span class="ident">data</span>, <span class="ident">hash_table</span>, <span class="ident">position</span>, <span class="ident">NO_LENGTH</span>, <span class="ident">max_hash_checks</span>) };
 
             <span class="kw">if</span> <span class="ident">match_len</span> <span class="op">&gt;=</span> <span class="ident">MIN_MATCH</span> <span class="kw">as</span> <span class="ident">usize</span> <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="ident">match_too_far</span>(<span class="ident">match_len</span>, <span class="ident">match_dist</span>) {
                 <span class="comment">// Casting note: length and distance is already bounded by the longest match</span>
@@ -2184,7 +2197,7 @@
                     <span class="macro">assert</span><span class="macro">!</span>(
                         <span class="ident">into_back_buffer</span> <span class="op">&lt;=</span> <span class="ident">back_buffer</span>.<span class="ident">len</span>(),
                         <span class="string">&quot;ERROR: Attempted to refer to a match in non-existing data!\
-                            into_back_buffer: {}, back_buffer len {}, d {}, l {:?}&quot;</span>,
+                         into_back_buffer: {}, back_buffer len {}, d {}, l {:?}&quot;</span>,
                         <span class="ident">into_back_buffer</span>,
                         <span class="ident">back_buffer</span>.<span class="ident">len</span>(),
                         <span class="ident">d</span>,
@@ -2293,7 +2306,7 @@
             ).<span class="number">0</span>;
             <span class="ident">slice</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">slice</span>[<span class="ident">bytes_written</span>..];
             <span class="ident">out</span>.<span class="ident">extend</span>(<span class="ident">test</span>.<span class="ident">writer</span>.<span class="ident">get_buffer</span>());
-            <span class="ident">test</span>.<span class="ident">writer</span>.<span class="ident">clear_buffer</span>();
+            <span class="ident">test</span>.<span class="ident">writer</span>.<span class="ident">clear</span>();
         }
 
     }
@@ -2446,7 +2459,7 @@
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">compress_block_multiple_windows</span>() {
         <span class="kw">use</span> <span class="ident">input_buffer</span>::<span class="ident">InputBuffer</span>;
-        <span class="kw">use</span> <span class="ident">output_writer</span>::{<span class="ident">OutputWriter</span>, <span class="ident">DynamicWriter</span>};
+        <span class="kw">use</span> <span class="ident">output_writer</span>::<span class="ident">DynamicWriter</span>;
 
         <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="ident">get_test_data</span>();
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">data</span>.<span class="ident">len</span>() <span class="op">&gt;</span> (<span class="ident">WINDOW_SIZE</span> <span class="op">*</span> <span class="number">2</span>) <span class="op">+</span> <span class="kw">super</span>::<span class="ident">MAX_MATCH</span>);
@@ -2464,7 +2477,7 @@
         <span class="kw">let</span> <span class="ident">buf_len</span> <span class="op">=</span> <span class="ident">buffer</span>.<span class="ident">get_buffer</span>().<span class="ident">len</span>();
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">buffer</span>.<span class="ident">get_buffer</span>()[..] <span class="op">==</span> <span class="ident">data</span>[..<span class="ident">buf_len</span>]);
 
-        <span class="ident">writer</span>.<span class="ident">clear_buffer</span>();
+        <span class="ident">writer</span>.<span class="ident">clear</span>();
         <span class="kw">let</span> (_, <span class="ident">status</span>) <span class="op">=</span> <span class="ident">lz77_compress_block_finish</span>(
             <span class="kw-2">&amp;</span><span class="ident">data</span>[<span class="ident">bytes_consumed</span>..],
             <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">state</span>,
@@ -2477,7 +2490,6 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">multiple_inputs</span>() {
-        <span class="kw">use</span> <span class="ident">output_writer</span>::<span class="ident">OutputWriter</span>;
         <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="string">b&quot;Badger badger bababa test data 25 asfgestghresjkgh&quot;</span>;
         <span class="kw">let</span> <span class="ident">comp1</span> <span class="op">=</span> <span class="ident">lz77_compress</span>(<span class="ident">data</span>).<span class="ident">unwrap</span>();
         <span class="kw">let</span> <span class="ident">comp2</span> <span class="op">=</span> {
@@ -2543,7 +2555,7 @@
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">out</span> <span class="op">=</span> <span class="ident">decompress_lz77</span>(<span class="ident">state</span>.<span class="ident">writer</span>.<span class="ident">get_buffer</span>());
 
-        <span class="ident">state</span>.<span class="ident">writer</span>.<span class="ident">clear_buffer</span>();
+        <span class="ident">state</span>.<span class="ident">writer</span>.<span class="ident">clear</span>();
         <span class="comment">// The buffer should now be cleared.</span>
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">state</span>.<span class="ident">writer</span>.<span class="ident">get_buffer</span>().<span class="ident">len</span>(), <span class="number">0</span>);
 

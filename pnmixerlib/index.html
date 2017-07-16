@@ -48,7 +48,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/pnmixerlib/lib.rs.html#1-90' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../src/pnmixerlib/lib.rs.html#1-99' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>PNMixer-rs is a mixer for the system tray.</p>
 
 <h1 id='design-overview' class='section-header'><a href='#design-overview'>Design Overview</a></h1>
@@ -78,15 +78,8 @@ accordingly. So listening to changes from the audio subsystem (and therefore
 having a signal-oriented design) is the most obvious solution to solve that
 problem.</p>
 </div><h2 id='reexports' class='section-header'><a href="#reexports">Reexports</a></h2>
-<table><tr><td><code>pub extern crate <a class="mod" href="../flexi_logger/index.html" title="mod flexi_logger">flexi_logger</a>;</code></td></tr><tr><td><code>pub extern crate <a class="mod" href="../log/index.html" title="mod log">log</a>;</code></td></tr><tr><td><code>pub extern crate <a class="mod" href="../error_chain/index.html" title="mod error_chain">error_chain</a>;</code></td></tr><tr><td><code>pub extern crate <a class="mod" href="../serde_derive/index.html" title="mod serde_derive">serde_derive</a>;</code></td></tr><tr><td><code>pub extern crate <a class="mod" href="../toml/index.html" title="mod toml">toml</a>;</code></td></tr><tr><td><code>pub extern crate <a class="mod" href="../serde/index.html" title="mod serde">serde</a>;</code></td></tr><tr><td><code>pub extern crate <a class="mod" href="../alsa/index.html" title="mod alsa">alsa</a>;</code></td></tr><tr><td><code>pub extern crate <a class="mod" href="../alsa_sys/index.html" title="mod alsa_sys">alsa_sys</a>;</code></td></tr><tr><td><code>pub extern crate <a class="mod" href="../ffi/index.html" title="mod ffi">ffi</a>;</code></td></tr><tr><td><code>pub extern crate <a class="mod" href="../gdk/index.html" title="mod gdk">gdk</a>;</code></td></tr><tr><td><code>pub extern crate <a class="mod" href="../gdk_pixbuf/index.html" title="mod gdk_pixbuf">gdk_pixbuf</a>;</code></td></tr><tr><td><code>pub extern crate <a class="mod" href="../gdk_pixbuf_sys/index.html" title="mod gdk_pixbuf_sys">gdk_pixbuf_sys</a>;</code></td></tr><tr><td><code>pub extern crate <a class="mod" href="../gdk_sys/index.html" title="mod gdk_sys">gdk_sys</a>;</code></td></tr><tr><td><code>pub extern crate <a class="mod" href="../gio/index.html" title="mod gio">gio</a>;</code></td></tr><tr><td><code>pub extern crate <a class="mod" href="../glib/index.html" title="mod glib">glib</a>;</code></td></tr><tr><td><code>pub extern crate <a class="mod" href="../glib_sys/index.html" title="mod glib_sys">glib_sys</a>;</code></td></tr><tr><td><code>pub extern crate <a class="mod" href="../gobject_sys/index.html" title="mod gobject_sys">gobject_sys</a>;</code></td></tr><tr><td><code>pub extern crate <a class="mod" href="../gtk/index.html" title="mod gtk">gtk</a>;</code></td></tr><tr><td><code>pub extern crate <a class="mod" href="../gtk_sys/index.html" title="mod gtk_sys">gtk_sys</a>;</code></td></tr><tr><td><code>pub extern crate <a class="mod" href="../libc/index.html" title="mod libc">libc</a>;</code></td></tr><tr><td><code>pub extern crate <a class="mod" href="../png/index.html" title="mod png">png</a>;</code></td></tr><tr><td><code>pub extern crate <a class="mod" href="../which/index.html" title="mod which">which</a>;</code></td></tr><tr><td><code>pub extern crate <a class="mod" href="../xdg/index.html" title="mod xdg">xdg</a>;</code></td></tr></table><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
+<table><tr><td><code>pub extern crate <a class="mod" href="../flexi_logger/index.html" title="mod flexi_logger">flexi_logger</a>;</code></td></tr><tr><td><code>pub extern crate <a class="mod" href="../gtk/index.html" title="mod gtk">gtk</a>;</code></td></tr><tr><td><code>pub extern crate <a class="mod" href="../libnotify/index.html" title="mod libnotify">libnotify</a>;</code></td></tr></table><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
 <table>
-                       <tr class=' module-item'>
-                           <td><a class="mod" href="alsa_card/index.html"
-                                  title='mod pnmixerlib::alsa_card'>alsa_card</a></td>
-                           <td class='docblock-short'>
-                                <p>Alsa audio subsystem.</p>
-                           </td>
-                       </tr>
                        <tr class=' module-item'>
                            <td><a class="mod" href="app_state/index.html"
                                   title='mod pnmixerlib::app_state'>app_state</a></td>
@@ -95,95 +88,10 @@ problem.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class="mod" href="audio/index.html"
-                                  title='mod pnmixerlib::audio'>audio</a></td>
-                           <td class='docblock-short'>
-                                <p>High-level audio subsystem.</p>
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="mod" href="errors/index.html"
-                                  title='mod pnmixerlib::errors'>errors</a></td>
-                           <td class='docblock-short'>
-                                
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="mod" href="glade_helpers/index.html"
-                                  title='mod pnmixerlib::glade_helpers'>glade_helpers</a></td>
-                           <td class='docblock-short'>
-                                
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="mod" href="prefs/index.html"
-                                  title='mod pnmixerlib::prefs'>prefs</a></td>
-                           <td class='docblock-short'>
-                                <p>The preferences subsystem.</p>
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="mod" href="support_alsa/index.html"
-                                  title='mod pnmixerlib::support_alsa'>support_alsa</a></td>
-                           <td class='docblock-short'>
-                                <p>Alsa audio helper functions.</p>
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="mod" href="support_audio/index.html"
-                                  title='mod pnmixerlib::support_audio'>support_audio</a></td>
-                           <td class='docblock-short'>
-                                <p>Helper functions of the audio subsystem.</p>
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="mod" href="support_cmd/index.html"
-                                  title='mod pnmixerlib::support_cmd'>support_cmd</a></td>
-                           <td class='docblock-short'>
-                                <p>Helper functions for invoking system commands.</p>
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="mod" href="support_ui/index.html"
-                                  title='mod pnmixerlib::support_ui'>support_ui</a></td>
-                           <td class='docblock-short'>
-                                <p>Helper functions for the UI, mostly pixbuf functions.</p>
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
                            <td><a class="mod" href="ui_entry/index.html"
                                   title='mod pnmixerlib::ui_entry'>ui_entry</a></td>
                            <td class='docblock-short'>
                                 <p>Global GUI state.</p>
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="mod" href="ui_popup_menu/index.html"
-                                  title='mod pnmixerlib::ui_popup_menu'>ui_popup_menu</a></td>
-                           <td class='docblock-short'>
-                                <p>The popup menu subsystem when the user right-clicks on the tray icon.</p>
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="mod" href="ui_popup_window/index.html"
-                                  title='mod pnmixerlib::ui_popup_window'>ui_popup_window</a></td>
-                           <td class='docblock-short'>
-                                <p>The popup window subsystem when the user left-clicks on the tray icon.</p>
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="mod" href="ui_prefs_dialog/index.html"
-                                  title='mod pnmixerlib::ui_prefs_dialog'>ui_prefs_dialog</a></td>
-                           <td class='docblock-short'>
-                                <p>The preferences window subsystem, when the user clicks the &quot;Preferences&quot;
-menu item on the popup menu.</p>
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="mod" href="ui_tray_icon/index.html"
-                                  title='mod pnmixerlib::ui_tray_icon'>ui_tray_icon</a></td>
-                           <td class='docblock-short'>
-                                <p>The tray icon subsystem.</p>
                            </td>
                        </tr></table><h2 id='macros' class='section-header'><a href="#macros">Macros</a></h2>
 <table>
@@ -195,11 +103,43 @@ menu item on the popup menu.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
+                           <td><a class="macro" href="macro.error_dialog.html"
+                                  title='macro pnmixerlib::error_dialog'>error_dialog</a></td>
+                           <td class='docblock-short'>
+                                <p>Present a gtk error dialog with given message.
+Provides only a close button.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="macro" href="macro.just_warn.html"
+                                  title='macro pnmixerlib::just_warn'>just_warn</a></td>
+                           <td class='docblock-short'>
+                                <p>Warns on err and yields <code>()</code> without returning the function.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
                            <td><a class="macro" href="macro.pixbuf_new_from_png.html"
                                   title='macro pnmixerlib::pixbuf_new_from_png'>pixbuf_new_from_png</a></td>
                            <td class='docblock-short'>
                                 <p>Create a pixbuf from the given PNG file. Includes the file as bytes
 in the binary and decodes it.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="macro" href="macro.push_warning.html"
+                                  title='macro pnmixerlib::push_warning'>push_warning</a></td>
+                           <td class='docblock-short'>
+                                <p>If there is an error in the expression, push it to
+the given mutable warning vector.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="macro" href="macro.result_warn.html"
+                                  title='macro pnmixerlib::result_warn'>result_warn</a></td>
+                           <td class='docblock-short'>
+                                <p>Present a gtk error dialog with the error from the <code>Result</code> type,
+if any.
+Provides only a close button.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -232,6 +172,30 @@ otherwise print a warning and <code>return ()</code> from the function.</p>
                            <td class='docblock-short'>
                                 <p>Try to unwrap a <code>Result&lt;T, E&gt;</code>. If there is a value <code>T</code>, yield it,
 otherwise print a warning and return from the function with the given value.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="macro" href="macro.unwrap_any.html"
+                                  title='macro pnmixerlib::unwrap_any'>unwrap_any</a></td>
+                           <td class='docblock-short'>
+                                <p>Unwraps a <code>Result&lt;T, E&gt;</code> by yielding a value of the samet ype
+for either case.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="macro" href="macro.unwrap_error.html"
+                                  title='macro pnmixerlib::unwrap_error'>unwrap_error</a></td>
+                           <td class='docblock-short'>
+                                <p>If there is a value in the Result type, unwrap it, otherwise error-log
+the error, show it via gtk dialog and exit the whole program.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="macro" href="macro.wresult_warn.html"
+                                  title='macro pnmixerlib::wresult_warn'>wresult_warn</a></td>
+                           <td class='docblock-short'>
+                                <p>Convert <code>WResult</code> to <code>Result</code>. All warnings are printed via the <code>log</code>
+crate and are shown via Gtk dialogs.</p>
                            </td>
                        </tr></table></section>
     <section id='search' class="content hidden"></section>

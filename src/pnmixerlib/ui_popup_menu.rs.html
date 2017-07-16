@@ -238,6 +238,7 @@
 <span id="193">193</span>
 <span id="194">194</span>
 <span id="195">195</span>
+<span id="196">196</span>
 </pre><pre class="rust ">
 <span class="attribute">#<span class="op">!</span>[<span class="ident">allow</span>(<span class="ident">missing_docs</span>)]</span> <span class="comment">// glade_helpers</span>
 
@@ -315,7 +316,8 @@
         <span class="kw">let</span> <span class="ident">apps</span> <span class="op">=</span> <span class="ident">appstate</span>.<span class="ident">clone</span>();
         <span class="kw">let</span> <span class="ident">mixer_item</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">appstate</span>.<span class="ident">gui</span>.<span class="ident">popup_menu</span>.<span class="ident">mixer_item</span>;
         <span class="ident">mixer_item</span>.<span class="ident">connect_activate</span>(<span class="kw">move</span> <span class="op">|</span>_<span class="op">|</span> {
-            <span class="macro">try_w</span><span class="macro">!</span>(<span class="ident">execute_vol_control_command</span>(<span class="kw-2">&amp;</span><span class="ident">apps</span>.<span class="ident">prefs</span>.<span class="ident">borrow</span>()));
+            <span class="kw">let</span> _ <span class="op">=</span> <span class="macro">result_warn</span><span class="macro">!</span>(<span class="ident">execute_vol_control_command</span>(<span class="kw-2">&amp;</span><span class="ident">apps</span>.<span class="ident">prefs</span>.<span class="ident">borrow</span>()),
+                <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">apps</span>.<span class="ident">gui</span>.<span class="ident">popup_menu</span>.<span class="ident">menu_window</span>));
         });
     }
 

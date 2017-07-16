@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/hasufell/.cargo/registry/src/github.com-1ecc6299db9ec823/deflate-0.7.13/src/bitstream.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/jule/.cargo/registry/src/github.com-1ecc6299db9ec823/deflate-0.7.14/src/bitstream.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>bitstream.rs.html -- source</title>
@@ -292,7 +292,6 @@
 <span id="247">247</span>
 <span id="248">248</span>
 <span id="249">249</span>
-<span id="250">250</span>
 </pre><pre class="rust ">
 <span class="comment">// This was originally based on code from: https://github.com/nwin/lzw</span>
 <span class="comment">// Copyright (c) 2015 nwin</span>
@@ -351,7 +350,6 @@
 
 <span class="kw">impl</span> <span class="ident">LsbWriter</span> {
     <span class="doccomment">/// Creates a new bit reader</span>
-    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">dead_code</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">writer</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">LsbWriter</span> {
         <span class="ident">LsbWriter</span> {
             <span class="ident">w</span>: <span class="ident">writer</span>,

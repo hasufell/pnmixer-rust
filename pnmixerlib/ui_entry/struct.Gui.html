@@ -50,31 +50,31 @@
                    </a>
                </span><a class='srclink' href='../../src/pnmixerlib/ui_entry.rs.html#28-39' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct Gui {
-    pub tray_icon: <a class="struct" href="../../pnmixerlib/ui_tray_icon/struct.TrayIcon.html" title="struct pnmixerlib::ui_tray_icon::TrayIcon">TrayIcon</a>,
-    pub popup_window: <a class="struct" href="../../pnmixerlib/ui_popup_window/struct.PopupWindow.html" title="struct pnmixerlib::ui_popup_window::PopupWindow">PopupWindow</a>,
-    pub popup_menu: <a class="struct" href="../../pnmixerlib/ui_popup_menu/struct.PopupMenu.html" title="struct pnmixerlib::ui_popup_menu::PopupMenu">PopupMenu</a>,
-    pub prefs_dialog: <a class="struct" href="https://doc.rust-lang.org/nightly/core/cell/struct.RefCell.html" title="struct core::cell::RefCell">RefCell</a>&lt;<a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../../pnmixerlib/ui_prefs_dialog/struct.PrefsDialog.html" title="struct pnmixerlib::ui_prefs_dialog::PrefsDialog">PrefsDialog</a>&gt;&gt;,
+    pub tray_icon: TrayIcon,
+    pub popup_window: PopupWindow,
+    pub popup_menu: PopupMenu,
+    pub prefs_dialog: <a class="struct" href="https://doc.rust-lang.org/nightly/core/cell/struct.RefCell.html" title="struct core::cell::RefCell">RefCell</a>&lt;<a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;PrefsDialog&gt;&gt;,
     // some fields omitted
 }</pre><div class='docblock'><p>The GUI struct mostly describing the main widgets (mostly wrapped)
 the user interacts with.</p>
 </div><h2 id='fields' class='fields'>Fields</h2><span id='structfield.tray_icon' class="structfield">
                            <span id='tray_icon.v' class='invisible'>
-                           <code>tray_icon: <a class="struct" href="../../pnmixerlib/ui_tray_icon/struct.TrayIcon.html" title="struct pnmixerlib::ui_tray_icon::TrayIcon">TrayIcon</a></code>
+                           <code>tray_icon: TrayIcon</code>
                            </span></span><div class='docblock'><p>The tray icon.</p>
 </div><span id='structfield.popup_window' class="structfield">
                            <span id='popup_window.v' class='invisible'>
-                           <code>popup_window: <a class="struct" href="../../pnmixerlib/ui_popup_window/struct.PopupWindow.html" title="struct pnmixerlib::ui_popup_window::PopupWindow">PopupWindow</a></code>
+                           <code>popup_window: PopupWindow</code>
                            </span></span><div class='docblock'><p>The popup window.</p>
 </div><span id='structfield.popup_menu' class="structfield">
                            <span id='popup_menu.v' class='invisible'>
-                           <code>popup_menu: <a class="struct" href="../../pnmixerlib/ui_popup_menu/struct.PopupMenu.html" title="struct pnmixerlib::ui_popup_menu::PopupMenu">PopupMenu</a></code>
+                           <code>popup_menu: PopupMenu</code>
                            </span></span><div class='docblock'><p>The popup menu.</p>
 </div><span id='structfield.prefs_dialog' class="structfield">
                            <span id='prefs_dialog.v' class='invisible'>
-                           <code>prefs_dialog: <a class="struct" href="https://doc.rust-lang.org/nightly/core/cell/struct.RefCell.html" title="struct core::cell::RefCell">RefCell</a>&lt;<a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../../pnmixerlib/ui_prefs_dialog/struct.PrefsDialog.html" title="struct pnmixerlib::ui_prefs_dialog::PrefsDialog">PrefsDialog</a>&gt;&gt;</code>
+                           <code>prefs_dialog: <a class="struct" href="https://doc.rust-lang.org/nightly/core/cell/struct.RefCell.html" title="struct core::cell::RefCell">RefCell</a>&lt;<a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;PrefsDialog&gt;&gt;</code>
                            </span></span><div class='docblock'><p>The preferences dialog.</p>
 </div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class="struct" href="../../pnmixerlib/ui_entry/struct.Gui.html" title="struct pnmixerlib::ui_entry::Gui">Gui</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/pnmixerlib/ui_entry.rs.html#41-55' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;builder_popup_window: <a class="struct" href="../../gtk/builder/struct.Builder.html" title="struct gtk::builder::Builder">Builder</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;builder_popup_menu: <a class="struct" href="../../gtk/builder/struct.Builder.html" title="struct gtk::builder::Builder">Builder</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;prefs: &amp;<a class="struct" href="../../pnmixerlib/prefs/struct.Prefs.html" title="struct pnmixerlib::prefs::Prefs">Prefs</a><br>) -&gt; <a class="struct" href="../../pnmixerlib/ui_entry/struct.Gui.html" title="struct pnmixerlib::ui_entry::Gui">Gui</a></code></span></h4>
+<div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;builder_popup_window: <a class="struct" href="../../gtk/builder/struct.Builder.html" title="struct gtk::builder::Builder">Builder</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;builder_popup_menu: <a class="struct" href="../../gtk/builder/struct.Builder.html" title="struct gtk::builder::Builder">Builder</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;prefs: &amp;Prefs<br>) -&gt; <a class="struct" href="../../pnmixerlib/ui_entry/struct.Gui.html" title="struct pnmixerlib::ui_entry::Gui">Gui</a></code></span></h4>
 <div class='docblock'><p>Constructor. The prefs dialog is initialized as <code>None</code>.</p>
 </div></div></section>
     <section id='search' class="content hidden"></section>

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/hasufell/.cargo/registry/src/github.com-1ecc6299db9ec823/deflate-0.7.13/src/checksum.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/jule/.cargo/registry/src/github.com-1ecc6299db9ec823/deflate-0.7.14/src/checksum.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>checksum.rs.html -- source</title>
@@ -113,6 +113,8 @@
 <span id="68">68</span>
 <span id="69">69</span>
 <span id="70">70</span>
+<span id="71">71</span>
+<span id="72">72</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">adler32</span>::<span class="ident">RollingAdler32</span>;
 
@@ -152,7 +154,9 @@
 
 <span class="kw">impl</span> <span class="ident">Adler32Checksum</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="ident">Adler32Checksum</span> {
-        <span class="ident">Adler32Checksum</span> { <span class="ident">adler32</span>: <span class="ident">RollingAdler32</span>::<span class="ident">new</span>() }
+        <span class="ident">Adler32Checksum</span> {
+            <span class="ident">adler32</span>: <span class="ident">RollingAdler32</span>::<span class="ident">new</span>(),
+        }
     }
 }
 

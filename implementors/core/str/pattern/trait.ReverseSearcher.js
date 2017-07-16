@@ -11,6 +11,7 @@ implementors["gtk"] = [];
 implementors["libc"] = [];
 implementors["num"] = [];
 implementors["pango"] = [];
+implementors["pnmixerlib"] = [];
 implementors["regex_syntax"] = [];
 implementors["serde"] = [];
 implementors["syn"] = [];

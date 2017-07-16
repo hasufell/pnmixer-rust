@@ -48,11 +48,13 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/pnmixerlib/app_state.rs.html#19-30' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../../src/pnmixerlib/app_state.rs.html#21-35' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct AppS {
     pub gui: <a class="struct" href="../../pnmixerlib/ui_entry/struct.Gui.html" title="struct pnmixerlib::ui_entry::Gui">Gui</a>,
-    pub audio: <a class="struct" href="../../pnmixerlib/audio/struct.Audio.html" title="struct pnmixerlib::audio::Audio">Audio</a>,
-    pub prefs: <a class="struct" href="https://doc.rust-lang.org/nightly/core/cell/struct.RefCell.html" title="struct core::cell::RefCell">RefCell</a>&lt;<a class="struct" href="../../pnmixerlib/prefs/struct.Prefs.html" title="struct pnmixerlib::prefs::Prefs">Prefs</a>&gt;,
+    pub audio: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/rc/struct.Rc.html" title="struct alloc::rc::Rc">Rc</a>&lt;Audio&gt;,
+    pub prefs: <a class="struct" href="https://doc.rust-lang.org/nightly/core/cell/struct.RefCell.html" title="struct core::cell::RefCell">RefCell</a>&lt;Prefs&gt;,
+    pub notif: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Notif&gt;,
+    pub hotkeys: <a class="struct" href="https://doc.rust-lang.org/nightly/core/cell/struct.RefCell.html" title="struct core::cell::RefCell">RefCell</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html" title="struct alloc::boxed::Box">Box</a>&lt;Hotkeys&gt;&gt;,
     // some fields omitted
 }</pre><div class='docblock'><p>The global application state struct.</p>
 </div><h2 id='fields' class='fields'>Fields</h2><span id='structfield.gui' class="structfield">
@@ -61,25 +63,36 @@
                            </span></span><div class='docblock'><p>Mostly static GUI state.</p>
 </div><span id='structfield.audio' class="structfield">
                            <span id='audio.v' class='invisible'>
-                           <code>audio: <a class="struct" href="../../pnmixerlib/audio/struct.Audio.html" title="struct pnmixerlib::audio::Audio">Audio</a></code>
+                           <code>audio: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/rc/struct.Rc.html" title="struct alloc::rc::Rc">Rc</a>&lt;Audio&gt;</code>
                            </span></span><div class='docblock'><p>Audio state.</p>
 </div><span id='structfield.prefs' class="structfield">
                            <span id='prefs.v' class='invisible'>
-                           <code>prefs: <a class="struct" href="https://doc.rust-lang.org/nightly/core/cell/struct.RefCell.html" title="struct core::cell::RefCell">RefCell</a>&lt;<a class="struct" href="../../pnmixerlib/prefs/struct.Prefs.html" title="struct pnmixerlib::prefs::Prefs">Prefs</a>&gt;</code>
+                           <code>prefs: <a class="struct" href="https://doc.rust-lang.org/nightly/core/cell/struct.RefCell.html" title="struct core::cell::RefCell">RefCell</a>&lt;Prefs&gt;</code>
                            </span></span><div class='docblock'><p>Preferences state.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class="struct" href="../../pnmixerlib/app_state/struct.AppS.html" title="struct pnmixerlib::app_state::AppS">AppS</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/pnmixerlib/app_state.rs.html#33-107' title='goto source code'>[src]</a></span></h3>
+</div><span id='structfield.notif' class="structfield">
+                           <span id='notif.v' class='invisible'>
+                           <code>notif: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Notif&gt;</code>
+                           </span></span><div class='docblock'><p>Notification state. In case of initialization failure, this
+is set to <code>None</code>.</p>
+</div><span id='structfield.hotkeys' class="structfield">
+                           <span id='hotkeys.v' class='invisible'>
+                           <code>hotkeys: <a class="struct" href="https://doc.rust-lang.org/nightly/core/cell/struct.RefCell.html" title="struct core::cell::RefCell">RefCell</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html" title="struct alloc::boxed::Box">Box</a>&lt;Hotkeys&gt;&gt;</code>
+                           </span></span><div class='docblock'><p>Hotkey state.</p>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class="struct" href="../../pnmixerlib/app_state/struct.AppS.html" title="struct pnmixerlib::app_state::AppS">AppS</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/pnmixerlib/app_state.rs.html#38-129' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>() -&gt; <a class="struct" href="../../pnmixerlib/app_state/struct.AppS.html" title="struct pnmixerlib::app_state::AppS">AppS</a></code></span></h4>
 <div class='docblock'><p>Create an application state instance. There should really only be one.</p>
-</div><h4 id='method.update_tray_icon' class="method"><span id='update_tray_icon.v' class='invisible'><code>fn <a href='#method.update_tray_icon' class='fnname'>update_tray_icon</a>(&amp;self) -&gt; <a class="type" href="../../pnmixerlib/errors/type.Result.html" title="type pnmixerlib::errors::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;</code></span></h4>
+</div><h4 id='method.update_tray_icon' class="method"><span id='update_tray_icon.v' class='invisible'><code>fn <a href='#method.update_tray_icon' class='fnname'>update_tray_icon</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>, Error&gt;</code></span></h4>
 <div class='docblock'><p>Update the tray icon state.</p>
-</div><h4 id='method.update_popup_window' class="method"><span id='update_popup_window.v' class='invisible'><code>fn <a href='#method.update_popup_window' class='fnname'>update_popup_window</a>(&amp;self) -&gt; <a class="type" href="../../pnmixerlib/errors/type.Result.html" title="type pnmixerlib::errors::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;</code></span></h4>
+</div><h4 id='method.update_popup_window' class="method"><span id='update_popup_window.v' class='invisible'><code>fn <a href='#method.update_popup_window' class='fnname'>update_popup_window</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>, Error&gt;</code></span></h4>
 <div class='docblock'><p>Update the Popup Window state.</p>
-</div><h4 id='method.update_notify' class="method"><span id='update_notify.v' class='invisible'><code>fn <a href='#method.update_notify' class='fnname'>update_notify</a>(&amp;self) -&gt; <a class="type" href="../../pnmixerlib/errors/type.Result.html" title="type pnmixerlib::errors::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;</code></span></h4>
+</div><h4 id='method.update_notify' class="method"><span id='update_notify.v' class='invisible'><code>fn <a href='#method.update_notify' class='fnname'>update_notify</a>(&amp;self)</code></span></h4>
 <div class='docblock'><p>Update the notification state.</p>
-</div><h4 id='method.update_audio' class="method"><span id='update_audio.v' class='invisible'><code>fn <a href='#method.update_audio' class='fnname'>update_audio</a>(&amp;self, user: <a class="enum" href="../../pnmixerlib/audio/enum.AudioUser.html" title="enum pnmixerlib::audio::AudioUser">AudioUser</a>) -&gt; <a class="type" href="../../pnmixerlib/errors/type.Result.html" title="type pnmixerlib::errors::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;</code></span></h4>
+</div><h4 id='method.update_audio' class="method"><span id='update_audio.v' class='invisible'><code>fn <a href='#method.update_audio' class='fnname'>update_audio</a>(&amp;self, user: AudioUser) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>, Error&gt;</code></span></h4>
 <div class='docblock'><p>Update the audio state.</p>
-</div><h4 id='method.update_config' class="method"><span id='update_config.v' class='invisible'><code>fn <a href='#method.update_config' class='fnname'>update_config</a>(&amp;self) -&gt; <a class="type" href="../../pnmixerlib/errors/type.Result.html" title="type pnmixerlib::errors::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;</code></span></h4>
+</div><h4 id='method.update_config' class="method"><span id='update_config.v' class='invisible'><code>fn <a href='#method.update_config' class='fnname'>update_config</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>, Error&gt;</code></span></h4>
 <div class='docblock'><p>Update the config file.</p>
+</div><h4 id='method.update_hotkeys' class="method"><span id='update_hotkeys.v' class='invisible'><code>fn <a href='#method.update_hotkeys' class='fnname'>update_hotkeys</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>, Error&gt;</code></span></h4>
+<div class='docblock'><p>Update hotkey state.</p>
 </div></div></section>
     <section id='search' class="content hidden"></section>
 

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/hasufell/.cargo/registry/src/github.com-1ecc6299db9ec823/deflate-0.7.13/src/chained_hash_table.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/jule/.cargo/registry/src/github.com-1ecc6299db9ec823/deflate-0.7.14/src/chained_hash_table.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>chained_hash_table.rs.html -- source</title>
@@ -335,13 +335,113 @@
 <span id="290">290</span>
 <span id="291">291</span>
 <span id="292">292</span>
+<span id="293">293</span>
+<span id="294">294</span>
+<span id="295">295</span>
+<span id="296">296</span>
+<span id="297">297</span>
+<span id="298">298</span>
+<span id="299">299</span>
+<span id="300">300</span>
+<span id="301">301</span>
+<span id="302">302</span>
+<span id="303">303</span>
+<span id="304">304</span>
+<span id="305">305</span>
+<span id="306">306</span>
+<span id="307">307</span>
+<span id="308">308</span>
+<span id="309">309</span>
+<span id="310">310</span>
+<span id="311">311</span>
+<span id="312">312</span>
+<span id="313">313</span>
+<span id="314">314</span>
+<span id="315">315</span>
+<span id="316">316</span>
+<span id="317">317</span>
+<span id="318">318</span>
+<span id="319">319</span>
+<span id="320">320</span>
+<span id="321">321</span>
+<span id="322">322</span>
+<span id="323">323</span>
+<span id="324">324</span>
+<span id="325">325</span>
+<span id="326">326</span>
+<span id="327">327</span>
+<span id="328">328</span>
+<span id="329">329</span>
+<span id="330">330</span>
+<span id="331">331</span>
+<span id="332">332</span>
+<span id="333">333</span>
 </pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">deflate_state</span>::<span class="ident">DebugCounter</span>;
+<span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">mem</span>, <span class="ident">ptr</span>};
+
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">WINDOW_SIZE</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">32768</span>;
 <span class="kw">const</span> <span class="ident">WINDOW_MASK</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="ident">WINDOW_SIZE</span> <span class="op">-</span> <span class="number">1</span>;
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">HASH_BYTES</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">3</span>;
 <span class="kw">const</span> <span class="ident">HASH_SHIFT</span>: <span class="ident">u16</span> <span class="op">=</span> <span class="number">5</span>;
 <span class="kw">const</span> <span class="ident">HASH_MASK</span>: <span class="ident">u16</span> <span class="op">=</span> <span class="ident">WINDOW_MASK</span> <span class="kw">as</span> <span class="ident">u16</span>;
+
+<span class="doccomment">/// Helper struct to let us allocate both head and prev in the same block.</span>
+<span class="kw">struct</span> <span class="ident">Tables</span> {
+    <span class="doccomment">/// Starts of hash chains (in prev)</span>
+    <span class="kw">pub</span> <span class="ident">head</span>: [<span class="ident">u16</span>; <span class="ident">WINDOW_SIZE</span>],
+    <span class="doccomment">/// Link to previous occurence of this hash value</span>
+    <span class="kw">pub</span> <span class="ident">prev</span>: [<span class="ident">u16</span>; <span class="ident">WINDOW_SIZE</span>],
+}
+
+<span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">Tables</span> {
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="ident">Tables</span> {
+        <span class="comment">// # Unsafe</span>
+        <span class="comment">// This struct is not public and is only used in this module, and</span>
+        <span class="comment">// the values are immediately filled in after this struct is</span>
+        <span class="comment">// created.</span>
+        <span class="kw">unsafe</span> {
+            <span class="ident">Tables</span> {
+                <span class="ident">head</span>: <span class="ident">mem</span>::<span class="ident">uninitialized</span>(),
+                <span class="ident">prev</span>: <span class="ident">mem</span>::<span class="ident">uninitialized</span>(),
+            }
+        }
+    }
+}
+
+<span class="kw">impl</span> <span class="ident">Tables</span> {
+    <span class="kw">fn</span> <span class="ident">fill_prev</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+        <span class="self">self</span>.<span class="ident">prev</span>.<span class="ident">copy_from_slice</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">head</span>);
+    }
+}
+
+<span class="doccomment">/// Create and box the hash chains.</span>
+<span class="kw">fn</span> <span class="ident">create_tables</span>() <span class="op">-&gt;</span> <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">Tables</span><span class="op">&gt;</span> {
+    <span class="comment">// Using default here is a trick to get around the lack of box syntax on stable rust.</span>
+    <span class="comment">//</span>
+    <span class="comment">// Box::new([0u16,n]) ends up creating an temporary array on the stack which is not optimised</span>
+    <span class="comment">// but using default, which simply calls `box value` internally allows us to get around this.</span>
+    <span class="comment">//</span>
+    <span class="comment">// We could use vec instead, but using a boxed array helps the compiler optimise</span>
+    <span class="comment">// away bounds checks as `n &amp; WINDOW_MASK &lt; WINDOW_SIZE` will always be true.</span>
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">t</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">Tables</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box</span>::<span class="ident">default</span>();
+
+    <span class="kw">for</span> (<span class="ident">n</span>, <span class="kw-2">mut</span> <span class="ident">b</span>) <span class="kw">in</span> <span class="ident">t</span>.<span class="ident">head</span>.<span class="ident">iter_mut</span>().<span class="ident">enumerate</span>() {
+        <span class="comment">// # Unsafe</span>
+        <span class="comment">//</span>
+        <span class="comment">// Using ptr::write here since the values are uninitialised.</span>
+        <span class="comment">// u16 is a primitive and doesn&#39;t implement drop, so this would be safe either way.</span>
+        <span class="kw">unsafe</span> {
+            <span class="ident">ptr</span>::<span class="ident">write</span>(<span class="ident">b</span>, <span class="ident">n</span> <span class="kw">as</span> <span class="ident">u16</span>);
+        }
+    }
+
+    <span class="ident">t</span>.<span class="ident">fill_prev</span>();
+
+    <span class="ident">t</span>
+}
 
 <span class="doccomment">/// Returns a new hash value based on the previous value and the next byte</span>
 <span class="attribute">#[<span class="ident">inline</span>]</span>
@@ -355,41 +455,27 @@
 }
 
 <span class="attribute">#[<span class="ident">inline</span>]</span>
-<span class="kw">fn</span> <span class="ident">init_array</span>(<span class="ident">arr</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u16</span>]) {
+<span class="kw">fn</span> <span class="ident">reset_array</span>(<span class="ident">arr</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u16</span>; <span class="ident">WINDOW_SIZE</span>]) {
     <span class="kw">for</span> (<span class="ident">n</span>, <span class="kw-2">mut</span> <span class="ident">b</span>) <span class="kw">in</span> <span class="ident">arr</span>.<span class="ident">iter_mut</span>().<span class="ident">enumerate</span>() {
         <span class="kw-2">*</span><span class="ident">b</span> <span class="op">=</span> <span class="ident">n</span> <span class="kw">as</span> <span class="ident">u16</span>;
     }
 }
 
-<span class="comment">//#[inline]</span>
-<span class="kw">fn</span> <span class="ident">new_array</span>() <span class="op">-&gt;</span> <span class="ident">Box</span><span class="op">&lt;</span>[<span class="ident">u16</span>]<span class="op">&gt;</span> {
-    <span class="comment">// Create the vector with the elements initialised as using collect or extend ends</span>
-    <span class="comment">// up being significantly slower for some reason.</span>
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">arr</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[<span class="number">0</span>; <span class="ident">WINDOW_SIZE</span>];
-    <span class="ident">init_array</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">arr</span>);
-    <span class="ident">arr</span>.<span class="ident">into_boxed_slice</span>()
-}
-
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ChainedHashTable</span> {
     <span class="comment">// Current running hash value of the last 3 bytes</span>
     <span class="ident">current_hash</span>: <span class="ident">u16</span>,
-    <span class="comment">// Starts of hash chains (in prev)</span>
-    <span class="ident">head</span>: <span class="ident">Box</span><span class="op">&lt;</span>[<span class="ident">u16</span>]<span class="op">&gt;</span>,
-    <span class="comment">// link to previous occurence of this hash value</span>
-    <span class="ident">prev</span>: <span class="ident">Box</span><span class="op">&lt;</span>[<span class="ident">u16</span>]<span class="op">&gt;</span>,
+    <span class="comment">// Hash chains.</span>
+    <span class="ident">c</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">Tables</span><span class="op">&gt;</span>,
     <span class="comment">// Used for testing</span>
-    <span class="comment">// Didn&#39;t find an easy way for it not to exist when debug_assertions are disabled.</span>
-    <span class="kw">pub</span> <span class="ident">count</span>: <span class="ident">u64</span>,
+    <span class="ident">count</span>: <span class="ident">DebugCounter</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">ChainedHashTable</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="ident">ChainedHashTable</span> {
-        <span class="kw">let</span> <span class="ident">chain</span> <span class="op">=</span> <span class="ident">new_array</span>();
         <span class="ident">ChainedHashTable</span> {
             <span class="ident">current_hash</span>: <span class="number">0</span>,
-            <span class="ident">head</span>: <span class="ident">chain</span>.<span class="ident">clone</span>(),
-            <span class="ident">prev</span>: <span class="ident">chain</span>,
-            <span class="ident">count</span>: <span class="number">0</span>,
+            <span class="ident">c</span>: <span class="ident">create_tables</span>(),
+            <span class="ident">count</span>: <span class="ident">DebugCounter</span>::<span class="ident">default</span>(),
         }
     }
 
@@ -404,10 +490,14 @@
     <span class="doccomment">/// Resets the hash value and hash chains</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reset</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
         <span class="self">self</span>.<span class="ident">current_hash</span> <span class="op">=</span> <span class="number">0</span>;
-        <span class="ident">init_array</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">head</span>);
-        <span class="ident">init_array</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">prev</span>);
+        <span class="ident">reset_array</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">c</span>.<span class="ident">head</span>);
+        {
+            <span class="kw">let</span> <span class="ident">h</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">c</span>.<span class="ident">head</span>;
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">c</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">c</span>.<span class="ident">prev</span>;
+            <span class="ident">c</span>[..].<span class="ident">copy_from_slice</span>(<span class="kw-2">&amp;</span><span class="ident">h</span>[..]);
+        }
         <span class="kw">if</span> <span class="macro">cfg</span><span class="macro">!</span>(<span class="ident">debug_assertions</span>) {
-            <span class="self">self</span>.<span class="ident">count</span> <span class="op">=</span> <span class="number">0</span>;
+            <span class="self">self</span>.<span class="ident">count</span>.<span class="ident">reset</span>();
         }
     }
 
@@ -419,7 +509,10 @@
     <span class="comment">// Insert a byte into the hash table</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add_hash_value</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">position</span>: <span class="ident">usize</span>, <span class="ident">value</span>: <span class="ident">u8</span>) {
         <span class="comment">// Check that all bytes are input in order and at the correct positions.</span>
-        <span class="macro">debug_assert_eq</span><span class="macro">!</span>(<span class="ident">position</span> <span class="op">&amp;</span> <span class="ident">WINDOW_MASK</span>, <span class="self">self</span>.<span class="ident">count</span> <span class="kw">as</span> <span class="ident">usize</span> <span class="op">&amp;</span> <span class="ident">WINDOW_MASK</span>);
+        <span class="macro">debug_assert_eq</span><span class="macro">!</span>(
+            <span class="ident">position</span> <span class="op">&amp;</span> <span class="ident">WINDOW_MASK</span>,
+            <span class="self">self</span>.<span class="ident">count</span>.<span class="ident">get</span>() <span class="kw">as</span> <span class="ident">usize</span> <span class="op">&amp;</span> <span class="ident">WINDOW_MASK</span>
+        );
         <span class="macro">debug_assert</span><span class="macro">!</span>(
             <span class="ident">position</span> <span class="op">&lt;</span> <span class="ident">WINDOW_SIZE</span> <span class="op">*</span> <span class="number">2</span>,
             <span class="string">&quot;Position is larger than 2 * window size! {}&quot;</span>,
@@ -429,26 +522,25 @@
         <span class="comment">// bounds checks in this function.</span>
         <span class="kw">let</span> <span class="ident">new_hash</span> <span class="op">=</span> <span class="ident">update_hash</span>(<span class="self">self</span>.<span class="ident">current_hash</span>, <span class="ident">value</span>);
 
+        <span class="kw">if</span> <span class="macro">cfg</span><span class="macro">!</span>(<span class="ident">debug_assertions</span>) {
+            <span class="self">self</span>.<span class="ident">count</span>.<span class="ident">add</span>(<span class="number">1</span>);
+        }
 
-        <span class="self">self</span>.<span class="ident">prev</span>[<span class="ident">position</span> <span class="op">&amp;</span> <span class="ident">WINDOW_MASK</span>] <span class="op">=</span> <span class="self">self</span>.<span class="ident">head</span>[<span class="ident">new_hash</span> <span class="kw">as</span> <span class="ident">usize</span>];
+        <span class="self">self</span>.<span class="ident">c</span>.<span class="ident">prev</span>[<span class="ident">position</span> <span class="op">&amp;</span> <span class="ident">WINDOW_MASK</span>] <span class="op">=</span> <span class="self">self</span>.<span class="ident">c</span>.<span class="ident">head</span>[<span class="ident">new_hash</span> <span class="kw">as</span> <span class="ident">usize</span>];
 
         <span class="comment">// Ignoring any bits over 16 here is deliberate, as we only concern ourselves about</span>
         <span class="comment">// where in the buffer (which is 64k bytes) we are referring to.</span>
-        <span class="self">self</span>.<span class="ident">head</span>[<span class="ident">new_hash</span> <span class="kw">as</span> <span class="ident">usize</span>] <span class="op">=</span> <span class="ident">position</span> <span class="kw">as</span> <span class="ident">u16</span>;
+        <span class="self">self</span>.<span class="ident">c</span>.<span class="ident">head</span>[<span class="ident">new_hash</span> <span class="kw">as</span> <span class="ident">usize</span>] <span class="op">=</span> <span class="ident">position</span> <span class="kw">as</span> <span class="ident">u16</span>;
 
         <span class="comment">// Update the stored hash value with the new hash.</span>
         <span class="self">self</span>.<span class="ident">current_hash</span> <span class="op">=</span> <span class="ident">new_hash</span>;
-
-        <span class="kw">if</span> <span class="macro">cfg</span><span class="macro">!</span>(<span class="ident">debug_assertions</span>) {
-            <span class="self">self</span>.<span class="ident">count</span> <span class="op">+=</span> <span class="number">1</span>;
-        }
     }
 
     <span class="comment">// Get the head of the hash chain for the current hash value</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">current_head</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">u16</span> {
-        <span class="self">self</span>.<span class="ident">head</span>[<span class="self">self</span>.<span class="ident">current_hash</span> <span class="kw">as</span> <span class="ident">usize</span>]
+        <span class="self">self</span>.<span class="ident">c</span>.<span class="ident">head</span>[<span class="self">self</span>.<span class="ident">current_hash</span> <span class="kw">as</span> <span class="ident">usize</span>]
     }
 
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
@@ -458,32 +550,21 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">debug_assertions</span>)]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_prev</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">bytes</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">u16</span> {
-        <span class="self">self</span>.<span class="ident">prev</span>[<span class="ident">bytes</span> <span class="op">&amp;</span> <span class="ident">WINDOW_MASK</span>]
+        <span class="self">self</span>.<span class="ident">c</span>.<span class="ident">prev</span>[<span class="ident">bytes</span> <span class="op">&amp;</span> <span class="ident">WINDOW_MASK</span>]
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">debug_assertions</span>))]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_prev</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">bytes</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">u16</span> {
-        <span class="comment">// Safety: The index is anded by WINDOW_MASK, which is the length</span>
-        <span class="comment">// of the prev array - 1, which means that the index value will always</span>
-        <span class="comment">// be less than the length of prev.</span>
-        <span class="comment">// Prev is made into a boxed slice when the table is created.</span>
-        <span class="comment">// and the length can thus not change after init.</span>
-        <span class="comment">//</span>
-        <span class="comment">// If prev is a Box[u16;WINDOW_SIZE], the compiler will avoid this bounds check</span>
-        <span class="comment">// and using unsafe wouldn&#39;t be needed. However, the rust compiler is currently</span>
-        <span class="comment">// not able to optimise out the stack arrays when using Box::new() to create a</span>
-        <span class="comment">// boxed array, which leads to substantially slower initialisation of the hash table.</span>
-        <span class="kw">unsafe</span> { <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">prev</span>.<span class="ident">get_unchecked</span>(<span class="ident">bytes</span> <span class="op">&amp;</span> <span class="ident">WINDOW_MASK</span>) }
-    }
-
     <span class="kw">fn</span> <span class="ident">slide_value</span>(<span class="ident">b</span>: <span class="ident">u16</span>, <span class="ident">pos</span>: <span class="ident">u16</span>, <span class="ident">bytes</span>: <span class="ident">u16</span>) <span class="op">-&gt;</span> <span class="ident">u16</span> {
-        <span class="kw">if</span> <span class="ident">b</span> <span class="op">&gt;=</span> <span class="ident">bytes</span> { <span class="ident">b</span> <span class="op">-</span> <span class="ident">bytes</span> } <span class="kw">else</span> { <span class="ident">pos</span> }
+        <span class="kw">if</span> <span class="ident">b</span> <span class="op">&gt;=</span> <span class="ident">bytes</span> {
+            <span class="ident">b</span> <span class="op">-</span> <span class="ident">bytes</span>
+        } <span class="kw">else</span> {
+            <span class="ident">pos</span>
+        }
     }
 
-    <span class="kw">fn</span> <span class="ident">slide_table</span>(<span class="ident">table</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u16</span>], <span class="ident">bytes</span>: <span class="ident">u16</span>) {
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">slide_table</span>(<span class="ident">table</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u16</span>; <span class="ident">WINDOW_SIZE</span>], <span class="ident">bytes</span>: <span class="ident">u16</span>) {
         <span class="kw">for</span> (<span class="ident">n</span>, <span class="ident">b</span>) <span class="kw">in</span> <span class="ident">table</span>.<span class="ident">iter_mut</span>().<span class="ident">enumerate</span>() {
             <span class="kw-2">*</span><span class="ident">b</span> <span class="op">=</span> <span class="ident">ChainedHashTable</span>::<span class="ident">slide_value</span>(<span class="kw-2">*</span><span class="ident">b</span>, <span class="ident">n</span> <span class="kw">as</span> <span class="ident">u16</span>, <span class="ident">bytes</span>);
         }
@@ -492,21 +573,10 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">slide</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">bytes</span>: <span class="ident">usize</span>) {
         <span class="kw">if</span> <span class="macro">cfg</span><span class="macro">!</span>(<span class="ident">debug_assertions</span>) <span class="op">&amp;&amp;</span> <span class="ident">bytes</span> <span class="op">!=</span> <span class="ident">WINDOW_SIZE</span> {
             <span class="comment">// This should only happen in tests in this file.</span>
-            <span class="self">self</span>.<span class="ident">count</span> <span class="op">=</span> <span class="number">0</span>;
-
+            <span class="self">self</span>.<span class="ident">count</span>.<span class="ident">reset</span>();
         }
-        <span class="ident">ChainedHashTable</span>::<span class="ident">slide_table</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">head</span>[..], <span class="ident">bytes</span> <span class="kw">as</span> <span class="ident">u16</span>);
-        <span class="ident">ChainedHashTable</span>::<span class="ident">slide_table</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">prev</span>[..], <span class="ident">bytes</span> <span class="kw">as</span> <span class="ident">u16</span>);
-    }
-
-    <span class="comment">// #[cfg(test)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">_get_head_arr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u16</span>] {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">head</span>[..]
-    }
-
-    <span class="comment">// #[cfg(test)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">_get_prev_arr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u16</span>] {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">prev</span>[..]
+        <span class="ident">ChainedHashTable</span>::<span class="ident">slide_table</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">c</span>.<span class="ident">head</span>, <span class="ident">bytes</span> <span class="kw">as</span> <span class="ident">u16</span>);
+        <span class="ident">ChainedHashTable</span>::<span class="ident">slide_table</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">c</span>.<span class="ident">prev</span>, <span class="ident">bytes</span> <span class="kw">as</span> <span class="ident">u16</span>);
     }
 }
 
@@ -521,7 +591,7 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">test</span> {
-    <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">filled_hash_table</span>;
+    <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">filled_hash_table</span>, <span class="ident">ChainedHashTable</span>};
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">chained_hash</span>() {
@@ -567,7 +637,7 @@
         <span class="ident">test_data</span>.<span class="ident">extend</span>((<span class="number">255u8</span>..<span class="number">0</span>));
         <span class="kw">let</span> <span class="ident">hash_table</span> <span class="op">=</span> <span class="ident">filled_hash_table</span>(<span class="kw-2">&amp;</span><span class="ident">test_data</span>);
         <span class="kw">let</span> <span class="ident">prev_pos</span> <span class="op">=</span> <span class="ident">hash_table</span>.<span class="ident">get_prev</span>(<span class="ident">hash_table</span>.<span class="ident">current_head</span>() <span class="kw">as</span> <span class="ident">usize</span>);
-        <span class="comment">// Since all sequences in the input are unique, there shouldn&#39;t be any previous values</span>
+        <span class="comment">// Since all sequences in the input are unique, there shouldn&#39;t be any previous values.</span>
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">prev_pos</span>, <span class="ident">hash_table</span>.<span class="ident">current_hash</span>());
     }
 
@@ -595,7 +665,7 @@
         <span class="ident">hash_table</span>.<span class="ident">slide</span>(<span class="ident">window_size</span>);
 
         {
-            <span class="kw">let</span> <span class="ident">max_head</span> <span class="op">=</span> <span class="ident">hash_table</span>.<span class="ident">head</span>.<span class="ident">iter</span>().<span class="ident">max</span>().<span class="ident">unwrap</span>();
+            <span class="kw">let</span> <span class="ident">max_head</span> <span class="op">=</span> <span class="ident">hash_table</span>.<span class="ident">c</span>.<span class="ident">head</span>.<span class="ident">iter</span>().<span class="ident">max</span>().<span class="ident">unwrap</span>();
             <span class="comment">// After sliding there should be no hashes referring to values</span>
             <span class="comment">// higher than the window size</span>
             <span class="macro">assert</span><span class="macro">!</span>(<span class="kw-2">*</span><span class="ident">max_head</span> <span class="op">&lt;</span> <span class="ident">window_size16</span>);
@@ -612,7 +682,7 @@
 
         <span class="comment">// There should hashes referring to values in the upper part of the input window</span>
         <span class="comment">// at this point</span>
-        <span class="kw">let</span> <span class="ident">max_prev</span> <span class="op">=</span> <span class="ident">hash_table</span>.<span class="ident">prev</span>.<span class="ident">iter</span>().<span class="ident">max</span>().<span class="ident">unwrap</span>();
+        <span class="kw">let</span> <span class="ident">max_prev</span> <span class="op">=</span> <span class="ident">hash_table</span>.<span class="ident">c</span>.<span class="ident">prev</span>.<span class="ident">iter</span>().<span class="ident">max</span>().<span class="ident">unwrap</span>();
         <span class="macro">assert</span><span class="macro">!</span>(<span class="kw-2">*</span><span class="ident">max_prev</span> <span class="op">&gt;</span> <span class="ident">window_size16</span>);
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">pos</span> <span class="op">=</span> <span class="ident">hash_table</span>.<span class="ident">current_head</span>();
@@ -625,6 +695,18 @@
 
             <span class="ident">pos</span> <span class="op">=</span> <span class="ident">hash_table</span>.<span class="ident">get_prev</span>(<span class="ident">pos</span> <span class="kw">as</span> <span class="ident">usize</span>);
             <span class="ident">iterations</span> <span class="op">+=</span> <span class="number">1</span>;
+        }
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="doccomment">/// Ensure that the initial hash values are correct.</span>
+    <span class="kw">fn</span> <span class="ident">initial_chains</span>() {
+        <span class="kw">let</span> <span class="ident">t</span> <span class="op">=</span> <span class="ident">ChainedHashTable</span>::<span class="ident">new</span>();
+        <span class="kw">for</span> (<span class="ident">n</span>, <span class="kw-2">&amp;</span><span class="ident">b</span>) <span class="kw">in</span> <span class="ident">t</span>.<span class="ident">c</span>.<span class="ident">head</span>.<span class="ident">iter</span>().<span class="ident">enumerate</span>() {
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">n</span>, <span class="ident">b</span> <span class="kw">as</span> <span class="ident">usize</span>);
+        }
+        <span class="kw">for</span> (<span class="ident">n</span>, <span class="kw-2">&amp;</span><span class="ident">b</span>) <span class="kw">in</span> <span class="ident">t</span>.<span class="ident">c</span>.<span class="ident">prev</span>.<span class="ident">iter</span>().<span class="ident">enumerate</span>() {
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">n</span>, <span class="ident">b</span> <span class="kw">as</span> <span class="ident">usize</span>);
         }
     }
 }

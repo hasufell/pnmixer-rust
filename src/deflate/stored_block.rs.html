@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/hasufell/.cargo/registry/src/github.com-1ecc6299db9ec823/deflate-0.7.13/src/stored_block.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/jule/.cargo/registry/src/github.com-1ecc6299db9ec823/deflate-0.7.14/src/stored_block.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>stored_block.rs.html -- source</title>
@@ -231,7 +231,7 @@
     <span class="kw">fn</span> <span class="ident">no_compression_string</span>() {
         <span class="kw">let</span> <span class="ident">test_data</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from</span>(
             <span class="string">&quot;This is some text, this is some more text, this is even \
-                                      more text, lots of text here.&quot;</span>,
+             more text, lots of text here.&quot;</span>,
         ).<span class="ident">into_bytes</span>();
         <span class="kw">let</span> <span class="ident">compressed</span> <span class="op">=</span> <span class="ident">compress_data_stored</span>(<span class="kw-2">&amp;</span><span class="ident">test_data</span>);
         <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">decompress_to_end</span>(<span class="kw-2">&amp;</span><span class="ident">compressed</span>);

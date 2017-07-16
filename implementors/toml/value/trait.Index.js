@@ -1,4 +1,5 @@
 (function() {var implementors = {};
+implementors["pnmixerlib"] = [];
 implementors["toml"] = [];
 
             if (window.register_implementors) {

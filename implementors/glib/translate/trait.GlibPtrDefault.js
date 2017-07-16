@@ -6,6 +6,7 @@ implementors["gio"] = [];
 implementors["glib"] = [];
 implementors["gtk"] = ["impl <a class=\"trait\" href=\"glib/translate/trait.GlibPtrDefault.html\" title=\"trait glib::translate::GlibPtrDefault\">GlibPtrDefault</a> for <a class=\"struct\" href=\"gdk/atom/struct.Atom.html\" title=\"struct gdk::atom::Atom\">Atom</a>",];
 implementors["pango"] = [];
+implementors["pnmixerlib"] = ["impl <a class=\"trait\" href=\"glib/translate/trait.GlibPtrDefault.html\" title=\"trait glib::translate::GlibPtrDefault\">GlibPtrDefault</a> for <a class=\"struct\" href=\"gdk/atom/struct.Atom.html\" title=\"struct gdk::atom::Atom\">Atom</a>",];
 
             if (window.register_implementors) {
                 window.register_implementors(implementors);

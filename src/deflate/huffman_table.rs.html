@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/hasufell/.cargo/registry/src/github.com-1ecc6299db9ec823/deflate-0.7.13/src/huffman_table.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/jule/.cargo/registry/src/github.com-1ecc6299db9ec823/deflate-0.7.14/src/huffman_table.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>huffman_table.rs.html -- source</title>
@@ -1681,6 +1681,44 @@
 <span id="1636">1636</span>
 <span id="1637">1637</span>
 <span id="1638">1638</span>
+<span id="1639">1639</span>
+<span id="1640">1640</span>
+<span id="1641">1641</span>
+<span id="1642">1642</span>
+<span id="1643">1643</span>
+<span id="1644">1644</span>
+<span id="1645">1645</span>
+<span id="1646">1646</span>
+<span id="1647">1647</span>
+<span id="1648">1648</span>
+<span id="1649">1649</span>
+<span id="1650">1650</span>
+<span id="1651">1651</span>
+<span id="1652">1652</span>
+<span id="1653">1653</span>
+<span id="1654">1654</span>
+<span id="1655">1655</span>
+<span id="1656">1656</span>
+<span id="1657">1657</span>
+<span id="1658">1658</span>
+<span id="1659">1659</span>
+<span id="1660">1660</span>
+<span id="1661">1661</span>
+<span id="1662">1662</span>
+<span id="1663">1663</span>
+<span id="1664">1664</span>
+<span id="1665">1665</span>
+<span id="1666">1666</span>
+<span id="1667">1667</span>
+<span id="1668">1668</span>
+<span id="1669">1669</span>
+<span id="1670">1670</span>
+<span id="1671">1671</span>
+<span id="1672">1672</span>
+<span id="1673">1673</span>
+<span id="1674">1674</span>
+<span id="1675">1675</span>
+<span id="1676">1676</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
 <span class="kw">use</span> <span class="ident">bit_reverse</span>::<span class="ident">reverse_bits</span>;
@@ -2954,7 +2992,9 @@
 <span class="doccomment">/// Get the length code that corresponds to the length value</span>
 <span class="doccomment">/// Panics if length is out of range.</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_length_code</span>(<span class="ident">length</span>: <span class="ident">u16</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
-    <span class="ident">usize</span>::<span class="ident">from</span>(<span class="ident">LENGTH_CODE</span>[(<span class="ident">length</span> <span class="op">-</span> <span class="ident">MIN_MATCH</span>) <span class="kw">as</span> <span class="ident">usize</span>]) <span class="op">+</span> <span class="ident">LENGTH_BITS_START</span> <span class="kw">as</span> <span class="ident">usize</span>
+    <span class="comment">// Going via an u8 here helps the compiler evade bounds checking.</span>
+    <span class="ident">usize</span>::<span class="ident">from</span>(<span class="ident">LENGTH_CODE</span>[(<span class="ident">length</span>.<span class="ident">wrapping_sub</span>(<span class="ident">MIN_MATCH</span>)) <span class="kw">as</span> <span class="ident">u8</span> <span class="kw">as</span> <span class="ident">usize</span>]) <span class="op">+</span>
+        <span class="ident">LENGTH_BITS_START</span> <span class="kw">as</span> <span class="ident">usize</span>
 }
 
 <span class="doccomment">/// Get the code for the huffman table and the extra bits for the requested length.</span>
@@ -3024,12 +3064,11 @@
 }
 
 <span class="kw">impl</span> <span class="ident">HuffmanCode</span> {
-    <span class="doccomment">/// Create a new huffman code struct, reversing the bits in the code</span>
-    <span class="doccomment">/// Returns None if the code is longer than 15 bits (the maximum allowed by the DEFLATE spec)</span>
-    <span class="kw">fn</span> <span class="ident">from_reversed_bits</span>(<span class="ident">code</span>: <span class="ident">u16</span>, <span class="ident">length</span>: <span class="ident">u8</span>) <span class="op">-&gt;</span> <span class="ident">HuffmanCode</span> {
-        <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">length</span> <span class="op">&lt;=</span> <span class="number">15</span>);
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="doccomment">/// Create a huffman code value from a code and length.</span>
+    <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">code</span>: <span class="ident">u16</span>, <span class="ident">length</span>: <span class="ident">u8</span>) <span class="op">-&gt;</span> <span class="ident">HuffmanCode</span> {
         <span class="ident">HuffmanCode</span> {
-            <span class="ident">code</span>: <span class="ident">reverse_bits</span>(<span class="ident">code</span>, <span class="ident">length</span>),
+            <span class="ident">code</span>: <span class="ident">code</span>,
             <span class="ident">length</span>: <span class="ident">length</span>,
         }
     }
@@ -3045,9 +3084,9 @@
 
 <span class="doccomment">/// Counts the number of values of each length.</span>
 <span class="doccomment">/// Returns a tuple containing the longest length value in the table, it&#39;s position,</span>
-<span class="doccomment">/// and a vector of lengths.</span>
+<span class="doccomment">/// and fills in lengths in the `len_counts` slice.</span>
 <span class="doccomment">/// Returns an error if `table` is empty, or if any of the lengths exceed 15.</span>
-<span class="kw">fn</span> <span class="ident">build_length_count_table</span>(<span class="ident">table</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> (<span class="ident">usize</span>, <span class="ident">usize</span>, <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u16</span><span class="op">&gt;</span>) {
+<span class="kw">fn</span> <span class="ident">build_length_count_table</span>(<span class="ident">table</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="ident">len_counts</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u16</span>; <span class="number">16</span>]) <span class="op">-&gt;</span> (<span class="ident">usize</span>, <span class="ident">usize</span>) {
     <span class="comment">// TODO: Validate the length table properly in debug mode.</span>
     <span class="kw">let</span> <span class="ident">max_length</span> <span class="op">=</span> (<span class="kw-2">*</span><span class="ident">table</span>.<span class="ident">iter</span>().<span class="ident">max</span>().<span class="ident">expect</span>(<span class="string">&quot;BUG! Empty lengths!&quot;</span>)).<span class="ident">into</span>();
 
@@ -3055,7 +3094,6 @@
 
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">max_length_pos</span> <span class="op">=</span> <span class="number">0</span>;
 
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">len_counts</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[<span class="number">0u16</span>; <span class="ident">max_length</span> <span class="op">+</span> <span class="number">1</span>];
     <span class="kw">for</span> (<span class="ident">n</span>, <span class="kw-2">&amp;</span><span class="ident">length</span>) <span class="kw">in</span> <span class="ident">table</span>.<span class="ident">iter</span>().<span class="ident">enumerate</span>() {
         <span class="comment">// TODO: Make sure we don&#39;t have more of one length than we can make</span>
         <span class="comment">// codes for</span>
@@ -3064,21 +3102,15 @@
             <span class="ident">max_length_pos</span> <span class="op">=</span> <span class="ident">n</span>;
         }
     }
-    (<span class="ident">max_length</span>, <span class="ident">max_length_pos</span>, <span class="ident">len_counts</span>)
-}
-
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">create_codes</span>(<span class="ident">length_table</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">HuffmanCode</span><span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">codes</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[<span class="ident">HuffmanCode</span>::<span class="ident">default</span>(); <span class="ident">length_table</span>.<span class="ident">len</span>()];
-    <span class="ident">create_codes_in_place</span>(<span class="ident">codes</span>.<span class="ident">as_mut_slice</span>(), <span class="ident">length_table</span>);
-    <span class="ident">codes</span>
+    (<span class="ident">max_length</span>, <span class="ident">max_length_pos</span>)
 }
 
 <span class="doccomment">/// Generats a vector of huffman codes given a table of bit lengths</span>
 <span class="doccomment">/// Returns an error if any of the lengths are &gt; 15</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">create_codes_in_place</span>(<span class="ident">code_table</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">HuffmanCode</span>], <span class="ident">length_table</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) {
-
-
-    <span class="kw">let</span> (<span class="ident">max_length</span>, <span class="ident">max_length_pos</span>, <span class="ident">lengths</span>) <span class="op">=</span> <span class="ident">build_length_count_table</span>(<span class="ident">length_table</span>);
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">create_codes_in_place</span>(<span class="ident">code_table</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u16</span>], <span class="ident">length_table</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) {
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">len_counts</span> <span class="op">=</span> [<span class="number">0</span>; <span class="number">16</span>];
+    <span class="kw">let</span> (<span class="ident">max_length</span>, <span class="ident">max_length_pos</span>) <span class="op">=</span> <span class="ident">build_length_count_table</span>(<span class="ident">length_table</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">len_counts</span>);
+    <span class="kw">let</span> <span class="ident">lengths</span> <span class="op">=</span> <span class="ident">len_counts</span>;
 
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">code</span> <span class="op">=</span> <span class="number">0u16</span>;
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">next_code</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">with_capacity</span>(<span class="ident">length_table</span>.<span class="ident">len</span>());
@@ -3094,7 +3126,7 @@
         <span class="kw">if</span> <span class="ident">length</span> <span class="op">!=</span> <span class="number">0</span> {
             <span class="comment">// The algorithm generates the code in the reverse bit order, so we need to reverse them</span>
             <span class="comment">// to get the correct codes.</span>
-            <span class="ident">code_table</span>[<span class="ident">n</span>] <span class="op">=</span> <span class="ident">HuffmanCode</span>::<span class="ident">from_reversed_bits</span>(<span class="ident">next_code</span>[<span class="ident">length</span>], <span class="ident">length</span> <span class="kw">as</span> <span class="ident">u8</span>);
+            <span class="ident">code_table</span>[<span class="ident">n</span>] <span class="op">=</span> <span class="ident">reverse_bits</span>(<span class="ident">next_code</span>[<span class="ident">length</span>], <span class="ident">length</span> <span class="kw">as</span> <span class="ident">u8</span>);
             <span class="comment">// We use wrapping here as we would otherwise overflow on the last code</span>
             <span class="comment">// This should be okay as we exit the loop after this so the value is ignored</span>
             <span class="ident">next_code</span>[<span class="ident">length</span>] <span class="op">=</span> <span class="ident">next_code</span>[<span class="ident">length</span>].<span class="ident">wrapping_add</span>(<span class="number">1</span>);
@@ -3105,41 +3137,66 @@
 <span class="doccomment">/// A structure containing the tables of huffman codes for lengths, literals and distances</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">HuffmanTable</span> {
     <span class="comment">// Literal, end of block and length codes</span>
-    <span class="ident">codes</span>: [<span class="ident">HuffmanCode</span>; <span class="number">288</span>],
+    <span class="ident">codes</span>: [<span class="ident">u16</span>; <span class="number">288</span>],
+    <span class="ident">code_lengths</span>: [<span class="ident">u8</span>; <span class="number">288</span>],
     <span class="comment">// Distance codes</span>
-    <span class="ident">distance_codes</span>: [<span class="ident">HuffmanCode</span>; <span class="number">32</span>],
+    <span class="ident">distance_codes</span>: [<span class="ident">u16</span>; <span class="number">32</span>],
+    <span class="ident">distance_code_lengths</span>: [<span class="ident">u8</span>; <span class="number">32</span>],
 }
 
 <span class="kw">impl</span> <span class="ident">HuffmanTable</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">empty</span>() <span class="op">-&gt;</span> <span class="ident">HuffmanTable</span> {
         <span class="ident">HuffmanTable</span> {
-            <span class="ident">codes</span>: [<span class="ident">HuffmanCode</span> { <span class="ident">code</span>: <span class="number">0</span>, <span class="ident">length</span>: <span class="number">0</span> }; <span class="number">288</span>],
-            <span class="ident">distance_codes</span>: [<span class="ident">HuffmanCode</span> { <span class="ident">code</span>: <span class="number">0</span>, <span class="ident">length</span>: <span class="number">0</span> }; <span class="number">32</span>],
+            <span class="ident">codes</span>: [<span class="number">0</span>; <span class="number">288</span>],
+            <span class="ident">code_lengths</span>: [<span class="number">0</span>; <span class="number">288</span>],
+            <span class="ident">distance_codes</span>: [<span class="number">0</span>; <span class="number">32</span>],
+            <span class="ident">distance_code_lengths</span>: [<span class="number">0</span>; <span class="number">32</span>],
         }
     }
 
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_length_tables</span>(<span class="ident">literals_and_lengths</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="ident">distances</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="ident">HuffmanTable</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_length_tables</span>(
+        <span class="ident">literals_and_lengths</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>; <span class="number">288</span>],
+        <span class="ident">distances</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>; <span class="number">32</span>],
+    ) <span class="op">-&gt;</span> <span class="ident">HuffmanTable</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">table</span> <span class="op">=</span> <span class="ident">HuffmanTable</span> {
-            <span class="ident">codes</span>: [<span class="ident">HuffmanCode</span>::<span class="ident">default</span>(); <span class="number">288</span>],
-            <span class="ident">distance_codes</span>: [<span class="ident">HuffmanCode</span>::<span class="ident">default</span>(); <span class="number">32</span>],
+            <span class="ident">codes</span>: [<span class="number">0</span>; <span class="number">288</span>],
+            <span class="ident">code_lengths</span>: <span class="kw-2">*</span><span class="ident">literals_and_lengths</span>,
+            <span class="ident">distance_codes</span>: [<span class="number">0</span>; <span class="number">32</span>],
+            <span class="ident">distance_code_lengths</span>: <span class="kw-2">*</span><span class="ident">distances</span>,
         };
 
-        <span class="ident">create_codes_in_place</span>(<span class="ident">table</span>.<span class="ident">codes</span>.<span class="ident">as_mut</span>(), <span class="ident">literals_and_lengths</span>);
-        <span class="ident">create_codes_in_place</span>(<span class="ident">table</span>.<span class="ident">distance_codes</span>.<span class="ident">as_mut</span>(), <span class="ident">distances</span>);
+        <span class="ident">table</span>.<span class="ident">update_from_lengths</span>();
         <span class="ident">table</span>
     }
 
-    <span class="doccomment">/// Update the `HuffmanTable` from the provided length tables.</span>
-    <span class="doccomment">/// Returns Err if the tables have lengths &gt; 50, the</span>
-    <span class="doccomment">/// tables are too short, or are otherwise not formed correctly.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">update_from_length_tables</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">literals_and_lengths</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="ident">distances</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) {
-        <span class="ident">create_codes_in_place</span>(<span class="self">self</span>.<span class="ident">codes</span>.<span class="ident">as_mut</span>(), <span class="ident">literals_and_lengths</span>);
-        <span class="ident">create_codes_in_place</span>(<span class="self">self</span>.<span class="ident">distance_codes</span>.<span class="ident">as_mut</span>(), <span class="ident">distances</span>)
+    <span class="doccomment">/// Get references to the lenghts of the current huffman codes.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_lengths</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> (<span class="kw-2">&amp;</span>[<span class="ident">u8</span>; <span class="number">288</span>], <span class="kw-2">&amp;</span>[<span class="ident">u8</span>; <span class="number">32</span>]) {
+        (<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">code_lengths</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">distance_code_lengths</span>)
+    }
+
+    <span class="doccomment">/// Get mutable references to the lenghts of the current huffman codes.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Used for updating the lengths in place.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_lengths_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> (<span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>; <span class="number">288</span>], <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>; <span class="number">32</span>]) {
+        (<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">code_lengths</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">distance_code_lengths</span>)
+    }
+
+    <span class="doccomment">/// Update the huffman codes using the existing length values in the huffman table.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">update_from_lengths</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+        <span class="ident">create_codes_in_place</span>(<span class="self">self</span>.<span class="ident">codes</span>.<span class="ident">as_mut</span>(), <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">code_lengths</span>[..]);
+        <span class="ident">create_codes_in_place</span>(
+            <span class="self">self</span>.<span class="ident">distance_codes</span>.<span class="ident">as_mut</span>(),
+            <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">distance_code_lengths</span>[..],
+        );
     }
 
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_to_fixed</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
-        <span class="self">self</span>.<span class="ident">update_from_length_tables</span>(<span class="kw-2">&amp;</span><span class="ident">FIXED_CODE_LENGTHS</span>, <span class="kw-2">&amp;</span><span class="ident">FIXED_CODE_LENGTHS_DISTANCE</span>)
+        <span class="self">self</span>.<span class="ident">code_lengths</span> <span class="op">=</span> <span class="ident">FIXED_CODE_LENGTHS</span>;
+        <span class="self">self</span>.<span class="ident">distance_code_lengths</span> <span class="op">=</span> <span class="ident">FIXED_CODE_LENGTHS_DISTANCE</span>;
+        <span class="self">self</span>.<span class="ident">update_from_lengths</span>();
     }
 
     <span class="doccomment">/// Create a HuffmanTable using the fixed tables specified in the DEFLATE format specification.</span>
@@ -3150,22 +3207,32 @@
         <span class="ident">HuffmanTable</span>::<span class="ident">from_length_tables</span>(<span class="kw-2">&amp;</span><span class="ident">FIXED_CODE_LENGTHS</span>, <span class="kw-2">&amp;</span><span class="ident">FIXED_CODE_LENGTHS_DISTANCE</span>)
     }
 
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">get_ll_huff</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">value</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">HuffmanCode</span> {
+        <span class="ident">HuffmanCode</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">codes</span>[<span class="ident">value</span>], <span class="self">self</span>.<span class="ident">code_lengths</span>[<span class="ident">value</span>])
+    }
+
     <span class="doccomment">/// Get the huffman code from the corresponding literal value</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_literal</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">value</span>: <span class="ident">u8</span>) <span class="op">-&gt;</span> <span class="ident">HuffmanCode</span> {
-        <span class="self">self</span>.<span class="ident">codes</span>[<span class="ident">usize</span>::<span class="ident">from</span>(<span class="ident">value</span>)]
+        <span class="kw">let</span> <span class="ident">index</span> <span class="op">=</span> <span class="ident">usize</span>::<span class="ident">from</span>(<span class="ident">value</span>);
+        <span class="ident">HuffmanCode</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">codes</span>[<span class="ident">index</span>], <span class="self">self</span>.<span class="ident">code_lengths</span>[<span class="ident">index</span>])
     }
 
     <span class="doccomment">/// Get the huffman code for the end of block value</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_end_of_block</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">HuffmanCode</span> {
-        <span class="self">self</span>.<span class="ident">codes</span>[<span class="ident">END_OF_BLOCK_POSITION</span>]
+        <span class="self">self</span>.<span class="ident">get_ll_huff</span>(<span class="ident">END_OF_BLOCK_POSITION</span>)
     }
 
     <span class="doccomment">/// Get the huffman code and extra bits for the specified length</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_length_huffman</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">length</span>: <span class="ident">StoredLength</span>) <span class="op">-&gt;</span> (<span class="ident">HuffmanCode</span>, <span class="ident">HuffmanCode</span>) {
 
         <span class="kw">let</span> <span class="ident">length_data</span> <span class="op">=</span> <span class="ident">get_length_code_and_extra_bits</span>(<span class="ident">length</span>);
 
-        <span class="kw">let</span> <span class="ident">length_huffman_code</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">codes</span>[<span class="ident">length_data</span>.<span class="ident">code_number</span> <span class="kw">as</span> <span class="ident">usize</span>];
+        <span class="kw">let</span> <span class="ident">length_huffman_code</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_ll_huff</span>(<span class="ident">length_data</span>.<span class="ident">code_number</span> <span class="kw">as</span> <span class="ident">usize</span>);
+
         (
             <span class="ident">length_huffman_code</span>,
             <span class="ident">HuffmanCode</span> {
@@ -3178,15 +3245,21 @@
     <span class="doccomment">/// Get the huffman code and extra bits for the specified distance</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Returns None if distance is 0 or above 32768</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_distance_huffman</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">distance</span>: <span class="ident">u16</span>) <span class="op">-&gt;</span> (<span class="ident">HuffmanCode</span>, <span class="ident">HuffmanCode</span>) {
         <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="ident">distance</span> <span class="op">&gt;=</span> <span class="ident">MIN_DISTANCE</span> <span class="op">&amp;&amp;</span> <span class="ident">distance</span> <span class="op">&lt;=</span> <span class="ident">MAX_DISTANCE</span>);
 
         <span class="kw">let</span> <span class="ident">distance_data</span> <span class="op">=</span> <span class="ident">get_distance_code_and_extra_bits</span>(<span class="ident">distance</span>);
 
         <span class="kw">let</span> <span class="ident">distance_huffman_code</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">distance_codes</span>[<span class="ident">distance_data</span>.<span class="ident">code_number</span> <span class="kw">as</span> <span class="ident">usize</span>];
+        <span class="kw">let</span> <span class="ident">distance_huffman_length</span> <span class="op">=</span>
+            <span class="self">self</span>.<span class="ident">distance_code_lengths</span>[<span class="ident">distance_data</span>.<span class="ident">code_number</span> <span class="kw">as</span> <span class="ident">usize</span>];
 
         (
-            <span class="ident">distance_huffman_code</span>,
+            <span class="ident">HuffmanCode</span> {
+                <span class="ident">code</span>: <span class="ident">distance_huffman_code</span>,
+                <span class="ident">length</span>: <span class="ident">distance_huffman_length</span>,
+            },
             <span class="ident">HuffmanCode</span> {
                 <span class="ident">code</span>: <span class="ident">distance_data</span>.<span class="ident">value</span>,
                 <span class="ident">length</span>: <span class="ident">distance_data</span>.<span class="ident">num_bits</span>,
@@ -3270,37 +3343,37 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_length_table_fixed</span>() {
-        <span class="kw">let</span> _ <span class="op">=</span> <span class="ident">build_length_count_table</span>(<span class="kw-2">&amp;</span><span class="ident">FIXED_CODE_LENGTHS</span>);
+        <span class="kw">let</span> _ <span class="op">=</span> <span class="ident">build_length_count_table</span>(<span class="kw-2">&amp;</span><span class="ident">FIXED_CODE_LENGTHS</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="number">0</span>; <span class="number">16</span>]);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="attribute">#[<span class="ident">should_panic</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_length_table_max_length</span>() {
         <span class="kw">let</span> <span class="ident">table</span> <span class="op">=</span> [<span class="number">16u8</span>; <span class="number">288</span>];
-        <span class="ident">build_length_count_table</span>(<span class="kw-2">&amp;</span><span class="ident">table</span>);
+        <span class="ident">build_length_count_table</span>(<span class="kw-2">&amp;</span><span class="ident">table</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="number">0</span>; <span class="number">16</span>]);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="attribute">#[<span class="ident">should_panic</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_empty_table</span>() {
         <span class="kw">let</span> <span class="ident">table</span> <span class="op">=</span> [];
-        <span class="ident">build_length_count_table</span>(<span class="kw-2">&amp;</span><span class="ident">table</span>);
+        <span class="ident">build_length_count_table</span>(<span class="kw-2">&amp;</span><span class="ident">table</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="number">0</span>; <span class="number">16</span>]);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">make_table_fixed</span>() {
         <span class="kw">let</span> <span class="ident">table</span> <span class="op">=</span> <span class="ident">HuffmanTable</span>::<span class="ident">fixed_table</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">table</span>.<span class="ident">codes</span>[<span class="number">0</span>].<span class="ident">code</span>, <span class="number">0b00001100</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">table</span>.<span class="ident">codes</span>[<span class="number">143</span>].<span class="ident">code</span>, <span class="number">0b11111101</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">table</span>.<span class="ident">codes</span>[<span class="number">144</span>].<span class="ident">code</span>, <span class="number">0b000010011</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">table</span>.<span class="ident">codes</span>[<span class="number">255</span>].<span class="ident">code</span>, <span class="number">0b111111111</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">table</span>.<span class="ident">codes</span>[<span class="number">256</span>].<span class="ident">code</span>, <span class="number">0b0000000</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">table</span>.<span class="ident">codes</span>[<span class="number">279</span>].<span class="ident">code</span>, <span class="number">0b1110100</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">table</span>.<span class="ident">codes</span>[<span class="number">280</span>].<span class="ident">code</span>, <span class="number">0b00000011</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">table</span>.<span class="ident">codes</span>[<span class="number">287</span>].<span class="ident">code</span>, <span class="number">0b11100011</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">table</span>.<span class="ident">codes</span>[<span class="number">0</span>], <span class="number">0b00001100</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">table</span>.<span class="ident">codes</span>[<span class="number">143</span>], <span class="number">0b11111101</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">table</span>.<span class="ident">codes</span>[<span class="number">144</span>], <span class="number">0b000010011</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">table</span>.<span class="ident">codes</span>[<span class="number">255</span>], <span class="number">0b111111111</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">table</span>.<span class="ident">codes</span>[<span class="number">256</span>], <span class="number">0b0000000</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">table</span>.<span class="ident">codes</span>[<span class="number">279</span>], <span class="number">0b1110100</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">table</span>.<span class="ident">codes</span>[<span class="number">280</span>], <span class="number">0b00000011</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">table</span>.<span class="ident">codes</span>[<span class="number">287</span>], <span class="number">0b11100011</span>);
 
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">table</span>.<span class="ident">distance_codes</span>[<span class="number">0</span>].<span class="ident">code</span>, <span class="number">0</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">table</span>.<span class="ident">distance_codes</span>[<span class="number">5</span>].<span class="ident">code</span>, <span class="number">20</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">table</span>.<span class="ident">distance_codes</span>[<span class="number">0</span>], <span class="number">0</span>);
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">table</span>.<span class="ident">distance_codes</span>[<span class="number">5</span>], <span class="number">20</span>);
 
         <span class="kw">let</span> <span class="ident">ld</span> <span class="op">=</span> <span class="ident">table</span>.<span class="ident">get_length_distance_code</span>(<span class="number">4</span>, <span class="number">5</span>);
 
@@ -3312,13 +3385,16 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">extra_bits_distance</span>() {
+        <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">mem</span>::<span class="ident">size_of</span>;
         <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">NUM_DISTANCE_CODES</span> {
             <span class="macro">assert_eq</span><span class="macro">!</span>(
                 <span class="ident">num_extra_bits_for_distance_code</span>(<span class="ident">i</span> <span class="kw">as</span> <span class="ident">u8</span>),
                 <span class="ident">DISTANCE_EXTRA_BITS</span>[<span class="ident">i</span>]
             );
         }
+        <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;Size of huffmanCode struct: {}&quot;</span>, <span class="ident">size_of</span>::<span class="op">&lt;</span><span class="ident">HuffmanCode</span><span class="op">&gt;</span>());
     }
+
 }
 </pre>
 </section>

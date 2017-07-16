@@ -2,6 +2,7 @@
 implementors["chrono"] = [];
 implementors["flexi_logger"] = [];
 implementors["num_integer"] = [];
+implementors["pnmixerlib"] = [];
 
             if (window.register_implementors) {
                 window.register_implementors(implementors);

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `libnotify` crate.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, libnotify">
+
+    <title>libnotify - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc mod">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'>Crate libnotify</p><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#functions">Functions</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'libnotify', ty: 'mod', relpath: '../'};</script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Crate <a class="mod" href=''>libnotify</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../src/libnotify/lib.rs.html#1-52' title='goto source code'>[src]</a></span></h1>
+<div class='docblock'><p>Rustic bindings to <a href="https://developer.gnome.org/libnotify/">libnotify</a></p>
+
+<pre class="rust rust-example-rendered">
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">libnotify</span>;
+
+<span class="kw">fn</span> <span class="ident">main</span>() {
+    <span class="comment">// Init libnotify</span>
+    <span class="ident">libnotify</span>::<span class="ident">init</span>(<span class="string">&quot;myapp&quot;</span>).<span class="ident">unwrap</span>();
+    <span class="comment">// Create a new notification (doesn&#39;t show it yet)</span>
+    <span class="kw">let</span> <span class="ident">n</span> <span class="op">=</span> <span class="ident">libnotify</span>::<span class="ident">Notification</span>::<span class="ident">new</span>(<span class="string">&quot;Summary&quot;</span>,
+                                         <span class="prelude-val">Some</span>(<span class="string">&quot;Optional Body&quot;</span>),
+                                         <span class="prelude-val">None</span>);
+    <span class="comment">// Show the notification</span>
+    <span class="ident">n</span>.<span class="ident">show</span>().<span class="ident">unwrap</span>();
+    <span class="comment">// Update the existent notification</span>
+    <span class="ident">n</span>.<span class="ident">update</span>(<span class="string">&quot;I am another notification&quot;</span>, <span class="prelude-val">None</span>, <span class="prelude-val">None</span>).<span class="ident">unwrap</span>();
+    <span class="comment">// Show the updated notification</span>
+    <span class="ident">n</span>.<span class="ident">show</span>().<span class="ident">unwrap</span>();
+    <span class="comment">// We are done, deinit</span>
+    <span class="ident">libnotify</span>::<span class="ident">uninit</span>();
+}
+</pre>
+</div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.Notification.html"
+                                  title='struct libnotify::Notification'>Notification</a></td>
+                           <td class='docblock-short'>
+                                <p><code>Notification</code> represents a passive pop-up notification. It can contain
+summary text, body text, and an icon, as well as hints specifying how
+the notification should be presented. The notification is rendered by
+a notification daemon, and may present the notification in any number
+of ways. As such, there is a clear separation of content and
+presentation, and this API enforces that.</p>
+                           </td>
+                       </tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.Urgency.html"
+                                  title='enum libnotify::Urgency'>Urgency</a></td>
+                           <td class='docblock-short'>
+                                <p>The urgency level of the notification.</p>
+                           </td>
+                       </tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.get_app_name.html"
+                                  title='fn libnotify::get_app_name'>get_app_name</a></td>
+                           <td class='docblock-short'>
+                                <p>Gets the application name registered.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.get_server_caps.html"
+                                  title='fn libnotify::get_server_caps'>get_server_caps</a></td>
+                           <td class='docblock-short'>
+                                <p>Synchronously queries the server for its capabilities and returns them as
+a Vector.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.get_server_info.html"
+                                  title='fn libnotify::get_server_info'>get_server_info</a></td>
+                           <td class='docblock-short'>
+                                <p>Synchronously queries the server for its information, specifically,
+the name, vendor, server version, and the version of the notifications
+specification that it is compliant with.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.init.html"
+                                  title='fn libnotify::init'>init</a></td>
+                           <td class='docblock-short'>
+                                <p>Initialized libnotify. This must be called before any other functions.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.is_initted.html"
+                                  title='fn libnotify::is_initted'>is_initted</a></td>
+                           <td class='docblock-short'>
+                                <p>Gets whether or not libnotify is initialized.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.set_app_name.html"
+                                  title='fn libnotify::set_app_name'>set_app_name</a></td>
+                           <td class='docblock-short'>
+                                <p>Sets the application name.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.uninit.html"
+                                  title='fn libnotify::uninit'>uninit</a></td>
+                           <td class='docblock-short'>
+                                <p>Uninitialized libnotify.</p>
+                           </td>
+                       </tr></table></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "libnotify";
+    </script>
+    <script src="../main.js"></script>
+    <script defer src="../search-index.js"></script>
+</body>
+</html>

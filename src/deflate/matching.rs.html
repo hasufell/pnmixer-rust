@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/hasufell/.cargo/registry/src/github.com-1ecc6299db9ec823/deflate-0.7.13/src/matching.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/jule/.cargo/registry/src/github.com-1ecc6299db9ec823/deflate-0.7.14/src/matching.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>matching.rs.html -- source</title>
@@ -270,11 +270,6 @@
 <span id="225">225</span>
 <span id="226">226</span>
 <span id="227">227</span>
-<span id="228">228</span>
-<span id="229">229</span>
-<span id="230">230</span>
-<span id="231">231</span>
-<span id="232">232</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cmp</span>;
 
@@ -413,11 +408,6 @@
         }
     }
 
-    <span class="comment">/*let r = if best_length &gt; prev_length {
-        best_length
-    } else {
-        0
-    };*/</span>
     <span class="kw">if</span> <span class="ident">best_length</span> <span class="op">&gt;</span> <span class="ident">prev_length</span> {
         (<span class="ident">best_length</span>, <span class="ident">best_distance</span>)
     } <span class="kw">else</span> {

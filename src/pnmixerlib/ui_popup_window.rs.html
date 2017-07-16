@@ -372,6 +372,7 @@
 <span id="327">327</span>
 <span id="328">328</span>
 <span id="329">329</span>
+<span id="330">330</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! The popup window subsystem when the user left-clicks on the tray icon.</span>
 <span class="doccomment">//!</span>
@@ -580,7 +581,8 @@
                 .<span class="ident">popup_window</span>
                 .<span class="ident">popup_window</span>
                 .<span class="ident">hide</span>();
-            <span class="macro">try_w</span><span class="macro">!</span>(<span class="ident">execute_vol_control_command</span>(<span class="kw-2">&amp;</span><span class="ident">apps</span>.<span class="ident">prefs</span>.<span class="ident">borrow</span>()));
+            <span class="kw">let</span> _ <span class="op">=</span> <span class="macro">result_warn</span><span class="macro">!</span>(<span class="ident">execute_vol_control_command</span>(<span class="kw-2">&amp;</span><span class="ident">apps</span>.<span class="ident">prefs</span>.<span class="ident">borrow</span>()),
+                <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">apps</span>.<span class="ident">gui</span>.<span class="ident">popup_menu</span>.<span class="ident">menu_window</span>));
         });
     }
 }

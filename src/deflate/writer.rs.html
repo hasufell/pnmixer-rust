@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/hasufell/.cargo/registry/src/github.com-1ecc6299db9ec823/deflate-0.7.13/src/writer.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/jule/.cargo/registry/src/github.com-1ecc6299db9ec823/deflate-0.7.14/src/writer.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>writer.rs.html -- source</title>
@@ -676,6 +676,36 @@
 <span id="631">631</span>
 <span id="632">632</span>
 <span id="633">633</span>
+<span id="634">634</span>
+<span id="635">635</span>
+<span id="636">636</span>
+<span id="637">637</span>
+<span id="638">638</span>
+<span id="639">639</span>
+<span id="640">640</span>
+<span id="641">641</span>
+<span id="642">642</span>
+<span id="643">643</span>
+<span id="644">644</span>
+<span id="645">645</span>
+<span id="646">646</span>
+<span id="647">647</span>
+<span id="648">648</span>
+<span id="649">649</span>
+<span id="650">650</span>
+<span id="651">651</span>
+<span id="652">652</span>
+<span id="653">653</span>
+<span id="654">654</span>
+<span id="655">655</span>
+<span id="656">656</span>
+<span id="657">657</span>
+<span id="658">658</span>
+<span id="659">659</span>
+<span id="660">660</span>
+<span id="661">661</span>
+<span id="662">662</span>
+<span id="663">663</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::<span class="ident">Write</span>;
 <span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">thread</span>, <span class="ident">io</span>};
@@ -732,7 +762,7 @@
 
     <span class="macro">debug_assert_eq</span><span class="macro">!</span>(
         <span class="ident">deflate_state</span>.<span class="ident">bytes_written</span>,
-        <span class="ident">deflate_state</span>.<span class="ident">bytes_written_control</span>
+        <span class="ident">deflate_state</span>.<span class="ident">bytes_written_control</span>.<span class="ident">get</span>()
     );
 
     <span class="prelude-val">Ok</span>(())
@@ -745,7 +775,11 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// # Examples</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// ```</span>
+<span class="doccomment">/// ```rust</span>
+<span class="doccomment">/// # use std::io;</span>
+<span class="doccomment">/// #</span>
+<span class="doccomment">/// # fn try_main() -&gt; io::Result&lt;Vec&lt;u8&gt;&gt; {</span>
+<span class="doccomment">/// #</span>
 <span class="doccomment">/// use std::io::Write;</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// use deflate::Compression;</span>
@@ -753,9 +787,14 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// let data = b&quot;This is some test data&quot;;</span>
 <span class="doccomment">/// let mut encoder = DeflateEncoder::new(Vec::new(), Compression::Default);</span>
-<span class="doccomment">/// encoder.write_all(data).unwrap();</span>
-<span class="doccomment">/// let compressed_data = encoder.finish().unwrap();</span>
-<span class="doccomment">/// # let _ = compressed_data;</span>
+<span class="doccomment">/// encoder.write_all(data)?;</span>
+<span class="doccomment">/// let compressed_data = encoder.finish()?;</span>
+<span class="doccomment">/// # Ok(compressed_data)</span>
+<span class="doccomment">/// #</span>
+<span class="doccomment">/// # }</span>
+<span class="doccomment">/// # fn main() {</span>
+<span class="doccomment">/// #     try_main().unwrap();</span>
+<span class="doccomment">/// # }</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">/// [`Write`]: https://doc.rust-lang.org/std/io/trait.Write.html</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">DeflateEncoder</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span> {
@@ -765,7 +804,9 @@
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span> <span class="ident">DeflateEncoder</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Creates a new encoder using the provided compression options.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span><span class="op">&lt;</span><span class="ident">O</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">CompressionOptions</span><span class="op">&gt;&gt;</span>(<span class="ident">writer</span>: <span class="ident">W</span>, <span class="ident">options</span>: <span class="ident">O</span>) <span class="op">-&gt;</span> <span class="ident">DeflateEncoder</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span> {
-        <span class="ident">DeflateEncoder</span> { <span class="ident">deflate_state</span>: <span class="ident">DeflateState</span>::<span class="ident">new</span>(<span class="ident">options</span>.<span class="ident">into</span>(), <span class="ident">writer</span>) }
+        <span class="ident">DeflateEncoder</span> {
+            <span class="ident">deflate_state</span>: <span class="ident">DeflateState</span>::<span class="ident">new</span>(<span class="ident">options</span>.<span class="ident">into</span>(), <span class="ident">writer</span>),
+        }
     }
 
     <span class="doccomment">/// Encode all pending data to the contained writer, consume this `DeflateEncoder`,</span>
@@ -829,7 +870,11 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// # Examples</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// ```</span>
+<span class="doccomment">/// ```rust</span>
+<span class="doccomment">/// # use std::io;</span>
+<span class="doccomment">/// #</span>
+<span class="doccomment">/// # fn try_main() -&gt; io::Result&lt;Vec&lt;u8&gt;&gt; {</span>
+<span class="doccomment">/// #</span>
 <span class="doccomment">/// use std::io::Write;</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// use deflate::Compression;</span>
@@ -837,9 +882,14 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// let data = b&quot;This is some test data&quot;;</span>
 <span class="doccomment">/// let mut encoder = ZlibEncoder::new(Vec::new(), Compression::Default);</span>
-<span class="doccomment">/// encoder.write_all(data).unwrap();</span>
-<span class="doccomment">/// let compressed_data = encoder.finish().unwrap();</span>
-<span class="doccomment">/// # let _ = compressed_data;</span>
+<span class="doccomment">/// encoder.write_all(data)?;</span>
+<span class="doccomment">/// let compressed_data = encoder.finish()?;</span>
+<span class="doccomment">/// # Ok(compressed_data)</span>
+<span class="doccomment">/// #</span>
+<span class="doccomment">/// # }</span>
+<span class="doccomment">/// # fn main() {</span>
+<span class="doccomment">/// #     try_main().unwrap();</span>
+<span class="doccomment">/// # }</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">/// [`Write`]: https://doc.rust-lang.org/std/io/trait.Write.html</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ZlibEncoder</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span> {
@@ -967,7 +1017,11 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Examples</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// ```rust</span>
+    <span class="doccomment">/// # use std::io;</span>
+    <span class="doccomment">/// #</span>
+    <span class="doccomment">/// # fn try_main() -&gt; io::Result&lt;Vec&lt;u8&gt;&gt; {</span>
+    <span class="doccomment">/// #</span>
     <span class="doccomment">/// use std::io::Write;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// use deflate::Compression;</span>
@@ -975,9 +1029,14 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// let data = b&quot;This is some test data&quot;;</span>
     <span class="doccomment">/// let mut encoder = GzEncoder::new(Vec::new(), Compression::Default);</span>
-    <span class="doccomment">/// encoder.write_all(data).unwrap();</span>
-    <span class="doccomment">/// let compressed_data = encoder.finish().unwrap();</span>
-    <span class="doccomment">/// # let _ = compressed_data;</span>
+    <span class="doccomment">/// encoder.write_all(data)?;</span>
+    <span class="doccomment">/// let compressed_data = encoder.finish()?;</span>
+    <span class="doccomment">/// # Ok(compressed_data)</span>
+    <span class="doccomment">/// #</span>
+    <span class="doccomment">/// # }</span>
+    <span class="doccomment">/// # fn main() {</span>
+    <span class="doccomment">/// #     try_main().unwrap();</span>
+    <span class="doccomment">/// # }</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// [`Write`]: https://doc.rust-lang.org/std/io/trait.Write.html</span>
     <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">GzEncoder</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span> {
@@ -1010,9 +1069,10 @@
         <span class="doccomment">/// Write header to the output buffer if it hasn&#39;t been done yet.</span>
         <span class="kw">fn</span> <span class="ident">check_write_header</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
             <span class="kw">if</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">header</span>.<span class="ident">is_empty</span>() {
-                <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">deflate_state</span>.<span class="ident">output_buf</span>().<span class="ident">extend_from_slice</span>(
-                    <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">header</span>,
-                );
+                <span class="self">self</span>.<span class="ident">inner</span>
+                    .<span class="ident">deflate_state</span>
+                    .<span class="ident">output_buf</span>()
+                    .<span class="ident">extend_from_slice</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">header</span>);
                 <span class="self">self</span>.<span class="ident">header</span>.<span class="ident">clear</span>();
             }
         }

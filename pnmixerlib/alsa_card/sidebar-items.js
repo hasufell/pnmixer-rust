@@ -1,1 +1,0 @@
-initSidebarItems({"enum":[["AlsaEvent","An \"external\" alsa card event, potentially triggered by anything."]],"struct":[["AlsaCard","A fairly high-level alsa card struct. We save some redundant information in order to access it more easily, in addition to some information that is not purely alsa related (like callbacks)."]]});

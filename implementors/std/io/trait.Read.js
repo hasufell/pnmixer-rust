@@ -12,6 +12,7 @@ implementors["gtk"] = [];
 implementors["libc"] = [];
 implementors["num"] = [];
 implementors["pango"] = [];
+implementors["pnmixerlib"] = ["impl&lt;'a, S&gt; <a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/std/io/trait.Read.html\" title=\"trait std::io::Read\">Read</a> for <a class=\"struct\" href=\"alsa/pcm/struct.IO.html\" title=\"struct alsa::pcm::IO\">IO</a>&lt;'a, S&gt; <span class=\"where fmt-newline\">where<br>&nbsp;&nbsp;&nbsp;&nbsp;S: <a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html\" title=\"trait core::marker::Copy\">Copy</a>,&nbsp;</span>","impl&lt;'a&gt; <a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/std/io/trait.Read.html\" title=\"trait std::io::Read\">Read</a> for <a class=\"struct\" href=\"alsa/rawmidi/struct.IO.html\" title=\"struct alsa::rawmidi::IO\">IO</a>&lt;'a&gt;",];
 implementors["regex_syntax"] = [];
 implementors["serde"] = [];
 implementors["syn"] = [];

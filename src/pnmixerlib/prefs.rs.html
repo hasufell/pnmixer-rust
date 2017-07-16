@@ -333,6 +333,28 @@
 <span id="288">288</span>
 <span id="289">289</span>
 <span id="290">290</span>
+<span id="291">291</span>
+<span id="292">292</span>
+<span id="293">293</span>
+<span id="294">294</span>
+<span id="295">295</span>
+<span id="296">296</span>
+<span id="297">297</span>
+<span id="298">298</span>
+<span id="299">299</span>
+<span id="300">300</span>
+<span id="301">301</span>
+<span id="302">302</span>
+<span id="303">303</span>
+<span id="304">304</span>
+<span id="305">305</span>
+<span id="306">306</span>
+<span id="307">307</span>
+<span id="308">308</span>
+<span id="309">309</span>
+<span id="310">310</span>
+<span id="311">311</span>
+<span id="312">312</span>
 </pre><pre class="rust ">
 <span class="attribute">#<span class="op">!</span>[<span class="ident">allow</span>(<span class="ident">missing_docs</span>)]</span>
 
@@ -501,8 +523,8 @@
     <span class="kw">pub</span> <span class="ident">notifcation_timeout</span>: <span class="ident">i64</span>,
     <span class="kw">pub</span> <span class="ident">notify_mouse_scroll</span>: <span class="ident">bool</span>,
     <span class="kw">pub</span> <span class="ident">notify_popup</span>: <span class="ident">bool</span>,
-    <span class="kw">pub</span> <span class="ident">notify_external</span>: <span class="ident">bool</span>, 
-    <span class="comment">// TODO: notify_hotkeys?</span>
+    <span class="kw">pub</span> <span class="ident">notify_external</span>: <span class="ident">bool</span>,
+    <span class="kw">pub</span> <span class="ident">notify_hotkeys</span>: <span class="ident">bool</span>,
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;notify&quot;</span>)]</span>
@@ -514,8 +536,20 @@
                    <span class="ident">notify_mouse_scroll</span>: <span class="bool-val">true</span>,
                    <span class="ident">notify_popup</span>: <span class="bool-val">true</span>,
                    <span class="ident">notify_external</span>: <span class="bool-val">true</span>,
+                   <span class="ident">notify_hotkeys</span>: <span class="bool-val">true</span>,
                };
     }
+}
+
+
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Deserialize</span>, <span class="ident">Debug</span>, <span class="ident">Serialize</span>, <span class="ident">Default</span>)]</span>
+<span class="doccomment">/// Hotkey preferences.</span>
+<span class="doccomment">/// The `String`s represent gtk accelerator strings.</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">HotkeyPrefs</span> {
+    <span class="kw">pub</span> <span class="ident">enable_hotkeys</span>: <span class="ident">bool</span>,
+    <span class="kw">pub</span> <span class="ident">mute_unmute_key</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">vol_up_key</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">vol_down_key</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
 }
 
 
@@ -527,8 +561,8 @@
     <span class="kw">pub</span> <span class="ident">view_prefs</span>: <span class="ident">ViewPrefs</span>,
     <span class="kw">pub</span> <span class="ident">behavior_prefs</span>: <span class="ident">BehaviorPrefs</span>,
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;notify&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="ident">notify_prefs</span>: <span class="ident">NotifyPrefs</span>, 
-    <span class="comment">// TODO: HotKeys?</span>
+    <span class="kw">pub</span> <span class="ident">notify_prefs</span>: <span class="ident">NotifyPrefs</span>,
+    <span class="kw">pub</span> <span class="ident">hotkey_prefs</span>: <span class="ident">HotkeyPrefs</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">Prefs</span> {
@@ -559,6 +593,7 @@
     }
 
 
+    <span class="comment">// TODO: unused</span>
     <span class="doccomment">/// Reload the current preferences from the config file.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reload_config</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         <span class="macro">debug</span><span class="macro">!</span>(<span class="string">&quot;Reloading config...&quot;</span>);
@@ -573,12 +608,21 @@
     <span class="doccomment">/// Store the current preferences to the config file.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">store_config</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">config_path</span> <span class="op">=</span> <span class="ident">get_xdg_dirs</span>().<span class="ident">place_config_file</span>(<span class="string">&quot;pnmixer.toml&quot;</span>)
-            .<span class="ident">from_err</span>()<span class="question-mark">?</span>;
+            .<span class="ident">chain_err</span>(<span class="op">||</span> {
+                           <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;Could not create config directory at {:?}&quot;</span>,
+                                   <span class="ident">get_xdg_dirs</span>().<span class="ident">get_config_home</span>())
+                       })<span class="question-mark">?</span>;
 
         <span class="macro">debug</span><span class="macro">!</span>(<span class="string">&quot;Storing config in {:?}&quot;</span>, <span class="ident">config_path</span>);
 
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">f</span> <span class="op">=</span> <span class="ident">File</span>::<span class="ident">create</span>(<span class="ident">config_path</span>)<span class="question-mark">?</span>;
-        <span class="ident">f</span>.<span class="ident">write_all</span>(<span class="self">self</span>.<span class="ident">to_str</span>().<span class="ident">as_bytes</span>())<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">f</span> <span class="op">=</span> <span class="ident">File</span>::<span class="ident">create</span>(<span class="ident">config_path</span>.<span class="ident">clone</span>())
+            .<span class="ident">chain_err</span>(<span class="op">||</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;Could not open/create config file {:?} for writing&quot;</span>,
+                       <span class="ident">config_path</span>))<span class="question-mark">?</span>;
+        <span class="ident">f</span>.<span class="ident">write_all</span>(<span class="self">self</span>.<span class="ident">to_str</span>().<span class="ident">as_bytes</span>())
+            .<span class="ident">chain_err</span>(<span class="op">||</span> {
+                           <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;Could not write to config file {:?}&quot;</span>,
+                                   <span class="ident">config_path</span>)
+                       })<span class="question-mark">?</span>;
 
         <span class="kw">return</span> <span class="prelude-val">Ok</span>(());
     }

@@ -5,6 +5,7 @@ implementors["gdk_pixbuf"] = [];
 implementors["gio"] = [];
 implementors["glib"] = [];
 implementors["pango"] = [];
+implementors["pnmixerlib"] = [];
 
             if (window.register_implementors) {
                 window.register_implementors(implementors);

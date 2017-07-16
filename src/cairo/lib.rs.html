@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/hasufell/.cargo/git/checkouts/cairo-e6055a6d391c3fc9/ef0c331/src/lib.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/jule/.cargo/git/checkouts/cairo-e6055a6d391c3fc9/d10d626/src/lib.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>lib.rs.html -- source</title>
@@ -172,6 +172,10 @@
 <span id="127">127</span>
 <span id="128">128</span>
 <span id="129">129</span>
+<span id="130">130</span>
+<span id="131">131</span>
+<span id="132">132</span>
+<span id="133">133</span>
 </pre><pre class="rust ">
 <span class="comment">// Copyright 2013-2016, The Gtk-rs Project Developers.</span>
 <span class="comment">// See the COPYRIGHT file at the top-level directory of this distribution.</span>
@@ -268,6 +272,8 @@
     <span class="ident">ImageSurfaceData</span>,
 };
 
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">pdf_surface</span>::<span class="ident">PDFSurface</span>;
+
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;xcb&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">xcb</span>::{
     <span class="ident">XCBConnection</span>,
@@ -285,6 +291,7 @@
 <span class="kw">mod</span> <span class="ident">font</span>;
 <span class="kw">mod</span> <span class="ident">context</span>;
 <span class="kw">mod</span> <span class="ident">error</span>;
+<span class="kw">mod</span> <span class="ident">pdf_surface</span>;
 <span class="kw">mod</span> <span class="ident">image_surface</span>;
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;png&quot;</span>)]</span>
 <span class="kw">mod</span> <span class="ident">image_surface_png</span>;
@@ -302,6 +309,7 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">windows</span>)]</span>
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">win32_surface</span>::<span class="ident">Win32Surface</span>;
+
 </pre>
 </section>
     <section id='search' class="content hidden"></section>

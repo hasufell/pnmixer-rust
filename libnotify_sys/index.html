@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `libnotify_sys` crate.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, libnotify_sys">
+
+    <title>libnotify_sys - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc mod">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'>Crate libnotify_sys</p><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#constants">Constants</a></li><li><a href="#functions">Functions</a></li><li><a href="#types">Type Definitions</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'libnotify_sys', ty: 'mod', relpath: '../'};</script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Crate <a class="mod" href=''>libnotify_sys</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../src/libnotify_sys/lib.rs.html#4-98' title='goto source code'>[src]</a></span></h1>
+<h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.NotifyNotification.html"
+                                  title='struct libnotify_sys::NotifyNotification'>NotifyNotification</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.NotifyNotificationClass.html"
+                                  title='struct libnotify_sys::NotifyNotificationClass'>NotifyNotificationClass</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.NotifyNotificationPrivate.html"
+                                  title='struct libnotify_sys::NotifyNotificationPrivate'>NotifyNotificationPrivate</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.NotifyUrgency.html"
+                                  title='enum libnotify_sys::NotifyUrgency'>NotifyUrgency</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr></table><h2 id='constants' class='section-header'><a href="#constants">Constants</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.NOTIFY_EXPIRES_DEFAULT.html"
+                                  title='constant libnotify_sys::NOTIFY_EXPIRES_DEFAULT'>NOTIFY_EXPIRES_DEFAULT</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.NOTIFY_EXPIRES_NEVER.html"
+                                  title='constant libnotify_sys::NOTIFY_EXPIRES_NEVER'>NOTIFY_EXPIRES_NEVER</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.NOTIFY_URGENCY_CRITICAL.html"
+                                  title='constant libnotify_sys::NOTIFY_URGENCY_CRITICAL'>NOTIFY_URGENCY_CRITICAL</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.NOTIFY_URGENCY_LOW.html"
+                                  title='constant libnotify_sys::NOTIFY_URGENCY_LOW'>NOTIFY_URGENCY_LOW</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.NOTIFY_URGENCY_NORMAL.html"
+                                  title='constant libnotify_sys::NOTIFY_URGENCY_NORMAL'>NOTIFY_URGENCY_NORMAL</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.NOTIFY_VERSION_MAJOR.html"
+                                  title='constant libnotify_sys::NOTIFY_VERSION_MAJOR'>NOTIFY_VERSION_MAJOR</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.NOTIFY_VERSION_MICRO.html"
+                                  title='constant libnotify_sys::NOTIFY_VERSION_MICRO'>NOTIFY_VERSION_MICRO</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.NOTIFY_VERSION_MINOR.html"
+                                  title='constant libnotify_sys::NOTIFY_VERSION_MINOR'>NOTIFY_VERSION_MINOR</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.notify_get_app_name.html"
+                                  title='fn libnotify_sys::notify_get_app_name'>notify_get_app_name</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.notify_get_server_caps.html"
+                                  title='fn libnotify_sys::notify_get_server_caps'>notify_get_server_caps</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.notify_get_server_info.html"
+                                  title='fn libnotify_sys::notify_get_server_info'>notify_get_server_info</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.notify_init.html"
+                                  title='fn libnotify_sys::notify_init'>notify_init</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.notify_is_initted.html"
+                                  title='fn libnotify_sys::notify_is_initted'>notify_is_initted</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.notify_notification_clear_actions.html"
+                                  title='fn libnotify_sys::notify_notification_clear_actions'>notify_notification_clear_actions</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.notify_notification_clear_hints.html"
+                                  title='fn libnotify_sys::notify_notification_clear_hints'>notify_notification_clear_hints</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.notify_notification_close.html"
+                                  title='fn libnotify_sys::notify_notification_close'>notify_notification_close</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.notify_notification_get_closed_reason.html"
+                                  title='fn libnotify_sys::notify_notification_get_closed_reason'>notify_notification_get_closed_reason</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.notify_notification_get_type.html"
+                                  title='fn libnotify_sys::notify_notification_get_type'>notify_notification_get_type</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.notify_notification_new.html"
+                                  title='fn libnotify_sys::notify_notification_new'>notify_notification_new</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.notify_notification_set_app_name.html"
+                                  title='fn libnotify_sys::notify_notification_set_app_name'>notify_notification_set_app_name</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.notify_notification_set_category.html"
+                                  title='fn libnotify_sys::notify_notification_set_category'>notify_notification_set_category</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.notify_notification_set_hint.html"
+                                  title='fn libnotify_sys::notify_notification_set_hint'>notify_notification_set_hint</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.notify_notification_set_hint_byte.html"
+                                  title='fn libnotify_sys::notify_notification_set_hint_byte'>notify_notification_set_hint_byte</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.notify_notification_set_hint_byte_array.html"
+                                  title='fn libnotify_sys::notify_notification_set_hint_byte_array'>notify_notification_set_hint_byte_array</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.notify_notification_set_hint_double.html"
+                                  title='fn libnotify_sys::notify_notification_set_hint_double'>notify_notification_set_hint_double</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.notify_notification_set_hint_int32.html"
+                                  title='fn libnotify_sys::notify_notification_set_hint_int32'>notify_notification_set_hint_int32</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.notify_notification_set_hint_string.html"
+                                  title='fn libnotify_sys::notify_notification_set_hint_string'>notify_notification_set_hint_string</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.notify_notification_set_hint_uint32.html"
+                                  title='fn libnotify_sys::notify_notification_set_hint_uint32'>notify_notification_set_hint_uint32</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.notify_notification_set_icon_from_pixbuf.html"
+                                  title='fn libnotify_sys::notify_notification_set_icon_from_pixbuf'>notify_notification_set_icon_from_pixbuf</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.notify_notification_set_image_from_pixbuf.html"
+                                  title='fn libnotify_sys::notify_notification_set_image_from_pixbuf'>notify_notification_set_image_from_pixbuf</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.notify_notification_set_timeout.html"
+                                  title='fn libnotify_sys::notify_notification_set_timeout'>notify_notification_set_timeout</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.notify_notification_set_urgency.html"
+                                  title='fn libnotify_sys::notify_notification_set_urgency'>notify_notification_set_urgency</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.notify_notification_show.html"
+                                  title='fn libnotify_sys::notify_notification_show'>notify_notification_show</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.notify_notification_update.html"
+                                  title='fn libnotify_sys::notify_notification_update'>notify_notification_update</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.notify_set_app_name.html"
+                                  title='fn libnotify_sys::notify_set_app_name'>notify_set_app_name</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.notify_uninit.html"
+                                  title='fn libnotify_sys::notify_uninit'>notify_uninit</a><a title='unsafe function' href='#'><sup>⚠</sup></a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr></table><h2 id='types' class='section-header'><a href="#types">Type Definitions</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="type" href="type.NotifyActionCallback.html"
+                                  title='type libnotify_sys::NotifyActionCallback'>NotifyActionCallback</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr></table></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "libnotify_sys";
+    </script>
+    <script src="../main.js"></script>
+    <script defer src="../search-index.js"></script>
+</body>
+</html>

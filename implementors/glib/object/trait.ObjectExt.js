@@ -6,6 +6,7 @@ implementors["gio"] = [];
 implementors["glib"] = [];
 implementors["gtk"] = [];
 implementors["pango"] = [];
+implementors["pnmixerlib"] = [];
 
             if (window.register_implementors) {
                 window.register_implementors(implementors);

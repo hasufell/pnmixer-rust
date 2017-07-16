@@ -11,6 +11,7 @@ implementors["gtk"] = [];
 implementors["libc"] = [];
 implementors["num"] = [];
 implementors["pango"] = [];
+implementors["pnmixerlib"] = ["impl <a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/core/ops/arith/trait.Neg.html\" title=\"trait core::ops::arith::Neg\">Neg</a> for <a class=\"struct\" href=\"time/duration/struct.Duration.html\" title=\"struct time::duration::Duration\">Duration</a>",];
 implementors["regex_syntax"] = [];
 implementors["serde"] = [];
 implementors["syn"] = [];
