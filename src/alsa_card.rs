@@ -316,7 +316,6 @@ extern "C" fn watch_cb(chan: *mut glib_sys::GIOChannel,
                 error!("GIO error has occurred");
                 cb(AlsaEvent::AlsaCardError);
             }
-            _ => warn!("Unknown status from g_io_channel_read_chars()"),
         }
         return true as glib_sys::gboolean;
     }

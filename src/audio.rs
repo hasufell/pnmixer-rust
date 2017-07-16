@@ -1,4 +1,5 @@
 #![allow(missing_docs)] // enums
+#![allow(illegal_floating_point_literal_pattern)]
 
 //! High-level audio subsystem.
 //!
@@ -443,6 +444,5 @@ fn on_alsa_event(last_action_timestamp: &mut i64,
                             self::AudioSignal::ValuesChanged,
                             self::AudioUser::Unknown);
         }
-        e => warn!("Unhandled alsa event: {:?}", e),
     }
 }

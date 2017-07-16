@@ -6,16 +6,11 @@ extern crate pnmixerlib;
 use pnmixerlib::*;
 
 use app_state::*;
-#[cfg(feature = "notify")]
-use libnotify::*;
 use std::rc::Rc;
+
 
 fn main() {
     gtk::init().unwrap();
-
-    // TODO: error handling
-    #[cfg(feature = "notify")]
-    init("PNMixer-rs").unwrap();
 
     flexi_logger::LogOptions::new()
        .log_to_file(false)
@@ -29,6 +24,5 @@ fn main() {
 
     gtk::main();
 
-    #[cfg(feature = "notify")]
-    uninit();
+    // TODO: clean deallocation?
 }

@@ -51,6 +51,6 @@ Pretty much the same. Differences are:
 TODO
 ----
 
-- [ ] [hotkey support](https://github.com/hasufell/pnmixer-rust/issues/5)
+- [x] [hotkey support](https://github.com/hasufell/pnmixer-rust/issues/5)
 - [ ] [translation](https://github.com/hasufell/pnmixer-rust/issues/4)
 - [X] [documentation](https://github.com/hasufell/pnmixer-rust/issues/3)

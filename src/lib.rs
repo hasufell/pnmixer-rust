@@ -59,11 +59,16 @@ pub extern crate gtk;
 extern crate gtk_sys;
 extern crate libc;
 extern crate png;
+extern crate w_result;
 extern crate which;
+extern crate x11;
 extern crate xdg;
 
 #[cfg(feature = "notify")]
-extern crate libnotify;
+pub extern crate libnotify;
+
+#[macro_use]
+extern crate lazy_static;
 
 #[macro_use]
 mod errors;
@@ -74,6 +79,9 @@ mod glade_helpers;
 mod alsa_card;
 pub mod app_state;
 mod audio;
+mod gdk_x11;
+mod hotkey;
+mod hotkeys;
 mod prefs;
 mod support_alsa;
 mod support_audio;
@@ -81,6 +89,7 @@ mod support_cmd;
 #[macro_use]
 mod support_ui;
 pub mod ui_entry;
+mod ui_hotkey_dialog;
 mod ui_popup_menu;
 mod ui_popup_window;
 mod ui_prefs_dialog;
@@ -88,3 +97,6 @@ mod ui_tray_icon;
 
 #[cfg(feature = "notify")]
 mod notif;
+
+
+// TODO: run_error_dialog an more occasions
