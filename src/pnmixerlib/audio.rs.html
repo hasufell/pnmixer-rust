@@ -493,6 +493,7 @@
 <span id="448">448</span>
 </pre><pre class="rust ">
 <span class="attribute">#<span class="op">!</span>[<span class="ident">allow</span>(<span class="ident">missing_docs</span>)]</span> <span class="comment">// enums</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">allow</span>(<span class="ident">illegal_floating_point_literal_pattern</span>)]</span>
 
 <span class="doccomment">//! High-level audio subsystem.</span>
 <span class="doccomment">//!</span>
@@ -937,7 +938,6 @@
                             <span class="self">self</span>::<span class="ident">AudioSignal</span>::<span class="ident">ValuesChanged</span>,
                             <span class="self">self</span>::<span class="ident">AudioUser</span>::<span class="ident">Unknown</span>);
         }
-        <span class="ident">e</span> <span class="op">=&gt;</span> <span class="macro">warn</span><span class="macro">!</span>(<span class="string">&quot;Unhandled alsa event: {:?}&quot;</span>, <span class="ident">e</span>),
     }
 }
 </pre>

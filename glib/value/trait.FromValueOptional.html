@@ -48,7 +48,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/glib/value.rs.html#444-446' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../../src/glib/value.rs.html#445-447' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait FromValueOptional&lt;'a&gt;: <a class="trait" href="../../glib/types/trait.StaticType.html" title="trait glib::types::StaticType">StaticType</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a> {
     unsafe fn <a href='#tymethod.from_value_optional' class='fnname'>from_value_optional</a>(_: &amp;'a <a class="struct" href="../../glib/value/struct.Value.html" title="struct glib::value::Value">Value</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Self&gt;;
 }</pre><div class='docblock'><p>Extracts a value.</p>
@@ -62,6 +62,7 @@
         <ul class='item-list' id='implementors-list'>
     <li><code>impl&lt;'a&gt; FromValueOptional&lt;'a&gt; for <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a></code></li>
 <li><code>impl&lt;'a&gt; FromValueOptional&lt;'a&gt; for &amp;'a <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a></code></li>
+<li><code>impl&lt;'a, T:&nbsp;<a class="trait" href="../../glib/object/trait.IsA.html" title="trait glib::object::IsA">IsA</a>&lt;<a class="struct" href="../../glib/object/struct.Object.html" title="struct glib::object::Object">Object</a>&gt;&gt; FromValueOptional&lt;'a&gt; for T</code></li>
 <li><code>impl&lt;'a&gt; FromValueOptional&lt;'a&gt; for <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></li>
 <li><code>impl&lt;'a&gt; FromValueOptional&lt;'a&gt; for <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i8.html">i8</a></code></li>
 <li><code>impl&lt;'a&gt; FromValueOptional&lt;'a&gt; for <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a></code></li>

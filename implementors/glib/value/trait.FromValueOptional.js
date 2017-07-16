@@ -4,7 +4,7 @@ implementors["gdk"] = ["impl&lt;'a&gt; <a class=\"trait\" href=\"glib/value/trai
 implementors["gdk_pixbuf"] = [];
 implementors["gio"] = [];
 implementors["glib"] = [];
-implementors["gtk"] = ["impl&lt;'a&gt; <a class=\"trait\" href=\"glib/value/trait.FromValueOptional.html\" title=\"trait glib::value::FromValueOptional\">FromValueOptional</a>&lt;'a&gt; for <a class=\"struct\" href=\"gdk/rgba/struct.RGBA.html\" title=\"struct gdk::rgba::RGBA\">RGBA</a>","impl&lt;'a&gt; <a class=\"trait\" href=\"glib/value/trait.FromValueOptional.html\" title=\"trait glib::value::FromValueOptional\">FromValueOptional</a>&lt;'a&gt; for <a class=\"struct\" href=\"gtk/struct.Rectangle.html\" title=\"struct gtk::Rectangle\">Rectangle</a>",];
+implementors["gtk"] = ["impl&lt;'a&gt; <a class=\"trait\" href=\"glib/value/trait.FromValueOptional.html\" title=\"trait glib::value::FromValueOptional\">FromValueOptional</a>&lt;'a&gt; for <a class=\"struct\" href=\"gtk/struct.Rectangle.html\" title=\"struct gtk::Rectangle\">Rectangle</a>","impl&lt;'a&gt; <a class=\"trait\" href=\"glib/value/trait.FromValueOptional.html\" title=\"trait glib::value::FromValueOptional\">FromValueOptional</a>&lt;'a&gt; for <a class=\"struct\" href=\"gdk/rgba/struct.RGBA.html\" title=\"struct gdk::rgba::RGBA\">RGBA</a>",];
 implementors["pango"] = [];
 
             if (window.register_implementors) {
