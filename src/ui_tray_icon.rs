@@ -96,16 +96,14 @@ impl TrayIcon {
 
 
     /// Update the tooltip of the tray icon.
-    fn update_tooltip(&self, audio: &Audio) {
-        let cardname = audio.acard
-            .borrow()
-            .card_name()
-            .unwrap_or(String::from("Unknown card"));
-        let channame = audio.acard
-            .borrow()
-            .chan_name()
-            .unwrap_or(String::from("unknown channel"));
-        let vol = audio.vol()
+    fn update_tooltip<T>(&self, audio: &T)
+        where T: AudioFrontend
+    {
+        let cardname =
+            audio.card_name().unwrap_or(String::from("Unknown card"));
+        let channame =
+            audio.chan_name().unwrap_or(String::from("unknown channel"));
+        let vol = audio.get_vol()
             .map(|s| format!("{}", s.round()))
             .unwrap_or(String::from("unknown volume"));
         let mute_info = {
@@ -127,11 +125,13 @@ impl TrayIcon {
 
 
     /// Update the whole tray icon state.
-    pub fn update_all(&self,
-                      prefs: &Prefs,
-                      audio: &Audio,
-                      m_size: Option<i32>)
-                      -> Result<()> {
+    pub fn update_all<T>(&self,
+                         prefs: &Prefs,
+                         audio: &T,
+                         m_size: Option<i32>)
+                         -> Result<()>
+        where T: AudioFrontend
+    {
         match m_size {
             Some(s) => {
                 if s < ICON_MIN_SIZE {
@@ -153,8 +153,8 @@ impl TrayIcon {
             *self.volmeter.borrow_mut() = Some(volmeter);
         }
 
-        self.update_tooltip(&audio);
-        return self.update_vol_meter(audio.vol()?, audio.vol_level());
+        self.update_tooltip(audio);
+        return self.update_vol_meter(audio.get_vol()?, audio.vol_level());
     }
 }
 
@@ -378,7 +378,9 @@ impl AudioPix {
 
 
 /// Initialize the tray icon subsystem.
-pub fn init_tray_icon(appstate: Rc<AppS>) {
+pub fn init_tray_icon<T>(appstate: Rc<AppS<T>>)
+    where T: AudioFrontend + 'static
+{
     let tray_icon = &appstate.gui.tray_icon;
 
     tray_icon.status_icon.set_visible(true);
@@ -388,9 +390,9 @@ pub fn init_tray_icon(appstate: Rc<AppS>) {
         let apps = appstate.clone();
         appstate.audio.connect_handler(Box::new(move |s, u| match (s, u) {
                                                     (_, _) => {
-            apps.gui.tray_icon.update_tooltip(&apps.audio);
+            apps.gui.tray_icon.update_tooltip(apps.audio.as_ref());
             try_w!(apps.gui.tray_icon.update_vol_meter(try_w!(apps.audio
-                                                                  .vol()),
+                                                                  .get_vol()),
                                                        apps.audio.vol_level()));
         }
                                                 }));
@@ -401,7 +403,7 @@ pub fn init_tray_icon(appstate: Rc<AppS>) {
         let apps = appstate.clone();
         tray_icon.status_icon.connect_size_changed(move |_, size| {
             try_wr!(apps.gui.tray_icon.update_all(&apps.prefs.borrow_mut(),
-                                                  &apps.audio,
+                                                  apps.audio.as_ref(),
                                                   Some(size)),
                     false);
             return false;
@@ -448,15 +450,17 @@ pub fn init_tray_icon(appstate: Rc<AppS>) {
                     ));
         default_theme.connect_changed(move |_| {
             let tray_icon = &apps.gui.tray_icon;
-            let audio = &apps.audio;
-            try_e!(tray_icon.update_all(&apps.prefs.borrow_mut(), &audio, None));
+            try_e!(tray_icon.update_all(&apps.prefs.borrow_mut(),
+                apps.audio.as_ref(), None));
         });
     }
 }
 
 
 /// When the tray icon is activated.
-fn on_tray_icon_activate(appstate: &AppS) {
+fn on_tray_icon_activate<T>(appstate: &AppS<T>)
+    where T: AudioFrontend
+{
     let popup_window = &appstate.gui.popup_window.popup_window;
 
     if popup_window.get_visible() {
@@ -468,7 +472,9 @@ fn on_tray_icon_activate(appstate: &AppS) {
 
 
 /// When the popup menu is shown, hide the popup window, if any.
-fn on_tray_icon_popup_menu(appstate: &AppS) {
+fn on_tray_icon_popup_menu<T>(appstate: &AppS<T>)
+    where T: AudioFrontend
+{
     let popup_window = &appstate.gui.popup_window.popup_window;
     let popup_menu = &appstate.gui.popup_menu.menu;
 
@@ -479,9 +485,11 @@ fn on_tray_icon_popup_menu(appstate: &AppS) {
 
 /// When the mouse scroll event happens while the mouse pointer is
 /// on the tray icon.
-fn on_tray_icon_scroll_event(appstate: &AppS,
-                             event: &gdk::EventScroll)
-                             -> bool {
+fn on_tray_icon_scroll_event<T>(appstate: &AppS<T>,
+                                event: &gdk::EventScroll)
+                                -> bool
+    where T: AudioFrontend
+{
 
     let scroll_dir: gdk::ScrollDirection = event.get_direction();
     match scroll_dir {
@@ -511,9 +519,11 @@ fn on_tray_icon_scroll_event(appstate: &AppS,
 /// Basically when the tray icon is clicked (although we connect to the `release`
 /// event). This decides whether it was a left, right or middle-click and
 /// takes appropriate actions.
-fn on_tray_button_release_event(appstate: &Rc<AppS>,
-                                event_button: &gdk::EventButton)
-                                -> bool {
+fn on_tray_button_release_event<T>(appstate: &Rc<AppS<T>>,
+                                   event_button: &gdk::EventButton)
+                                   -> bool
+    where T: AudioFrontend + 'static
+{
     let button = event_button.get_button();
 
     if button != 2 {

@@ -3,7 +3,7 @@
 
 
 use app_state::*;
-use audio::{AudioUser, AudioSignal};
+use audio::*;
 use errors::*;
 use gdk;
 use gtk::ResponseType;
@@ -334,7 +334,9 @@ impl PrefsDialog {
 
 /// Show the preferences dialog. This is created and destroyed dynamically
 /// and not persistent across the application lifetime.
-pub fn show_prefs_dialog(appstate: &Rc<AppS>) {
+pub fn show_prefs_dialog<T>(appstate: &Rc<AppS<T>>)
+    where T: AudioFrontend + 'static
+{
     if appstate.gui
            .prefs_dialog
            .borrow()
@@ -359,7 +361,9 @@ pub fn show_prefs_dialog(appstate: &Rc<AppS>) {
 
 /// Initialize the internal prefs dialog handler that connects to the audio
 /// system.
-pub fn init_prefs_callback(appstate: Rc<AppS>) {
+pub fn init_prefs_callback<T>(appstate: Rc<AppS<T>>)
+    where T: AudioFrontend + 'static
+{
     let apps = appstate.clone();
     appstate.audio.connect_handler(Box::new(move |s, u| {
         /* skip if prefs window is not present */
@@ -383,7 +387,9 @@ pub fn init_prefs_callback(appstate: Rc<AppS>) {
 
 
 /// Initialize the preferences dialog gtk callbacks.
-fn init_prefs_dialog(appstate: &Rc<AppS>) {
+fn init_prefs_dialog<T>(appstate: &Rc<AppS<T>>)
+    where T: AudioFrontend + 'static
+{
 
     /* prefs_dialog.connect_show */
     {
@@ -486,7 +492,9 @@ fn init_prefs_dialog(appstate: &Rc<AppS>) {
 
 
 /// Fill the card combo box in the Devices tab.
-fn fill_card_combo(appstate: &AppS) {
+fn fill_card_combo<T>(appstate: &AppS<T>)
+    where T: AudioFrontend
+{
     let m_cc = appstate.gui.prefs_dialog.borrow();
     let card_combo = &m_cc.as_ref().unwrap().card_combo;
     card_combo.remove_all();
@@ -513,7 +521,9 @@ fn fill_card_combo(appstate: &AppS) {
 
 
 /// Fill the channel combo box in the Devices tab.
-fn fill_chan_combo(appstate: &AppS, cardname: Option<String>) {
+fn fill_chan_combo<T>(appstate: &AppS<T>, cardname: Option<String>)
+    where T: AudioFrontend
+{
     let m_cc = appstate.gui.prefs_dialog.borrow();
     let chan_combo = &m_cc.as_ref().unwrap().chan_combo;
     chan_combo.remove_all();
@@ -543,10 +553,12 @@ fn fill_chan_combo(appstate: &AppS, cardname: Option<String>) {
 }
 
 
-fn on_hotkey_event_box_button_press_event(appstate: &AppS,
-                                          widget: &gtk::EventBox,
-                                          event: &gdk::EventButton)
-                                          -> bool {
+fn on_hotkey_event_box_button_press_event<T>(appstate: &AppS<T>,
+                                             widget: &gtk::EventBox,
+                                             event: &gdk::EventButton)
+                                             -> bool
+    where T: AudioFrontend
+{
     let borrow = appstate.gui.prefs_dialog.borrow();
     let prefs_dialog = &borrow.as_ref().unwrap();
     /* we want a left-click */

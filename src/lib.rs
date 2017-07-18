@@ -97,4 +97,3 @@ pub mod ui_tray_icon;
 
 #[cfg(feature = "notify")]
 pub mod notif;
-

@@ -5,7 +5,7 @@
 //! before they can be interpreted by Gtk/Gdk.
 
 
-use audio::{Audio, AudioUser};
+use audio::*;
 use errors::*;
 use errors;
 use gdk;
@@ -23,22 +23,26 @@ use x11;
 
 
 /// The possible Hotkeys for manipulating the volume.
-pub struct Hotkeys {
+pub struct Hotkeys<T>
+    where T: AudioFrontend
+{
     enabled: bool,
     mute_key: Option<Hotkey>,
     up_key: Option<Hotkey>,
     down_key: Option<Hotkey>,
 
     // need this to access audio in 'key_filter'
-    audio: Rc<Audio>,
+    audio: Rc<T>,
     auto_unmute: bool,
 }
 
-impl Hotkeys {
+impl<T> Hotkeys<T>
+    where T: AudioFrontend
+{
     /// Creates the hotkeys subsystem and binds the hotkeys.
     pub fn new(prefs: &Prefs,
-               audio: Rc<Audio>)
-               -> WResult<Box<Hotkeys>, errors::Error, errors::Error> {
+               audio: Rc<T>)
+               -> WResult<Box<Hotkeys<T>>, errors::Error, errors::Error> {
         debug!("Creating hotkeys control");
         let mut hotkeys =
             Box::new(Hotkeys {
@@ -55,10 +59,10 @@ impl Hotkeys {
         /* bind hotkeys */
         let data_ptr =
             unsafe {
-                mem::transmute::<&Hotkeys,
+                mem::transmute::<&Hotkeys<T>,
                                  glib_sys::gpointer>(hotkeys.as_ref())
             };
-        hotkeys_add_filter(Some(key_filter), data_ptr);
+        hotkeys_add_filter(Some(key_filter::<T>), data_ptr);
         return WOk(hotkeys, warn);
     }
 
@@ -159,8 +163,8 @@ impl Hotkeys {
         }
 
         let data_ptr =
-            unsafe { mem::transmute::<&Hotkeys, glib_sys::gpointer>(self) };
-        hotkeys_add_filter(Some(key_filter), data_ptr);
+            unsafe { mem::transmute::<&Hotkeys<T>, glib_sys::gpointer>(self) };
+        hotkeys_add_filter(Some(key_filter::<T>), data_ptr);
     }
 
     /// Unbind hotkeys manually. Should be paired with a `bind()` call.
@@ -186,22 +190,25 @@ impl Hotkeys {
         }
 
         let data_ptr =
-            unsafe { mem::transmute::<&Hotkeys, glib_sys::gpointer>(self) };
-        hotkeys_remove_filter(Some(key_filter), data_ptr);
+            unsafe { mem::transmute::<&Hotkeys<T>, glib_sys::gpointer>(self) };
+        hotkeys_remove_filter(Some(key_filter::<T>), data_ptr);
     }
 }
 
-impl Drop for Hotkeys {
+impl<T> Drop for Hotkeys<T>
+    where T: AudioFrontend
+{
     fn drop(&mut self) {
         debug!("Freeing hotkeys");
         self.mute_key = None;
         self.up_key = None;
         self.down_key = None;
 
-        let data_ptr =
-            unsafe { mem::transmute::<&mut Hotkeys, glib_sys::gpointer>(self) };
+        let data_ptr = unsafe {
+            mem::transmute::<&mut Hotkeys<T>, glib_sys::gpointer>(self)
+        };
 
-        hotkeys_remove_filter(Some(key_filter), data_ptr)
+        hotkeys_remove_filter(Some(key_filter::<T>), data_ptr)
     }
 }
 
@@ -243,14 +250,16 @@ fn hotkeys_remove_filter(function: gdk_sys::GdkFilterFunc,
 
 /// This function is called before Gtk/Gdk can respond
 /// to any(!) window event and handles pressed hotkeys.
-extern "C" fn key_filter(gdk_xevent: *mut gdk_sys::GdkXEvent,
-                         _: *mut gdk_sys::GdkEvent,
-                         data: glib_sys::gpointer)
-                         -> gdk_sys::GdkFilterReturn {
+extern "C" fn key_filter<T>(gdk_xevent: *mut gdk_sys::GdkXEvent,
+                            _: *mut gdk_sys::GdkEvent,
+                            data: glib_sys::gpointer)
+                            -> gdk_sys::GdkFilterReturn
+    where T: AudioFrontend
+{
     let xevent = gdk_xevent as *mut x11::xlib::XKeyEvent;
 
-    let hotkeys: &Hotkeys =
-        unsafe { mem::transmute::<glib_sys::gpointer, &Hotkeys>(data) };
+    let hotkeys: &Hotkeys<T> =
+        unsafe { mem::transmute::<glib_sys::gpointer, &Hotkeys<T>>(data) };
     let mute_key = &hotkeys.mute_key;
     let up_key = &hotkeys.up_key;
     let down_key = &hotkeys.down_key;
