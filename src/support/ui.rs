@@ -17,7 +17,7 @@ use std::path::*;
 pub fn copy_pixbuf(pixbuf: &gdk_pixbuf::Pixbuf) -> gdk_pixbuf::Pixbuf {
 
     let new_pixbuf = unsafe {
-        let gdk_pixbuf = pixbuf.to_glib_full();
+        let gdk_pixbuf = pixbuf.to_glib_none().0;
         let copy = gdk_pixbuf_sys::gdk_pixbuf_copy(gdk_pixbuf);
         FromGlibPtrFull::from_glib_full(copy)
     };
