@@ -5,18 +5,18 @@
 //! before they can be interpreted by Gtk/Gdk.
 
 
-use audio_frontend::*;
+use audio::frontend::*;
 use errors::*;
 use errors;
 use gdk;
 use gdk_sys;
-use gdk_x11;
 use glib::translate::*;
 use glib_sys;
 use hotkey::*;
 use prefs::*;
 use std::mem;
 use std::rc::Rc;
+use support::gdk_x11;
 use w_result::*;
 use x11;
 
@@ -24,7 +24,8 @@ use x11;
 
 /// The possible Hotkeys for manipulating the volume.
 pub struct Hotkeys<T>
-    where T: AudioFrontend
+where
+    T: AudioFrontend,
 {
     enabled: bool,
     mute_key: Option<Hotkey>,
@@ -37,31 +38,30 @@ pub struct Hotkeys<T>
 }
 
 impl<T> Hotkeys<T>
-    where T: AudioFrontend
+where
+    T: AudioFrontend,
 {
     /// Creates the hotkeys subsystem and binds the hotkeys.
-    pub fn new(prefs: &Prefs,
-               audio: Rc<T>)
-               -> WResult<Box<Hotkeys<T>>, errors::Error, errors::Error> {
+    pub fn new(
+        prefs: &Prefs,
+        audio: Rc<T>,
+    ) -> WResult<Box<Hotkeys<T>>, errors::Error, errors::Error> {
         debug!("Creating hotkeys control");
-        let mut hotkeys =
-            Box::new(Hotkeys {
-                         enabled: false,
-                         mute_key: None,
-                         up_key: None,
-                         down_key: None,
-                         audio: audio,
-                         auto_unmute: prefs.behavior_prefs.unmute_on_vol_change,
-                     });
+        let mut hotkeys = Box::new(Hotkeys {
+            enabled: false,
+            mute_key: None,
+            up_key: None,
+            down_key: None,
+            audio: audio,
+            auto_unmute: prefs.behavior_prefs.unmute_on_vol_change,
+        });
         let mut warn = vec![];
         push_warning!(hotkeys.reload(prefs), warn);
 
         /* bind hotkeys */
-        let data_ptr =
-            unsafe {
-                mem::transmute::<&Hotkeys<T>,
-                                 glib_sys::gpointer>(hotkeys.as_ref())
-            };
+        let data_ptr = unsafe {
+            mem::transmute::<&Hotkeys<T>, glib_sys::gpointer>(hotkeys.as_ref())
+        };
         hotkeys_add_filter(Some(key_filter::<T>), data_ptr);
         return WOk(hotkeys, warn);
     }
@@ -135,29 +135,17 @@ impl<T> Hotkeys<T>
     pub fn bind(&self) {
         debug!("Bind hotkeys");
         if self.mute_key.is_some() {
-            if self.mute_key
-                   .as_ref()
-                   .unwrap()
-                   .grab()
-                   .is_err() {
+            if self.mute_key.as_ref().unwrap().grab().is_err() {
                 warn!("Could not grab mute key");
             };
         }
         if self.up_key.is_some() {
-            if self.up_key
-                   .as_ref()
-                   .unwrap()
-                   .grab()
-                   .is_err() {
+            if self.up_key.as_ref().unwrap().grab().is_err() {
                 warn!("Could not grab volume up key");
             };
         }
         if self.down_key.is_some() {
-            if self.down_key
-                   .as_ref()
-                   .unwrap()
-                   .grab()
-                   .is_err() {
+            if self.down_key.as_ref().unwrap().grab().is_err() {
                 warn!("Could not grab volume down key");
             };
         }
@@ -171,22 +159,13 @@ impl<T> Hotkeys<T>
     pub fn unbind(&self) {
         debug!("Unbind hotkeys");
         if self.mute_key.is_some() {
-            self.mute_key
-                .as_ref()
-                .unwrap()
-                .ungrab();
+            self.mute_key.as_ref().unwrap().ungrab();
         }
         if self.up_key.is_some() {
-            self.up_key
-                .as_ref()
-                .unwrap()
-                .ungrab();
+            self.up_key.as_ref().unwrap().ungrab();
         }
         if self.down_key.is_some() {
-            self.down_key
-                .as_ref()
-                .unwrap()
-                .ungrab();
+            self.down_key.as_ref().unwrap().ungrab();
         }
 
         let data_ptr =
@@ -196,7 +175,8 @@ impl<T> Hotkeys<T>
 }
 
 impl<T> Drop for Hotkeys<T>
-    where T: AudioFrontend
+where
+    T: AudioFrontend,
 {
     fn drop(&mut self) {
         debug!("Freeing hotkeys");
@@ -215,13 +195,15 @@ impl<T> Drop for Hotkeys<T>
 
 /// Attaches the `key_filter()` function as a filter
 /// to the root window, so it will intercept window events.
-fn hotkeys_add_filter(function: gdk_sys::GdkFilterFunc,
-                      data: glib_sys::gpointer) {
+fn hotkeys_add_filter(
+    function: gdk_sys::GdkFilterFunc,
+    data: glib_sys::gpointer,
+) {
     // TODO: all the unwrapping :/
     let window = gdk_x11::gdk_x11_window_foreign_new_for_display(
         &mut gdk::Display::get_default().unwrap(),
-        gdk_x11::gdk_x11_get_default_root_xwindow()
-        ).unwrap();
+        gdk_x11::gdk_x11_get_default_root_xwindow(),
+    ).unwrap();
 
     unsafe {
         gdk_sys::gdk_window_add_filter(window.to_glib_none().0, function, data);
@@ -231,18 +213,22 @@ fn hotkeys_add_filter(function: gdk_sys::GdkFilterFunc,
 
 /// Removes the previously attached `key_filter()` function from
 /// the root window.
-fn hotkeys_remove_filter(function: gdk_sys::GdkFilterFunc,
-                         data: glib_sys::gpointer) {
+fn hotkeys_remove_filter(
+    function: gdk_sys::GdkFilterFunc,
+    data: glib_sys::gpointer,
+) {
     // TODO: all the unwrapping :/
     let window = gdk_x11::gdk_x11_window_foreign_new_for_display(
         &mut gdk::Display::get_default().unwrap(),
-        gdk_x11::gdk_x11_get_default_root_xwindow()
-        ).unwrap();
+        gdk_x11::gdk_x11_get_default_root_xwindow(),
+    ).unwrap();
 
     unsafe {
-        gdk_sys::gdk_window_remove_filter(window.to_glib_none().0,
-                                          function,
-                                          data);
+        gdk_sys::gdk_window_remove_filter(
+            window.to_glib_none().0,
+            function,
+            data,
+        );
     }
 
 }
@@ -250,11 +236,13 @@ fn hotkeys_remove_filter(function: gdk_sys::GdkFilterFunc,
 
 /// This function is called before Gtk/Gdk can respond
 /// to any(!) window event and handles pressed hotkeys.
-extern "C" fn key_filter<T>(gdk_xevent: *mut gdk_sys::GdkXEvent,
-                            _: *mut gdk_sys::GdkEvent,
-                            data: glib_sys::gpointer)
-                            -> gdk_sys::GdkFilterReturn
-    where T: AudioFrontend
+extern "C" fn key_filter<T>(
+    gdk_xevent: *mut gdk_sys::GdkXEvent,
+    _: *mut gdk_sys::GdkEvent,
+    data: glib_sys::gpointer,
+) -> gdk_sys::GdkFilterReturn
+where
+    T: AudioFrontend,
 {
     let xevent = gdk_xevent as *mut x11::xlib::XKeyEvent;
 
@@ -275,25 +263,31 @@ extern "C" fn key_filter<T>(gdk_xevent: *mut gdk_sys::GdkXEvent,
 
 
     if mute_key.as_ref().is_some() &&
-       mute_key.as_ref()
-           .unwrap()
-           .matches(xevent_key as i32,
-                    gdk::ModifierType::from_bits(xevent_state).unwrap()) {
+        mute_key.as_ref().unwrap().matches(
+            xevent_key as i32,
+            gdk::ModifierType::from_bits(xevent_state)
+                .unwrap(),
+        )
+    {
         just_warn!(audio.toggle_mute(AudioUser::Hotkeys));
     } else if up_key.as_ref().is_some() &&
-              up_key.as_ref()
-                  .unwrap()
-                  .matches(xevent_key as i32,
-                           gdk::ModifierType::from_bits(xevent_state)
-                               .unwrap()) {
+               up_key.as_ref().unwrap().matches(
+            xevent_key as i32,
+            gdk::ModifierType::from_bits(
+                xevent_state,
+            ).unwrap(),
+        )
+    {
         just_warn!(audio.increase_vol(AudioUser::Hotkeys, hotkeys.auto_unmute));
 
     } else if down_key.as_ref().is_some() &&
-              down_key.as_ref()
-                  .unwrap()
-                  .matches(xevent_key as i32,
-                           gdk::ModifierType::from_bits(xevent_state)
-                               .unwrap()) {
+               down_key.as_ref().unwrap().matches(
+            xevent_key as i32,
+            gdk::ModifierType::from_bits(
+                xevent_state,
+            ).unwrap(),
+        )
+    {
         just_warn!(audio.decrease_vol(AudioUser::Hotkeys, hotkeys.auto_unmute));
     }
 

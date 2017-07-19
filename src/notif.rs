@@ -5,7 +5,7 @@
 
 
 use app_state::*;
-use audio_frontend::*;
+use audio::frontend::*;
 use errors::*;
 use glib::prelude::*;
 use libnotify;
@@ -63,18 +63,23 @@ impl Notif {
         self.from_external.set(prefs.notify_prefs.notify_external);
 
         self.volume_notif.set_timeout(timeout as i32);
-        self.volume_notif.set_hint("x-canonical-private-synchronous",
-                                   Some("".to_variant()));
+        self.volume_notif.set_hint(
+            "x-canonical-private-synchronous",
+            Some("".to_variant()),
+        );
 
 
         self.text_notif.set_timeout(timeout as i32);
-        self.text_notif.set_hint("x-canonical-private-synchronous",
-                                 Some("".to_variant()));
+        self.text_notif.set_hint(
+            "x-canonical-private-synchronous",
+            Some("".to_variant()),
+        );
     }
 
     /// Shows a volume notification, e.g. for volume or mute state change.
     pub fn show_volume_notif<T>(&self, audio: &T) -> Result<()>
-        where T: AudioFrontend
+    where
+        T: AudioFrontend,
     {
         let vol = audio.get_vol()?;
         let vol_level = audio.vol_level();
@@ -93,17 +98,24 @@ impl Notif {
             match vol_level {
                 VolLevel::Muted => String::from("Volume muted"),
                 _ => {
-                    format!("{} ({})\nVolume: {}",
-                            audio.card_name()?,
-                            audio.chan_name()?,
-                            vol as i32)
+                    format!(
+                        "{} ({})\nVolume: {}",
+                        audio.card_name()?,
+                        audio.chan_name()?,
+                        vol as i32
+                    )
                 }
             }
         };
 
         // TODO: error handling
-        self.volume_notif.update(summary.as_str(), None, Some(icon)).unwrap();
-        self.volume_notif.set_hint("value", Some((vol as i32).to_variant()));
+        self.volume_notif
+            .update(summary.as_str(), None, Some(icon))
+            .unwrap();
+        self.volume_notif.set_hint(
+            "value",
+            Some((vol as i32).to_variant()),
+        );
         // TODO: error handling
         self.volume_notif.show().unwrap();
 
@@ -132,7 +144,8 @@ impl Drop for Notif {
 
 /// Initialize the notification subsystem.
 pub fn init_notify<T>(appstate: Rc<AppS<T>>)
-    where T: AudioFrontend + 'static
+where
+    T: AudioFrontend + 'static,
 {
     {
         /* connect handler */

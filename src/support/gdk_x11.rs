@@ -18,8 +18,10 @@ mod ffi {
     extern "C" {
         pub fn gdk_x11_get_default_xdisplay() -> *mut Display;
         pub fn gdk_x11_get_default_root_xwindow() -> Window;
-        pub fn gdk_x11_window_foreign_new_for_display(display: *mut GdkDisplay,
-window: Window) -> * mut GdkWindow;
+        pub fn gdk_x11_window_foreign_new_for_display(
+            display: *mut GdkDisplay,
+            window: Window,
+        ) -> *mut GdkWindow;
     }
 }
 
@@ -64,14 +66,17 @@ pub fn gdk_x11_get_default_root_xwindow() -> Window {
 ///
 /// a GdkWindow wrapper for the native window, or `None` if the window has been
 /// destroyed. The wrapper will be newly created, if one doesn’t exist already.
-pub fn gdk_x11_window_foreign_new_for_display(gdk_display: &mut gdk::Display,
-                                              xwindow: Window)
-                                              -> Option<gdk::Window> {
+pub fn gdk_x11_window_foreign_new_for_display(
+    gdk_display: &mut gdk::Display,
+    xwindow: Window,
+) -> Option<gdk::Window> {
     unsafe {
         let display: *mut GdkDisplay =
             mut_override(gdk_display.to_glib_none().0);
 
-        return from_glib_full(
-            ffi::gdk_x11_window_foreign_new_for_display(display, xwindow));
+        return from_glib_full(ffi::gdk_x11_window_foreign_new_for_display(
+            display,
+            xwindow,
+        ));
     }
 }

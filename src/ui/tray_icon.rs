@@ -5,7 +5,7 @@
 
 
 use app_state::*;
-use audio_frontend::*;
+use audio::frontend::*;
 use errors::*;
 use gdk;
 use gdk_pixbuf;
@@ -16,9 +16,9 @@ use prefs::{Prefs, MiddleClickAction};
 use std::cell::Cell;
 use std::cell::RefCell;
 use std::rc::Rc;
-use support_cmd::*;
-use support_ui::*;
-use ui_prefs_dialog::show_prefs_dialog;
+use support::cmd::*;
+use support::ui::*;
+use ui::prefs_dialog::show_prefs_dialog;
 
 
 
@@ -63,21 +63,22 @@ impl TrayIcon {
         let status_icon = gtk::StatusIcon::new();
 
         return Ok(TrayIcon {
-                      _cant_construct: (),
-                      volmeter,
-                      audio_pix: RefCell::new(audio_pix),
-                      status_icon,
-                      icon_size: Cell::new(ICON_MIN_SIZE),
-                  });
+            _cant_construct: (),
+            volmeter,
+            audio_pix: RefCell::new(audio_pix),
+            status_icon,
+            icon_size: Cell::new(ICON_MIN_SIZE),
+        });
     }
 
 
     /// Update the volume meter Pixbuf, which is drawn on top of the
     /// actual Pixbuf.
-    fn update_vol_meter(&self,
-                        cur_vol: f64,
-                        vol_level: VolLevel)
-                        -> Result<()> {
+    fn update_vol_meter(
+        &self,
+        cur_vol: f64,
+        vol_level: VolLevel,
+    ) -> Result<()> {
         let audio_pix = self.audio_pix.borrow();
         let pixbuf = audio_pix.select_pix(vol_level);
 
@@ -97,13 +98,15 @@ impl TrayIcon {
 
     /// Update the tooltip of the tray icon.
     fn update_tooltip<T>(&self, audio: &T)
-        where T: AudioFrontend
+    where
+        T: AudioFrontend,
     {
         let cardname =
             audio.card_name().unwrap_or(String::from("Unknown card"));
         let channame =
             audio.chan_name().unwrap_or(String::from("unknown channel"));
-        let vol = audio.get_vol()
+        let vol = audio
+            .get_vol()
             .map(|s| format!("{}", s.round()))
             .unwrap_or(String::from("unknown volume"));
         let mute_info = {
@@ -115,22 +118,27 @@ impl TrayIcon {
                 ""
             }
         };
-        self.status_icon.set_tooltip_text(format!("{} ({})\nVolume: {}{}",
-                                                  cardname,
-                                                  channame,
-                                                  vol,
-                                                  mute_info)
-                                                  .as_str());
+        self.status_icon.set_tooltip_text(
+            format!(
+                "{} ({})\nVolume: {}{}",
+                cardname,
+                channame,
+                vol,
+                mute_info
+            ).as_str(),
+        );
     }
 
 
     /// Update the whole tray icon state.
-    pub fn update_all<T>(&self,
-                         prefs: &Prefs,
-                         audio: &T,
-                         m_size: Option<i32>)
-                         -> Result<()>
-        where T: AudioFrontend
+    pub fn update_all<T>(
+        &self,
+        prefs: &Prefs,
+        audio: &T,
+        m_size: Option<i32>,
+    ) -> Result<()>
+    where
+        T: AudioFrontend,
     {
         match m_size {
             Some(s) => {
@@ -178,32 +186,38 @@ impl VolMeter {
     /// Constructor. `width` and `row` are initialized with default values.
     fn new(prefs: &Prefs) -> VolMeter {
         return VolMeter {
-                   red: (prefs.view_prefs.vol_meter_color.red * 255.0) as u8,
-                   green: (prefs.view_prefs.vol_meter_color.green * 255.0) as
-                          u8,
-                   blue: (prefs.view_prefs.vol_meter_color.blue * 255.0) as u8,
-                   x_offset_pct: prefs.view_prefs.vol_meter_offset as i64,
-                   y_offset_pct: 10,
-                   /* dynamic */
-                   width: Cell::new(0),
-                   row: RefCell::new(vec![]),
-               };
+            red: (prefs.view_prefs.vol_meter_color.red * 255.0) as u8,
+            green: (prefs.view_prefs.vol_meter_color.green * 255.0) as u8,
+            blue: (prefs.view_prefs.vol_meter_color.blue * 255.0) as u8,
+            x_offset_pct: prefs.view_prefs.vol_meter_offset as i64,
+            y_offset_pct: 10,
+            /* dynamic */
+            width: Cell::new(0),
+            row: RefCell::new(vec![]),
+        };
     }
 
     // TODO: cache input pixbuf?
     /// Draw the volume meter on top of the actual tray icon Pixbuf.
-    fn meter_draw(&self,
-                  volume: i64,
-                  pixbuf: &gdk_pixbuf::Pixbuf)
-                  -> Result<gdk_pixbuf::Pixbuf> {
+    fn meter_draw(
+        &self,
+        volume: i64,
+        pixbuf: &gdk_pixbuf::Pixbuf,
+    ) -> Result<gdk_pixbuf::Pixbuf> {
 
-        ensure!(pixbuf.get_colorspace() == gdk_pixbuf_sys::GDK_COLORSPACE_RGB,
-                "Invalid colorspace in pixbuf");
-        ensure!(pixbuf.get_bits_per_sample() == 8,
-                "Invalid bits per sample in pixbuf");
+        ensure!(
+            pixbuf.get_colorspace() == gdk_pixbuf_sys::GDK_COLORSPACE_RGB,
+            "Invalid colorspace in pixbuf"
+        );
+        ensure!(
+            pixbuf.get_bits_per_sample() == 8,
+            "Invalid bits per sample in pixbuf"
+        );
         ensure!(pixbuf.get_has_alpha(), "No alpha channel in pixbuf");
-        ensure!(pixbuf.get_n_channels() == 4,
-                "Invalid number of channels in pixbuf");
+        ensure!(
+            pixbuf.get_n_channels() == 4,
+            "Invalid number of channels in pixbuf"
+        );
 
         let i_width = pixbuf.get_width() as i64;
         let i_height = pixbuf.get_height() as i64;
@@ -212,16 +226,21 @@ impl VolMeter {
 
         let vm_width = i_width / 6;
         let x = (self.x_offset_pct as f64 *
-                 ((i_width - vm_width) as f64 / 100.0)) as i64;
-        ensure!(x >= 0 && (x + vm_width) <= i_width,
-                "x coordinate invalid: {}",
-                x);
+                     ((i_width - vm_width) as f64 / 100.0)) as
+            i64;
+        ensure!(
+            x >= 0 && (x + vm_width) <= i_width,
+            "x coordinate invalid: {}",
+            x
+        );
         let y = (self.y_offset_pct as f64 * (i_height as f64 / 100.0)) as i64;
         let vm_height =
             ((i_height - (y * 2)) as f64 * (volume as f64 / 100.0)) as i64;
-        ensure!(y >= 0 && (y + vm_height) <= i_height,
-                "y coordinate invalid: {}",
-                y);
+        ensure!(
+            y >= 0 && (y + vm_height) <= i_height,
+            "y coordinate invalid: {}",
+            y
+        );
 
         /* Let's check if the icon width changed, in which case we
          * must reinit our internal row of pixels.
@@ -257,8 +276,9 @@ impl VolMeter {
                 let p_index = ((row_offset * rowstride) + col_offset) as usize;
 
                 let row = self.row.borrow();
-                pixels[p_index..p_index + row.len()]
-                    .copy_from_slice(row.as_ref());
+                pixels[p_index..p_index + row.len()].copy_from_slice(
+                    row.as_ref(),
+                );
 
             }
         }
@@ -283,22 +303,22 @@ pub struct AudioPix {
 
 impl Default for AudioPix {
     fn default() -> AudioPix {
-        let dummy_pixbuf =
-            unsafe {
-                gdk_pixbuf::Pixbuf::new(gdk_pixbuf_sys::GDK_COLORSPACE_RGB,
-                                        false,
-                                        8,
-                                        1,
-                                        1)
-                        .unwrap()
-            };
+        let dummy_pixbuf = unsafe {
+            gdk_pixbuf::Pixbuf::new(
+                gdk_pixbuf_sys::GDK_COLORSPACE_RGB,
+                false,
+                8,
+                1,
+                1,
+            ).unwrap()
+        };
         return AudioPix {
-                   muted: dummy_pixbuf.clone(),
-                   low: dummy_pixbuf.clone(),
-                   medium: dummy_pixbuf.clone(),
-                   high: dummy_pixbuf.clone(),
-                   off: dummy_pixbuf.clone(),
-               };
+            muted: dummy_pixbuf.clone(),
+            low: dummy_pixbuf.clone(),
+            medium: dummy_pixbuf.clone(),
+            high: dummy_pixbuf.clone(),
+            off: dummy_pixbuf.clone(),
+        };
     }
 }
 
@@ -352,11 +372,21 @@ impl AudioPix {
                 }
             } else {
                 AudioPix {
-                    muted: pixbuf_new_from_png!("../data/pixmaps/pnmixer-muted.png")?,
-                    low: pixbuf_new_from_png!("../data/pixmaps/pnmixer-low.png")?,
-                    medium: pixbuf_new_from_png!("../data/pixmaps/pnmixer-medium.png")?,
-                    high: pixbuf_new_from_png!("../data/pixmaps/pnmixer-high.png")?,
-                    off: pixbuf_new_from_png!("../data/pixmaps/pnmixer-off.png")?,
+                    muted: pixbuf_new_from_png!(
+                        "../../data/pixmaps/pnmixer-muted.png"
+                    )?,
+                    low: pixbuf_new_from_png!(
+                        "../../data/pixmaps/pnmixer-low.png"
+                    )?,
+                    medium: pixbuf_new_from_png!(
+                        "../../data/pixmaps/pnmixer-medium.png"
+                    )?,
+                    high: pixbuf_new_from_png!(
+                        "../../data/pixmaps/pnmixer-high.png"
+                    )?,
+                    off: pixbuf_new_from_png!(
+                        "../../data/pixmaps/pnmixer-off.png"
+                    )?,
                 }
             }
         };
@@ -379,7 +409,8 @@ impl AudioPix {
 
 /// Initialize the tray icon subsystem.
 pub fn init_tray_icon<T>(appstate: Rc<AppS<T>>)
-    where T: AudioFrontend + 'static
+where
+    T: AudioFrontend + 'static,
 {
     let tray_icon = &appstate.gui.tray_icon;
 
@@ -388,24 +419,31 @@ pub fn init_tray_icon<T>(appstate: Rc<AppS<T>>)
     /* connect audio handler */
     {
         let apps = appstate.clone();
-        appstate.audio.connect_handler(Box::new(move |s, u| match (s, u) {
-                                                    (_, _) => {
-            apps.gui.tray_icon.update_tooltip(apps.audio.as_ref());
-            try_w!(apps.gui.tray_icon.update_vol_meter(try_w!(apps.audio
-                                                                  .get_vol()),
-                                                       apps.audio.vol_level()));
-        }
-                                                }));
+        appstate.audio.connect_handler(
+            Box::new(move |s, u| match (s, u) {
+                (_, _) => {
+                    apps.gui.tray_icon.update_tooltip(apps.audio.as_ref());
+                    try_w!(apps.gui.tray_icon.update_vol_meter(
+                        try_w!(apps.audio.get_vol()),
+                        apps.audio.vol_level(),
+                    ));
+                }
+            }),
+        );
     }
 
     /* tray_icon.connect_size_changed */
     {
         let apps = appstate.clone();
         tray_icon.status_icon.connect_size_changed(move |_, size| {
-            try_wr!(apps.gui.tray_icon.update_all(&apps.prefs.borrow_mut(),
-                                                  apps.audio.as_ref(),
-                                                  Some(size)),
-                    false);
+            try_wr!(
+                apps.gui.tray_icon.update_all(
+                    &apps.prefs.borrow_mut(),
+                    apps.audio.as_ref(),
+                    Some(size),
+                ),
+                false
+            );
             return false;
         });
     }
@@ -413,9 +451,9 @@ pub fn init_tray_icon<T>(appstate: Rc<AppS<T>>)
     /* tray_icon.connect_activate */
     {
         let apps = appstate.clone();
-        tray_icon.status_icon.connect_activate(move |_| {
-                                                   on_tray_icon_activate(&apps)
-                                               });
+        tray_icon.status_icon.connect_activate(
+            move |_| on_tray_icon_activate(&apps),
+        );
     }
 
     /* tray_icon.connect_scroll_event */
@@ -446,12 +484,15 @@ pub fn init_tray_icon<T>(appstate: Rc<AppS<T>>)
     {
         let apps = appstate.clone();
         let default_theme = try_w!(gtk::IconTheme::get_default().ok_or(
-                        "Couldn't get default icon theme",
-                    ));
+            "Couldn't get default icon theme",
+        ));
         default_theme.connect_changed(move |_| {
             let tray_icon = &apps.gui.tray_icon;
-            try_e!(tray_icon.update_all(&apps.prefs.borrow_mut(),
-                apps.audio.as_ref(), None));
+            try_e!(tray_icon.update_all(
+                &apps.prefs.borrow_mut(),
+                apps.audio.as_ref(),
+                None,
+            ));
         });
     }
 }
@@ -459,7 +500,8 @@ pub fn init_tray_icon<T>(appstate: Rc<AppS<T>>)
 
 /// When the tray icon is activated.
 fn on_tray_icon_activate<T>(appstate: &AppS<T>)
-    where T: AudioFrontend
+where
+    T: AudioFrontend,
 {
     let popup_window = &appstate.gui.popup_window.popup_window;
 
@@ -473,7 +515,8 @@ fn on_tray_icon_activate<T>(appstate: &AppS<T>)
 
 /// When the popup menu is shown, hide the popup window, if any.
 fn on_tray_icon_popup_menu<T>(appstate: &AppS<T>)
-    where T: AudioFrontend
+where
+    T: AudioFrontend,
 {
     let popup_window = &appstate.gui.popup_window.popup_window;
     let popup_menu = &appstate.gui.popup_menu.menu;
@@ -485,29 +528,41 @@ fn on_tray_icon_popup_menu<T>(appstate: &AppS<T>)
 
 /// When the mouse scroll event happens while the mouse pointer is
 /// on the tray icon.
-fn on_tray_icon_scroll_event<T>(appstate: &AppS<T>,
-                                event: &gdk::EventScroll)
-                                -> bool
-    where T: AudioFrontend
+fn on_tray_icon_scroll_event<T>(
+    appstate: &AppS<T>,
+    event: &gdk::EventScroll,
+) -> bool
+where
+    T: AudioFrontend,
 {
 
     let scroll_dir: gdk::ScrollDirection = event.get_direction();
     match scroll_dir {
         gdk::ScrollDirection::Up => {
-            try_wr!(appstate.audio.increase_vol(AudioUser::TrayIcon,
-                                                appstate.prefs
-                                                    .borrow()
-                                                    .behavior_prefs
-                                                    .unmute_on_vol_change),
-                    false);
+            try_wr!(
+                appstate.audio.increase_vol(
+                    AudioUser::TrayIcon,
+                    appstate
+                        .prefs
+                        .borrow()
+                        .behavior_prefs
+                        .unmute_on_vol_change,
+                ),
+                false
+            );
         }
         gdk::ScrollDirection::Down => {
-            try_wr!(appstate.audio.decrease_vol(AudioUser::TrayIcon,
-                                                appstate.prefs
-                                                    .borrow()
-                                                    .behavior_prefs
-                                                    .unmute_on_vol_change),
-                    false);
+            try_wr!(
+                appstate.audio.decrease_vol(
+                    AudioUser::TrayIcon,
+                    appstate
+                        .prefs
+                        .borrow()
+                        .behavior_prefs
+                        .unmute_on_vol_change,
+                ),
+                false
+            );
         }
         _ => (),
     }
@@ -519,10 +574,12 @@ fn on_tray_icon_scroll_event<T>(appstate: &AppS<T>,
 /// Basically when the tray icon is clicked (although we connect to the `release`
 /// event). This decides whether it was a left, right or middle-click and
 /// takes appropriate actions.
-fn on_tray_button_release_event<T>(appstate: &Rc<AppS<T>>,
-                                   event_button: &gdk::EventButton)
-                                   -> bool
-    where T: AudioFrontend + 'static
+fn on_tray_button_release_event<T>(
+    appstate: &Rc<AppS<T>>,
+    event_button: &gdk::EventButton,
+) -> bool
+where
+    T: AudioFrontend + 'static,
 {
     let button = event_button.get_button();
 
@@ -545,14 +602,18 @@ fn on_tray_button_release_event<T>(appstate: &Rc<AppS<T>>,
         // TODO
         &MiddleClickAction::ShowPreferences => show_prefs_dialog(&appstate),
         &MiddleClickAction::VolumeControl => {
-            let _ = result_warn!(execute_vol_control_command(&appstate.prefs.borrow()),
-                Some(&appstate.gui.popup_menu.menu_window));
+            let _ = result_warn!(
+                execute_vol_control_command(&appstate.prefs.borrow()),
+                Some(&appstate.gui.popup_menu.menu_window)
+            );
         }
         &MiddleClickAction::CustomCommand => {
             match custom_command {
                 &Some(ref cmd) => {
-                    let _ = result_warn!(execute_command(cmd.as_str()),
-                        Some(&appstate.gui.popup_menu.menu_window));
+                    let _ = result_warn!(
+                        execute_command(cmd.as_str()),
+                        Some(&appstate.gui.popup_menu.menu_window)
+                    );
                 }
                 &None => warn!("No custom command found"),
             }

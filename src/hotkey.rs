@@ -7,11 +7,11 @@
 use errors::*;
 use gdk;
 use gdk_sys;
-use gdk_x11::*;
 use gtk;
-use x11;
 use libc::c_int;
 use libc::c_uint;
+use support::gdk_x11::*;
+use x11;
 
 
 /// `xmodmap -pm`
@@ -50,8 +50,9 @@ impl Hotkey {
         let mod_bits = mods.bits();
         let sym =
             unsafe { x11::xlib::XkbKeycodeToKeysym(display, code as u8, 0, 0) };
-        let gtk_accel = gtk::accelerator_name(sym as u32, mods)
-            .ok_or("Could net get accelerator name")?;
+        let gtk_accel = gtk::accelerator_name(sym as u32, mods).ok_or(
+            "Could net get accelerator name",
+        )?;
 
         let hotkey = Hotkey {
             code,
@@ -84,13 +85,15 @@ impl Hotkey {
         /* Grab the key */
         for key in KEY_MASKS.iter() {
             unsafe {
-                x11::xlib::XGrabKey(display,
-                                    self.code,
-                                    self.mod_bits | key,
-                                    gdk_x11_get_default_root_xwindow(),
-                                    1,
-                                    x11::xlib::GrabModeAsync,
-                                    x11::xlib::GrabModeAsync);
+                x11::xlib::XGrabKey(
+                    display,
+                    self.code,
+                    self.mod_bits | key,
+                    gdk_x11_get_default_root_xwindow(),
+                    1,
+                    x11::xlib::GrabModeAsync,
+                    x11::xlib::GrabModeAsync,
+                );
             }
         }
 
@@ -119,10 +122,12 @@ impl Hotkey {
 
         for key in KEY_MASKS.iter() {
             unsafe {
-                x11::xlib::XUngrabKey(display,
-                                      self.code,
-                                      self.mod_bits | key,
-                                      gdk_x11_get_default_root_xwindow());
+                x11::xlib::XUngrabKey(
+                    display,
+                    self.code,
+                    self.mod_bits | key,
+                    gdk_x11_get_default_root_xwindow(),
+                );
             }
         }
     }
@@ -159,8 +164,10 @@ pub fn hotkey_accel_to_code(accel: &str) -> (gdk::key, gdk::ModifierType) {
 
     unsafe {
         if sym != 0 {
-            return (x11::xlib::XKeysymToKeycode(display, sym as u64) as i32,
-                    mods);
+            return (
+                x11::xlib::XKeysymToKeycode(display, sym as u64) as i32,
+                mods,
+            );
         } else {
             return (-1, mods);
         }
@@ -170,9 +177,10 @@ pub fn hotkey_accel_to_code(accel: &str) -> (gdk::key, gdk::ModifierType) {
 
 static mut GRAB_ERROR: u8 = 0;
 
-extern "C" fn grab_error_handler(_: *mut x11::xlib::Display,
-                                 _: *mut x11::xlib::XErrorEvent)
-                                 -> c_int {
+extern "C" fn grab_error_handler(
+    _: *mut x11::xlib::Display,
+    _: *mut x11::xlib::XErrorEvent,
+) -> c_int {
     warn!("Error while grabbing hotkey");
     unsafe {
         GRAB_ERROR = 1;

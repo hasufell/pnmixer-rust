@@ -1,16 +1,16 @@
 //! Global application state.
 
 
-use alsa_backend::*;
-use audio_frontend::*;
+use audio::alsa::backend::*;
+use audio::frontend::*;
 use errors::*;
 use gtk;
 use hotkeys::Hotkeys;
 use prefs::*;
 use std::cell::RefCell;
 use std::rc::Rc;
-use support_audio::*;
-use ui_entry::Gui;
+use support::audio::*;
+use ui::entry::Gui;
 
 #[cfg(feature = "notify")]
 use notif::*;
@@ -20,7 +20,8 @@ use notif::*;
 // TODO: destructors
 /// The global application state struct.
 pub struct AppS<T>
-    where T: AudioFrontend
+where
+    T: AudioFrontend,
 {
     _cant_construct: (),
     /// Mostly static GUI state.
@@ -42,56 +43,55 @@ pub struct AppS<T>
 pub fn new_alsa_appstate() -> AppS<AlsaBackend> {
     let prefs = RefCell::new(unwrap_error!(Prefs::new(), None));
 
-    let card_name = prefs.borrow()
-        .device_prefs
-        .card
-        .clone();
-    let chan_name = prefs.borrow()
-        .device_prefs
-        .channel
-        .clone();
-    let audio = Rc::new(unwrap_error!(AlsaBackend::new(Some(card_name),
-                                                       Some(chan_name)),
-                                      None));
+    let card_name = prefs.borrow().device_prefs.card.clone();
+    let chan_name = prefs.borrow().device_prefs.channel.clone();
+    let audio = Rc::new(unwrap_error!(
+        AlsaBackend::new(Some(card_name), Some(chan_name)),
+        None
+    ));
     return AppS::new(prefs, audio);
 }
 
 
 impl<T> AppS<T>
-    where T: AudioFrontend
+where
+    T: AudioFrontend,
 {
     /// Create an application state instance. There should really only be one.
     pub fn new(prefs: RefCell<Prefs>, audio: Rc<T>) -> Self {
         let builder_popup_window =
-            gtk::Builder::new_from_string(include_str!(concat!(env!("CARGO_MANIFEST_DIR"),
-                                                               "/data/ui/popup-window.glade")));
+            gtk::Builder::new_from_string(include_str!(concat!(
+                env!("CARGO_MANIFEST_DIR"),
+                "/data/ui/popup-window.glade"
+            )));
         let builder_popup_menu =
-            gtk::Builder::new_from_string(include_str!(concat!(env!("CARGO_MANIFEST_DIR"),
-                                                               "/data/ui/popup-menu.glade")));
+            gtk::Builder::new_from_string(include_str!(concat!(
+                env!("CARGO_MANIFEST_DIR"),
+                "/data/ui/popup-menu.glade"
+            )));
 
 
         // TODO: better error handling
         #[cfg(feature = "notify")]
         let notif = result_warn!(Notif::new(&prefs.borrow()), None).ok();
 
-
-        let hotkeys = unwrap_error!(wresult_warn!(
-                    Hotkeys::new(&prefs.borrow(),
-                                 audio.clone()), None),
-                                    None);
+        let hotkeys =
+            unwrap_error!(
+                wresult_warn!(Hotkeys::new(&prefs.borrow(), audio.clone()), None),
+                None
+            );
 
         let gui =
             Gui::new(builder_popup_window, builder_popup_menu, &prefs.borrow());
 
         return AppS {
-                   _cant_construct: (),
-                   gui,
-                   audio,
-                   prefs,
-                   #[cfg(feature = "notify")]
-                   notif,
-                   hotkeys: RefCell::new(hotkeys),
-               };
+            _cant_construct: (),
+            gui,
+            audio,
+            prefs,
+            notif,
+            hotkeys: RefCell::new(hotkeys),
+        };
     }
 
 
@@ -100,9 +100,11 @@ impl<T> AppS<T>
     /// Update the tray icon state.
     pub fn update_tray_icon(&self) -> Result<()> {
         debug!("Update tray icon!");
-        return self.gui.tray_icon.update_all(&self.prefs.borrow(),
-                                             self.audio.as_ref(),
-                                             None);
+        return self.gui.tray_icon.update_all(
+            &self.prefs.borrow(),
+            self.audio.as_ref(),
+            None,
+        );
     }
 
     /// Update the Popup Window state.
@@ -116,7 +118,9 @@ impl<T> AppS<T>
     pub fn update_notify(&self) {
         match self.notif {
             Some(ref n) => n.reload(&self.prefs.borrow()),
-            None => warn!("Notification system not unitialized, skipping update"),
+            None => {
+                warn!("Notification system not unitialized, skipping update")
+            }
         }
     }
 

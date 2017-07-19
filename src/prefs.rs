@@ -73,16 +73,16 @@ impl From<MiddleClickAction> for i32 {
 /// Device preferences tab.
 pub struct DevicePrefs {
     pub card: String,
-    pub channel: String, 
+    pub channel: String,
     // TODO: normalize volume?
 }
 
 impl Default for DevicePrefs {
     fn default() -> DevicePrefs {
         return DevicePrefs {
-                   card: String::from("(default)"),
-                   channel: String::from("Master"),
-               };
+            card: String::from("(default)"),
+            channel: String::from("Master"),
+        };
     }
 }
 
@@ -94,18 +94,18 @@ pub struct ViewPrefs {
     pub draw_vol_meter: bool,
     pub vol_meter_offset: i32,
     pub system_theme: bool,
-    pub vol_meter_color: VolColor, 
+    pub vol_meter_color: VolColor,
     // TODO: Display text folume/text volume pos?
 }
 
 impl Default for ViewPrefs {
     fn default() -> ViewPrefs {
         return ViewPrefs {
-                   draw_vol_meter: true,
-                   vol_meter_offset: 10,
-                   system_theme: true,
-                   vol_meter_color: VolColor::default(),
-               };
+            draw_vol_meter: true,
+            vol_meter_offset: 10,
+            system_theme: true,
+            vol_meter_color: VolColor::default(),
+        };
     }
 }
 
@@ -122,10 +122,10 @@ pub struct VolColor {
 impl Default for VolColor {
     fn default() -> VolColor {
         return VolColor {
-                   red: 0.960784313725,
-                   green: 0.705882352941,
-                   blue: 0.0,
-               };
+            red: 0.960784313725,
+            green: 0.705882352941,
+            blue: 0.0,
+        };
     }
 }
 
@@ -145,13 +145,13 @@ pub struct BehaviorPrefs {
 impl Default for BehaviorPrefs {
     fn default() -> BehaviorPrefs {
         return BehaviorPrefs {
-                   unmute_on_vol_change: true,
-                   vol_control_cmd: None,
-                   vol_scroll_step: 5.0,
-                   vol_fine_scroll_step: 1.0,
-                   middle_click_action: MiddleClickAction::default(),
-                   custom_command: None,
-               };
+            unmute_on_vol_change: true,
+            vol_control_cmd: None,
+            vol_scroll_step: 5.0,
+            vol_fine_scroll_step: 1.0,
+            middle_click_action: MiddleClickAction::default(),
+            custom_command: None,
+        };
     }
 }
 
@@ -173,13 +173,13 @@ pub struct NotifyPrefs {
 impl Default for NotifyPrefs {
     fn default() -> NotifyPrefs {
         return NotifyPrefs {
-                   enable_notifications: true,
-                   notifcation_timeout: 1500,
-                   notify_mouse_scroll: true,
-                   notify_popup: true,
-                   notify_external: true,
-                   notify_hotkeys: true,
-               };
+            enable_notifications: true,
+            notifcation_timeout: 1500,
+            notify_mouse_scroll: true,
+            notify_popup: true,
+            notify_external: true,
+            notify_hotkeys: true,
+        };
     }
 }
 
@@ -249,22 +249,26 @@ impl Prefs {
 
     /// Store the current preferences to the config file.
     pub fn store_config(&self) -> Result<()> {
-        let config_path = get_xdg_dirs().place_config_file("pnmixer.toml")
+        let config_path = get_xdg_dirs()
+            .place_config_file("pnmixer.toml")
             .chain_err(|| {
-                           format!("Could not create config directory at {:?}",
-                                   get_xdg_dirs().get_config_home())
-                       })?;
+                format!(
+                    "Could not create config directory at {:?}",
+                    get_xdg_dirs().get_config_home()
+                )
+            })?;
 
         debug!("Storing config in {:?}", config_path);
 
-        let mut f = File::create(config_path.clone())
-            .chain_err(|| format!("Could not open/create config file {:?} for writing",
-                       config_path))?;
-        f.write_all(self.to_str().as_bytes())
-            .chain_err(|| {
-                           format!("Could not write to config file {:?}",
-                                   config_path)
-                       })?;
+        let mut f = File::create(config_path.clone()).chain_err(|| {
+            format!(
+                "Could not open/create config file {:?} for writing",
+                config_path
+            )
+        })?;
+        f.write_all(self.to_str().as_bytes()).chain_err(|| {
+            format!("Could not write to config file {:?}", config_path)
+        })?;
 
         return Ok(());
     }
@@ -297,9 +301,10 @@ impl Prefs {
 }
 
 impl Display for Prefs {
-    fn fmt(&self,
-           f: &mut Formatter)
-           -> std::result::Result<(), std::fmt::Error> {
+    fn fmt(
+        &self,
+        f: &mut Formatter,
+    ) -> std::result::Result<(), std::fmt::Error> {
         let s = self.to_str();
         return write!(f, "{}", s);
     }

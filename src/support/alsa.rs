@@ -4,9 +4,9 @@
 //! out the details we don't care about.
 
 
-use alsa::card::Card;
-use alsa::mixer::{Mixer, Selem, Elem};
-use alsa;
+use alsa_lib::card::Card;
+use alsa_lib::mixer::{Mixer, Selem, Elem};
+use alsa_lib;
 use errors::*;
 use libc::c_int;
 
@@ -25,8 +25,8 @@ pub fn get_alsa_card_by_id(index: c_int) -> Card {
 
 
 /// Get all available alsa cards.
-pub fn get_alsa_cards() -> alsa::card::Iter {
-    return alsa::card::Iter::new();
+pub fn get_alsa_cards() -> alsa_lib::card::Iter {
+    return alsa_lib::card::Iter::new();
 }
 
 
@@ -144,13 +144,12 @@ pub fn get_playable_selem_names(mixer: &Mixer) -> Vec<String> {
 
 
 /// Get a playable `Selem` by the given name.
-pub fn get_playable_selem_by_name(mixer: &Mixer,
-                                  name: String)
-                                  -> Result<Selem> {
+pub fn get_playable_selem_by_name(
+    mixer: &Mixer,
+    name: String,
+) -> Result<Selem> {
     for selem in get_playable_selems(mixer) {
-        let n = selem.get_id()
-            .get_name()
-            .map(|y| String::from(y))?;
+        let n = selem.get_id().get_name().map(|y| String::from(y))?;
 
         if n == name {
             return Ok(selem);

@@ -26,23 +26,26 @@ pub struct HotkeyDialog {
 impl HotkeyDialog {
     /// Creates a new hotkey dialog.
     pub fn new<P>(parent: &P, hotkey: String) -> HotkeyDialog
-        where P: IsA<gtk::Window>
+    where
+        P: IsA<gtk::Window>,
     {
-        let builder =
-            gtk::Builder::new_from_string(include_str!(concat!(env!("CARGO_MANIFEST_DIR"),
-                                                               "/data/ui/hotkey-dialog.glade")));
+        let builder = gtk::Builder::new_from_string(include_str!(concat!(
+            env!("CARGO_MANIFEST_DIR"),
+            "/data/ui/hotkey-dialog.glade"
+        )));
 
-        let hotkey_dialog: gtk::Dialog = builder.get_object("hotkey_dialog")
-            .unwrap();
-        let instruction_label: gtk::Label = builder.get_object("instruction_label")
-            .unwrap();
-        let key_pressed_label: gtk::Label = builder.get_object("key_pressed_label")
-            .unwrap();
+        let hotkey_dialog: gtk::Dialog =
+            builder.get_object("hotkey_dialog").unwrap();
+        let instruction_label: gtk::Label =
+            builder.get_object("instruction_label").unwrap();
+        let key_pressed_label: gtk::Label =
+            builder.get_object("key_pressed_label").unwrap();
 
         hotkey_dialog.set_title(format!("Set {} HotKey", hotkey).as_str());
-        instruction_label.set_markup(format!("Press new HotKey for <b>{}</b>",
-                                             hotkey)
-                                             .as_str());
+        instruction_label.set_markup(
+            format!("Press new HotKey for <b>{}</b>", hotkey)
+                .as_str(),
+        );
 
         hotkey_dialog.set_transient_for(parent);
 
@@ -63,16 +66,19 @@ impl HotkeyDialog {
                         &mut keyval as *mut c_uint,
                         std::ptr::null_mut(),
                         std::ptr::null_mut(),
-                        &mut consumed as *mut gdk_sys::GdkModifierType);
+                        &mut consumed as *mut gdk_sys::GdkModifierType,
+                    );
 
                     let consumed: gdk::ModifierType = from_glib(!consumed);
                     state = state & consumed;
                     state = state & gtk::accelerator_get_default_mod_mask();
 
                     let key_text = gtk::accelerator_name(keyval, state);
-                    key_pressed_label.set_text(key_text
-                                               .unwrap_or(String::from("(None)"))
-                                               .as_str());
+                    key_pressed_label.set_text(
+                        key_text
+                            .unwrap_or(String::from("(None)"))
+                            .as_str(),
+                    );
                 };
                 return Inhibit(false);
             });
@@ -86,28 +92,30 @@ impl HotkeyDialog {
         });
 
         return HotkeyDialog {
-                   hotkey_dialog,
-                   key_pressed_label,
-               };
+            hotkey_dialog,
+            key_pressed_label,
+        };
     }
 
     /// Runs the hotkey dialog and returns a String representing the hotkey
     /// that has been pressed.
     pub fn run(&self) -> Result<String> {
         self.hotkey_dialog.show_now();
-        let device = gtk::get_current_event_device()
-            .ok_or("Could not get current device")?;
-        let window = self.hotkey_dialog
-            .get_window()
-            .ok_or("Could not get window")?;
+        let device = gtk::get_current_event_device().ok_or(
+            "Could not get current device",
+        )?;
+        let window = self.hotkey_dialog.get_window().ok_or(
+            "Could not get window",
+        )?;
 
-        let m_grab_status =
-            device.grab(&window,
-                        gdk::GrabOwnership::Application,
-                        true,
-                        gdk::KEY_PRESS_MASK,
-                        None,
-                        gdk_sys::GDK_CURRENT_TIME as u32);
+        let m_grab_status = device.grab(
+            &window,
+            gdk::GrabOwnership::Application,
+            true,
+            gdk::KEY_PRESS_MASK,
+            None,
+            gdk_sys::GDK_CURRENT_TIME as u32,
+        );
 
         if m_grab_status != gdk::GrabStatus::Success {
             bail!("Could not grab the keyboard");
@@ -117,12 +125,14 @@ impl HotkeyDialog {
         device.ungrab(gdk_sys::GDK_CURRENT_TIME as u32);
 
         if resp != gtk::ResponseType::Ok.into() {
-            bail!(ErrorKind::GtkResponseCancel(String::from("not assigning hotkey")));
+            bail!(ErrorKind::GtkResponseCancel(
+                String::from("not assigning hotkey"),
+            ));
         }
 
-        return Ok(self.key_pressed_label
-                      .get_text()
-                      .ok_or("Could not get text")?);
+        return Ok(self.key_pressed_label.get_text().ok_or(
+            "Could not get text",
+        )?);
     }
 }
 

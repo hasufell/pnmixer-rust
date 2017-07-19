@@ -1,6 +1,6 @@
 #![allow(missing_docs)]
 
-use alsa;
+use alsa_lib;
 use png;
 use std::convert::From;
 use std;
@@ -10,7 +10,7 @@ use toml;
 
 error_chain! {
     foreign_links {
-        Alsa(alsa::Error);
+        Alsa(alsa_lib::Error);
         IO(std::io::Error);
         Toml(toml::de::Error);
         Png(png::DecodingError);

@@ -20,7 +20,7 @@ fn main() {
 
     let apps = Rc::new(new_alsa_appstate());
 
-    ui_entry::init(apps);
+    ui::entry::init(apps);
 
     gtk::main();
 

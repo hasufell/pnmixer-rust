@@ -44,7 +44,7 @@ extern crate serde_derive;
 extern crate toml;
 extern crate serde;
 
-extern crate alsa;
+extern crate alsa as alsa_lib;
 extern crate alsa_sys;
 extern crate ffi;
 extern crate gdk;
@@ -73,27 +73,15 @@ extern crate lazy_static;
 #[macro_use]
 pub mod errors;
 
-#[macro_use]
-pub mod glade_helpers;
-
-pub mod alsa_backend;
 pub mod app_state;
-pub mod audio_frontend;
-pub mod gdk_x11;
+pub mod audio;
 pub mod hotkey;
 pub mod hotkeys;
 pub mod prefs;
-pub mod support_alsa;
-pub mod support_audio;
-pub mod support_cmd;
 #[macro_use]
-pub mod support_ui;
-pub mod ui_entry;
-pub mod ui_hotkey_dialog;
-pub mod ui_popup_menu;
-pub mod ui_popup_window;
-pub mod ui_prefs_dialog;
-pub mod ui_tray_icon;
+pub mod support;
+#[macro_use]
+pub mod ui;
 
 #[cfg(feature = "notify")]
 pub mod notif;

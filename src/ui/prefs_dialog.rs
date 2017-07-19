@@ -3,7 +3,7 @@
 
 
 use app_state::*;
-use audio_frontend::*;
+use audio::frontend::*;
 use errors::*;
 use gdk;
 use gtk::ResponseType;
@@ -13,8 +13,8 @@ use prefs::*;
 use std::ascii::AsciiExt;
 use std::cell::RefCell;
 use std::rc::Rc;
-use support_audio::*;
-use ui_hotkey_dialog::HotkeyDialog;
+use support::audio::*;
+use ui::hotkey_dialog::HotkeyDialog;
 
 
 
@@ -74,9 +74,10 @@ pub struct PrefsDialog {
 
 impl PrefsDialog {
     fn new() -> PrefsDialog {
-        let builder =
-            gtk::Builder::new_from_string(include_str!(concat!(env!("CARGO_MANIFEST_DIR"),
-                                                               "/data/ui/prefs-dialog.glade")));
+        let builder = gtk::Builder::new_from_string(include_str!(concat!(
+            env!("CARGO_MANIFEST_DIR"),
+            "/data/ui/prefs-dialog.glade"
+        )));
         let prefs_dialog = PrefsDialog {
             _cant_construct: (),
             prefs_dialog: builder.get_object("prefs_dialog").unwrap(),
@@ -87,31 +88,43 @@ impl PrefsDialog {
             chan_combo: builder.get_object("chan_combo").unwrap(),
 
             /* ViewPrefs */
-            vol_meter_draw_check: builder.get_object("vol_meter_draw_check")
+            vol_meter_draw_check: builder
+                .get_object("vol_meter_draw_check")
                 .unwrap(),
-            vol_meter_pos_spin: builder.get_object("vol_meter_pos_spin")
+            vol_meter_pos_spin: builder
+                .get_object("vol_meter_pos_spin")
                 .unwrap(),
-            vol_meter_color_button: builder.get_object("vol_meter_color_button")
+            vol_meter_color_button: builder
+                .get_object("vol_meter_color_button")
                 .unwrap(),
             system_theme: builder.get_object("system_theme").unwrap(),
 
             /* BehaviorPrefs */
-            unmute_on_vol_change: builder.get_object("unmute_on_vol_change")
+            unmute_on_vol_change: builder
+                .get_object("unmute_on_vol_change")
                 .unwrap(),
             vol_control_entry: builder.get_object("vol_control_entry").unwrap(),
             scroll_step_spin: builder.get_object("scroll_step_spin").unwrap(),
-            fine_scroll_step_spin: builder.get_object("fine_scroll_step_spin")
+            fine_scroll_step_spin: builder
+                .get_object("fine_scroll_step_spin")
                 .unwrap(),
-            middle_click_combo: builder.get_object("middle_click_combo")
+            middle_click_combo: builder
+                .get_object("middle_click_combo")
                 .unwrap(),
             custom_entry: builder.get_object("custom_entry").unwrap(),
 
             /* NotifyPrefs */
             #[cfg(feature = "notify")]
+            #[cfg(feature = "notify")]
+            #[cfg(feature = "notify")]
+            #[cfg(feature = "notify")]
             noti_enable_check: builder.get_object("noti_enable_check").unwrap(),
             #[cfg(feature = "notify")]
             noti_timeout_spin: builder.get_object("noti_timeout_spin").unwrap(),
             // noti_hotkey_check: builder.get_object("noti_hotkey_check").unwrap(),
+            #[cfg(feature = "notify")]
+            #[cfg(feature = "notify")]
+            #[cfg(feature = "notify")]
             #[cfg(feature = "notify")]
             noti_mouse_check: builder.get_object("noti_mouse_check").unwrap(),
             #[cfg(feature = "notify")]
@@ -122,33 +135,41 @@ impl PrefsDialog {
             noti_hotkey_check: builder.get_object("noti_hotkey_check").unwrap(),
 
             /* HotkeyPrefs */
-            hotkeys_enable_check: builder.get_object("hotkeys_enable_check")
+            hotkeys_enable_check: builder
+                .get_object("hotkeys_enable_check")
                 .unwrap(),
-            hotkeys_mute_label: builder.get_object("hotkeys_mute_label")
+            hotkeys_mute_label: builder
+                .get_object("hotkeys_mute_label")
                 .unwrap(),
             hotkeys_up_label: builder.get_object("hotkeys_up_label").unwrap(),
-            hotkeys_down_label: builder.get_object("hotkeys_down_label")
+            hotkeys_down_label: builder
+                .get_object("hotkeys_down_label")
                 .unwrap(),
 
             /* Hotkey stuff (not prefs) */
-            hotkeys_mute_eventbox: builder.get_object("hotkeys_mute_eventbox")
+            hotkeys_mute_eventbox: builder
+                .get_object("hotkeys_mute_eventbox")
                 .unwrap(),
-            hotkeys_up_eventbox: builder.get_object("hotkeys_up_eventbox")
+            hotkeys_up_eventbox: builder
+                .get_object("hotkeys_up_eventbox")
                 .unwrap(),
-            hotkeys_down_eventbox: builder.get_object("hotkeys_down_eventbox")
+            hotkeys_down_eventbox: builder
+                .get_object("hotkeys_down_eventbox")
                 .unwrap(),
             hotkey_dialog: RefCell::new(None),
         };
 
         #[cfg(feature = "notify")]
-        let notify_tab: gtk::Box = builder.get_object("noti_vbox_enabled")
-            .unwrap();
+        let notify_tab: gtk::Box =
+            builder.get_object("noti_vbox_enabled").unwrap();
         #[cfg(not(feature = "notify"))]
-        let notify_tab: gtk::Box = builder.get_object("noti_vbox_disabled")
-            .unwrap();
+        let notify_tab: gtk::Box =
+            builder.get_object("noti_vbox_disabled").unwrap();
 
-        prefs_dialog.notebook.append_page(&notify_tab,
-                                          Some(&gtk::Label::new(Some("Notifications"))));
+        prefs_dialog.notebook.append_page(
+            &notify_tab,
+            Some(&gtk::Label::new(Some("Notifications"))),
+        );
         return prefs_dialog;
     }
 
@@ -161,9 +182,13 @@ impl PrefsDialog {
         self.chan_combo.remove_all();
 
         /* ViewPrefs */
-        self.vol_meter_draw_check.set_active(prefs.view_prefs.draw_vol_meter);
-        self.vol_meter_pos_spin.set_value(prefs.view_prefs.vol_meter_offset as
-                                          f64);
+        self.vol_meter_draw_check.set_active(
+            prefs.view_prefs.draw_vol_meter,
+        );
+        self.vol_meter_pos_spin.set_value(
+            prefs.view_prefs.vol_meter_offset as
+                f64,
+        );
 
         let rgba = gdk::RGBA {
             red: prefs.view_prefs.vol_meter_color.red,
@@ -175,64 +200,105 @@ impl PrefsDialog {
         self.system_theme.set_active(prefs.view_prefs.system_theme);
 
         /* BehaviorPrefs */
-        self.unmute_on_vol_change
-            .set_active(prefs.behavior_prefs.unmute_on_vol_change);
-        self.vol_control_entry.set_text(prefs.behavior_prefs
-                                            .vol_control_cmd
-                                            .as_ref()
-                                            .unwrap_or(&String::from(""))
-                                            .as_str());
-        self.scroll_step_spin.set_value(prefs.behavior_prefs.vol_scroll_step);
-        self.fine_scroll_step_spin
-            .set_value(prefs.behavior_prefs.vol_fine_scroll_step);
+        self.unmute_on_vol_change.set_active(
+            prefs
+                .behavior_prefs
+                .unmute_on_vol_change,
+        );
+        self.vol_control_entry.set_text(
+            prefs
+                .behavior_prefs
+                .vol_control_cmd
+                .as_ref()
+                .unwrap_or(&String::from(""))
+                .as_str(),
+        );
+        self.scroll_step_spin.set_value(
+            prefs.behavior_prefs.vol_scroll_step,
+        );
+        self.fine_scroll_step_spin.set_value(
+            prefs
+                .behavior_prefs
+                .vol_fine_scroll_step,
+        );
 
         // TODO: make sure these values always match, must be a better way
         //       also check to_prefs()
         self.middle_click_combo.append_text("Toggle Mute");
         self.middle_click_combo.append_text("Show Preferences");
         self.middle_click_combo.append_text("Volume Control");
-        self.middle_click_combo.append_text("Custom Command (set below)");
-        self.middle_click_combo.set_active(prefs.behavior_prefs
-                                               .middle_click_action
-                                               .into());
-        self.custom_entry.set_text(prefs.behavior_prefs
-                                       .custom_command
-                                       .as_ref()
-                                       .unwrap_or(&String::from(""))
-                                       .as_str());
+        self.middle_click_combo.append_text(
+            "Custom Command (set below)",
+        );
+        self.middle_click_combo.set_active(
+            prefs
+                .behavior_prefs
+                .middle_click_action
+                .into(),
+        );
+        self.custom_entry.set_text(
+            prefs
+                .behavior_prefs
+                .custom_command
+                .as_ref()
+                .unwrap_or(&String::from(""))
+                .as_str(),
+        );
 
         /* NotifyPrefs */
         #[cfg(feature = "notify")]
         {
-            self.noti_enable_check
-                .set_active(prefs.notify_prefs.enable_notifications);
-            self.noti_timeout_spin
-                .set_value(prefs.notify_prefs.notifcation_timeout as f64);
-            self.noti_mouse_check
-                .set_active(prefs.notify_prefs.notify_mouse_scroll);
-            self.noti_popup_check.set_active(prefs.notify_prefs.notify_popup);
-            self.noti_ext_check.set_active(prefs.notify_prefs.notify_external);
-            self.noti_hotkey_check
-                .set_active(prefs.notify_prefs.notify_hotkeys);
+            self.noti_enable_check.set_active(
+                prefs
+                    .notify_prefs
+                    .enable_notifications,
+            );
+            self.noti_timeout_spin.set_value(
+                prefs.notify_prefs.notifcation_timeout as
+                    f64,
+            );
+            self.noti_mouse_check.set_active(
+                prefs.notify_prefs.notify_mouse_scroll,
+            );
+            self.noti_popup_check.set_active(
+                prefs.notify_prefs.notify_popup,
+            );
+            self.noti_ext_check.set_active(
+                prefs.notify_prefs.notify_external,
+            );
+            self.noti_hotkey_check.set_active(
+                prefs.notify_prefs.notify_hotkeys,
+            );
         }
 
         /* hotkey prefs */
-        self.hotkeys_enable_check.set_active(prefs.hotkey_prefs.enable_hotkeys);
-        self.hotkeys_mute_label.set_text(prefs.hotkey_prefs
-                                             .mute_unmute_key
-                                             .clone()
-                                             .unwrap_or(String::from("(None)"))
-                                             .as_str());
-        self.hotkeys_up_label.set_text(prefs.hotkey_prefs
-                                           .vol_up_key
-                                           .clone()
-                                           .unwrap_or(String::from("(None)"))
-                                           .as_str());
-        self.hotkeys_down_label.set_text(prefs.hotkey_prefs
-                                             .vol_down_key
-                                             .clone()
-                                             .unwrap_or(String::from("(None)"))
-                                             .as_str());
+        self.hotkeys_enable_check.set_active(
+            prefs.hotkey_prefs.enable_hotkeys,
+        );
+        self.hotkeys_mute_label.set_text(
+            prefs
+                .hotkey_prefs
+                .mute_unmute_key
+                .clone()
+                .unwrap_or(String::from("(None)"))
+                .as_str(),
+        );
+        self.hotkeys_up_label.set_text(
+            prefs
+                .hotkey_prefs
+                .vol_up_key
+                .clone()
+                .unwrap_or(String::from("(None)"))
+                .as_str(),
+        );
+        self.hotkeys_down_label.set_text(
+            prefs
+                .hotkey_prefs
+                .vol_down_key
+                .clone()
+                .unwrap_or(String::from("(None)"))
+                .as_str(),
+        );
     }
 
 
@@ -264,19 +330,16 @@ impl PrefsDialog {
             vol_meter_color,
         };
 
-        let vol_control_cmd =
-            self.vol_control_entry.get_text().and_then(|x| if x.is_empty() {
-                                                           None
-                                                       } else {
-                                                           Some(x)
-                                                       });
+        let vol_control_cmd = self.vol_control_entry.get_text().and_then(|x| {
+            if x.is_empty() { None } else { Some(x) }
+        });
 
         let custom_command =
             self.custom_entry.get_text().and_then(|x| if x.is_empty() {
-                                                      None
-                                                  } else {
-                                                      Some(x)
-                                                  });
+                None
+            } else {
+                Some(x)
+            });
 
         let behavior_prefs = BehaviorPrefs {
             unmute_on_vol_change: self.unmute_on_vol_change.get_active(),
@@ -291,42 +354,48 @@ impl PrefsDialog {
         let notify_prefs = NotifyPrefs {
             enable_notifications: self.noti_enable_check.get_active(),
             notifcation_timeout: self.noti_timeout_spin.get_value_as_int() as
-                                 i64,
+                i64,
             notify_mouse_scroll: self.noti_mouse_check.get_active(),
             notify_popup: self.noti_popup_check.get_active(),
             notify_external: self.noti_ext_check.get_active(),
             notify_hotkeys: self.noti_hotkey_check.get_active(),
         };
 
-        let hotkey_prefs = HotkeyPrefs {
-            enable_hotkeys: self.hotkeys_enable_check.get_active(),
-            mute_unmute_key:
-                self.hotkeys_mute_label.get_text().and_then(|s| if s ==
-                                                                   "(None)" {
-                                                                None
-                                                            } else {
-                                                                Some(s)
-                                                            }),
-            vol_up_key:
-                self.hotkeys_up_label.get_text().and_then(|s| if s ==
-                                                                 "(None)" {
-                                                              None
-                                                          } else {
-                                                              Some(s)
-                                                          }),
-            vol_down_key: self.hotkeys_down_label.get_text().and_then(|s| {
-                if s == "(None)" { None } else { Some(s) }
-            }),
-        };
+        let hotkey_prefs =
+            HotkeyPrefs {
+                enable_hotkeys: self.hotkeys_enable_check.get_active(),
+                mute_unmute_key: self.hotkeys_mute_label.get_text().and_then(
+                    |s| {
+                        if s == "(None)" { None } else { Some(s) }
+                    },
+                ),
+                vol_up_key: self.hotkeys_up_label.get_text().and_then(
+                    |s| if s ==
+                        "(None)"
+                    {
+                        None
+                    } else {
+                        Some(s)
+                    },
+                ),
+                vol_down_key: self.hotkeys_down_label.get_text().and_then(
+                    |s| if s ==
+                        "(None)"
+                    {
+                        None
+                    } else {
+                        Some(s)
+                    },
+                ),
+            };
 
         return Prefs {
-                   device_prefs,
-                   view_prefs,
-                   behavior_prefs,
-                   #[cfg(feature = "notify")]
-                   notify_prefs,
-                   hotkey_prefs,
-               };
+            device_prefs,
+            view_prefs,
+            behavior_prefs,
+            notify_prefs,
+            hotkey_prefs,
+        };
 
     }
 }
@@ -335,12 +404,10 @@ impl PrefsDialog {
 /// Show the preferences dialog. This is created and destroyed dynamically
 /// and not persistent across the application lifetime.
 pub fn show_prefs_dialog<T>(appstate: &Rc<AppS<T>>)
-    where T: AudioFrontend + 'static
+where
+    T: AudioFrontend + 'static,
 {
-    if appstate.gui
-           .prefs_dialog
-           .borrow()
-           .is_some() {
+    if appstate.gui.prefs_dialog.borrow().is_some() {
         return;
     }
 
@@ -362,15 +429,13 @@ pub fn show_prefs_dialog<T>(appstate: &Rc<AppS<T>>)
 /// Initialize the internal prefs dialog handler that connects to the audio
 /// system.
 pub fn init_prefs_callback<T>(appstate: Rc<AppS<T>>)
-    where T: AudioFrontend + 'static
+where
+    T: AudioFrontend + 'static,
 {
     let apps = appstate.clone();
     appstate.audio.connect_handler(Box::new(move |s, u| {
         /* skip if prefs window is not present */
-        if apps.gui
-               .prefs_dialog
-               .borrow()
-               .is_none() {
+        if apps.gui.prefs_dialog.borrow().is_none() {
             return;
         }
 
@@ -388,7 +453,8 @@ pub fn init_prefs_callback<T>(appstate: Rc<AppS<T>>)
 
 /// Initialize the preferences dialog gtk callbacks.
 fn init_prefs_dialog<T>(appstate: &Rc<AppS<T>>)
-    where T: AudioFrontend + 'static
+where
+    T: AudioFrontend + 'static,
 {
 
     /* prefs_dialog.connect_show */
@@ -397,9 +463,9 @@ fn init_prefs_dialog<T>(appstate: &Rc<AppS<T>>)
         let m_pd = appstate.gui.prefs_dialog.borrow();
         let pd = m_pd.as_ref().unwrap();
         pd.prefs_dialog.connect_show(move |_| {
-                                         fill_card_combo(&apps);
-                                         fill_chan_combo(&apps, None);
-                                     });
+            fill_card_combo(&apps);
+            fill_chan_combo(&apps, None);
+        });
     }
 
     /* card_combo.connect_changed */
@@ -425,7 +491,8 @@ fn init_prefs_dialog<T>(appstate: &Rc<AppS<T>>)
         pd.prefs_dialog.connect_response(move |_, response_id| {
 
             if response_id == ResponseType::Ok.into() ||
-               response_id == ResponseType::Apply.into() {
+                response_id == ResponseType::Apply.into()
+            {
                 let mut prefs = apps.prefs.borrow_mut();
                 let prefs_dialog = apps.gui.prefs_dialog.borrow();
                 *prefs = prefs_dialog.as_ref().unwrap().to_prefs();
@@ -434,23 +501,25 @@ fn init_prefs_dialog<T>(appstate: &Rc<AppS<T>>)
 
             if response_id != ResponseType::Apply.into() {
                 let mut prefs_dialog = apps.gui.prefs_dialog.borrow_mut();
-                prefs_dialog.as_ref()
-                    .unwrap()
-                    .prefs_dialog
-                    .destroy();
+                prefs_dialog.as_ref().unwrap().prefs_dialog.destroy();
                 *prefs_dialog = None;
             }
 
             if response_id == ResponseType::Ok.into() ||
-               response_id == ResponseType::Apply.into() {
+                response_id == ResponseType::Apply.into()
+            {
                 try_w!(apps.update_popup_window());
                 try_w!(apps.update_tray_icon());
-                let _ = result_warn!(apps.update_hotkeys(),
-                                     Some(&apps.gui.popup_menu.menu_window));
+                let _ = result_warn!(
+                    apps.update_hotkeys(),
+                    Some(&apps.gui.popup_menu.menu_window)
+                );
                 apps.update_notify();
                 try_w!(apps.update_audio(AudioUser::PrefsWindow));
-                let _ = result_warn!(apps.update_config(),
-                                     Some(&apps.gui.popup_menu.menu_window));
+                let _ = result_warn!(
+                    apps.update_config(),
+                    Some(&apps.gui.popup_menu.menu_window)
+                );
             }
 
         });
@@ -462,9 +531,13 @@ fn init_prefs_dialog<T>(appstate: &Rc<AppS<T>>)
         let m_pd = appstate.gui.prefs_dialog.borrow();
         let pd = m_pd.as_ref().unwrap();
 
-        pd.hotkeys_mute_eventbox.connect_button_press_event(move |w, e| {
-            return Inhibit(on_hotkey_event_box_button_press_event(&apps, &w, e));
-        });
+        pd.hotkeys_mute_eventbox.connect_button_press_event(
+            move |w, e| {
+                return Inhibit(
+                    on_hotkey_event_box_button_press_event(&apps, &w, e),
+                );
+            },
+        );
     }
 
     /* prefs_dialog.hotkeys_up_eventbox */
@@ -473,9 +546,13 @@ fn init_prefs_dialog<T>(appstate: &Rc<AppS<T>>)
         let m_pd = appstate.gui.prefs_dialog.borrow();
         let pd = m_pd.as_ref().unwrap();
 
-        pd.hotkeys_up_eventbox.connect_button_press_event(move |w, e| {
-            return Inhibit(on_hotkey_event_box_button_press_event(&apps, &w, e));
-        });
+        pd.hotkeys_up_eventbox.connect_button_press_event(
+            move |w, e| {
+                return Inhibit(
+                    on_hotkey_event_box_button_press_event(&apps, &w, e),
+                );
+            },
+        );
     }
 
     /* prefs_dialog.hotkeys_down_eventbox */
@@ -484,16 +561,21 @@ fn init_prefs_dialog<T>(appstate: &Rc<AppS<T>>)
         let m_pd = appstate.gui.prefs_dialog.borrow();
         let pd = m_pd.as_ref().unwrap();
 
-        pd.hotkeys_down_eventbox.connect_button_press_event(move |w, e| {
-            return Inhibit(on_hotkey_event_box_button_press_event(&apps, &w, e));
-        });
+        pd.hotkeys_down_eventbox.connect_button_press_event(
+            move |w, e| {
+                return Inhibit(
+                    on_hotkey_event_box_button_press_event(&apps, &w, e),
+                );
+            },
+        );
     }
 }
 
 
 /// Fill the card combo box in the Devices tab.
 fn fill_card_combo<T>(appstate: &AppS<T>)
-    where T: AudioFrontend
+where
+    T: AudioFrontend,
 {
     let m_cc = appstate.gui.prefs_dialog.borrow();
     let card_combo = &m_cc.as_ref().unwrap().card_combo;
@@ -501,8 +583,8 @@ fn fill_card_combo<T>(appstate: &AppS<T>)
     let audio = &appstate.audio;
 
     /* set card combo */
-    let cur_card_name = try_w!(audio.card_name(),
-                               "Can't get current card name!");
+    let cur_card_name =
+        try_w!(audio.card_name(), "Can't get current card name!");
     let available_card_names = get_playable_card_names();
 
     /* set_active_id doesn't work, so save the index */
@@ -522,7 +604,8 @@ fn fill_card_combo<T>(appstate: &AppS<T>)
 
 /// Fill the channel combo box in the Devices tab.
 fn fill_chan_combo<T>(appstate: &AppS<T>, cardname: Option<String>)
-    where T: AudioFrontend
+where
+    T: AudioFrontend,
 {
     let m_cc = appstate.gui.prefs_dialog.borrow();
     let chan_combo = &m_cc.as_ref().unwrap().chan_combo;
@@ -553,11 +636,13 @@ fn fill_chan_combo<T>(appstate: &AppS<T>, cardname: Option<String>)
 }
 
 
-fn on_hotkey_event_box_button_press_event<T>(appstate: &AppS<T>,
-                                             widget: &gtk::EventBox,
-                                             event: &gdk::EventButton)
-                                             -> bool
-    where T: AudioFrontend
+fn on_hotkey_event_box_button_press_event<T>(
+    appstate: &AppS<T>,
+    widget: &gtk::EventBox,
+    event: &gdk::EventButton,
+) -> bool
+where
+    T: AudioFrontend,
 {
     let borrow = appstate.gui.prefs_dialog.borrow();
     let prefs_dialog = &borrow.as_ref().unwrap();
@@ -573,13 +658,20 @@ fn on_hotkey_event_box_button_press_event<T>(appstate: &AppS<T>,
 
     let (hotkey_label, hotkey) = {
         if *widget == prefs_dialog.hotkeys_mute_eventbox {
-            (prefs_dialog.hotkeys_mute_label.clone(),
-             String::from("Mute/Unmute"))
+            (
+                prefs_dialog.hotkeys_mute_label.clone(),
+                String::from("Mute/Unmute"),
+            )
         } else if *widget == prefs_dialog.hotkeys_up_eventbox {
-            (prefs_dialog.hotkeys_up_label.clone(), String::from("Volume Up"))
+            (
+                prefs_dialog.hotkeys_up_label.clone(),
+                String::from("Volume Up"),
+            )
         } else if *widget == prefs_dialog.hotkeys_down_eventbox {
-            (prefs_dialog.hotkeys_down_label.clone(),
-             String::from("Volume Down"))
+            (
+                prefs_dialog.hotkeys_down_label.clone(),
+                String::from("Volume Down"),
+            )
         } else {
             warn!("Unknown hotkey eventbox");
             return false;
@@ -598,10 +690,7 @@ fn on_hotkey_event_box_button_press_event<T>(appstate: &AppS<T>,
     let hotkey_dialog = &prefs_dialog.hotkey_dialog;
     *hotkey_dialog.borrow_mut() =
         Some(HotkeyDialog::new(&prefs_dialog.prefs_dialog, hotkey));
-    let key_pressed = hotkey_dialog.borrow()
-        .as_ref()
-        .unwrap()
-        .run();
+    let key_pressed = hotkey_dialog.borrow().as_ref().unwrap().run();
     *hotkey_dialog.borrow_mut() = None;
 
     /* Bind hotkeys */
@@ -623,8 +712,10 @@ fn on_hotkey_event_box_button_press_event<T>(appstate: &AppS<T>,
         }
         Err(e) => {
             // Could not grab hotkey, most likely
-            error_dialog!(e.description(),
-                          Some(&appstate.gui.popup_menu.menu_window));
+            error_dialog!(
+                e.description(),
+                Some(&appstate.gui.popup_menu.menu_window)
+            );
             warn!("{}", e);
             return false;
         }

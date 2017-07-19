@@ -6,10 +6,10 @@
 //! but are important helpers.
 
 
-use audio_frontend::*;
+use audio::frontend::*;
 use errors::*;
 use prefs::*;
-use support_alsa::*;
+use support::alsa::*;
 
 
 #[derive(Clone, Copy, Debug)]
@@ -55,7 +55,8 @@ pub fn lrint(v: f64, dir: VolDir) -> f64 {
 
 /// Reload the audio system.
 pub fn audio_reload<T>(audio: &T, prefs: &Prefs, user: AudioUser) -> Result<()>
-    where T: AudioFrontend
+where
+    T: AudioFrontend,
 {
     let card = &prefs.device_prefs.card;
     let channel = &prefs.device_prefs.channel;
@@ -69,10 +70,12 @@ pub fn audio_reload<T>(audio: &T, prefs: &Prefs, user: AudioUser) -> Result<()>
 /// of the volume level.
 pub fn vol_to_percent(vol: i64, range: (i64, i64)) -> Result<f64> {
     let (min, max) = range;
-    ensure!(min < max,
-            "Invalid playback volume range [{} - {}]",
-            min,
-            max);
+    ensure!(
+        min < max,
+        "Invalid playback volume range [{} - {}]",
+        min,
+        max
+    );
     let perc = ((vol - min) as f64) / ((max - min) as f64) * 100.0;
     return Ok(perc);
 }
@@ -83,10 +86,12 @@ pub fn vol_to_percent(vol: i64, range: (i64, i64)) -> Result<f64> {
 /// range.
 pub fn percent_to_vol(vol: f64, range: (i64, i64), dir: VolDir) -> Result<i64> {
     let (min, max) = range;
-    ensure!(min < max,
-            "Invalid playback volume range [{} - {}]",
-            min,
-            max);
+    ensure!(
+        min < max,
+        "Invalid playback volume range [{} - {}]",
+        min,
+        max
+    );
 
     let _v = lrint(vol / 100.0 * ((max - min) as f64), dir) + (min as f64);
     return Ok(_v as i64);

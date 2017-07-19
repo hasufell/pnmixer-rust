@@ -13,7 +13,7 @@ use std::cell::Ref;
 use std::cell::RefCell;
 use std::f64;
 use std::rc::Rc;
-use support_audio::*;
+use support::audio::*;
 
 
 
@@ -76,25 +76,30 @@ impl Handlers {
 }
 
 
-// TODO: explain more, specify details that need to be implemented
+/// This is the audio frontend, which can be implemented by different backends,
+/// e.g. Alsa or PulseAudio. The high-level UI code only calls these
+/// functions, never the underlying backend functions. The backend
+/// implementation must ensure proper state and consistency, especially
+/// wrt handlers and switching the card.
 pub trait AudioFrontend {
     /// Switches the current card. Must invoke handlers.
     /// ## `user`
     /// Where the card switch originates from.
-    fn switch_card(&self,
-                   card_name: Option<String>,
-                   elem_name: Option<String>,
-                   user: AudioUser)
-                   -> Result<()>;
+    fn switch_card(
+        &self,
+        card_name: Option<String>,
+        elem_name: Option<String>,
+        user: AudioUser,
+    ) -> Result<()>;
 
     /// Current volume. Between 0 and 100.
-    /// This always gets the volume of the `FrontRight` channel, because the
+    /// This always gets the volume of the `FrontRight` channel, because that
     /// seems to be the safest bet.
     fn get_vol(&self) -> Result<f64>;
 
     /// Set the current volume. Must invoke handlers.
     /// ## `new_vol`
-    /// Set the volume to this value.
+    /// Set the volume to this value. From 0 to 100.
     /// ## `user`
     /// Where the card switch originates from.
     /// ## `dir`
@@ -102,12 +107,13 @@ pub trait AudioFrontend {
     /// or increase. This helps with rounding problems.
     /// ## `auto_unmute`
     /// Whether to automatically unmute if the volume changes.
-    fn set_vol(&self,
-               new_vol: f64,
-               user: AudioUser,
-               dir: VolDir,
-               auto_unmute: bool)
-               -> Result<()>;
+    fn set_vol(
+        &self,
+        new_vol: f64,
+        user: AudioUser,
+        dir: VolDir,
+        auto_unmute: bool,
+    ) -> Result<()>;
 
     /// Current volume level, nicely usable for e.g. selecting from a set
     /// of images.
