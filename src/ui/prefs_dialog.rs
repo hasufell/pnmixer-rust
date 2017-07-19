@@ -393,6 +393,7 @@ impl PrefsDialog {
             device_prefs,
             view_prefs,
             behavior_prefs,
+            #[cfg(feature = "notify")]
             notify_prefs,
             hotkey_prefs,
         };

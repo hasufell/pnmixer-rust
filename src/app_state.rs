@@ -89,6 +89,7 @@ where
             gui,
             audio,
             prefs,
+            #[cfg(feature = "notify")]
             notif,
             hotkeys: RefCell::new(hotkeys),
         };
