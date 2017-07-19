@@ -113,6 +113,9 @@ impl AudioFrontend for AlsaBackend {
             *ac = AlsaCard::new(card_name, elem_name, cb)?;
         }
 
+        debug!("New card name: {}", self.card_name().unwrap());
+        debug!("New chan name: {}", self.chan_name().unwrap());
+
         invoke_handlers(
             &self.handlers.borrow(),
             AudioSignal::CardInitialized,

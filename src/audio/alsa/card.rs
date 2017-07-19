@@ -233,7 +233,6 @@ extern "C" fn watch_cb(
 
         match stat {
             glib_sys::G_IO_STATUS_AGAIN => {
-                debug!("G_IO_STATUS_AGAIN");
                 continue;
             }
             glib_sys::G_IO_STATUS_NORMAL => {
