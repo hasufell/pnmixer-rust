@@ -52,3 +52,4 @@ TODO
 - [x] [hotkey support](https://github.com/hasufell/pnmixer-rust/issues/5)
 - [ ] [translation](https://github.com/hasufell/pnmixer-rust/issues/4)
 - [X] [documentation](https://github.com/hasufell/pnmixer-rust/issues/3)
+- [ ] [PulseAudio support](https://github.com/hasufell/pnmixer-rust/issues/11)
