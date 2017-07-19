@@ -104,20 +104,20 @@ where
         /* Setup mute hotkey */
         let (m_unmute_key, mute_err) =
             new_hotkey(&hotkey_prefs.mute_unmute_key);
-        if m_unmute_key.is_some() {
-            self.mute_key = Some(m_unmute_key.unwrap());
+        if let Some(key) = m_unmute_key {
+            self.up_key = Some(key);
         }
 
         /* Setup volume uphotkey */
         let (m_up_key, up_err) = new_hotkey(&hotkey_prefs.vol_up_key);
-        if m_up_key.is_some() {
-            self.up_key = Some(m_up_key.unwrap());
+        if let Some(key) = m_up_key {
+            self.up_key = Some(key);
         }
 
         /* Setup volume down hotkey */
         let (m_down_key, down_err) = new_hotkey(&hotkey_prefs.vol_down_key);
-        if m_down_key.is_some() {
-            self.down_key = Some(m_down_key.unwrap());
+        if let Some(key) = m_down_key {
+            self.up_key = Some(key);
         }
 
         if mute_err || up_err || down_err {
@@ -134,20 +134,23 @@ where
     /// Bind hotkeys manually. Should be paired with an `unbind()` call.
     pub fn bind(&self) {
         debug!("Bind hotkeys");
-        if self.mute_key.is_some() {
-            if self.mute_key.as_ref().unwrap().grab().is_err() {
+
+        if let Some(ref key) = self.mute_key {
+            if key.grab().is_err() {
                 warn!("Could not grab mute key");
-            };
+            }
         }
-        if self.up_key.is_some() {
-            if self.up_key.as_ref().unwrap().grab().is_err() {
-                warn!("Could not grab volume up key");
-            };
+
+        if let Some(ref key) = self.up_key {
+            if key.grab().is_err() {
+                warn!("Could not grab mute key");
+            }
         }
-        if self.down_key.is_some() {
-            if self.down_key.as_ref().unwrap().grab().is_err() {
-                warn!("Could not grab volume down key");
-            };
+
+        if let Some(ref key) = self.down_key {
+            if key.grab().is_err() {
+                warn!("Could not grab mute key");
+            }
         }
 
         let data_ptr =
@@ -158,14 +161,17 @@ where
     /// Unbind hotkeys manually. Should be paired with a `bind()` call.
     pub fn unbind(&self) {
         debug!("Unbind hotkeys");
-        if self.mute_key.is_some() {
-            self.mute_key.as_ref().unwrap().ungrab();
+
+        if let Some(ref key) = self.mute_key {
+            key.ungrab();
         }
-        if self.up_key.is_some() {
-            self.up_key.as_ref().unwrap().ungrab();
+
+        if let Some(ref key) = self.up_key {
+            key.ungrab();
         }
-        if self.down_key.is_some() {
-            self.down_key.as_ref().unwrap().ungrab();
+
+        if let Some(ref key) = self.down_key {
+            key.ungrab();
         }
 
         let data_ptr =
