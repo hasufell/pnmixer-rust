@@ -105,7 +105,7 @@ where
         let (m_unmute_key, mute_err) =
             new_hotkey(&hotkey_prefs.mute_unmute_key);
         if let Some(key) = m_unmute_key {
-            self.up_key = Some(key);
+            self.mute_key = Some(key);
         }
 
         /* Setup volume uphotkey */
@@ -117,7 +117,7 @@ where
         /* Setup volume down hotkey */
         let (m_down_key, down_err) = new_hotkey(&hotkey_prefs.vol_down_key);
         if let Some(key) = m_down_key {
-            self.up_key = Some(key);
+            self.down_key = Some(key);
         }
 
         if mute_err || up_err || down_err {
