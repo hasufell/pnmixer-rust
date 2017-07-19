@@ -6,7 +6,7 @@
 //! but are important helpers.
 
 
-use audio::*;
+use audio_frontend::*;
 use errors::*;
 use prefs::*;
 use support_alsa::*;

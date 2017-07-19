@@ -3,7 +3,7 @@
 
 
 use app_state::*;
-use audio::*;
+use audio_frontend::*;
 use errors::*;
 use gdk;
 use gtk::ResponseType;

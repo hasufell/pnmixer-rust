@@ -2,7 +2,7 @@
 
 
 use app_state::*;
-use audio::*;
+use audio_frontend::*;
 use gtk::DialogExt;
 use gtk::MessageDialogExt;
 use gtk::WidgetExt;

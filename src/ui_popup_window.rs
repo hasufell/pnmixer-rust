@@ -5,7 +5,7 @@
 
 
 use app_state::*;
-use audio::*;
+use audio_frontend::*;
 use errors::*;
 use gdk::DeviceExt;
 use gdk::{GrabOwnership, GrabStatus, BUTTON_PRESS_MASK, KEY_PRESS_MASK};

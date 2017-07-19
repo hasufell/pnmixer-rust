@@ -1,8 +1,8 @@
 //! Global application state.
 
 
-use alsa_card::*;
-use audio::*;
+use alsa_backend::*;
+use audio_frontend::*;
 use errors::*;
 use gtk;
 use hotkeys::Hotkeys;

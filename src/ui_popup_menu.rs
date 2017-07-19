@@ -12,7 +12,7 @@
 //! * Quit
 
 use app_state::*;
-use audio::*;
+use audio_frontend::*;
 use gtk::prelude::*;
 use gtk;
 use std::rc::Rc;

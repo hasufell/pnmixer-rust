@@ -12,7 +12,7 @@ use alsa::mixer::SelemChannelId::*;
 use alsa::mixer::{Mixer, Selem, SelemId};
 use alsa::poll::PollDescriptors;
 use alsa_sys;
-use audio::*;
+use audio_frontend::*;
 use errors::*;
 use glib;
 use glib_sys;

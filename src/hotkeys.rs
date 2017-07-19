@@ -5,7 +5,7 @@
 //! before they can be interpreted by Gtk/Gdk.
 
 
-use audio::*;
+use audio_frontend::*;
 use errors::*;
 use errors;
 use gdk;

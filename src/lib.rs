@@ -76,9 +76,9 @@ pub mod errors;
 #[macro_use]
 pub mod glade_helpers;
 
-pub mod alsa_card;
+pub mod alsa_backend;
 pub mod app_state;
-pub mod audio;
+pub mod audio_frontend;
 pub mod gdk_x11;
 pub mod hotkey;
 pub mod hotkeys;
