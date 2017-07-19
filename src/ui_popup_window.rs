@@ -62,17 +62,21 @@ impl PopupWindow {
 
     /// Update the popup window state, including the slider
     /// and the mute checkbutton.
-    pub fn update(&self, audio: &Audio) -> Result<()> {
-        let cur_vol = audio.vol()?;
+    pub fn update<T>(&self, audio: &T) -> Result<()>
+        where T: AudioFrontend
+    {
+        let cur_vol = audio.get_vol()?;
         set_slider(&self.vol_scale_adj, cur_vol);
 
-        self.update_mute_check(&audio);
+        self.update_mute_check(audio);
 
         return Ok(());
     }
 
     /// Update the mute checkbutton.
-    pub fn update_mute_check(&self, audio: &Audio) {
+    pub fn update_mute_check<T>(&self, audio: &T)
+        where T: AudioFrontend
+    {
         let m_muted = audio.get_mute();
 
         glib::signal_handler_block(&self.mute_check, self.toggle_signal.get());
@@ -109,7 +113,9 @@ impl PopupWindow {
 
 
 /// Initialize the popup window subsystem.
-pub fn init_popup_window(appstate: Rc<AppS>) {
+pub fn init_popup_window<T>(appstate: Rc<AppS<T>>)
+    where T: AudioFrontend + 'static
+{
     /* audio.connect_handler */
     {
         let apps = appstate.clone();
@@ -130,11 +136,12 @@ pub fn init_popup_window(appstate: Rc<AppS>) {
                  * and not the real value reported by the audio system.
                  */
                 (_, AudioUser::Popup) => {
-                    apps.gui.popup_window.update_mute_check(&apps.audio);
+                    apps.gui.popup_window.update_mute_check(apps.audio
+                                                                .as_ref());
                 }
                 /* external change, safe to update slider too */
                 (_, _) => {
-                    try_w!(apps.gui.popup_window.update(&apps.audio));
+                    try_w!(apps.gui.popup_window.update(apps.audio.as_ref()));
                 }
             }
         }));
@@ -213,12 +220,14 @@ pub fn init_popup_window(appstate: Rc<AppS>) {
 
 
 /// When the popup window is shown.
-fn on_popup_window_show(appstate: &AppS) {
+fn on_popup_window_show<T>(appstate: &AppS<T>)
+    where T: AudioFrontend
+{
     let popup_window = &appstate.gui.popup_window;
     appstate.gui.popup_window.set_vol_increment(&appstate.prefs.borrow());
     glib::signal_handler_block(&popup_window.vol_scale_adj,
                                popup_window.changed_signal.get());
-    try_w!(appstate.gui.popup_window.update(&appstate.audio));
+    try_w!(appstate.gui.popup_window.update(appstate.audio.as_ref()));
     glib::signal_handler_unblock(&popup_window.vol_scale_adj,
                                  popup_window.changed_signal.get());
     popup_window.vol_scale.grab_focus();
@@ -257,9 +266,11 @@ fn on_popup_window_event(w: &gtk::Window, e: &gdk::Event) -> gtk::Inhibit {
 
 
 /// When the volume scale slider is moved.
-fn on_vol_scale_value_changed(appstate: &AppS) {
+fn on_vol_scale_value_changed<T>(appstate: &AppS<T>)
+    where T: AudioFrontend
+{
     let audio = &appstate.audio;
-    let old_vol = try_w!(audio.vol());
+    let old_vol = try_w!(audio.get_vol());
 
     let val = appstate.gui
         .popup_window
@@ -279,7 +290,9 @@ fn on_vol_scale_value_changed(appstate: &AppS) {
 
 
 /// When the mute checkbutton is toggled.
-fn on_mute_check_toggled(appstate: &AppS) {
+fn on_mute_check_toggled<T>(appstate: &AppS<T>)
+    where T: AudioFrontend
+{
     let audio = &appstate.audio;
     try_w!(audio.toggle_mute(AudioUser::Popup))
 }

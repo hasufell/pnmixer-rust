@@ -18,7 +18,7 @@ fn main() {
        .init(Some("pnmixer=debug".to_string()))
        .unwrap_or_else(|e| panic!("Logger initialization failed with {}", e));
 
-    let apps = Rc::new(AppS::new());
+    let apps = Rc::new(new_alsa_appstate());
 
     ui_entry::init(apps);
 

@@ -73,8 +73,10 @@ impl Notif {
     }
 
     /// Shows a volume notification, e.g. for volume or mute state change.
-    pub fn show_volume_notif(&self, audio: &Audio) -> Result<()> {
-        let vol = audio.vol()?;
+    pub fn show_volume_notif<T>(&self, audio: &T) -> Result<()>
+        where T: AudioFrontend
+    {
+        let vol = audio.get_vol()?;
         let vol_level = audio.vol_level();
 
         let icon = {
@@ -92,12 +94,8 @@ impl Notif {
                 VolLevel::Muted => String::from("Volume muted"),
                 _ => {
                     format!("{} ({})\nVolume: {}",
-                            audio.acard
-                                .borrow()
-                                .card_name()?,
-                            audio.acard
-                                .borrow()
-                                .chan_name()?,
+                            audio.card_name()?,
+                            audio.chan_name()?,
                             vol as i32)
                 }
             }
@@ -133,7 +131,9 @@ impl Drop for Notif {
 
 
 /// Initialize the notification subsystem.
-pub fn init_notify(appstate: Rc<AppS>) {
+pub fn init_notify<T>(appstate: Rc<AppS<T>>)
+    where T: AudioFrontend + 'static
+{
     {
         /* connect handler */
         let apps = appstate.clone();
@@ -154,16 +154,16 @@ pub fn init_notify(appstate: Rc<AppS>) {
                 (AudioSignal::CardError, _, _) => (),
                 (AudioSignal::ValuesChanged,
                  AudioUser::TrayIcon,
-                 (_, true, _, _)) => try_w!(notif.show_volume_notif(&apps.audio)),
+                 (_, true, _, _)) => try_w!(notif.show_volume_notif(apps.audio.as_ref())),
                 (AudioSignal::ValuesChanged,
                  AudioUser::Popup,
-                 (true, _, _, _)) => try_w!(notif.show_volume_notif(&apps.audio)),
+                 (true, _, _, _)) => try_w!(notif.show_volume_notif(apps.audio.as_ref())),
                 (AudioSignal::ValuesChanged,
                  AudioUser::Unknown,
-                 (_, _, true, _)) => try_w!(notif.show_volume_notif(&apps.audio)),
+                 (_, _, true, _)) => try_w!(notif.show_volume_notif(apps.audio.as_ref())),
                 (AudioSignal::ValuesChanged,
                  AudioUser::Hotkeys,
-                 (_, _, _, true)) => try_w!(notif.show_volume_notif(&apps.audio)),
+                 (_, _, _, true)) => try_w!(notif.show_volume_notif(apps.audio.as_ref())),
                 _ => (),
             }
         }));

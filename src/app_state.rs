@@ -1,7 +1,8 @@
 //! Global application state.
 
 
-use audio::{Audio, AudioUser};
+use alsa_card::*;
+use audio::*;
 use errors::*;
 use gtk;
 use hotkeys::Hotkeys;
@@ -18,12 +19,14 @@ use notif::*;
 
 // TODO: destructors
 /// The global application state struct.
-pub struct AppS {
+pub struct AppS<T>
+    where T: AudioFrontend
+{
     _cant_construct: (),
     /// Mostly static GUI state.
     pub gui: Gui,
     /// Audio state.
-    pub audio: Rc<Audio>,
+    pub audio: Rc<T>,
     /// Preferences state.
     pub prefs: RefCell<Prefs>,
     #[cfg(feature = "notify")]
@@ -31,39 +34,50 @@ pub struct AppS {
     /// is set to `None`.
     pub notif: Option<Notif>,
     /// Hotkey state.
-    pub hotkeys: RefCell<Box<Hotkeys>>, // Gets an Rc to Audio.
+    pub hotkeys: RefCell<Box<Hotkeys<T>>>, // Gets an Rc to Audio.
 }
 
 
-impl AppS {
+/// Create a new application state using the `AlsaBackend`.
+pub fn new_alsa_appstate() -> AppS<AlsaBackend> {
+    let prefs = RefCell::new(unwrap_error!(Prefs::new(), None));
+
+    let card_name = prefs.borrow()
+        .device_prefs
+        .card
+        .clone();
+    let chan_name = prefs.borrow()
+        .device_prefs
+        .channel
+        .clone();
+    let audio = Rc::new(unwrap_error!(AlsaBackend::new(Some(card_name),
+                                                       Some(chan_name)),
+                                      None));
+    return AppS::new(prefs, audio);
+}
+
+
+impl<T> AppS<T>
+    where T: AudioFrontend
+{
     /// Create an application state instance. There should really only be one.
-    pub fn new() -> AppS {
+    pub fn new(prefs: RefCell<Prefs>, audio: Rc<T>) -> Self {
         let builder_popup_window =
             gtk::Builder::new_from_string(include_str!(concat!(env!("CARGO_MANIFEST_DIR"),
                                                                "/data/ui/popup-window.glade")));
         let builder_popup_menu =
             gtk::Builder::new_from_string(include_str!(concat!(env!("CARGO_MANIFEST_DIR"),
                                                                "/data/ui/popup-menu.glade")));
-        let prefs = RefCell::new(unwrap_error!(Prefs::new(), None));
 
 
-        let card_name = prefs.borrow()
-            .device_prefs
-            .card
-            .clone();
-        let chan_name = prefs.borrow()
-            .device_prefs
-            .channel
-            .clone();
         // TODO: better error handling
         #[cfg(feature = "notify")]
         let notif = result_warn!(Notif::new(&prefs.borrow()), None).ok();
 
-        let audio = Rc::new(unwrap_error!(Audio::new(Some(card_name),
-                                                     Some(chan_name)),
-                                          None));
-        let hotkeys = unwrap_error!(wresult_warn!(Hotkeys::new(&prefs.borrow(),
-            audio.clone()), None),
+
+        let hotkeys = unwrap_error!(wresult_warn!(
+                    Hotkeys::new(&prefs.borrow(),
+                                 audio.clone()), None),
                                     None);
 
         let gui =
@@ -72,7 +86,7 @@ impl AppS {
         return AppS {
                    _cant_construct: (),
                    gui,
-                   audio: audio,
+                   audio,
                    prefs,
                    #[cfg(feature = "notify")]
                    notif,
@@ -87,14 +101,14 @@ impl AppS {
     pub fn update_tray_icon(&self) -> Result<()> {
         debug!("Update tray icon!");
         return self.gui.tray_icon.update_all(&self.prefs.borrow(),
-                                             &self.audio,
+                                             self.audio.as_ref(),
                                              None);
     }
 
     /// Update the Popup Window state.
     pub fn update_popup_window(&self) -> Result<()> {
         debug!("Update PopupWindow!");
-        return self.gui.popup_window.update(&self.audio);
+        return self.gui.popup_window.update(self.audio.as_ref());
     }
 
     #[cfg(feature = "notify")]
@@ -112,7 +126,7 @@ impl AppS {
 
     /// Update the audio state.
     pub fn update_audio(&self, user: AudioUser) -> Result<()> {
-        return audio_reload(&self.audio, &self.prefs.borrow(), user);
+        return audio_reload(self.audio.as_ref(), &self.prefs.borrow(), user);
     }
 
     /// Update the config file.

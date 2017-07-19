@@ -6,7 +6,7 @@
 //! but are important helpers.
 
 
-use audio::{Audio, AudioUser};
+use audio::*;
 use errors::*;
 use prefs::*;
 use support_alsa::*;
@@ -54,14 +54,13 @@ pub fn lrint(v: f64, dir: VolDir) -> f64 {
 
 
 /// Reload the audio system.
-pub fn audio_reload(audio: &Audio,
-                    prefs: &Prefs,
-                    user: AudioUser)
-                    -> Result<()> {
+pub fn audio_reload<T>(audio: &T, prefs: &Prefs, user: AudioUser) -> Result<()>
+    where T: AudioFrontend
+{
     let card = &prefs.device_prefs.card;
     let channel = &prefs.device_prefs.channel;
     // TODO: is this clone safe?
-    return audio.switch_acard(Some(card.clone()), Some(channel.clone()), user);
+    return audio.switch_card(Some(card.clone()), Some(channel.clone()), user);
 }
 
 
