@@ -222,7 +222,7 @@ impl VolMeter {
         let i_width = pixbuf.get_width() as i64;
         let i_height = pixbuf.get_height() as i64;
 
-        let new_pixbuf = copy_pixbuf(pixbuf);
+        let new_pixbuf = pixbuf.copy();
 
         let vm_width = i_width / 6;
         let x = (self.x_offset_pct as f64 *
