@@ -108,16 +108,13 @@ impl Notif {
             }
         };
 
-        // TODO: error handling
         self.volume_notif
-            .update(summary.as_str(), None, Some(icon))
-            .unwrap();
+            .update(summary.as_str(), None, Some(icon))?;
         self.volume_notif.set_hint(
             "value",
             Some((vol as i32).to_variant()),
         );
-        // TODO: error handling
-        self.volume_notif.show().unwrap();
+        self.volume_notif.show()?;
 
         return Ok(());
     }
@@ -125,10 +122,8 @@ impl Notif {
 
     /// Shows a text notification, e.g. for warnings or errors.
     pub fn show_text_notif(&self, summary: &str, body: &str) -> Result<()> {
-        // TODO: error handling
-        self.text_notif.update(summary, Some(body), None).unwrap();
-        // TODO: error handling
-        self.text_notif.show().unwrap();
+        self.text_notif.update(summary, Some(body), None)?;
+        self.text_notif.show()?;
 
         return Ok(());
     }

@@ -1,6 +1,7 @@
 #![allow(missing_docs)]
 
 use alsa_lib;
+use glib;
 use png;
 use std::convert::From;
 use std;
@@ -14,6 +15,7 @@ error_chain! {
         IO(std::io::Error);
         Toml(toml::de::Error);
         Png(png::DecodingError);
+        GlibError(glib::Error);
     }
 
     errors {
