@@ -4,9 +4,9 @@
 use app_state::*;
 use audio::frontend::*;
 use gtk::DialogExt;
+use gtk::GtkWindowExt;
 use gtk::MessageDialogExt;
 use gtk::WidgetExt;
-use gtk::WindowExt;
 use gtk;
 use gtk_sys::GTK_RESPONSE_YES;
 use prefs::*;

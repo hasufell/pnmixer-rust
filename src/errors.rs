@@ -147,8 +147,8 @@ macro_rules! error_dialog {
     ($msg:expr, $parent:expr) => {
         {
             use gtk::DialogExt;
+            use gtk::GtkWindowExt;
             use gtk::WidgetExt;
-            use gtk::WindowExt;
 
             let parent: Option<&gtk::Window> = $parent;
             let dialog = gtk::MessageDialog::new(parent,
