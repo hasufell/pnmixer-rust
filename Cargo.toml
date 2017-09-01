@@ -1,6 +1,14 @@
 [package]
 authors = ["Julian Ospald <hasufell@posteo.de>"]
+categories = [ "multimedia::audio" ]
+description = "Volume mixer for the system tray"
+documentation = "https://hasufell.github.io/pnmixer-rust/pnmixerlib/"
+homepage = "https://github.com/hasufell/pnmixer-rust"
+keywords = [ "alsa", "gtk", "mixer" ]
+license = "GPL-3.0"
 name = "pnmixer-rs"
+readme = "README.md"
+repository = "https://github.com/hasufell/pnmixer-rust"
 version = "0.1.2"
 
 [[bin]]
