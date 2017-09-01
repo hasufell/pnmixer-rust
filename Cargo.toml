@@ -1,7 +1,7 @@
 [package]
 authors = ["Julian Ospald <hasufell@posteo.de>"]
 name = "pnmixer-rs"
-version = "0.1.1"
+version = "0.1.2"
 
 [[bin]]
 doc = false
@@ -24,7 +24,7 @@ gobject-sys = "^0.4.0"
 gtk-sys = "^0.4.0"
 lazy_static = "^0.2.8"
 libc = "^0.2.30"
-libnotify = { version = "^1.0.1", optional = true }
+libnotify = { version = "^1.0.2", optional = true }
 log = "^0.3.8"
 png = "^0.9.0"
 serde = "^1.0.11"
