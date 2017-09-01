@@ -139,7 +139,7 @@ pub struct BehaviorPrefs {
     pub vol_scroll_step: f64,
     pub vol_fine_scroll_step: f64,
     pub middle_click_action: MiddleClickAction,
-    pub custom_command: Option<String>, // TODO: fine scroll step?
+    pub custom_command: Option<String>,
 }
 
 impl Default for BehaviorPrefs {
