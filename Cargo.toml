@@ -1,68 +1,74 @@
 [package]
+authors = ["Julian Ospald <hasufell@posteo.de>"]
 name = "pnmixer-rs"
 version = "0.1.0"
-authors = ["Julian Ospald <hasufell@posteo.de>"]
-
-[lib]
-name = "pnmixerlib"
-path = "src/lib.rs"
-doc = true
 
 [[bin]]
+doc = false
 name = "pnmixer-rs"
 path = "src/bin.rs"
-doc = false
 
 [dependencies]
-alsa = "^0.1.8"
+alsa = "^0.1.10"
 alsa-sys = "^0.1.1"
-error-chain = { git = "https://github.com/hasufell/error-chain.git", branch = "PR-from-error" }
+error-chain = "^0.10.0"
 ffi = "^0.0.2"
-flexi_logger = "^0.5.1"
-gdk-pixbuf = { git = "https://github.com/gtk-rs/gdk-pixbuf.git" }
-gdk-pixbuf-sys = { git = "https://github.com/gtk-rs/sys" }
-gdk-sys = { git = "https://github.com/gtk-rs/sys" }
-gio = { git = "https://github.com/gtk-rs/gio.git" }
-glib = { git = "https://github.com/gtk-rs/glib.git" }
-glib-sys = { git = "https://github.com/gtk-rs/sys" }
-gobject-sys = { git = "https://github.com/gtk-rs/sys" }
-gtk-sys = { git = "https://github.com/gtk-rs/sys" }
-libc = "^0.2.23"
-log = "^0.3.8"
-serde = "^1.0.9"
-serde_derive = "^1.0.9"
-toml = "^0.4.2"
-which = "*"
-xdg = "*"
-libnotify = { git = "https://github.com/hasufell/rust-libnotify.git", branch = "git-deps", optional = true }
-png = "^0.9.0"
+flexi_logger = "^0.6.8"
+gdk-pixbuf = "^0.2.0"
+gdk-pixbuf-sys = "^0.4.0"
+gdk-sys = "^0.4.0"
+gio = "^0.2.0"
+glib = "^0.3.1"
+glib-sys = "^0.4.0"
+gobject-sys = "^0.4.0"
+gtk-sys = "^0.4.0"
 lazy_static = "^0.2.8"
+libc = "^0.2.30"
+libnotify = { version = "^1.0.1", optional = true }
+log = "^0.3.8"
+png = "^0.9.0"
+serde = "^1.0.11"
+serde_derive = "^1.0.11"
+toml = "^0.4.5"
 w_result = "^0.1.2"
-
-
-[dependencies.x11]
-version = "^2.14.0"
-features = ["xlib", "xtst"]
-
-[dependencies.gtk]
-git = "https://github.com/gtk-rs/gtk.git"
-features = [ "v3_10", "v3_12", "v3_22" ]
+which = "^1.0.2"
+xdg = "^2.1.0"
 
 [dependencies.gdk]
-git = "https://github.com/gtk-rs/gdk.git"
-features = [ "v3_10", "v3_12", "v3_22" ]
+features = [
+    "v3_10",
+    "v3_12",
+    "v3_22",
+]
+version = "^0.6.0"
 
-[profile.dev]
-opt-level = 0      # controls the `--opt-level` the compiler builds with
-debug = true       # controls whether the compiler passes `-C debuginfo`
-                   # a value of `true` is equivalent to `2`
-rpath = false      # controls whether the compiler passes `-C rpath`
-lto = false        # controls `-C lto` for binaries and staticlibs
-debug-assertions = false # controls whether debug assertions are enabled
-codegen-units = 1  # controls whether the compiler passes `-C codegen-units`
-                   # `codegen-units` is ignored when `lto = true`
-panic = 'unwind'   # panic strategy (`-C panic=...`), can also be 'abort'
+[dependencies.gtk]
+features = [
+    "v3_10",
+    "v3_12",
+    "v3_22",
+]
+version = "^0.2.0"
 
+[dependencies.x11]
+features = [
+    "xlib",
+    "xtst",
+]
+version = "^2.15.0"
 
 [features]
 notify = ["libnotify"]
+
+[lib]
+doc = true
+name = "pnmixerlib"
+path = "src/lib.rs"
+[profile.dev]
+codegen-units = 1
+debug = true
+debug-assertions = false
+lto = false
+opt-level = 0
+panic = "unwind"
+rpath = false

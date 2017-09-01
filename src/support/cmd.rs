@@ -24,9 +24,8 @@ pub fn execute_vol_control_command(prefs: &Prefs) -> Result<()> {
 
 /// Try to execute the given command asynchronously via gtk.
 pub fn execute_command(cmd: &str) -> Result<()> {
-    return glib::spawn_command_line_async(cmd)
+    return Ok(glib::spawn_command_line_async(cmd)
         .map_err(|e| {
             std::io::Error::new(std::io::ErrorKind::Other, e.description())
-        })
-        .from_err();
+        })?);
 }

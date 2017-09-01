@@ -95,7 +95,7 @@ pub fn alsa_card_has_playable_selem(card: &Card) -> bool {
 
 /// Get the `Mixer` for the given alsa card.
 pub fn get_mixer(card: &Card) -> Result<Mixer> {
-    return Mixer::new(&format!("hw:{}", card.get_index()), false).from_err();
+    return Ok(Mixer::new(&format!("hw:{}", card.get_index()), false)?);
 }
 
 

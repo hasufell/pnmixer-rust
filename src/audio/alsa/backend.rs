@@ -126,7 +126,7 @@ impl AudioFrontend for AlsaBackend {
     }
 
     fn card_name(&self) -> Result<String> {
-        return self.acard.borrow().card.get_name().from_err();
+        return Ok(self.acard.borrow().card.get_name()?);
     }
 
     fn chan_name(&self) -> Result<String> {
