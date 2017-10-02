@@ -2,3 +2,4 @@
 
 pub mod alsa;
 pub mod frontend;
+pub mod pulseaudio;

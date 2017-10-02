@@ -34,6 +34,7 @@ gtk-sys = "0.4.0"
 lazy_static = "0.2.8"
 libc = "0.2.31"
 libnotify = { version = "^1.0.2", optional = true }
+libpulse-sys = "0.0.0"
 log = "0.3.8"
 png = "0.10.0"
 serde = "1.0.15"
