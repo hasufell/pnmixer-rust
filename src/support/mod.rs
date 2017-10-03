@@ -9,5 +9,6 @@ pub mod cmd;
 pub mod gdk_x11;
 #[macro_use]
 pub mod glade;
+pub mod pulseaudio;
 #[macro_use]
 pub mod ui;

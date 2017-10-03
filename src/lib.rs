@@ -55,14 +55,15 @@ extern crate gio;
 extern crate glib;
 extern crate glib_sys;
 extern crate gobject_sys;
-pub extern crate gtk;
 extern crate gtk_sys;
 extern crate libc;
+extern crate libpulse_sys;
 extern crate png;
 extern crate w_result;
 extern crate which;
 extern crate x11;
 extern crate xdg;
+pub extern crate gtk;
 
 #[cfg(feature = "notify")]
 pub extern crate libnotify;

@@ -23,6 +23,10 @@ error_chain! {
             description("User hit cancel")
             display("User hit cancel: {}", t)
         }
+        PulseAudioError(t: String) {
+            description("Error in pulseaudio call")
+            display("Error in pulseaudio call: {}", t)
+        }
     }
 }
 

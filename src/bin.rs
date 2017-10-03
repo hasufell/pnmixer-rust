@@ -17,72 +17,14 @@ use libpulse_sys::*;
 use std::ffi::{CString, CStr};
 use std::os::raw::c_char;
 use std::ptr;
+use audio::pulseaudio::*;
+use support::audio::VolDir;
 
 
-static mut CONTEXT_READY: bool = false;
-
-
-unsafe extern "C" fn context_state_cb(
-        ctx: *mut pa_context, data: *mut libc::c_void) {
-
-    let mainloop: *mut pa_threaded_mainloop = data as *mut pa_threaded_mainloop;
-    let state = pa_context_get_state(ctx);
-
-    match state {
-        PA_CONTEXT_READY => {
-            CONTEXT_READY = true;
-            pa_threaded_mainloop_signal(mainloop, 1);
-        },
-        _ => ()
-    }
-
-}
 
 fn main() {
-    unsafe {
-        let mainloop: *mut pa_threaded_mainloop = pa_threaded_mainloop_new();
 
-        if mainloop.is_null() {
-            panic!("Oh no");
-        }
 
-        let api: *mut pa_mainloop_api = pa_threaded_mainloop_get_api(mainloop);
-
-        let context_name = CString::new("pnmixer-rs").unwrap();
-        let context: *mut pa_context = pa_context_new(api,
-                                                      context_name.as_ptr());
-
-        if context.is_null() {
-            panic!("Oh no");
-        }
-
-        pa_context_set_state_callback(context,
-                                      Some(context_state_cb),
-                                      mainloop as *mut libc::c_void);
-        let ret = pa_context_connect(context,
-                                     std::ptr::null_mut(),
-                                     0,
-                                     std::ptr::null_mut());
-
-        if ret < 0 {
-            panic!("Oh no");
-        }
-
-        let ret = pa_threaded_mainloop_start(mainloop);
-
-        if ret < 0 {
-            panic!("Oh no");
-        }
-
-        pa_threaded_mainloop_lock(mainloop);
-        while !CONTEXT_READY {
-            pa_threaded_mainloop_wait(mainloop);
-        }
-        pa_threaded_mainloop_accept(mainloop);
-        pa_threaded_mainloop_unlock(mainloop);
-        CONTEXT_READY = false;
-
-    }
 
 
     let args: Vec<String> = env::args().collect();
@@ -130,6 +72,14 @@ fn main() {
         .start()
         .unwrap_or_else(|e|{panic!("Logger initialization failed with {}",e)});
 
+
+    let pa = PABackend::new(Some(String::from("Built-in Audio Analog Stereo"))).unwrap();
+    println!("Sink: {:?}", pa.sink);
+    println!("Volume: {:?}", pa.get_vol());
+    pa.set_vol(80.0, VolDir::Up).unwrap();
+    println!("Volume: {:?}", pa.get_vol());
+
+    return;
 
     gtk::init()
         .unwrap_or_else(|e| panic!("Gtk initialization failed with {}", e));
