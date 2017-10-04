@@ -19,14 +19,13 @@ use support::audio::*;
 // TODO: how to handle channels
 
 
-// TODO: update when sink changes
+// TODO: update when sink changes, only name and description are const
 #[derive(Clone, Debug)]
 pub struct Sink {
     pub name: String,
     pub index: u32,
     pub description: String,
     pub channels: u8,
-    pub base_vol: u32,
 }
 
 
@@ -117,19 +116,90 @@ impl PABackend {
 
     pub fn get_vol(&self) -> Result<f64> {
 
-        let mut vol: Result<f64> = Err("No value".into());
+        let mut vol: u32 = 0;
         unsafe {
 
             pa_threaded_mainloop_lock(self.m);
-            let _data = &mut(self.m, &mut vol);
-            let data = mem::transmute::<&mut(*mut pa_threaded_mainloop,
-                                             &mut Result<f64>),
-                                             *mut libc::c_void>(_data);
+            let data = &mut(self, &mut vol);
             let sink_name = CString::new(self.sink.borrow().name.clone()).unwrap().into_raw();
             let o = pa_context_get_sink_info_by_name(self.c,
                                                      sink_name,
                                                      Some(get_sink_vol),
-                                                     data);
+                                                     data as *mut _ as *mut libc::c_void);
+            if o.is_null() {
+                pa_threaded_mainloop_unlock(self.m);
+                bail!("Failed to initialize PA operation!");
+            }
+
+            while pa_operation_get_state(o) == PA_OPERATION_RUNNING {
+                pa_threaded_mainloop_wait(self.m);
+            }
+            pa_operation_unref(o);
+            pa_threaded_mainloop_unlock(self.m);
+
+            let _ = CString::from_raw(sink_name);
+
+        }
+        unsafe {
+            return Ok(pa_sw_volume_to_linear(vol) * 100.0);
+        }
+    }
+
+    pub fn set_vol(&self, new_vol: f64, dir: VolDir) -> Result<()> {
+        let mut res: Result<()> = Err("No value".into());
+        unsafe {
+            pa_threaded_mainloop_lock(self.m);
+            let data = &mut(self, &mut res);
+            let sink_name = CString::new(self.sink.borrow().name.clone()).unwrap().into_raw();
+
+            let new_vol = pa_sw_volume_from_linear(new_vol / 100.0);
+            let mut vol_arr: [u32; 32] = [0; 32];
+            for c in 0..(self.sink.borrow().channels) {
+                vol_arr[c as usize] = new_vol as u32;
+            }
+            let mut new_cvol = Struct_pa_cvolume {
+                channels: self.sink.borrow().channels,
+                values: vol_arr,
+            };
+
+            assert!(pa_cvolume_valid(&mut new_cvol as *mut pa_cvolume) != 0, "Invalid cvolume");
+
+            let o = pa_context_set_sink_volume_by_name(self.c,
+                                                       sink_name,
+                                                       &new_cvol as *const pa_cvolume,
+                                                       Some(set_sink_vol),
+                                                       data as *mut _ as *mut libc::c_void);
+
+            if o.is_null() {
+                pa_threaded_mainloop_unlock(self.m);
+                bail!("Failed to initialize PA operation!");
+            }
+
+            while pa_operation_get_state(o) == PA_OPERATION_RUNNING {
+                pa_threaded_mainloop_wait(self.m);
+            }
+            pa_operation_unref(o);
+            pa_threaded_mainloop_unlock(self.m);
+        }
+
+        return res;
+    }
+
+    pub fn has_mute(&self) -> bool {
+        return true;
+    }
+
+    pub fn get_mute(&self) -> Result<bool> {
+        let mut mute: bool = false;
+        unsafe {
+
+            pa_threaded_mainloop_lock(self.m);
+            let data = &mut(self, &mut mute);
+            let sink_name = CString::new(self.sink.borrow().name.clone()).unwrap().into_raw();
+            let o = pa_context_get_sink_info_by_name(self.c,
+                                                     sink_name,
+                                                     Some(get_sink_mute),
+                                                     data as *mut _ as *mut libc::c_void);
             if o.is_null() {
                 pa_threaded_mainloop_unlock(self.m);
                 bail!("Failed to initialize PA operation!");
@@ -143,37 +213,21 @@ impl PABackend {
 
             let _ = CString::from_raw(sink_name);
         }
-        return vol;
+        return Ok(mute);
     }
 
-    pub fn set_vol(&self, new_vol: f64, dir: VolDir) -> Result<()> {
+    pub fn set_mute(&self, mute: bool) -> Result<()> {
         let mut res: Result<()> = Err("No value".into());
         unsafe {
-            // pa_threaded_mainloop_lock(self.m);
-            let _data = &mut(self, &mut res);
-            let data = mem::transmute::<&mut(&PABackend,
-                                             &mut Result<()>),
-                                             *mut libc::c_void>(_data);
+            pa_threaded_mainloop_lock(self.m);
+            let data = &mut(self, &mut res);
             let sink_name = CString::new(self.sink.borrow().name.clone()).unwrap().into_raw();
 
-            let new_vol = percent_to_vol(new_vol,
-                                         (0, self.sink.borrow().base_vol as i64),
-                                         dir)?;
-            let mut vol_arr: [u32; 32] = [0; 32];
-            for c in 0..(self.sink.borrow().channels - 1) {
-                vol_arr[c as usize] = new_vol as u32;
-            }
-            let new_cvol = Struct_pa_cvolume {
-                channels: self.sink.borrow().channels,
-                values: vol_arr,
-
-            };
-
-            let o = pa_context_set_sink_volume_by_name(self.c,
-                                                       sink_name,
-                                                       &new_cvol as *const pa_cvolume,
-                                                       Some(set_sink_vol),
-                                                       data);
+            let o = pa_context_set_sink_mute_by_name(self.c,
+                                                     sink_name,
+                                                     mute as i32,
+                                                     Some(set_sink_mute),
+                                                     data as *mut _ as *mut libc::c_void);
 
             if o.is_null() {
                 pa_threaded_mainloop_unlock(self.m);
@@ -220,7 +274,6 @@ unsafe extern "C" fn context_state_cb(
 
     match state {
         PA_CONTEXT_READY => {
-            println!("Context ready");
             CONTEXT_READY = true;
             pa_threaded_mainloop_signal(mainloop, 1);
         },
@@ -235,19 +288,36 @@ unsafe extern "C" fn get_sink_vol(
         i: *const pa_sink_info,
         eol: i32,
         data: *mut libc::c_void) {
-    let &mut(mainloop, res) = mem::transmute::<*mut libc::c_void,
-                                        &mut(*mut pa_threaded_mainloop,
-                                            *mut Result<f64>)>(data);
-    assert!(!mainloop.is_null(), "Mainloop is null");
+    let (_self, res) = *(data as *mut (*mut PABackend,
+                                       *mut u32));
+    assert!(!(*_self).m.is_null(), "Mainloop is null");
 
     if i.is_null() {
         return
     }
 
-    *res = vol_to_percent((*i).volume.values[0] as i64,
-        (0, (*i).base_volume as i64));
+    *res = (*i).volume.values[0];
 
-    pa_threaded_mainloop_signal(mainloop, 0);
+    pa_threaded_mainloop_signal((*_self).m, 0);
+}
+
+// TODO: Better error handling.
+unsafe extern "C" fn get_sink_mute(
+        ctx: *mut pa_context,
+        i: *const pa_sink_info,
+        eol: i32,
+        data: *mut libc::c_void) {
+    let (_self, res) = *(data as *mut (*mut PABackend,
+                                       *mut bool));
+    assert!(!(*_self).m.is_null(), "Mainloop is null");
+
+    if i.is_null() {
+        return
+    }
+
+    *res = (*i).mute != 0;
+
+    pa_threaded_mainloop_signal((*_self).m, 0);
 }
 
 // TODO: Missing error handling.
@@ -255,10 +325,9 @@ unsafe extern "C" fn set_sink_vol(
         ctx: *mut pa_context,
         success: i32,
         data: *mut libc::c_void) {
-    let &mut(mainloop, res) = mem::transmute::<*mut libc::c_void,
-                                        &mut(*mut pa_threaded_mainloop,
-                                            *mut Result<()>)>(data);
-    assert!(!mainloop.is_null(), "Mainloop is null");
+    let (_self, res) = *(data as *mut (*mut PABackend,
+                                       *mut Result<()>));
+    assert!(!(*_self).m.is_null(), "Mainloop is null");
 
     if success > 0 {
         *res = Ok(());
@@ -266,6 +335,25 @@ unsafe extern "C" fn set_sink_vol(
         *res = Err("Failed to set volume".into());
     }
 
-    pa_threaded_mainloop_signal(mainloop, 0);
+    pa_threaded_mainloop_signal((*_self).m, 0);
 }
 
+
+// TODO: Missing error handling.
+// TODO: same as 'set_sink_vol'
+unsafe extern "C" fn set_sink_mute(
+        ctx: *mut pa_context,
+        success: i32,
+        data: *mut libc::c_void) {
+    let (_self, res) = *(data as *mut (*mut PABackend,
+                                       *mut Result<()>));
+    assert!(!(*_self).m.is_null(), "Mainloop is null");
+
+    if success > 0 {
+        *res = Ok(());
+    } else {
+        *res = Err("Failed to set volume".into());
+    }
+
+    pa_threaded_mainloop_signal((*_self).m, 0);
+}

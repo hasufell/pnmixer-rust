@@ -52,14 +52,12 @@ unsafe extern "C" fn get_all_sinks(
     let index = (*i).index;
     let description = CStr::from_ptr((*i).description).to_str().unwrap().to_owned();
     let channels = (*i).channel_map.channels;
-    let base_vol = (*i).base_volume;
 
     (*vec).push(Sink {
         name,
         index,
         description,
         channels,
-        base_vol,
     });
     pa_threaded_mainloop_signal(mainloop, 0);
 }

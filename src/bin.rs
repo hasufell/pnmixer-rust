@@ -75,9 +75,13 @@ fn main() {
 
     let pa = PABackend::new(Some(String::from("Built-in Audio Analog Stereo"))).unwrap();
     println!("Sink: {:?}", pa.sink);
-    println!("Volume: {:?}", pa.get_vol());
-    pa.set_vol(80.0, VolDir::Up).unwrap();
-    println!("Volume: {:?}", pa.get_vol());
+    println!("Volume before: {:?}", pa.get_vol());
+    pa.set_vol(80.0, VolDir::Up);
+    println!("Volume after: {:?}", pa.get_vol());
+    println!("Mute before: {:?}", pa.get_mute());
+    println!("PA_VOLUME_NORM: {:?}", PA_VOLUME_NORM);
+    // pa.set_mute(true);
+    // println!("Mute after: {:?}", pa.get_mute());
 
     return;
 
