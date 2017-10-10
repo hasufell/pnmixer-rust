@@ -22,6 +22,7 @@ use support::audio::VolDir;
 
 
 
+
 fn main() {
 
 
@@ -73,22 +74,22 @@ fn main() {
         .unwrap_or_else(|e|{panic!("Logger initialization failed with {}",e)});
 
 
-    let pa = PABackend::new(Some(String::from("Built-in Audio Analog Stereo"))).unwrap();
-    println!("Sink: {:?}", pa.sink);
-    println!("Volume before: {:?}", pa.get_vol());
-    pa.set_vol(80.0, VolDir::Up);
-    println!("Volume after: {:?}", pa.get_vol());
-    println!("Mute before: {:?}", pa.get_mute());
-    println!("PA_VOLUME_NORM: {:?}", PA_VOLUME_NORM);
+    // let pa = PABackend::new(Some(String::from("Built-in Audio Analog Stereo"))).unwrap();
+    // println!("Sink: {:?}", pa.sink);
+    // println!("Volume before: {:?}", pa.get_vol());
+    // pa.set_vol(80.0, VolDir::Up);
+    // println!("Volume after: {:?}", pa.get_vol());
+    // println!("Mute before: {:?}", pa.get_mute());
+    // println!("PA_VOLUME_NORM: {:?}", PA_VOLUME_NORM);
     // pa.set_mute(true);
     // println!("Mute after: {:?}", pa.get_mute());
 
-    return;
+    // return;
 
     gtk::init()
         .unwrap_or_else(|e| panic!("Gtk initialization failed with {}", e));
 
-    let apps = Rc::new(new_alsa_appstate());
+    let apps = Rc::new(new_pa_appstate());
 
     ui::entry::init(apps);
 

@@ -422,11 +422,14 @@ where
         appstate.audio.connect_handler(
             Box::new(move |s, u| match (s, u) {
                 (_, _) => {
-                    apps.gui.tray_icon.update_tooltip(apps.audio.as_ref());
-                    try_w!(apps.gui.tray_icon.update_vol_meter(
-                        try_w!(apps.audio.get_vol()),
-                        apps.audio.vol_level(),
-                    ));
+                    // apps.gui.tray_icon.update_tooltip(apps.audio.as_ref());
+                    // try_w!(apps.gui.tray_icon.update_vol_meter(
+                        // try_w!(apps.audio.get_vol()),
+                        // apps.audio.vol_level(),
+                    // ));
+                    let vol = apps.audio.get_vol();
+                    println!("Vol: {:?}", vol)
+                    // println!("Gaga");
                 }
             }),
         );

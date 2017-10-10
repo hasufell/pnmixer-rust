@@ -125,31 +125,31 @@ where
 {
     /* audio.connect_handler */
     {
-        let apps = appstate.clone();
-        appstate.audio.connect_handler(Box::new(move |s, u| {
-            /* skip if window is hidden */
-            if !apps.gui.popup_window.popup_window.get_visible() {
-                return;
-            }
-            match (s, u) {
-                /* Update only mute check here
-                 * If the user changes the volume through the popup window,
-                 * we MUST NOT update the slider value, it's been done already.
-                 * It means that, as long as the popup window is visible,
-                 * the slider value reflects the value set by user,
-                 * and not the real value reported by the audio system.
-                 */
-                (_, AudioUser::Popup) => {
-                    apps.gui.popup_window.update_mute_check(
-                        apps.audio.as_ref(),
-                    );
-                }
-                /* external change, safe to update slider too */
-                (_, _) => {
-                    try_w!(apps.gui.popup_window.update(apps.audio.as_ref()));
-                }
-            }
-        }));
+        // let apps = appstate.clone();
+        // appstate.audio.connect_handler(Box::new(move |s, u| {
+            // /* skip if window is hidden */
+            // if !apps.gui.popup_window.popup_window.get_visible() {
+                // return;
+            // }
+            // match (s, u) {
+                // /* Update only mute check here
+                 // * If the user changes the volume through the popup window,
+                 // * we MUST NOT update the slider value, it's been done already.
+                 // * It means that, as long as the popup window is visible,
+                 // * the slider value reflects the value set by user,
+                 // * and not the real value reported by the audio system.
+                 // */
+                // (_, AudioUser::Popup) => {
+                    // apps.gui.popup_window.update_mute_check(
+                        // apps.audio.as_ref(),
+                    // );
+                // }
+                // /* external change, safe to update slider too */
+                // (_, _) => {
+                    // try_w!(apps.gui.popup_window.update(apps.audio.as_ref()));
+                // }
+            // }
+        // }));
     }
 
     /* mute_check.connect_toggled */

@@ -10,8 +10,6 @@ use audio::frontend::*;
 use errors::*;
 use prefs::*;
 
-// TODO: rm alsa
-use support::alsa::*;
 
 
 #[derive(Clone, Copy, Debug)]
@@ -100,16 +98,25 @@ pub fn percent_to_vol(vol: f64, range: (i64, i64), dir: VolDir) -> Result<i64> {
 }
 
 
-/// Get all playable card names.
-pub fn get_playable_card_names() -> Vec<String> {
-    return get_playable_alsa_card_names();
-}
-
-
-/// Get all playable channel names.
-pub fn get_playable_chan_names(card_name: String) -> Vec<String> {
-    let card = try_r!(get_alsa_card_by_name(card_name), Vec::default());
-    let mixer = try_r!(get_mixer(&card), Vec::default());
-
-    return get_playable_selem_names(&mixer);
+/// Invokes the registered handlers.
+pub fn invoke_handlers(
+    handlers: &Vec<Box<Fn(AudioSignal, AudioUser)>>,
+    signal: AudioSignal,
+    user: AudioUser,
+) {
+    debug!(
+        "Invoking handlers for signal {:?} by user {:?}",
+        signal,
+        user
+    );
+    if handlers.is_empty() {
+        debug!("No handler found");
+    } else {
+        debug!("Executing handlers")
+    }
+    for handler in handlers {
+        debug!("Handler executing");
+        let unboxed = handler.as_ref();
+        unboxed(signal, user);
+    }
 }

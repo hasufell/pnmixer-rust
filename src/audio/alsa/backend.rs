@@ -136,8 +136,20 @@ impl AudioFrontend for AlsaBackend {
         return Ok(n);
     }
 
-    fn playable_chan_names(&self) -> Vec<String> {
-        return get_playable_selem_names(&self.acard.borrow().mixer);
+    fn playable_chan_names(&self, cardname: Option<String>) -> Vec<String> {
+        match cardname {
+            Some(name) => {
+                let card = try_r!(get_alsa_card_by_name(name), Vec::default());
+                let mixer = try_r!(get_mixer(&card), Vec::default());
+
+                return get_playable_selem_names(&mixer);
+            },
+            None => self.acard.borrow().playable_chan_names(),
+        }
+    }
+
+    fn playable_card_names(&self) -> Vec<String> {
+        return get_playable_alsa_card_names();
     }
 
     fn get_vol(&self) -> Result<f64> {
@@ -282,29 +294,6 @@ impl AudioFrontend for AlsaBackend {
 
     fn get_scroll_step(&self) -> u32 {
         return self.scroll_step.get();
-    }
-}
-
-
-/// Invokes the registered handlers.
-fn invoke_handlers(
-    handlers: &Vec<Box<Fn(AudioSignal, AudioUser)>>,
-    signal: AudioSignal,
-    user: AudioUser,
-) {
-    debug!(
-        "Invoking handlers for signal {:?} by user {:?}",
-        signal,
-        user
-    );
-    if handlers.is_empty() {
-        debug!("No handler found");
-    } else {
-        debug!("Executing handlers")
-    }
-    for handler in handlers {
-        let unboxed = handler.as_ref();
-        unboxed(signal, user);
     }
 }
 

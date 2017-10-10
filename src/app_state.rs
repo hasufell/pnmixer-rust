@@ -2,6 +2,7 @@
 
 
 use audio::alsa::backend::*;
+use audio::pulseaudio::*;
 use audio::frontend::*;
 use errors::*;
 use gtk;
@@ -47,6 +48,19 @@ pub fn new_alsa_appstate() -> AppS<AlsaBackend> {
     let chan_name = prefs.borrow().device_prefs.channel.clone();
     let audio = Rc::new(unwrap_error!(
         AlsaBackend::new(Some(card_name), Some(chan_name)),
+        None
+    ));
+    return AppS::new(prefs, audio);
+}
+
+/// Create a new application state using the `PABackend`.
+pub fn new_pa_appstate() -> AppS<PABackend> {
+    let prefs = RefCell::new(unwrap_error!(Prefs::new(), None));
+
+    let card_name = prefs.borrow().device_prefs.card.clone();
+    let chan_name = prefs.borrow().device_prefs.channel.clone();
+    let audio = Rc::new(unwrap_error!(
+        PABackend::new(Some(card_name), Some(chan_name)),
         None
     ));
     return AppS::new(prefs, audio);

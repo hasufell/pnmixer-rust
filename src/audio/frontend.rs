@@ -153,8 +153,11 @@ pub trait AudioFrontend {
     /// Get the current card name.
     fn card_name(&self) -> Result<String>;
 
+    /// Get the currently playable card names.
+    fn playable_card_names(&self) -> Vec<String>;
+
     /// Get the currently playable channel names.
-    fn playable_chan_names(&self) -> Vec<String>;
+    fn playable_chan_names(&self, cardname: Option<String>) -> Vec<String>;
 
     /// Get the current active channel name.
     fn chan_name(&self) -> Result<String>;

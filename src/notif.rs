@@ -144,37 +144,37 @@ where
 {
     {
         /* connect handler */
-        let apps = appstate.clone();
-        appstate.audio.connect_handler(Box::new(move |s, u| {
-            let notif = &apps.notif;
-            if notif.is_none() || !notif.as_ref().unwrap().enabled.get() {
-                return;
-            }
-            let notif = notif.as_ref().unwrap();
-            match (s,
-                   u,
-                   (notif.from_popup.get(),
-                    notif.from_tray.get(),
-                    notif.from_external.get(),
-                    notif.from_hotkeys.get())) {
-                (AudioSignal::NoCard, _, _) => try_w!(notif.show_text_notif("No sound card", "No playable soundcard found")),
-                (AudioSignal::CardDisconnected, _, _) => try_w!(notif.show_text_notif("Soundcard disconnected", "Soundcard has been disconnected, reloading sound system...")),
-                (AudioSignal::CardError, _, _) => (),
-                (AudioSignal::ValuesChanged,
-                 AudioUser::TrayIcon,
-                 (_, true, _, _)) => try_w!(notif.show_volume_notif(apps.audio.as_ref())),
-                (AudioSignal::ValuesChanged,
-                 AudioUser::Popup,
-                 (true, _, _, _)) => try_w!(notif.show_volume_notif(apps.audio.as_ref())),
-                (AudioSignal::ValuesChanged,
-                 AudioUser::Unknown,
-                 (_, _, true, _)) => try_w!(notif.show_volume_notif(apps.audio.as_ref())),
-                (AudioSignal::ValuesChanged,
-                 AudioUser::Hotkeys,
-                 (_, _, _, true)) => try_w!(notif.show_volume_notif(apps.audio.as_ref())),
-                _ => (),
-            }
-        }));
+        // let apps = appstate.clone();
+        // appstate.audio.connect_handler(Box::new(move |s, u| {
+            // let notif = &apps.notif;
+            // if notif.is_none() || !notif.as_ref().unwrap().enabled.get() {
+                // return;
+            // }
+            // let notif = notif.as_ref().unwrap();
+            // match (s,
+                   // u,
+                   // (notif.from_popup.get(),
+                    // notif.from_tray.get(),
+                    // notif.from_external.get(),
+                    // notif.from_hotkeys.get())) {
+                // (AudioSignal::NoCard, _, _) => try_w!(notif.show_text_notif("No sound card", "No playable soundcard found")),
+                // (AudioSignal::CardDisconnected, _, _) => try_w!(notif.show_text_notif("Soundcard disconnected", "Soundcard has been disconnected, reloading sound system...")),
+                // (AudioSignal::CardError, _, _) => (),
+                // (AudioSignal::ValuesChanged,
+                 // AudioUser::TrayIcon,
+                 // (_, true, _, _)) => try_w!(notif.show_volume_notif(apps.audio.as_ref())),
+                // (AudioSignal::ValuesChanged,
+                 // AudioUser::Popup,
+                 // (true, _, _, _)) => try_w!(notif.show_volume_notif(apps.audio.as_ref())),
+                // (AudioSignal::ValuesChanged,
+                 // AudioUser::Unknown,
+                 // (_, _, true, _)) => try_w!(notif.show_volume_notif(apps.audio.as_ref())),
+                // (AudioSignal::ValuesChanged,
+                 // AudioUser::Hotkeys,
+                 // (_, _, _, true)) => try_w!(notif.show_volume_notif(apps.audio.as_ref())),
+                // _ => (),
+            // }
+        // }));
 
     }
 }

@@ -63,31 +63,31 @@ where
 {
     {
         /* "global" audio signal handler */
-        let apps = appstate.clone();
-        appstate.audio.connect_handler(
-            Box::new(move |s, u| match (s, u) {
-                (AudioSignal::CardDisconnected, _) => {
-                    try_w!(audio_reload(
-                        apps.audio.as_ref(),
-                        &apps.prefs.borrow(),
-                        AudioUser::Unknown,
-                    ));
-                }
-                (AudioSignal::CardError, _) => {
-                    if run_audio_error_dialog(
-                        &apps.gui.popup_menu.menu_window,
-                    ) == (GTK_RESPONSE_YES as i32)
-                    {
-                        try_w!(audio_reload(
-                            apps.audio.as_ref(),
-                            &apps.prefs.borrow(),
-                            AudioUser::Unknown,
-                        ));
-                    }
-                }
-                _ => (),
-            }),
-        );
+        // let apps = appstate.clone();
+        // appstate.audio.connect_handler(
+            // Box::new(move |s, u| match (s, u) {
+                // (AudioSignal::CardDisconnected, _) => {
+                    // try_w!(audio_reload(
+                        // apps.audio.as_ref(),
+                        // &apps.prefs.borrow(),
+                        // AudioUser::Unknown,
+                    // ));
+                // }
+                // (AudioSignal::CardError, _) => {
+                    // if run_audio_error_dialog(
+                        // &apps.gui.popup_menu.menu_window,
+                    // ) == (GTK_RESPONSE_YES as i32)
+                    // {
+                        // try_w!(audio_reload(
+                            // apps.audio.as_ref(),
+                            // &apps.prefs.borrow(),
+                            // AudioUser::Unknown,
+                        // ));
+                    // }
+                // }
+                // _ => (),
+            // }),
+        // );
 
     }
 

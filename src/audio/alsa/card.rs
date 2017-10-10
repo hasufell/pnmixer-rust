@@ -184,6 +184,11 @@ impl AlsaCard {
             }
         }
     }
+
+    // Get playable channel names of the given card.
+    pub fn playable_chan_names(&self) -> Vec<String> {
+        return get_playable_selem_names(&self.mixer);
+    }
 }
 
 

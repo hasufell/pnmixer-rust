@@ -13,7 +13,6 @@ use prefs::*;
 use std::ascii::AsciiExt;
 use std::cell::RefCell;
 use std::rc::Rc;
-use support::audio::*;
 use ui::hotkey_dialog::HotkeyDialog;
 
 
@@ -434,21 +433,21 @@ where
     T: AudioFrontend + 'static,
 {
     let apps = appstate.clone();
-    appstate.audio.connect_handler(Box::new(move |s, u| {
-        /* skip if prefs window is not present */
-        if apps.gui.prefs_dialog.borrow().is_none() {
-            return;
-        }
+    // appstate.audio.connect_handler(Box::new(move |s, u| {
+        // /* skip if prefs window is not present */
+        // if apps.gui.prefs_dialog.borrow().is_none() {
+            // return;
+        // }
 
-        match (s, u) {
-            (AudioSignal::CardInitialized, _) => (),
-            (AudioSignal::CardCleanedUp, _) => {
-                fill_card_combo(&apps);
-                fill_chan_combo(&apps, None);
-            }
-            _ => (),
-        }
-    }));
+        // match (s, u) {
+            // (AudioSignal::CardInitialized, _) => (),
+            // (AudioSignal::CardCleanedUp, _) => {
+                // fill_card_combo(&apps);
+                // fill_chan_combo(&apps, None);
+            // }
+            // _ => (),
+        // }
+    // }));
 }
 
 
@@ -586,7 +585,7 @@ where
     /* set card combo */
     let cur_card_name =
         try_w!(audio.card_name(), "Can't get current card name!");
-    let available_card_names = get_playable_card_names();
+    let available_card_names = audio.playable_card_names();
 
     /* set_active_id doesn't work, so save the index */
     let mut c_index: i32 = -1;
@@ -613,10 +612,7 @@ where
     chan_combo.remove_all();
 
     let audio = &appstate.audio;
-    let available_chan_names = match cardname {
-        Some(name) => get_playable_chan_names(name),
-        None => audio.playable_chan_names(),
-    };
+    let available_chan_names = audio.playable_chan_names(cardname);
 
     /* set chan combo */
     let cur_chan_name = try_w!(audio.chan_name());

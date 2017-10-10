@@ -48,16 +48,16 @@ where
 {
     /* audio.connect_handler */
     {
-        let apps = appstate.clone();
-        appstate.audio.connect_handler(Box::new(move |s, u| {
-            /* skip if window is hidden */
-            if !apps.gui.popup_menu.menu.get_visible() {
-                return;
-            }
-            match (s, u) {
-                (_, _) => set_mute_check(&apps),
-            }
-        }));
+        // let apps = appstate.clone();
+        // appstate.audio.connect_handler(Box::new(move |s, u| {
+            // /* skip if window is hidden */
+            // if !apps.gui.popup_menu.menu.get_visible() {
+                // return;
+            // }
+            // match (s, u) {
+                // (_, _) => set_mute_check(&apps),
+            // }
+        // }));
 
     }
 
