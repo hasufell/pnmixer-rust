@@ -261,7 +261,7 @@ where
 
     let xevent_type = unsafe { (*xevent).type_ };
     if xevent_type == x11::xlib::KeyPress {
-        return gdk_sys::GdkFilterReturn::Continue;
+        return gdk_sys::GDK_FILTER_CONTINUE;
     }
 
     let xevent_key = unsafe { (*xevent).keycode };
@@ -297,5 +297,5 @@ where
         just_warn!(audio.decrease_vol(AudioUser::Hotkeys, hotkeys.auto_unmute));
     }
 
-    return gdk_sys::GdkFilterReturn::Continue;
+    return gdk_sys::GDK_FILTER_CONTINUE;
 }

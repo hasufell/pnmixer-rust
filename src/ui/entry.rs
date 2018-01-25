@@ -4,9 +4,9 @@
 use app_state::*;
 use audio::frontend::*;
 use gtk::DialogExt;
+use gtk::GtkWindowExt;
 use gtk::MessageDialogExt;
 use gtk::WidgetExt;
-use gtk::WindowExt;
 use gtk;
 use gtk_sys::GTK_RESPONSE_YES;
 use prefs::*;
@@ -115,7 +115,7 @@ fn run_audio_error_dialog(parent: &gtk::Window) -> i32 {
 
     let dialog = gtk::MessageDialog::new(
         Some(parent),
-        gtk::DIALOG_DESTROY_WITH_PARENT,
+        gtk::DialogFlags::DESTROY_WITH_PARENT,
         gtk::MessageType::Error,
         gtk::ButtonsType::YesNo,
         "Warning: Connection to sound system failed.",

@@ -10,7 +10,6 @@ use gdk_sys;
 use glib::translate::*;
 use gtk::prelude::*;
 use gtk;
-use gtk_sys;
 use libc::c_uint;
 use std;
 
@@ -87,7 +86,7 @@ impl HotkeyDialog {
 
 
         hotkey_dialog.connect_key_release_event(move |w, _| {
-            w.response(gtk_sys::GtkResponseType::Ok as i32);
+            w.response(gtk::ResponseType::Ok.into());
             return Inhibit(false);
         });
 
@@ -112,7 +111,7 @@ impl HotkeyDialog {
             &window,
             gdk::GrabOwnership::Application,
             true,
-            gdk::KEY_PRESS_MASK,
+            gdk::EventMask::KEY_PRESS_MASK,
             None,
             gdk_sys::GDK_CURRENT_TIME as u32,
         );

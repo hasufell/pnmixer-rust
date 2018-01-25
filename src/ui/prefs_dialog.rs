@@ -10,7 +10,6 @@ use gtk::ResponseType;
 use gtk::prelude::*;
 use gtk;
 use prefs::*;
-use std::ascii::AsciiExt;
 use std::cell::RefCell;
 use std::rc::Rc;
 use support::audio::*;

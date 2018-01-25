@@ -37,15 +37,15 @@ fn main() {
     let log_dir = matches.opt_str("log-to-file");
     let log_level = matches.opt_default("log-level", "debug").map(|s| {
         match s.to_lowercase().as_str() {
-            "trace" => flexi_logger::LogLevelFilter::Trace,
-            "debug" => flexi_logger::LogLevelFilter::Debug,
-            "info"  => flexi_logger::LogLevelFilter::Info,
-            "warn"  => flexi_logger::LogLevelFilter::Warn,
-            "error" => flexi_logger::LogLevelFilter::Error,
-            "off"   => flexi_logger::LogLevelFilter::Off,
-            _       => flexi_logger::LogLevelFilter::Debug,
+            "trace" => flexi_logger::LevelFilter::Trace,
+            "debug" => flexi_logger::LevelFilter::Debug,
+            "info"  => flexi_logger::LevelFilter::Info,
+            "warn"  => flexi_logger::LevelFilter::Warn,
+            "error" => flexi_logger::LevelFilter::Error,
+            "off"   => flexi_logger::LevelFilter::Off,
+            _       => flexi_logger::LevelFilter::Debug,
         }
-    }).unwrap_or(flexi_logger::LogLevelFilter::Off);
+    }).unwrap_or(flexi_logger::LevelFilter::Off);
 
     let mut flogger = flexi_logger::Logger::with(
         flexi_logger::LogSpecification::default(log_level).build());

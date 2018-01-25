@@ -244,6 +244,9 @@ extern "C" fn watch_cb(
                 error!("GIO error has occurred");
                 cb(AlsaEvent::AlsaCardError);
             }
+            _ => {
+                error!("Internal error: unknown status!");
+            },
         }
         return true as glib_sys::gboolean;
     }

@@ -8,9 +8,10 @@ use app_state::*;
 use audio::frontend::*;
 use errors::*;
 use gdk::DeviceExt;
-use gdk::{GrabOwnership, GrabStatus, BUTTON_PRESS_MASK, KEY_PRESS_MASK};
+use gdk::{GrabOwnership, GrabStatus};
 use gdk;
 use gdk_sys::{GDK_KEY_Escape, GDK_CURRENT_TIME};
+use glib::translate::*;
 use glib;
 use gtk::ToggleButtonExt;
 use gtk::prelude::*;
@@ -81,7 +82,8 @@ impl PopupWindow {
     {
         let m_muted = audio.get_mute();
 
-        glib::signal_handler_block(&self.mute_check, self.toggle_signal.get());
+        glib::signal_handler_block(&self.mute_check,
+                                   &from_glib(self.toggle_signal.get()));
 
         match m_muted {
             Ok(val) => {
@@ -101,7 +103,7 @@ impl PopupWindow {
 
         glib::signal_handler_unblock(
             &self.mute_check,
-            self.toggle_signal.get(),
+            &from_glib(self.toggle_signal.get()),
         );
     }
 
@@ -159,7 +161,7 @@ where
         let toggle_signal = mute_check.connect_toggled(move |_| {
             on_mute_check_toggled(&_appstate)
         });
-        appstate.gui.popup_window.toggle_signal.set(toggle_signal);
+        appstate.gui.popup_window.toggle_signal.set(toggle_signal.to_glib());
     }
 
     /* popup_window.connect_show */
@@ -177,7 +179,7 @@ where
             on_vol_scale_value_changed(&_appstate)
         });
 
-        appstate.gui.popup_window.changed_signal.set(changed_signal);
+        appstate.gui.popup_window.changed_signal.set(changed_signal.to_glib());
     }
 
     /* popup_window.connect_event */
@@ -212,12 +214,12 @@ where
     );
     glib::signal_handler_block(
         &popup_window.vol_scale_adj,
-        popup_window.changed_signal.get(),
+        &from_glib(popup_window.changed_signal.get()),
     );
     try_w!(appstate.gui.popup_window.update(appstate.audio.as_ref()));
     glib::signal_handler_unblock(
         &popup_window.vol_scale_adj,
-        popup_window.changed_signal.get(),
+        &from_glib(popup_window.changed_signal.get()),
     );
     popup_window.vol_scale.grab_focus();
     try_w!(grab_devices(&appstate.gui.popup_window.popup_window));
@@ -302,7 +304,7 @@ fn grab_devices(window: &gtk::Window) -> Result<()> {
         &gdk_window,
         GrabOwnership::None,
         true,
-        BUTTON_PRESS_MASK,
+        gdk::EventMask::BUTTON_PRESS_MASK,
         None,
         GDK_CURRENT_TIME as u32,
     );
@@ -323,7 +325,7 @@ fn grab_devices(window: &gtk::Window) -> Result<()> {
         &gdk_window,
         GrabOwnership::None,
         true,
-        KEY_PRESS_MASK,
+        gdk::EventMask::KEY_PRESS_MASK,
         None,
         GDK_CURRENT_TIME as u32,
     );

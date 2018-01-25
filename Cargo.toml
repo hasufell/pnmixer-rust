@@ -17,30 +17,30 @@ name = "pnmixer-rs"
 path = "src/bin.rs"
 
 [dependencies]
-alsa = "0.1.10"
+alsa = "0.2.0"
 alsa-sys = "0.1.1"
 error-chain = "0.11.0"
 ffi = "0.0.2"
-flexi_logger = "0.6.8"
-gdk-pixbuf = "0.2.0"
-gdk-pixbuf-sys = "0.4.0"
-gdk-sys = "0.4.0"
-getopts = "0.2.15"
-gio = "0.2.0"
-glib = "0.3.1"
-glib-sys = "0.4.0"
-gobject-sys = "0.4.0"
-gtk-sys = "0.4.0"
-lazy_static = "0.2.8"
-libc = "0.2.31"
-libnotify = { version = "^1.0.2", optional = true }
-log = "0.3.8"
-png = "0.10.0"
-serde = "1.0.15"
-serde_derive = "1.0.15"
+flexi_logger = "0.6.11"
+gdk-pixbuf = "0.3.0"
+gdk-pixbuf-sys = "0.5.0"
+gdk-sys = "0.5.0"
+getopts = "0.2.17"
+gio = "0.3.0"
+glib = "0.4.1"
+glib-sys = "0.5.0"
+gobject-sys = "0.5.0"
+gtk-sys = "0.5.0"
+lazy_static = "1.0.0"
+libc = "0.2.36"
+libnotify = { version = "1.0.2", optional = true }
+log = "0.4.1"
+png = "0.11.0"
+serde = "1.0.27"
+serde_derive = "1.0.27"
 toml = "0.4.5"
 w_result = "0.1.2"
-which = "1.0.2"
+which = "1.0.3"
 xdg = "2.1.0"
 
 [dependencies.gdk]
@@ -49,7 +49,7 @@ features = [
     "v3_12",
     "v3_22",
 ]
-version = "0.6.0"
+version = "0.7.0"
 
 [dependencies.gtk]
 features = [
@@ -57,14 +57,14 @@ features = [
     "v3_12",
     "v3_22",
 ]
-version = "0.2.0"
+version = "0.3.0"
 
 [dependencies.x11]
 features = [
     "xlib",
     "xtst",
 ]
-version = "2.15.0"
+version = "2.17.2"
 
 [features]
 notify = ["libnotify"]

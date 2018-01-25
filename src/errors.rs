@@ -149,12 +149,12 @@ macro_rules! error_dialog {
     ($msg:expr, $parent:expr) => {
         {
             use gtk::DialogExt;
+            use gtk::prelude::GtkWindowExt;
             use gtk::WidgetExt;
-            use gtk::WindowExt;
 
             let parent: Option<&gtk::Window> = $parent;
             let dialog = gtk::MessageDialog::new(parent,
-                                                 gtk::DIALOG_DESTROY_WITH_PARENT,
+                                                 gtk::DialogFlags::DESTROY_WITH_PARENT,
                                                  gtk::MessageType::Error,
                                                  gtk::ButtonsType::Close,
                                                  $msg);
