@@ -72,7 +72,7 @@ where
                         &apps.prefs.borrow(),
                         AudioUser::Unknown,
                     ));
-                }
+                },
                 (AudioSignal::CardError, _) => {
                     if run_audio_error_dialog(
                         &apps.gui.popup_menu.menu_window,
@@ -84,7 +84,14 @@ where
                             AudioUser::Unknown,
                         ));
                     }
-                }
+                },
+                (AudioSignal::CardReload, _) => {
+                    try_w!(audio_reload(
+                        apps.audio.as_ref(),
+                        &apps.prefs.borrow(),
+                        AudioUser::Unknown,
+                    ));
+                },
                 _ => (),
             }),
         );

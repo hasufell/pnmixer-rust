@@ -49,6 +49,7 @@ pub enum AudioSignal {
     CardDisconnected,
     CardError,
     ValuesChanged,
+    CardReload,
 }
 
 

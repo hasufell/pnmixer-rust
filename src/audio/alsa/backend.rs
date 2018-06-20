@@ -352,5 +352,12 @@ fn on_alsa_event(
                 self::AudioUser::Unknown,
             );
         }
+        AlsaEvent::AlsaCardReload => {
+            invoke_handlers(
+                handlers,
+                self::AudioSignal::CardReload,
+                self::AudioUser::Unknown,
+            );
+        }
     }
 }

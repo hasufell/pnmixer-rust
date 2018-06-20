@@ -32,6 +32,8 @@ pub enum AlsaEvent {
     AlsaCardDiconnected,
     /// The values of the mixer changed, including mute state.
     AlsaCardValuesChanged,
+    /// Alsa needs to be reloaded due to recoverable error.
+    AlsaCardReload,
 }
 
 
@@ -236,8 +238,9 @@ extern "C" fn watch_cb(
                 continue;
             }
             glib_sys::G_IO_STATUS_NORMAL => {
-                error!("Alsa failed to clear the channel");
-                cb(AlsaEvent::AlsaCardError);
+                // BUG: https://github.com/nicklan/pnmixer/issues/182
+                warn!("Alsa failed to clear the channel");
+                cb(AlsaEvent::AlsaCardReload);
             }
             glib_sys::G_IO_STATUS_ERROR => (),
             glib_sys::G_IO_STATUS_EOF => {
